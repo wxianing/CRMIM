@@ -16,6 +16,8 @@ import com.meidp.crmim.activity.AnnouncementActivity;
 import com.meidp.crmim.activity.CostManagerActivity;
 import com.meidp.crmim.activity.CustomerListActivity;
 import com.meidp.crmim.activity.CustomerVisitActivity;
+import com.meidp.crmim.activity.MyAchievementsActivity;
+import com.meidp.crmim.activity.MyPerformanceActivity;
 import com.meidp.crmim.activity.MyPrototypeActivity;
 import com.meidp.crmim.activity.OpenSeaPoolActivity;
 import com.meidp.crmim.activity.ProjectManagerActivity;
@@ -156,7 +158,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 startActivity(intent);
                 break;
             case 8://我的业绩
-                intent.setClass(getActivity(), CostManagerActivity.class);
+                intent.setClass(getActivity(), MyPerformanceActivity.class);
                 startActivity(intent);
                 break;
         }

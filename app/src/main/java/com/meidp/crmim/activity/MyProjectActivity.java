@@ -26,6 +26,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * 我的项目
+ */
 @ContentView(R.layout.activity_my_project)
 public class MyProjectActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2<ListView>, AdapterView.OnItemClickListener {
 

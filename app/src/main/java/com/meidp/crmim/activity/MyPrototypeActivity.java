@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * 我的样机
+ */
 @ContentView(R.layout.activity_my_prototype)
 public class MyPrototypeActivity extends BaseActivity {
 
@@ -53,7 +56,7 @@ public class MyPrototypeActivity extends BaseActivity {
         params.put("sType", 0);
         params.put("PageIndex", 1);
         params.put("PageSize", 8);
-        HttpRequestUtils.getmInstance().send(MyPrototypeActivity.this, Constant.MODEL_APPLY_URL, params, new HttpRequestCallBack<String>() {
+        HttpRequestUtils.getmInstance().send(MyPrototypeActivity.this, Constant.MY_MODEL_LIST, params, new HttpRequestCallBack<String>() {
             @Override
             public void onSuccess(String result) {
                 AppDatas<ModelApply> appDatas = JSONObject.parseObject(result, new TypeReference<AppDatas<ModelApply>>() {

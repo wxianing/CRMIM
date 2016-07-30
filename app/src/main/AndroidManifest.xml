@@ -154,7 +154,9 @@
         <activity android:name=".activity.MyPrototypeActivity" />
         <activity android:name=".activity.CostTypeActivity" />
         <activity android:name=".activity.CostTypeDetailsActivity" />
-        <activity android:name=".activity.PrototypeListActivity"></activity>
+        <activity android:name=".activity.PrototypeListActivity" />
+        <activity android:name=".activity.MyPerformanceActivity"></activity>
+        <activity android:name="org.achartengine.GraphicalActivity"></activity>
     </application>
 
 </manifest>
