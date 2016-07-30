@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingBottom="2dp">
+
+    <RadioButton
+        style="@style/mainRgStyle"
+        android:drawableTop="@drawable/main_rg_home_icon"
+        android:text="工作" />
+
+    <RadioButton
+        style="@style/mainRgStyle"
+        android:drawableTop="@drawable/main_rg_contact_icon"
+        android:text="联系人" />
+
+    <RadioButton
+        style="@style/mainRgStyle"
+        android:drawableTop="@drawable/main_rg_message_icon"
+        android:text="消息" />
+
+    <RadioButton
+        style="@style/mainRgStyle"
+        android:drawableTop="@drawable/main_rg_my_icon"
+        android:text="我的" />
+
+</RadioGroup>

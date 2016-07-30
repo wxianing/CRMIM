@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/dp10">
+
+    <TextView
+        android:id="@+id/item_project_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="西江水利工程"
+        android:textColor="@color/textcolor_black"
+        android:textSize="@dimen/sp16"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/item_project_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp5"
+        android:layout_weight="1"
+        android:text="上  报  人 : 张 三" />
+
+    <TextView
+        android:id="@+id/project_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp5"
+        android:layout_weight="1"
+        android:text="项目编号：12345678" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp5">
+
+        <TextView
+            android:id="@+id/project_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="项目时间：20160606" />
+
+        <TextView
+            android:id="@+id/project_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="审批中"
+            android:visibility="gone" />
+    </RelativeLayout>
+</LinearLayout>

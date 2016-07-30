@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp20"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp10"
+            android:layout_marginTop="@dimen/submit_item_top"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/textview_submit_setting"
+                android:text="开始时间:" />
+
+            <EditText
+                android:id="@+id/start_date"
+                style="@style/sub_editext"
+                android:focusable="false"
+                android:gravity="end"
+                android:hint="2016-5-5" />
+
+        </LinearLayout>
+
+        <include layout="@layout/horizontal_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp10"
+            android:layout_marginTop="@dimen/submit_item_top"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/textview_submit_setting"
+                android:text="结束时间:" />
+
+            <EditText
+
+                android:id="@+id/over_date"
+                style="@style/sub_editext"
+                android:focusable="false"
+                android:gravity="end"
+                android:hint="2016-5-5" />
+
+            <Button
+                android:id="@+id/pickdate_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="选择日期"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <include layout="@layout/horizontal_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp10"
+            android:layout_marginTop="@dimen/submit_item_top"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/textview_submit_setting"
+                android:text="费用预算(￥):" />
+
+            <EditText
+                android:id="@+id/budget_cost"
+                style="@style/sub_editext"
+                android:gravity="end"
+                android:hint="点击填写" />
+
+        </LinearLayout>
+
+        <include layout="@layout/horizontal_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp10"
+            android:layout_marginTop="@dimen/submit_item_top"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/textview_submit_setting"
+                android:text="人工数量(个):" />
+
+            <EditText
+                android:id="@+id/person_count"
+                style="@style/sub_editext"
+                android:gravity="end"
+                android:hint="点击填写" />
+
+        </LinearLayout>
+
+        <include layout="@layout/horizontal_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp10"
+            android:layout_marginTop="@dimen/submit_item_top"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/textview_submit_setting"
+                android:text="进度占比(0~1):" />
+
+            <EditText
+                android:id="@+id/rate"
+                style="@style/sub_editext"
+                android:gravity="end"
+                android:hint="点击填写" />
+
+        </LinearLayout>
+
+        <include layout="@layout/horizontal_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp10"
+            android:layout_marginTop="@dimen/submit_item_top"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/textview_submit_setting"
+                android:text="进度摘要:" />
+
+            <EditText
+                android:id="@+id/abstract_message"
+                style="@style/sub_editext"
+                android:gravity="end"
+                android:hint="点击填写" />
+
+        </LinearLayout>
+
+        <include layout="@layout/horizontal_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp10"
+            android:layout_marginTop="@dimen/submit_item_top"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/textview_submit_setting"
+                android:text="项目备忘:" />
+
+            <EditText
+                android:id="@+id/remark_et"
+                style="@style/sub_editext"
+                android:gravity="end"
+                android:hint="选填" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.meidp.crmim.activity.SubmitActivity">
+
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/titlebar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_bar"
+        android:background="@color/white"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F2F2F2"
+                android:padding="@dimen/dp10"
+                android:text="项目信息" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp10"
+                android:layout_marginTop="@dimen/submit_item_top"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="项目名称:" />
+
+                <EditText
+                    android:id="@+id/edittext_project_name"
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="请输入项目名称" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp10"
+                android:layout_marginTop="@dimen/submit_item_top"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="项目金额(元):" />
+
+                <EditText
+                    android:id="@+id/edittext_total_price"
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="请输入项目金额" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp10"
+                android:layout_marginTop="@dimen/submit_item_top"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="成功率(%):" />
+
+                <EditText
+                    android:id="@+id/edittext_success_rate"
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="请输入项目成功率" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F2F2F2"
+                android:padding="@dimen/dp10"
+                android:text="客户信息" />
+
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp5"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="联系人:" />
+
+                <EditText
+                    android:id="@+id/edittext_customer_name"
+                    style="@style/sub_editext"
+                    android:drawableRight="@mipmap/arrow_right"
+                    android:focusable="false"
+                    android:gravity="end"
+                    android:hint="点击选择" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp5"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="电话:" />
+
+                <EditText
+                    android:id="@+id/edittext_customer_phone"
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="选填" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp10"
+                android:layout_marginTop="@dimen/submit_item_top"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="地址:" />
+
+                <EditText
+                    android:id="@+id/edittext_project_address"
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="选填" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp10"
+                android:layout_marginTop="@dimen/submit_item_top"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="备注:" />
+
+                <EditText
+                    android:id="@+id/remark"
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="选填" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="20dp"
+        android:background="@color/default_background_color"
+        android:padding="@dimen/dp5"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/save_btn"
+            style="@style/sub_button"
+            android:text="保    存" />
+
+    </LinearLayout>
+</RelativeLayout>
+
+

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    android:background="@drawable/linear_bg_white"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dp5"
+    android:paddingLeft="@dimen/dp10"
+    android:paddingRight="@dimen/dp10"
+    android:paddingTop="@dimen/dp5">
+
+    <TextView
+        android:id="@+id/item_project_title"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginBottom="@dimen/dp5"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="西江水利工程西江水利工程西江水利工程西江水利工程西江水利工程"
+        android:textColor="@color/textcolor_black"
+        android:textSize="@dimen/sp14"
+        android:textStyle="bold" />
+
+    <include layout="@layout/horizontal_full_line" />
+
+    <TextView
+        android:id="@+id/link_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp5"
+        android:layout_weight="1"
+        android:text="上报人: 张 三"
+        android:textSize="@dimen/sp13" />
+
+    <TextView
+        android:id="@+id/project_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp5"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="项目编号：12345678"
+        android:textSize="@dimen/sp13" />
+
+    <TextView
+        android:id="@+id/project_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp5"
+        android:text="上报时间：20160606"
+        android:textSize="@dimen/sp13" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp5"
+            android:text="成功率："
+            android:textSize="@dimen/sp13" />
+
+        <TextView
+            android:id="@+id/success_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp5"
+            android:text="100%"
+            android:textSize="@dimen/sp13" />
+
+    </LinearLayout>
+
+</LinearLayout>

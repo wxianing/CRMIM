@@ -1,0 +1,34 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/default_background_color"
+    android:orientation="vertical"
+    tools:context=".fragment.HomeFragment">
+
+    <include layout="@layout/titlebar" />
+
+    <include layout="@layout/auto_viewpager" />
+
+    <include layout="@layout/horizontal_full_line" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="我的应用" />
+
+    <com.meidp.crmim.view.LineGridView
+        android:id="@+id/grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:horizontalSpacing="0dp"
+        android:listSelector="@color/white"
+        android:numColumns="4"
+        android:scrollbars="none"
+        android:verticalSpacing="0dp" />
+
+    <include layout="@layout/horizontal_full_line" />
+
+</LinearLayout>
