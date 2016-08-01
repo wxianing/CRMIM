@@ -1,5 +1,6 @@
 package com.meidp.crmim.activity;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ import java.util.HashMap;
 
 @ContentView(R.layout.activity_add_new_client)
 public class NewClientActivity extends BaseActivity {
+
     @ViewInject(R.id.title_tv)
     private TextView title;
     @ViewInject(R.id.title_right)
@@ -48,6 +50,7 @@ public class NewClientActivity extends BaseActivity {
     @ViewInject(R.id.remark)
     private EditText remarkEt;
 
+
     @Override
     public void onInit() {
         titleRight.setVisibility(View.VISIBLE);
@@ -55,7 +58,7 @@ public class NewClientActivity extends BaseActivity {
         title.setText("新增客户");
     }
 
-    @Event(value = {R.id.back_arrows, R.id.title_right})
+    @Event(value = {R.id.back_arrows, R.id.title_right, R.id.province})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
@@ -99,6 +102,18 @@ public class NewClientActivity extends BaseActivity {
                 });
 
                 break;
+            case R.id.province:
+                Intent intent = new Intent(NewClientActivity.this, CityListActivity.class);
+                startActivityForResult(intent, Constant.RESULT_OK);
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (Constant.RESULT_OK == 1) {
+            provinceEt.setText(data.getStringExtra("cityName"));
         }
     }
 }

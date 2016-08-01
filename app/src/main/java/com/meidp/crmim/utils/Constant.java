@@ -6,7 +6,7 @@ import com.meidp.crmim.MyApplication;
  * Created by John on 2016/6/29.
  */
 public class Constant {
-
+    public static final int RESULT_OK = 1;
     public static final String BASE_URL = "http://115.28.180.26:98/";
 
     public static final String APPID = "102";

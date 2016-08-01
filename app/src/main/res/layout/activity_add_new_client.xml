@@ -6,192 +6,247 @@
 
     <include layout="@layout/titlebar" />
 
-    <ScrollView
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/title_bar"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="公司信息" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
-        android:scrollbars="none">
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp10">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/dp10"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical">
+        <TextView
+            style="@style/textview_submit_setting"
+            android:text="公司名称：" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/submit_item_top"
-                android:gravity="center"
-                android:orientation="horizontal">
+        <EditText
+            android:id="@+id/customer_name"
+            style="@style/sub_editext"
+            android:gravity="right"
+            android:hint="点击填写" />
 
-                <TextView
-                    style="@style/textview_submit_setting"
-                    android:text="客  户  名：" />
+    </LinearLayout>
 
-                <EditText
-                    android:id="@+id/customer_name"
-                    style="@style/sub_editext" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/submit_item_top"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/textview_submit_setting"
-                    android:text="客户电话：" />
-
-                <EditText
-                    android:id="@+id/customer_phone"
-                    style="@style/sub_editext" />
-
-            </LinearLayout>
+    <include layout="@layout/horizontal_line" />
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp5"
-                android:gravity="center"
-                android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dp10"
+        android:paddingLeft="@dimen/dp10"
+        android:paddingTop="@dimen/dp10">
 
-                <TextView
-                    style="@style/textview_submit_setting"
-                    android:text="所在省份：" />
+        <TextView
+            style="@style/textview_submit_setting"
+            android:text="所在省份：" />
 
-                <EditText
-                    android:id="@+id/province"
-                    style="@style/sub_editext" />
+        <EditText
+            android:id="@+id/province"
+            style="@style/sub_editext"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:gravity="end"
+            android:hint="点击选择" />
 
-            </LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/arrow_right" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/submit_item_top"
-                android:gravity="center"
-                android:orientation="horizontal">
+    </LinearLayout>
 
-                <TextView
-                    style="@style/textview_submit_setting"
-                    android:text="城  市  名：" />
+    <include layout="@layout/horizontal_line" />
 
-                <EditText
-                    android:id="@+id/city_name"
-                    style="@style/sub_editext" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp10">
 
-            </LinearLayout>
+        <TextView
+            style="@style/textview_submit_setting"
+            android:text="经营范围：" />
+
+        <EditText
+            android:id="@+id/sellArea"
+            style="@style/sub_editext"
+            android:gravity="right"
+            android:hint="点击填写" />
+
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_line" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="联系方式" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp10">
+
+        <TextView
+            style="@style/textview_submit_setting"
+            android:text="座机：" />
+
+        <EditText
+            android:id="@+id/customer_phone"
+            style="@style/sub_editext"
+            android:gravity="right"
+            android:hint="点击填写" />
+
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp10"
+        android:visibility="gone">
+
+        <TextView
+            style="@style/textview_submit_setting"
+            android:text="城  市  名：" />
+
+        <EditText
+            android:id="@+id/city_name"
+            style="@style/sub_editext"
+            android:gravity="right"
+            android:hint="点击填写" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp10"
+        android:visibility="gone">
+
+        <TextView
+            style="@style/textview_submit_setting"
+            android:text="联  系  人：" />
+
+        <EditText
+            android:id="@+id/linkman"
+            style="@style/sub_editext"
+            android:gravity="right"
+            android:hint="点击填写" />
+
+    </LinearLayout>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/submit_item_top"
-                android:gravity="center"
-                android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp10">
 
-                <TextView
-                    style="@style/textview_submit_setting"
-                    android:text="联  系  人：" />
+        <TextView
+            style="@style/textview_submit_setting"
+            android:text="手机：" />
 
-                <EditText
-                    android:id="@+id/linkman"
-                    style="@style/sub_editext" />
+        <EditText
+            android:id="@+id/linkman_phone"
+            style="@style/sub_editext"
+            android:gravity="right"
+            android:hint="选填" />
 
-            </LinearLayout>
+    </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/submit_item_top"
-                android:gravity="center"
-                android:orientation="horizontal">
+    <include layout="@layout/horizontal_line" />
 
-                <TextView
-                    style="@style/textview_submit_setting"
-                    android:text="手机号码：" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp10">
 
-                <EditText
-                    android:id="@+id/linkman_phone"
-                    style="@style/sub_editext" />
+        <TextView
+            style="@style/textview_submit_setting"
+            android:text="邮箱：" />
 
-            </LinearLayout>
+        <EditText
+            android:id="@+id/e_mail"
+            style="@style/sub_editext"
+            android:gravity="right"
+            android:hint="选填" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/submit_item_top"
-                android:gravity="center"
-                android:orientation="horizontal">
+    </LinearLayout>
 
-                <TextView
-                    style="@style/textview_submit_setting"
-                    android:text="电子邮箱：" />
+    <include layout="@layout/horizontal_line" />
 
-                <EditText
-                    android:id="@+id/e_mail"
-                    style="@style/sub_editext" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp10">
 
-            </LinearLayout>
+        <TextView
+            style="@style/textview_submit_setting"
+            android:text="地址：" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/submit_item_top"
-                android:gravity="center"
-                android:orientation="horizontal">
+        <EditText
+            android:id="@+id/customer_address"
+            style="@style/sub_editext"
+            android:gravity="right"
+            android:hint="选填" />
 
-                <TextView
-                    style="@style/textview_submit_setting"
-                    android:text="客户地址：" />
+    </LinearLayout>
 
-                <EditText
-                    android:id="@+id/customer_address"
-                    style="@style/sub_editext" />
+    <include layout="@layout/horizontal_line" />
 
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/submit_item_top"
-                android:gravity="center"
-                android:orientation="horizontal">
+    <include layout="@layout/horizontal_line" />
 
-                <TextView
-                    style="@style/textview_submit_setting"
-                    android:text="经营范围：" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp10">
 
-                <EditText
-                    android:id="@+id/sellArea"
-                    style="@style/sub_editext" />
+        <TextView
+            style="@style/textview_submit_setting"
+            android:text="备注：" />
 
-            </LinearLayout>
+        <EditText
+            android:id="@+id/remark"
+            style="@style/sub_editext"
+            android:gravity="right"
+            android:hint="选填" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/submit_item_top"
-                android:gravity="center"
-                android:orientation="horizontal">
+    </LinearLayout>
 
-                <TextView
-                    style="@style/textview_submit_setting"
-                    android:text="备        注：" />
-
-                <EditText
-                    android:id="@+id/remark"
-                    style="@style/sub_editext" />
-
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
 </LinearLayout>

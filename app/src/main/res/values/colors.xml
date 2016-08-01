@@ -27,4 +27,8 @@
     <color name="light_drak">#BDBDBD</color>
     <color name="statusbar_bg">#00AFF1</color>
     <color name="drak_orange">#EB8949</color>
+    <color name="head_bg_color">#087CF5</color>
+    <color name="listview_item_normal">#eef0ed</color>
+    <color name="listview_item_pressed">#d4d4d4</color>
+
 </resources>

@@ -157,6 +157,8 @@
         <activity android:name=".activity.PrototypeListActivity" />
         <activity android:name=".activity.MyPerformanceActivity"></activity>
         <activity android:name="org.achartengine.GraphicalActivity"></activity>
+        <activity android:name=".activity.CityListActivity"></activity>
+
     </application>
 
 </manifest>
