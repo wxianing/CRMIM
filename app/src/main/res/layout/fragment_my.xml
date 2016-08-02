@@ -101,6 +101,7 @@
     <include layout="@layout/horizontal_line" />
 
     <LinearLayout
+        android:id="@+id/my_performance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -263,6 +264,37 @@
     </LinearLayout>
 
     <include layout="@layout/horizontal_line" />
+
+    <LinearLayout
+        android:id="@+id/"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/dp10"
+        android:paddingLeft="@dimen/dp10"
+        android:paddingRight="@dimen/dp5"
+        android:paddingTop="@dimen/dp10">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/inventory_manager_icon" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp5"
+            android:layout_weight="1"
+            android:text="意见反馈"
+            android:textSize="@dimen/sp16" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/arrow_right" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/logout"

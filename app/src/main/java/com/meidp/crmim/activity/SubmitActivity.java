@@ -1,5 +1,6 @@
 package com.meidp.crmim.activity;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -40,8 +41,8 @@ public class SubmitActivity extends BaseActivity {
     private EditText projectTotalPriceEt;
     @ViewInject(R.id.edittext_success_rate)
     private EditText projectSuccessRateEt;
-//    @ViewInject(R.id.remark)
-//    private EditText remarkEt;
+    @ViewInject(R.id.remark)
+    private EditText remarkEt;
 
     @Override
     public void onInit() {
@@ -57,14 +58,19 @@ public class SubmitActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.edittext_customer_name:
+                Intent intent = new Intent(this, CustomerListActivity.class);
+                startActivityForResult(intent, 1001);
                 break;
             case R.id.title_right:
+
                 String projectName = projectNameEt.getText().toString().trim();
                 String projectAddress = projectAddressEt.getText().toString().trim();
                 String CustomerName = CustomerNameEt.getText().toString().trim();
                 String CustomerPhone = CustomerPhoneEt.getText().toString().trim();
                 String projectTotalPrice = projectTotalPriceEt.getText().toString().trim();
                 String projectSuccessRate = projectSuccessRateEt.getText().toString().trim();
+                String remark = remarkEt.getText().toString().trim();
+
                 HashMap params = new HashMap();
 
                 params.put("ProjectName", projectName);//项目名称
@@ -73,6 +79,7 @@ public class SubmitActivity extends BaseActivity {
                 params.put("CustLinkTel", CustomerPhone);//客户号码
                 params.put("Investment", projectTotalPrice);//总价钱
                 params.put("SuccessRate", projectSuccessRate);//成功率
+                params.put("Remark", remark);//备注
 
                 HttpRequestUtils.getmInstance().send(SubmitActivity.this, Constant.SAVE_PROJECT, params, new HttpRequestCallBack<String>() {
                     @Override
@@ -88,6 +95,14 @@ public class SubmitActivity extends BaseActivity {
                     }
                 });
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 1001) {
+            CustomerNameEt.setText(data.getStringExtra("customName"));
         }
     }
 }

@@ -100,14 +100,7 @@ public class CustomContactActivity extends BaseActivity implements AdapterView.O
         intent.putExtra("customName", mDatas.get(position).getLinkManName());
         intent.putExtra("CustomerId", oid);
         setResult(1001, intent);
-//        Intent intent = new Intent(this, SigninMainActivity.class);
-//        intent.putExtra("customName", mDatas.get(position).getLinkManName());
-//        intent.putExtra("CustomerId", oid);
-//        if (CustomerListActivity.activity != null) {
-//            CustomerListActivity.activity.finish();
-//            CustomerListActivity.activity = null;
-//        }
-//        startActivity(intent);
+
         finish();
     }
 }

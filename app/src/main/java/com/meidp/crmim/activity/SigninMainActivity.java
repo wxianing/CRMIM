@@ -42,6 +42,7 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
     private BaiduMap mBaiduMap;
     private LocationClient mLocalClient;
     private boolean isFirstLoc = true; // 是否首次定位
+
     private TextView address;
 
     @ViewInject(R.id.customer_layout)
@@ -71,15 +72,16 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
         initView();
     }
 
-    @Event(R.id.customer_layout)
-    private void click(View v) {
-        ToastUtils.shows(this, "点击了客户");
-    }
+//    @Event(R.id.customer_layout)
+//    private void click(View v) {
+//        ToastUtils.shows(this, "点击了客户");
+//    }
 
     private void initView() {
         title = (TextView) findViewById(R.id.title_tv);
         title.setText("拜访客户");
         address = (TextView) findViewById(R.id.address_tv);
+
         mBaiduMap = mMapView.getMap();
         mMapView.showZoomControls(false);
 
@@ -211,9 +213,9 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
             case R.id.sign_in:
 //                String addr = address.getText().toString().trim();
 //                if (NullUtils.isNull(addr)) {
-////                    Intent intent = new Intent(this, SigninTextActivity.class);
-////                    intent.putExtra("ADDRESS", addr);
-////                    startActivity(intent);
+//                    Intent intent = new Intent(this, SigninTextActivity.class);
+//                    intent.putExtra("ADDRESS", addr);
+//                    startActivity(intent);
 //
 //                    double latitude = (double) SPUtils.get(this, "Latitude", 0.0);
 //                    double longitude = (double) SPUtils.get(this, "Longitude", 0.0);
@@ -255,6 +257,7 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
                 startActivity(intent);
                 break;
             case R.id.customer_name:
+                ToastUtils.shows(this, "点击了客户");
                 intent = new Intent();
                 intent.setClass(this, CustomerListActivity.class);
                 startActivity(intent);

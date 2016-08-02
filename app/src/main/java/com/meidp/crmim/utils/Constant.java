@@ -90,7 +90,7 @@ public class Constant {
     public static final String SAVE_PROJECT_PROGRESS = BASE_URL + "projects/projectconstructiondetailssave";
     //获取我的成果
     public static final String GET_MY_ACHIEVEMENT = BASE_URL + "common/user/getmyachievement";
-
+    //我的样机
     public static final String MY_MODEL_LIST = BASE_URL + "order/getsellsamplepagelist";
 
 }

@@ -14,6 +14,7 @@ import com.meidp.crmim.activity.LoginActivity;
 import com.meidp.crmim.activity.MainActivity;
 import com.meidp.crmim.activity.MyAchievementsActivity;
 import com.meidp.crmim.activity.MyCreditActivity;
+import com.meidp.crmim.activity.MyPerformanceActivity;
 import com.meidp.crmim.activity.MyPropertyActivity;
 import com.meidp.crmim.activity.PersonCentorActivity;
 import com.meidp.crmim.activity.ProjectManagerActivity;
@@ -51,23 +52,25 @@ public class MyFragment extends BaseFragment {
     public void onInit() {
         backImg.setVisibility(View.GONE);
         title.setText("个人信息");
-//        User user = SPUtils.getUser(getActivity());
-//        userName.setText(user.getLoginName());
-//        jobTitle.setText("职务：" + user.getDeptName());
+
         String phone = (String) SPUtils.get(getActivity(), "PHONE", "");
         phoneNum.setText("电话：" + phone);
     }
 
-    @Event(value = {R.id.person_center, R.id.my_projec, R.id.my_credit, R.id.my_cost, R.id.my_property, R.id.my_achievements, R.id.logout})
+    @Event(value = {R.id.person_center, R.id.my_projec, R.id.my_credit, R.id.my_cost, R.id.my_property, R.id.my_achievements, R.id.logout,R.id.})
     private void onClick(View v) {
         Intent intent = new Intent();
         switch (v.getId()) {
-            case R.id.person_center:
+            case R.id.person_center://个人中心
                 intent.setClass(getActivity(), PersonCentorActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.my_projec:
+            case R.id.my_projec://我的项目
                 intent.setClass(getActivity(), ProjectManagerActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.my_performance:
+                intent.setClass(getActivity(), MyPerformanceActivity.class);
                 startActivity(intent);
                 break;
             case R.id.my_credit:
@@ -82,11 +85,11 @@ public class MyFragment extends BaseFragment {
                 intent.setClass(getActivity(), MyAchievementsActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.my_property:
+            case R.id.my_property://
                 intent.setClass(getActivity(), MyPropertyActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.logout:
+            case R.id.logout://退出登录
                 SPUtils.setLoginTag(getActivity(), false);
                 intent.setClass(getActivity(), LoginActivity.class);
                 if (MainActivity.mainActivity != null) {
@@ -106,5 +109,10 @@ public class MyFragment extends BaseFragment {
             Bitmap headerBitmap = ImageUtils.stringtoBitmap(headStr);
             header.setImageBitmap(headerBitmap);
         }
+        String employeeName = (String) SPUtils.get(getActivity(), "EmployeeName", "");
+        userName.setText(employeeName);
+        String deptName = (String) SPUtils.get(getActivity(), "DeptName", "");
+        jobTitle.setText(deptName);
+
     }
 }

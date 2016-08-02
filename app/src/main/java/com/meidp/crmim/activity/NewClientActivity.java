@@ -55,7 +55,7 @@ public class NewClientActivity extends BaseActivity {
     public void onInit() {
         titleRight.setVisibility(View.VISIBLE);
         titleRight.setText("保存");
-        title.setText("新增客户");
+        title.setText("新建客户档案");
     }
 
     @Event(value = {R.id.back_arrows, R.id.title_right, R.id.province})

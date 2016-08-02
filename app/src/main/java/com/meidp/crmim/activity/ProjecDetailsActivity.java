@@ -87,12 +87,12 @@ public class ProjecDetailsActivity extends BaseActivity {
                     projectNum.setText("项目编号：" + appBean.getData().getProjectNo());
                     projectLinkname.setText("联系人：" + appBean.getData().getCustLinkMan());
                     linkmanPhone.setText("电话号码：" + appBean.getData().getLinkTel());
-                    totalMoney.setText("项目金额（￥）: " + appBean.getData().getInvestment());
+                    totalMoney.setText( ""+appBean.getData().getInvestment());
                     registerDate.setText("项目登记时间: " + appBean.getData().getCreateDate());
 
                     double rate = appBean.getData().getSuccessRate() * 100;//成功率
 
-                    successRate.setText("项目成功率：" + rate + "%");
+                    successRate.setText( rate + "%");
                     if (NullUtils.isNull(appBean.getData().getRemark())) {
                         remarkTv.setText("备注:" + appBean.getData().getRemark());
                     } else {

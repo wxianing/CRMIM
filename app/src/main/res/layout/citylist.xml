@@ -7,7 +7,9 @@
         android:id="@+id/searchBarContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/head_bg_color">
+        android:background="@color/statusbar_bg"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <EditText
             android:id="@+id/input_search_query"

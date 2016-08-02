@@ -22,6 +22,7 @@ import com.meidp.crmim.activity.MyPrototypeActivity;
 import com.meidp.crmim.activity.OpenSeaPoolActivity;
 import com.meidp.crmim.activity.ProjectManagerActivity;
 import com.meidp.crmim.activity.SubmitActivity;
+import com.meidp.crmim.activity.VisitingClientsActivity;
 import com.meidp.crmim.adapter.HomeGvAdapter;
 import com.meidp.crmim.adapter.ImagePagerAdapter;
 import com.meidp.crmim.http.HttpRequestCallBack;
@@ -138,7 +139,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 //                startActivity(intent);
 //                break;
             case 3://客户拜访
-                intent.setClass(getActivity(), CustomerVisitActivity.class);
+                intent.setClass(getActivity(), VisitingClientsActivity.class);
                 startActivity(intent);
                 break;
             case 4://费用报销

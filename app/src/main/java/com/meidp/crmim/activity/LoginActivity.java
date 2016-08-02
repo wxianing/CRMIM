@@ -25,6 +25,7 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.io.File;
 import java.util.HashMap;
 
 @ContentView(R.layout.activity_login)
@@ -137,6 +138,9 @@ public class LoginActivity extends BaseActivity {
         SPUtils.save(this, "USERNAME", userName);
         SPUtils.save(this, "PASSWORD", passWord);
         SPUtils.save(this, "TOKEN", appBean.getData().getRongcloudToken());
+
+        SPUtils.save(this, "EmployeeName", appBean.getData().getEmployeeName());
+        SPUtils.save(this, "DeptName", appBean.getData().getDeptName());
 
         SPUtils.save(this, "PhotoURL", appBean.getData().getPhotoURL());//保存头像
 //        SPUtils.saveUser(LoginActivity.this, appBean.getData());//保存用户对象

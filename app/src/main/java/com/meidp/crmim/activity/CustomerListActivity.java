@@ -3,11 +3,14 @@ package com.meidp.crmim.activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.meidp.crmim.R;
 import com.meidp.crmim.adapter.CustomerListAdapter;
 import com.meidp.crmim.http.HttpRequestCallBack;
@@ -26,55 +29,63 @@ import java.util.HashMap;
 import java.util.List;
 
 @ContentView(R.layout.activity_customer_list)
-public class CustomerListActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public class CustomerListActivity extends BaseActivity implements AdapterView.OnItemClickListener, PullToRefreshBase.OnRefreshListener2<ListView> {
     public static CustomerListActivity activity;
     @ViewInject(R.id.title_tv)
     private TextView title;
-    @ViewInject(R.id.title_right)
-    private TextView titleRight;
 
     @ViewInject(R.id.listview)
-    private ListView mListView;
-
+    private PullToRefreshListView mListView;
 
     private List<CustomerLists> mDatas;
     private CustomerListAdapter mAdapter;
     private String flag;
+    private int pageIndex = 1;
+    @ViewInject(R.id.search_edittext)
+    private EditText searchEdittext;
+    private String keyword = "";
 
     @Override
     public void onInit() {
         activity = this;
-        titleRight.setVisibility(View.VISIBLE);
-        titleRight.setText("新增");
-        title.setText("客户列表");
+        title.setText("客户档案");
+        mListView.setMode(PullToRefreshBase.Mode.BOTH);
         mDatas = new ArrayList<>();
         mAdapter = new CustomerListAdapter(mDatas, this);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
         flag = getIntent().getStringExtra("FLAG");
+        mListView.setOnRefreshListener(this);
     }
 
-    @Event(value = {R.id.back_arrows, R.id.title_right})
+    @Event(value = {R.id.back_arrows, R.id.right_img, R.id.search_btn})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
                 break;
-            case R.id.title_right:
+            case R.id.right_img:
                 Intent intent = new Intent();
                 intent.setClass(this, NewClientActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.search_btn:
+                keyword = searchEdittext.getText().toString().trim();
+                mDatas.clear();
+                loadData(pageIndex, keyword);
                 break;
         }
     }
 
     @Override
     public void onInitData() {
+        loadData(pageIndex, keyword);
     }
 
-    private void loadData() {
+    private void loadData(int pageIndex, String keyword) {
         HashMap params = new HashMap();
-        params.put("PageIndex", 1);
+        params.put("Keyword", keyword);
+        params.put("PageIndex", pageIndex);
         params.put("PageSize", 8);
         HttpRequestUtils.getmInstance().send(CustomerListActivity.this, Constant.CUSTOMER_LIST_URL, params, new HttpRequestCallBack<String>() {
             @Override
@@ -84,32 +95,25 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
                 if (appDatas != null && appDatas.getEnumcode() == 0) {
                     mDatas.addAll(appDatas.getData().getDataList());
                     mAdapter.notifyDataSetChanged();
+                    mListView.onRefreshComplete();
                 }
             }
         });
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        mDatas.clear();
-        loadData();
-
-    }
-
-    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (NullUtils.isNull(flag) && "Apply".equals(flag)) {
+        if (NullUtils.isNull(flag) && "Apply".equals(flag)) {//直接返回客户
             Intent intent = new Intent();
-            intent.putExtra("CustName", mDatas.get(position).getCustName());
-            intent.putExtra("OID", mDatas.get(position).getID());
+            intent.putExtra("CustName", mDatas.get(position - 1).getCustName());
+            intent.putExtra("OID", mDatas.get(position - 1).getID());
             setResult(1003, intent);
             finish();
         } else {
             Intent intent = new Intent();
             intent.setClass(CustomerListActivity.this, CustomContactActivity.class);
-            intent.putExtra("OID", mDatas.get(position).getID());
-            intent.putExtra("CustNo", mDatas.get(position).getCustNo());
+            intent.putExtra("OID", mDatas.get(position - 1).getID());
+            intent.putExtra("CustNo", mDatas.get(position - 1).getCustNo());
             startActivityForResult(intent, 1001);
         }
     }
@@ -126,5 +130,18 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
             setResult(1001, intent);
             finish();
         }
+    }
+
+    @Override
+    public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+        pageIndex = 1;
+        mDatas.clear();
+        loadData(pageIndex, keyword);
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+        pageIndex++;
+        loadData(pageIndex, keyword);
     }
 }

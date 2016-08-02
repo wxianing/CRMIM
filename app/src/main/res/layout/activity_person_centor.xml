@@ -57,7 +57,6 @@
             android:background="@drawable/edittext_transing"
             android:gravity="end"
             android:hint="请填写昵称"
-            android:text="胡汉三"
             android:textColor="@color/textcolor_black"
             android:textColorHint="@color/textcolor_gray"
             android:textSize="@dimen/sp14" />
@@ -79,6 +78,7 @@
             android:text="职务" />
 
         <TextView
+            android:id="@+id/duty_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -110,7 +110,6 @@
             android:background="@drawable/edittext_transing"
             android:gravity="end"
             android:hint="请填写手机号码"
-            android:text="13812345678"
             android:textColorHint="@color/textcolor_gray"
             android:textSize="@dimen/sp14" />
 

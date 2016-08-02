@@ -130,7 +130,9 @@
         <activity android:name=".activity.AnnounDetailsActivity" />
         <activity android:name=".activity.OpenSeaPoolActivity" />
         <activity android:name=".activity.ProjectManagerActivity" />
-        <activity android:name=".activity.SubmitActivity" />
+        <activity
+            android:name=".activity.SubmitActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name=".activity.FollowProjectActivity" />
         <activity android:name=".activity.CostManagerActivity" />
         <activity android:name=".activity.MyProjectActivity" />
@@ -155,10 +157,11 @@
         <activity android:name=".activity.CostTypeActivity" />
         <activity android:name=".activity.CostTypeDetailsActivity" />
         <activity android:name=".activity.PrototypeListActivity" />
-        <activity android:name=".activity.MyPerformanceActivity"></activity>
-        <activity android:name="org.achartengine.GraphicalActivity"></activity>
-        <activity android:name=".activity.CityListActivity"></activity>
-
+        <activity android:name=".activity.MyPerformanceActivity" />
+        <activity android:name="org.achartengine.GraphicalActivity" />
+        <activity android:name=".activity.CityListActivity" />
+        <activity android:name=".activity.VisitingClientsActivity" />
+        <activity android:name=".activity.FeedbackActivity"></activity>
     </application>
 
 </manifest>

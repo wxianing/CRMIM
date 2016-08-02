@@ -80,7 +80,7 @@ public class CostReimbursementActivity extends BaseActivity {
         titleRight.setVisibility(View.VISIBLE);
     }
 
-    @Event(value = {R.id.customer_et, R.id.cost_type, R.id.apply_time, R.id.need_time, R.id.title_right})
+    @Event(value = {R.id.customer_et, R.id.cost_type, R.id.apply_time, R.id.need_time, R.id.title_right, R.id.back_arrows})
     private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -112,6 +112,9 @@ public class CostReimbursementActivity extends BaseActivity {
                 break;
             case R.id.title_right:
                 sendMsg();
+                break;
+            case R.id.back_arrows:
+                finish();
                 break;
         }
     }

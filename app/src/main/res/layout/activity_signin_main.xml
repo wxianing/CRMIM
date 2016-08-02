@@ -119,19 +119,28 @@
             android:layout_toRightOf="@+id/customer_icon"
             android:text="客户" />
 
-        <TextView
+        <EditText
             android:id="@+id/customer_name"
+            style="@style/sub_editext"
+            android:layout_toLeftOf="@+id/arror_right_img"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:gravity="end"
+            android:hint="点击选择" />
+
+        <ImageView
+            android:id="@+id/arror_right_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:drawableRight="@mipmap/arrow_right"
-            android:text="点击选择联系人" />
+            android:layout_centerVertical="true"
+            android:src="@mipmap/arrow_right" />
 
     </RelativeLayout>
 
     <include layout="@layout/horizontal_line" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -151,13 +160,15 @@
             android:layout_toRightOf="@+id/customer_phone_icon"
             android:text="客户电话" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:drawableRight="@mipmap/arrow_right" />
+        <EditText
+            style="@style/sub_editext"
+            android:layout_toLeftOf="@+id/arror_right_img"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:gravity="end"
+            android:hint="点击填写" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -170,7 +181,7 @@
         <EditText
             android:id="@+id/content_tv"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="160dp"
             android:background="@drawable/edittext_shape"
             android:gravity="top"
             android:hint="请添加内容..."
@@ -232,9 +243,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dp40"
+        android:layout_marginTop="@dimen/dp30"
         android:background="@mipmap/see_icon">
-
     </ImageView>
 
 

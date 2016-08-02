@@ -9,10 +9,13 @@
 
     <include layout="@layout/titlebar" />
 
+    <include layout="@layout/search_layout" />
+
     <LinearLayout
         android:id="@+id/customer_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp5"
         android:background="@color/white">
 
         <ImageView
@@ -149,18 +152,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/search_edittext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp10"
-        android:background="@drawable/edittext_shape"
-        android:drawableLeft="@mipmap/search_icon"
-        android:focusable="false"
-        android:hint="找人"
-        android:textColorHint="@color/textcolor_gray"
-        android:textSize="@dimen/sp14"
-        android:visibility="gone" />
 
     <FrameLayout
         android:id="@+id/friends_list"

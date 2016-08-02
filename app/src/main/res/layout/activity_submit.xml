@@ -103,7 +103,6 @@
                 android:padding="@dimen/dp10"
                 android:text="客户信息" />
 
-
             <include layout="@layout/horizontal_line" />
 
             <LinearLayout
@@ -121,10 +120,15 @@
                 <EditText
                     android:id="@+id/edittext_customer_name"
                     style="@style/sub_editext"
-                    android:drawableRight="@mipmap/arrow_right"
+                    android:layout_weight="1"
                     android:focusable="false"
                     android:gravity="end"
                     android:hint="点击选择" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/arrow_right" />
 
             </LinearLayout>
 
