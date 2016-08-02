@@ -96,5 +96,7 @@ public class Constant {
     public static final String SAVA_WORK_PLAN = BASE_URL + "office/office/planaimsave";
     //过去个人计划列表
     public static final String GET_PERSONAL_PLAN = BASE_URL + "office/office/getplanaimpagelist";
+    //保存反馈意见
+    public static final String SAVE_FEEDBACK_URL = BASE_URL + "office/office/personaladvicesendsave";
 
 }

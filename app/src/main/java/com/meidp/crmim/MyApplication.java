@@ -25,6 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
 
@@ -51,6 +52,10 @@ public class MyApplication extends Application {
         x.Ext.setDebug(BuildConfig.DEBUG);
         initImageLoader(getApplicationContext());//初始化百度地图
         SDKInitializer.initialize(getApplicationContext());
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
+
+
         /**
          * 初始化融云
          * io.rong.push 为融云 push 进程名称，不可修改。

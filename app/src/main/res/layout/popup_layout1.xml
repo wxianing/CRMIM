@@ -1,0 +1,68 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:paddingBottom="2dp">
+
+    <TextView
+        android:id="@+id/day_plan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="日计划" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/textcolor_gray" />
+
+    <TextView
+        android:id="@+id/week_plan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="周计划" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/textcolor_gray" />
+
+    <TextView
+        android:id="@+id/month_plan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="月计划" />
+
+    <View
+        android:background="@color/textcolor_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <TextView
+        android:id="@+id/quarter_plan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="季计划" />
+
+    <View
+        android:background="@color/textcolor_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <TextView
+        android:id="@+id/year_plan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="年计划" />
+
+    <View
+        android:background="@color/textcolor_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+</LinearLayout>

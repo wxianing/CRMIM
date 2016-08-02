@@ -1,20 +1,33 @@
 package com.meidp.crmim.activity;
 
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.meidp.crmim.R;
+import com.meidp.crmim.http.HttpRequestCallBack;
+import com.meidp.crmim.http.HttpRequestUtils;
+import com.meidp.crmim.model.AppMsg;
+import com.meidp.crmim.utils.Constant;
+import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.ToastUtils;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.util.HashMap;
+
 @ContentView(R.layout.activity_feedback)
 public class FeedbackActivity extends BaseActivity {
 
     @ViewInject(R.id.title_tv)
     private TextView title;
+    @ViewInject(R.id.content_tv)
+    private EditText contentEt;
 
     @Override
     public void onInit() {
@@ -28,10 +41,29 @@ public class FeedbackActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.submit_btn:
-                ToastUtils.shows(this, "正在提交");
+                String content = contentEt.getText().toString().trim();
+                if (NullUtils.isNull(content)) {
+                    HashMap params = new HashMap();
+                    params.put("Title", "");
+                    params.put("Content", content);
+                    HttpRequestUtils.getmInstance().send(this, Constant.SAVE_FEEDBACK_URL, params, new HttpRequestCallBack() {
+                        @Override
+                        public void onSuccess(String result) {
+                            AppMsg appMsg = JSONObject.parseObject(result, new TypeReference<AppMsg>() {
+                            });
+                            if (appMsg != null && appMsg.getEnumcode() == 0) {
+                                ToastUtils.shows(FeedbackActivity.this, "保存成功");
+                                finish();
+                            } else {
+                                ToastUtils.shows(FeedbackActivity.this, "保存失败");
+                            }
+                        }
+                    });
+
+                } else {
+                    ToastUtils.shows(this, "请输入您的意见");
+                }
                 break;
         }
-
     }
-
 }
