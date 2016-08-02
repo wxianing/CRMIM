@@ -59,6 +59,7 @@ public class WorkPlanActivity extends BaseActivity implements View.OnClickListen
         mDatas = new ArrayList<>();
         mAdapter = new WorkPlansAdapter(mDatas, this);
         mListView.setAdapter(mAdapter);
+        initPopupWindow();
     }
 
     @Event({R.id.back_arrows, R.id.title_right, R.id.time_tv, R.id.type_tv})
@@ -94,18 +95,38 @@ public class WorkPlanActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    private void showTypePopupWindow() {
+    private void initPopupWindow() {
         View contentView = LayoutInflater.from(WorkPlanActivity.this).inflate(R.layout.popup_type_layout, null);
         mTypePopWindow = new PopupWindow(contentView,
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         mTypePopWindow.setContentView(contentView);
         //设置各个控件的点击响应
-        TextView tv1 = (TextView) contentView.findViewById(R.id.ordinary_tv);
-        TextView tv2 = (TextView) contentView.findViewById(R.id.importance_tv);
+        TextView tv11 = (TextView) contentView.findViewById(R.id.ordinary_tv);
+        TextView tv22 = (TextView) contentView.findViewById(R.id.importance_tv);
 
+        tv11.setOnClickListener(this);
+        tv22.setOnClickListener(this);
+
+        //设置contentView
+        View contentView1 = LayoutInflater.from(WorkPlanActivity.this).inflate(R.layout.popup_layout1, null);
+        mDatePopWindow = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        mDatePopWindow.setContentView(contentView);
+        //设置各个控件的点击响应
+        TextView tv1 = (TextView) contentView1.findViewById(R.id.day_plan);
+        TextView tv2 = (TextView) contentView1.findViewById(R.id.week_plan);
+        TextView tv3 = (TextView) contentView1.findViewById(R.id.month_plan);
+        TextView tv4 = (TextView) contentView1.findViewById(R.id.quarter_plan);
+        TextView tv5 = (TextView) contentView1.findViewById(R.id.year_plan);
         tv1.setOnClickListener(this);
         tv2.setOnClickListener(this);
+        tv3.setOnClickListener(this);
+        tv4.setOnClickListener(this);
+        tv5.setOnClickListener(this);
+        //显示PopupWindow
+    }
 
+    private void showTypePopupWindow() {
         //显示PopupWindow
         View rootview = LayoutInflater.from(WorkPlanActivity.this).inflate(R.layout.activity_work_plan, null);
         mTypePopWindow.showAtLocation(rootview, Gravity.TOP, 0, 240);
