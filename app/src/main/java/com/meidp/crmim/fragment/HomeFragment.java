@@ -23,6 +23,7 @@ import com.meidp.crmim.activity.OpenSeaPoolActivity;
 import com.meidp.crmim.activity.ProjectManagerActivity;
 import com.meidp.crmim.activity.SubmitActivity;
 import com.meidp.crmim.activity.VisitingClientsActivity;
+import com.meidp.crmim.activity.WorkPlanActivity;
 import com.meidp.crmim.adapter.HomeGvAdapter;
 import com.meidp.crmim.adapter.ImagePagerAdapter;
 import com.meidp.crmim.http.HttpRequestCallBack;
@@ -81,6 +82,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         entrities.add(new HomeEntrity(R.mipmap.home_customer_archives_icon, "客户档案"));
         entrities.add(new HomeEntrity(R.mipmap.home_my_prototype_icon, "我的样机"));
         entrities.add(new HomeEntrity(R.mipmap.home_my_performance_icon, "我的业绩"));
+        entrities.add(new HomeEntrity(R.mipmap.work_plan, "工作计划"));
         mGirdViewAdapter = new HomeGvAdapter(entrities, getActivity());
         mGridView.setAdapter(mGirdViewAdapter);
         mGridView.setOnItemClickListener(this);
@@ -160,6 +162,10 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 break;
             case 8://我的业绩
                 intent.setClass(getActivity(), MyPerformanceActivity.class);
+                startActivity(intent);
+                break;
+            case 9:
+                intent.setClass(getActivity(), WorkPlanActivity.class);
                 startActivity(intent);
                 break;
         }

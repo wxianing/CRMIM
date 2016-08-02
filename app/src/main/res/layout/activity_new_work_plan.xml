@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.meidp.crmim.activity.NewWorkPlanActivity">
+
+    <include layout="@layout/titlebar" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp20"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp10">
+
+        <TextView
+            style="@style/textview_submit_setting"
+            android:text="计划类型" />
+
+        <EditText
+            android:id="@+id/plan_type"
+            style="@style/sub_editext"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:gravity="end"
+            android:hint="点击选择" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/arrow_right" />
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp10">
+
+        <TextView
+            style="@style/textview_submit_setting"
+            android:text="工作方向" />
+
+        <EditText
+            android:id="@+id/work_direction"
+            style="@style/sub_editext"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:gravity="end"
+            android:hint="点击选择" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/arrow_right" />
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp20"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp10">
+
+        <TextView
+            style="@style/textview_submit_setting"
+            android:text="周期" />
+
+        <EditText
+            android:id="@+id/period_et"
+            style="@style/sub_editext"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:gravity="end"
+            android:hint="点击选择" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/arrow_right" />
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp10">
+
+        <TextView
+            style="@style/textview_submit_setting"
+            android:text="开始时间" />
+
+        <EditText
+            android:id="@+id/start_date"
+            style="@style/sub_editext"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:gravity="end"
+            android:hint="20160303" />
+
+
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp10">
+
+        <TextView
+            style="@style/textview_submit_setting"
+            android:text="结束时间" />
+
+        <EditText
+            android:id="@+id/end_date"
+            style="@style/sub_editext"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:gravity="end"
+            android:hint="20160707" />
+
+        <Button
+            android:id="@+id/pickdate_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="选择日期"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="@dimen/dp20"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp10"
+            android:text="标题:" />
+
+        <EditText
+            android:id="@+id/plan_title"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@drawable/white_bg"
+            android:textColorHint="@color/textcolor_gray"
+            android:textSize="@dimen/sp14" />
+
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/plan_content"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_marginTop="@dimen/dp10"
+        android:background="@drawable/white_bg"
+        android:gravity="top"
+        android:hint="填写你的计划..."
+        android:textColorHint="@color/textcolor_gray"
+        android:textSize="@dimen/sp14" />
+
+</LinearLayout>

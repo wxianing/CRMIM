@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -18,24 +17,17 @@ import com.meidp.crmim.R;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppMsg;
-import com.meidp.crmim.model.CostEntrity;
 import com.meidp.crmim.utils.Constant;
-import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.ToastUtils;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-/**
- * 费用报销
- */
-@ContentView(R.layout.activity_cost_reimbursement)
-public class CostReimbursementActivity extends BaseActivity {
+@ContentView(R.layout.activity_new_work_plan)
+public class NewWorkPlanActivity extends BaseActivity {
 
     private static final int SHOW_DATAPICK = 0;
     private static final int DATE_DIALOG_ID = 1;
@@ -43,151 +35,143 @@ public class CostReimbursementActivity extends BaseActivity {
 
     @ViewInject(R.id.title_right)
     private TextView titleRight;
-
     @ViewInject(R.id.title_tv)
     private TextView title;
-    @ViewInject(R.id.customer_et)
-    private EditText customerEt;//选这客户
-    @ViewInject(R.id.cost_type)
-    private EditText costType;//费用类型
-    @ViewInject(R.id.apply_time)
-    private EditText applyTimeEt;//申请时间
-    @ViewInject(R.id.need_time)
-    private EditText needTime;//需要时间
+    @ViewInject(R.id.plan_type)
+    private EditText planTypeEt;
+    @ViewInject(R.id.work_direction)
+    private EditText workDirection;//工作方向
+    @ViewInject(R.id.period_et)
+    private EditText period_et;// 周期
+    @ViewInject(R.id.start_date)
+    private EditText startDate;
+    @ViewInject(R.id.end_date)
+    private EditText endDate;
+
     @ViewInject(R.id.pickdate_btn)
     private Button pickDate;
-    @ViewInject(R.id.title_et)
-    private EditText titleEt;//费用标题
-    @ViewInject(R.id.count_et)
-    private EditText countEt;//数量
-    @ViewInject(R.id.cause_et)
-    private EditText causeEt;
-    @ViewInject(R.id.remark_et)
-    private EditText remarkEt;
+    @ViewInject(R.id.plan_title)
+    private EditText planTitleEt;//标题
+    @ViewInject(R.id.plan_content)
+    private EditText planContentEt;
 
-    private int typeId;
 
     private int mYear;
     private int mMonth;
     private int mDay;
-    private int custId;
-    private int expId;
+    private int aimFlag;
+    private int aimSortId;
+    private int aimDirectionId;
 
     @Override
     public void onInit() {
-        title.setText("费用报销");
+        title.setText("新建客户档案");
         titleRight.setText("保存");
         titleRight.setVisibility(View.VISIBLE);
     }
 
-    @Event(value = {R.id.customer_et, R.id.cost_type, R.id.apply_time, R.id.need_time, R.id.title_right, R.id.back_arrows})
+    @Event({R.id.back_arrows, R.id.title_right, R.id.plan_type, R.id.work_direction, R.id.period_et, R.id.start_date, R.id.end_date})
     private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
-            case R.id.customer_et:
-                intent = new Intent();
-                intent.setClass(this, CustomerListActivity.class);
-                startActivityForResult(intent, 1001);
+            case R.id.back_arrows://返回
+                finish();
                 break;
-            case R.id.cost_type://类别
+            case R.id.title_right://
+                sendMsg();
+                break;
+            case R.id.plan_type://类型
                 intent = new Intent();
                 intent.setClass(this, CostTypeActivity.class);
-                intent.putExtra("ChildId", 4);
+                intent.putExtra("ChildId", 6);
                 startActivityForResult(intent, 1002);
                 break;
-            case R.id.apply_time://申请时间
+            case R.id.work_direction://工作方向
+                intent = new Intent();
+                intent.setClass(this, CostTypeActivity.class);
+                intent.putExtra("ChildId", 7);
+                startActivityForResult(intent, 1002);
+                break;
+            case R.id.period_et://周期
+                intent = new Intent(this, CycleActivity.class);
+                startActivityForResult(intent, 1007);
+                break;
+            case R.id.start_date:
                 flag = 1;
                 Message msg = new Message();
                 if (pickDate.equals((EditText) v)) {
-                    msg.what = CostReimbursementActivity.SHOW_DATAPICK;
+                    msg.what = NewWorkPlanActivity.SHOW_DATAPICK;
                 }
-                CostReimbursementActivity.this.saleHandler.sendMessage(msg);
+                NewWorkPlanActivity.this.saleHandler.sendMessage(msg);
                 break;
-            case R.id.need_time://需要时间
+            case R.id.end_date:
                 flag = 2;
                 Message msg2 = new Message();
                 if (pickDate.equals((EditText) v)) {
-                    msg2.what = CostReimbursementActivity.SHOW_DATAPICK;
+                    msg2.what = NewWorkPlanActivity.SHOW_DATAPICK;
                 }
-                CostReimbursementActivity.this.saleHandler.sendMessage(msg2);
+                NewWorkPlanActivity.this.saleHandler.sendMessage(msg2);
                 break;
-            case R.id.title_right:
-                sendMsg();
-                break;
-            case R.id.back_arrows:
-                finish();
-                break;
+
         }
-    }
-
-
-    @Override
-    public void onInitData() {
-//        sendMsg();
     }
 
     private void sendMsg() {
-        String titleStr = titleEt.getText().toString().trim();
-        String ariseDate = applyTimeEt.getText().toString().trim();
-        String needDate = needTime.getText().toString().trim();
-        final String reason = causeEt.getText().toString().trim();
-        String remark = remarkEt.getText().toString().trim();
-        String count = countEt.getText().toString().trim();
+        ToastUtils.shows(this, "正在保存");
 
-        CostEntrity entrity = new CostEntrity();
-        entrity.setExpType(typeId);
-        entrity.setExpRemark(remark);
-        if (NullUtils.isNull(count)) {
-            entrity.setAmount(Double.valueOf(count));
-        }
-        List<CostEntrity> entrityList = new ArrayList<>();
-        entrityList.add(entrity);
+        String planTitle = planTitleEt.getText().toString().trim();
+        String planCOntent = planContentEt.getText().toString().trim();
+        String startDates = startDate.getText().toString().trim();
+        String endDates = endDate.getText().toString().trim();
 
         HashMap params = new HashMap();
+        params.put("AimTitle", planTitle);
+        params.put("AimContent", planCOntent);
+        params.put("StartDate", startDates);
+        params.put("EndDate", endDates);
+        params.put("AimSortId", aimSortId);//类型
+        params.put("AimFlag", aimFlag);//计划周期
+        params.put("AimDirectionId", aimDirectionId);//计划方向
 
-        params.put("Title", titleStr);
-        params.put("CustID", custId);//客户Id
-        params.put("ExpType", typeId);//公共分类类别
-
-        params.put("AriseDate", ariseDate);//申请日期
-        params.put("NeedDate", needDate);//使用日期
-        params.put("Reason", reason);//原因
-        params.put("details", entrityList);//原因
-
-        HttpRequestUtils.getmInstance().send(CostReimbursementActivity.this, Constant.COST_SAVE_URL, params, new HttpRequestCallBack() {
+        HttpRequestUtils.getmInstance().send(NewWorkPlanActivity.this, Constant.SAVA_WORK_PLAN, params, new HttpRequestCallBack() {
             @Override
             public void onSuccess(String result) {
-                Log.e("reslut", result);
                 AppMsg appMsg = JSONObject.parseObject(result, new TypeReference<AppMsg>() {
                 });
                 if (appMsg != null && appMsg.getEnumcode() == 0) {
-                    ToastUtils.shows(CostReimbursementActivity.this, "保存成功");
+                    ToastUtils.shows(NewWorkPlanActivity.this, "保存成功");
                     finish();
                 } else {
-                    ToastUtils.shows(CostReimbursementActivity.this, "保存失败");
+                    ToastUtils.shows(NewWorkPlanActivity.this, appMsg.getMsg());
                 }
             }
         });
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode) {
-            case 1001:
-                String customName = data.getStringExtra("customName");
-                custId = data.getIntExtra("CustomerId", 0);
-                customerEt.setText(customName);
-                break;
-            case 1002:
-                String codeName = data.getStringExtra("CodeName");
-                typeId = data.getIntExtra("OID", -1);
-                expId = data.getIntExtra("ExpID", -1);
-                costType.setText(codeName);
-                break;
+        if (resultCode == 1002) {
+            int childId = data.getIntExtra("ChildId", -1);
+            String typeName = data.getStringExtra("TypeName");
+            int oid = data.getIntExtra("OID", -1);
+            switch (childId) {
+                case 6:
+                    planTypeEt.setText(typeName);
+                    aimSortId = oid;
+                    break;
+                case 7:
+                    workDirection.setText(typeName);
+                    aimDirectionId = oid;
+                    break;
+            }
+        } else if (requestCode == 1007) {
+            aimFlag = data.getIntExtra("AimFlag", -1);
+            String cycleType = data.getStringExtra("CycleType");
+            period_et.setText(cycleType);
         }
     }
-
 
     /**
      * 处理日期控件的Handler
@@ -197,7 +181,7 @@ public class CostReimbursementActivity extends BaseActivity {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case CostReimbursementActivity.SHOW_DATAPICK:
+                case NewWorkPlanActivity.SHOW_DATAPICK:
                     showDialog(DATE_DIALOG_ID);
                     break;
             }
@@ -235,12 +219,13 @@ public class CostReimbursementActivity extends BaseActivity {
         }
     };
 
+
     /**
      * 更新日期
      */
     private void updateDisplay() {
         if (flag == 1) {
-            applyTimeEt.setText(new StringBuilder()
+            startDate.setText(new StringBuilder()
                     .append(mYear)
                     .append("-")
                     .append((mMonth + 1) < 10 ? "0" + (mMonth + 1) : (mMonth + 1))
@@ -248,7 +233,7 @@ public class CostReimbursementActivity extends BaseActivity {
                     .append((mDay < 10) ? "0" + mDay : mDay));
         }
         if (flag == 2) {
-            needTime.setText(new StringBuilder()
+            endDate.setText(new StringBuilder()
                     .append(mYear)
                     .append("-")
                     .append((mMonth + 1) < 10 ? "0" + (mMonth + 1) : (mMonth + 1))

@@ -53,7 +53,6 @@ public class LoginActivity extends BaseActivity {
         usernameEt.setSelection(et.length());
         usernameEt.clearFocus();//默认不获取光标
 
-
         //自动登录
 //        boolean isLogin = SPUtils.getLoginTag(this);
         if (false) {
@@ -143,7 +142,6 @@ public class LoginActivity extends BaseActivity {
         SPUtils.save(this, "DeptName", appBean.getData().getDeptName());
 
         SPUtils.save(this, "PhotoURL", appBean.getData().getPhotoURL());//保存头像
-//        SPUtils.saveUser(LoginActivity.this, appBean.getData());//保存用户对象
         SPUtils.setLoginTag(LoginActivity.this, true);//自动登录标志
     }
 }

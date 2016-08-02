@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.meidp.crmim.R;
 import com.meidp.crmim.activity.CostManagerActivity;
+import com.meidp.crmim.activity.FeedbackActivity;
 import com.meidp.crmim.activity.LoginActivity;
 import com.meidp.crmim.activity.MainActivity;
 import com.meidp.crmim.activity.MyAchievementsActivity;
@@ -57,7 +58,7 @@ public class MyFragment extends BaseFragment {
         phoneNum.setText("电话：" + phone);
     }
 
-    @Event(value = {R.id.person_center, R.id.my_projec, R.id.my_credit, R.id.my_cost, R.id.my_property, R.id.my_achievements, R.id.logout,R.id.})
+    @Event(value = {R.id.person_center, R.id.my_projec, R.id.my_credit, R.id.my_cost, R.id.my_property, R.id.my_achievements, R.id.logout, R.id.feedback_layout})
     private void onClick(View v) {
         Intent intent = new Intent();
         switch (v.getId()) {
@@ -96,6 +97,10 @@ public class MyFragment extends BaseFragment {
                     MainActivity.mainActivity.finish();
                     MainActivity.mainActivity = null;
                 }
+                startActivity(intent);
+                break;
+            case R.id.feedback_layout:
+                intent.setClass(getActivity(), FeedbackActivity.class);
                 startActivity(intent);
                 break;
         }

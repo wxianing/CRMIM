@@ -92,5 +92,9 @@ public class Constant {
     public static final String GET_MY_ACHIEVEMENT = BASE_URL + "common/user/getmyachievement";
     //我的样机
     public static final String MY_MODEL_LIST = BASE_URL + "order/getsellsamplepagelist";
+    //保存工作计划
+    public static final String SAVA_WORK_PLAN = BASE_URL + "office/office/planaimsave";
+    //过去个人计划列表
+    public static final String GET_PERSONAL_PLAN = BASE_URL + "office/office/getplanaimpagelist";
 
 }
