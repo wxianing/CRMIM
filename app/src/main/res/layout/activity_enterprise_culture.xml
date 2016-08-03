@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.meidp.crmim.activity.EnterpriseCultureActivity">
+
+    <include layout="@layout/titlebar" />
+
+    <TextView
+        android:layout_marginTop="@dimen/dp40"
+        android:padding="@dimen/dp10"
+        android:id="@+id/companys_magazine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:text="企业内刊" />
+
+    <TextView
+        android:layout_marginTop="@dimen/dp20"
+        android:padding="@dimen/dp10"
+        android:id="@+id/rules_and_regulations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:text="规章制度" />
+
+    <TextView
+        android:layout_marginTop="@dimen/dp20"
+        android:padding="@dimen/dp10"
+        android:id="@+id/information_sharing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:text="企业内刊" />
+
+</LinearLayout>

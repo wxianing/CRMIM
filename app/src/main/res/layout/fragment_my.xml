@@ -154,7 +154,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp5"
             android:layout_weight="1"
-            android:text="我的诚信度"
+            android:text="我的专业知识"
             android:textSize="@dimen/sp16" />
 
         <ImageView
@@ -253,7 +253,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp5"
             android:layout_weight="1"
-            android:text="我的财产"
+            android:text="我的评估"
             android:textSize="@dimen/sp16" />
 
         <ImageView

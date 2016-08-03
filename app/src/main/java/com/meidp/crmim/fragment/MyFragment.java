@@ -14,7 +14,9 @@ import com.meidp.crmim.activity.FeedbackActivity;
 import com.meidp.crmim.activity.LoginActivity;
 import com.meidp.crmim.activity.MainActivity;
 import com.meidp.crmim.activity.MyAchievementsActivity;
+import com.meidp.crmim.activity.MyAssessActivity;
 import com.meidp.crmim.activity.MyCreditActivity;
+import com.meidp.crmim.activity.MyKnowledgeActivity;
 import com.meidp.crmim.activity.MyPerformanceActivity;
 import com.meidp.crmim.activity.MyPropertyActivity;
 import com.meidp.crmim.activity.PersonCentorActivity;
@@ -74,8 +76,8 @@ public class MyFragment extends BaseFragment {
                 intent.setClass(getActivity(), MyPerformanceActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.my_credit:
-                intent.setClass(getActivity(), MyCreditActivity.class);
+            case R.id.my_credit://我的信用
+                intent.setClass(getActivity(), MyKnowledgeActivity.class);
                 startActivity(intent);
                 break;
             case R.id.my_cost:
@@ -87,7 +89,7 @@ public class MyFragment extends BaseFragment {
                 startActivity(intent);
                 break;
             case R.id.my_property://
-                intent.setClass(getActivity(), MyPropertyActivity.class);
+                intent.setClass(getActivity(), MyAssessActivity.class);
                 startActivity(intent);
                 break;
             case R.id.logout://退出登录
@@ -114,8 +116,8 @@ public class MyFragment extends BaseFragment {
             Bitmap headerBitmap = ImageUtils.stringtoBitmap(headStr);
             header.setImageBitmap(headerBitmap);
         }
-        String employeeName = (String) SPUtils.get(getActivity(), "EmployeeName", "");
-        userName.setText(employeeName);
+        String niceName = (String) SPUtils.get(getActivity(), "NICENAME", "");
+        userName.setText(niceName);
         String deptName = (String) SPUtils.get(getActivity(), "DeptName", "");
         jobTitle.setText(deptName);
 

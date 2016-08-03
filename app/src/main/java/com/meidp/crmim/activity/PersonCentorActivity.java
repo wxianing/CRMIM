@@ -98,7 +98,7 @@ public class PersonCentorActivity extends BaseActivity {
                         });
                         if (appMsg != null && appMsg.getEnumcode() == 0) {
                             ToastUtils.shows(PersonCentorActivity.this, "修改成功");
-                            SPUtils.save(PersonCentorActivity.this, "USERNAME", nickName);
+                            SPUtils.save(PersonCentorActivity.this, "NICENAME", nickName);
                             SPUtils.save(PersonCentorActivity.this, "PHONE", phoneNum);
                         } else {
                             ToastUtils.shows(PersonCentorActivity.this, "修改失败");

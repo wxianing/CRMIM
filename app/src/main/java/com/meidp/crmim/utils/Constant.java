@@ -98,5 +98,6 @@ public class Constant {
     public static final String GET_PERSONAL_PLAN = BASE_URL + "office/office/getplanaimpagelist";
     //保存反馈意见
     public static final String SAVE_FEEDBACK_URL = BASE_URL + "office/office/personaladvicesendsave";
-
+    //我的专业知识
+    public static final String MY_KNOWLEDGE_URL = BASE_URL + "office/office/getculturedocpagelist";
 }

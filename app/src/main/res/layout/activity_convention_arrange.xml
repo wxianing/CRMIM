@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.meidp.crmim.activity.ConventionArrangeActivity">
+
+    <include layout="@layout/titlebar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10"
+                android:text="主办方账号信息(不支持对私账户)" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="主办方账号信息:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10"
+                android:text="责任人:" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="展会申请规划责任人:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="展会总结责任人:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="大区经理审批意见:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10"
+                android:text="送货相关信息" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="收货人姓名:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="接收人电话:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="发货地址:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="最迟送货时间:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10"
+                android:text="展会结束" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="收货联系人:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="联系电话:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="收货地址:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="收货时间:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10"
+                android:text="物料相关信息" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="礼品数量:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="宣传册(名片)数量:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10"
+                android:text="公司参会及布展人员信息" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="名单:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="到场时间:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10"
+                android:text="备注" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginBottom="@dimen/dp20"
+                android:background="@drawable/white_bg"
+                android:gravity="top"
+                android:hint="点击输入"
+                android:textColorHint="@color/textcolor_gray"
+                android:textSize="@dimen/sp14" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -28,6 +28,8 @@ import org.xutils.view.annotation.ViewInject;
 import java.io.File;
 import java.util.HashMap;
 
+import cn.jpush.android.api.JPushInterface;
+
 @ContentView(R.layout.activity_login)
 public class LoginActivity extends BaseActivity {
     @ViewInject(R.id.username_edittext)
@@ -135,6 +137,7 @@ public class LoginActivity extends BaseActivity {
         SPUtils.save(this, "CODE", appBean.getData().getUserCode());
         Log.e("CODE", ">>>>>>>" + (String) SPUtils.get(this, "CODE", ""));
         SPUtils.save(this, "USERNAME", userName);
+        SPUtils.save(this, "NICENAME", userName);
         SPUtils.save(this, "PASSWORD", passWord);
         SPUtils.save(this, "TOKEN", appBean.getData().getRongcloudToken());
 
@@ -143,5 +146,7 @@ public class LoginActivity extends BaseActivity {
 
         SPUtils.save(this, "PhotoURL", appBean.getData().getPhotoURL());//保存头像
         SPUtils.setLoginTag(LoginActivity.this, true);//自动登录标志
+        String JPushUserId = String.valueOf(appBean.getData().getUserID());
+        JPushInterface.setAliasAndTags(this, JPushUserId, null);
     }
 }

@@ -46,7 +46,7 @@
     <!--上报项目item-->
     <style name="textview_submit_setting">
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">@dimen/submit_item_width</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:textSize">@dimen/submit_item_text_size</item>
     </style>
 

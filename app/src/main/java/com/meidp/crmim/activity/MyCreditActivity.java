@@ -26,7 +26,7 @@ public class MyCreditActivity extends BaseActivity {
 
     @Override
     public void onInit() {
-        title.setText("我的信用度");
+        title.setText("我的评估");
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {

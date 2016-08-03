@@ -13,9 +13,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.meidp.crmim.R;
 import com.meidp.crmim.activity.AnnouncementActivity;
+import com.meidp.crmim.activity.ConventionApplyForActivity;
 import com.meidp.crmim.activity.CostManagerActivity;
 import com.meidp.crmim.activity.CustomerListActivity;
 import com.meidp.crmim.activity.CustomerVisitActivity;
+import com.meidp.crmim.activity.EnterpriseCultureActivity;
 import com.meidp.crmim.activity.MyAchievementsActivity;
 import com.meidp.crmim.activity.MyPerformanceActivity;
 import com.meidp.crmim.activity.MyPrototypeActivity;
@@ -83,6 +85,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         entrities.add(new HomeEntrity(R.mipmap.home_my_prototype_icon, "我的样机"));
         entrities.add(new HomeEntrity(R.mipmap.home_my_performance_icon, "我的业绩"));
         entrities.add(new HomeEntrity(R.mipmap.work_plan, "工作计划"));
+        entrities.add(new HomeEntrity(R.mipmap.work_plan, "企业文化"));
+        entrities.add(new HomeEntrity(R.mipmap.work_plan, "参展申请"));
         mGirdViewAdapter = new HomeGvAdapter(entrities, getActivity());
         mGridView.setAdapter(mGirdViewAdapter);
         mGridView.setOnItemClickListener(this);
@@ -166,6 +170,14 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 break;
             case 9:
                 intent.setClass(getActivity(), WorkPlanActivity.class);
+                startActivity(intent);
+                break;
+            case 10:
+                intent.setClass(getActivity(), EnterpriseCultureActivity.class);
+                startActivity(intent);
+                break;
+            case 11:
+                intent.setClass(getActivity(), ConventionApplyForActivity.class);
                 startActivity(intent);
                 break;
         }

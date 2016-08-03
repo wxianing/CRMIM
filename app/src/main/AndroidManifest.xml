@@ -246,11 +246,16 @@
             android:value="developer-default" />
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="9dbbecdb99ef1b96e998ee0a" />
+            android:value="e431c948b59ab660fcba3c1e" />
 
         <activity android:name=".activity.JPushReceiverActivity" />
         <activity android:name=".activity.EmergencyActivity" />
-        <activity android:name=".activity.WorkPlanDetailsActivity"></activity>
+        <activity android:name=".activity.WorkPlanDetailsActivity" />
+        <activity android:name=".activity.MyAssessActivity" />
+        <activity android:name=".activity.MyKnowledgeActivity" />
+        <activity android:name=".activity.EnterpriseCultureActivity" />
+        <activity android:name=".activity.ConventionApplyForActivity" />
+        <activity android:name=".activity.ConventionArrangeActivity"></activity>
     </application>
 
 </manifest>

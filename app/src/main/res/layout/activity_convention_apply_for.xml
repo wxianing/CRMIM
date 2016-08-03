@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.meidp.crmim.activity.ConventionApplyForActivity">
+
+    <include layout="@layout/titlebar" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1800dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp20"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="展会名称:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10"
+                android:text="主办方" />
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="联系人姓名:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="电话号码:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入"
+                    android:inputType="phone" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10"
+                android:text="展会相关信息" />
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="展会性质:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="参会人数:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="展会时间:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="展会地点:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10"
+                android:text="参展目标及计划" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/white_bg"
+                android:gravity="top"
+                android:hint="点击输入"
+                android:textColorHint="@color/textcolor_gray"
+                android:textSize="@dimen/sp14" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10"
+                android:text="合作伙伴" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/white_bg"
+                android:gravity="top"
+                android:hint="点击输入"
+                android:textColorHint="@color/textcolor_gray"
+                android:textSize="@dimen/sp14" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10"
+                android:text="参展或赞助规格及费用" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/white_bg"
+                android:gravity="top"
+                android:hint="点击输入"
+                android:textColorHint="@color/textcolor_gray"
+                android:textSize="@dimen/sp14" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10"
+                android:text="参展机器详情" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="机器型号:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="归还日期:" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10"
+                android:text="竞争对手参展及赞助情况" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginBottom="@dimen/dp30"
+                android:background="@drawable/white_bg"
+                android:gravity="top"
+                android:hint="点击输入"
+                android:textColorHint="@color/textcolor_gray"
+                android:textSize="@dimen/sp14" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
