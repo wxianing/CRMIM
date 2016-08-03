@@ -248,7 +248,9 @@
             android:name="JPUSH_APPKEY"
             android:value="9dbbecdb99ef1b96e998ee0a" />
 
-        <activity android:name=".activity.JPushReceiverActivity"></activity>
+        <activity android:name=".activity.JPushReceiverActivity" />
+        <activity android:name=".activity.EmergencyActivity" />
+        <activity android:name=".activity.WorkPlanDetailsActivity"></activity>
     </application>
 
 </manifest>

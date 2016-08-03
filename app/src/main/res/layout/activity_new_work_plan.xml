@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp10"
         android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal"
@@ -69,7 +69,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp10"
         android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal"
@@ -151,6 +151,33 @@
 
     <include layout="@layout/horizontal_line" />
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp10">
+
+        <TextView
+            style="@style/textview_submit_setting"
+            android:text="紧急程度" />
+
+        <EditText
+            android:id="@+id/urgency_degree_et"
+            style="@style/sub_editext"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:gravity="end"
+            android:hint="点击选择" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/arrow_right" />
+    </LinearLayout>
+    <include layout="@layout/horizontal_line" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -168,7 +195,7 @@
         <EditText
             android:id="@+id/plan_title"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:background="@drawable/white_bg"

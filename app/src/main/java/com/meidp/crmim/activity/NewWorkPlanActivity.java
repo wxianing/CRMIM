@@ -54,6 +54,8 @@ public class NewWorkPlanActivity extends BaseActivity {
     private EditText planTitleEt;//标题
     @ViewInject(R.id.plan_content)
     private EditText planContentEt;
+    @ViewInject(R.id.urgency_degree_et)
+    private EditText urgency_degree_et;
 
 
     private int mYear;
@@ -62,6 +64,7 @@ public class NewWorkPlanActivity extends BaseActivity {
     private int aimFlag;
     private int aimSortId;
     private int aimDirectionId;
+    private int emergency;
 
     @Override
     public void onInit() {
@@ -70,7 +73,7 @@ public class NewWorkPlanActivity extends BaseActivity {
         titleRight.setVisibility(View.VISIBLE);
     }
 
-    @Event({R.id.back_arrows, R.id.title_right, R.id.plan_type, R.id.work_direction, R.id.period_et, R.id.start_date, R.id.end_date})
+    @Event({R.id.back_arrows, R.id.title_right, R.id.plan_type, R.id.work_direction, R.id.period_et, R.id.start_date, R.id.end_date, R.id.urgency_degree_et})
     private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -92,6 +95,11 @@ public class NewWorkPlanActivity extends BaseActivity {
                 intent.putExtra("ChildId", 7);
                 startActivityForResult(intent, 1002);
                 break;
+            case R.id.urgency_degree_et:
+                intent = new Intent();
+                intent.setClass(this, EmergencyActivity.class);
+                startActivityForResult(intent, 1008);
+                break;
             case R.id.period_et://周期
                 intent = new Intent(this, CycleActivity.class);
                 startActivityForResult(intent, 1007);
@@ -112,7 +120,6 @@ public class NewWorkPlanActivity extends BaseActivity {
                 }
                 NewWorkPlanActivity.this.saleHandler.sendMessage(msg2);
                 break;
-
         }
     }
 
@@ -129,6 +136,7 @@ public class NewWorkPlanActivity extends BaseActivity {
         params.put("AimContent", planCOntent);
         params.put("StartDate", startDates);
         params.put("EndDate", endDates);
+        params.put("Critical", emergency);
         params.put("AimSortId", aimSortId);//类型
         params.put("AimFlag", aimFlag);//计划周期
         params.put("AimDirectionId", aimDirectionId);//计划方向
@@ -170,6 +178,10 @@ public class NewWorkPlanActivity extends BaseActivity {
             aimFlag = data.getIntExtra("AimFlag", -1);
             String cycleType = data.getStringExtra("CycleType");
             period_et.setText(cycleType);
+        } else if (requestCode == 1008) {
+            emergency = data.getIntExtra("emergency", 0);
+            String emergencyStr = data.getStringExtra("emergencyStr");
+            urgency_degree_et.setText(emergencyStr);
         }
     }
 

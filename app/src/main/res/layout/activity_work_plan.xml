@@ -9,6 +9,7 @@
     <include layout="@layout/titlebar" />
 
     <LinearLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/white">
@@ -38,9 +39,11 @@
 
     </LinearLayout>
 
-    <include layout="@layout/horizontal_full_line" />
+    <include
+        android:id="@+id/line"
+        layout="@layout/horizontal_full_line" />
 
-    <ListView
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

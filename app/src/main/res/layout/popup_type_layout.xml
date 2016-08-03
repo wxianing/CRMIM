@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/default_background_color"
     android:orientation="vertical">
 
     <TextView
@@ -12,11 +12,24 @@
         android:padding="@dimen/dp10"
         android:text="一般" />
 
+    <include layout="@layout/horizontal_line" />
+
     <TextView
         android:id="@+id/importance_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp10"
         android:text="重要" />
+
+    <include layout="@layout/horizontal_line" />
+
+    <TextView
+        android:id="@+id/all_type_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="全部" />
+
+    <include layout="@layout/horizontal_line" />
 
 </LinearLayout>

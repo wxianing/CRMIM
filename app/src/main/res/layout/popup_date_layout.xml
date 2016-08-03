@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#ffffff"
+    android:background="@color/default_background_color"
     android:orientation="vertical"
     android:paddingBottom="2dp">
 
@@ -12,10 +12,7 @@
         android:padding="@dimen/dp10"
         android:text="日计划" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/textcolor_gray" />
+    <include layout="@layout/horizontal_line" />
 
     <TextView
         android:id="@+id/week_plan"
@@ -24,10 +21,7 @@
         android:padding="@dimen/dp10"
         android:text="周计划" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/textcolor_gray" />
+    <include layout="@layout/horizontal_line" />
 
     <TextView
         android:id="@+id/month_plan"
@@ -36,10 +30,7 @@
         android:padding="@dimen/dp10"
         android:text="月计划" />
 
-    <View
-        android:background="@color/textcolor_gray"
-        android:layout_width="match_parent"
-        android:layout_height="1dp" />
+    <include layout="@layout/horizontal_line" />
 
     <TextView
         android:id="@+id/quarter_plan"
@@ -48,10 +39,7 @@
         android:padding="@dimen/dp10"
         android:text="季计划" />
 
-    <View
-        android:background="@color/textcolor_gray"
-        android:layout_width="match_parent"
-        android:layout_height="1dp" />
+    <include layout="@layout/horizontal_line" />
 
     <TextView
         android:id="@+id/year_plan"
@@ -60,9 +48,15 @@
         android:padding="@dimen/dp10"
         android:text="年计划" />
 
-    <View
-        android:background="@color/textcolor_gray"
-        android:layout_width="match_parent"
-        android:layout_height="1dp" />
+    <include layout="@layout/horizontal_line" />
 
+
+    <TextView
+        android:id="@+id/all_date_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="全部" />
+
+    <include layout="@layout/horizontal_line" />
 </LinearLayout>
