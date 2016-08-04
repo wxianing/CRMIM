@@ -4,21 +4,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.ProjectManagerActivity">
+    tools:context="com.meidp.crmim.activity.OpenSeaPoolActivity">
 
-    <include layout="@layout/titlebar" />
+    <include layout="@layout/titlebar_search_layout" />
 
-    <com.handmark.pulltorefresh.library.PullToRefreshGridView
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/time_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="时间" />
+
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dp5"
+            android:layout_marginTop="@dimen/dp5"
+            android:background="@color/textcolor_gray" />
+
+        <TextView
+            android:id="@+id/type_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="类型" />
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/line"
+        layout="@layout/horizontal_full_line" />
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/dp10"
-        android:layout_marginLeft="@dimen/dp10"
-        android:layout_marginRight="@dimen/dp10"
         android:layout_marginTop="@dimen/dp10"
-        android:horizontalSpacing="@dimen/dp10"
-        android:numColumns="2"
-        android:scrollbars="none"
-        android:verticalSpacing="@dimen/dp10" />
+        android:scrollbars="none" />
 
 </LinearLayout>

@@ -76,7 +76,8 @@ public class PersonCentorActivity extends BaseActivity {
         duty.setText(deptName);
         String employeeName = (String) SPUtils.get(this, "EmployeeName", "");
         nickNameEt.setText(employeeName);
-
+        String phone = (String) SPUtils.get(this, "PHONE", "");
+        phoneNumEt.setText(phone);
     }
 
     @Event(value = {R.id.back_arrows, R.id.title_right, R.id.header_img})
@@ -233,12 +234,6 @@ public class PersonCentorActivity extends BaseActivity {
     private void upload(final String photoString) {
         HashMap params = new HashMap();
         params.put("PothoData", photoString);
-//        HttpRequestUtils.getmInstance().send(PersonCentorActivity.this, Constant.UPDATE_HEADER, params, new HttpRequestCallBack<String>() {
-//            @Override
-//            public void onSuccess(String result) {
-//                Log.e("result", result);
-//            }
-//        });
         HttpRequestUtils.getmInstance().send(PersonCentorActivity.this, Constant.UPDATE_HEADER, params, new HttpRequestCallBack<String>() {
             @Override
             public void onSuccess(String result) {

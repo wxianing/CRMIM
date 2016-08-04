@@ -37,10 +37,10 @@ public class OpenProjectAdapter extends BasicAdapter<Projects> {
             vh = (ViewHolder) convertView.getTag();
         }
         vh.projectName.setText(data.getProjectName());
-        vh.linkName.setText("申请人："+data.getCustLinkMan());
-        vh.projectNum.setText("编号：" + data.getProjectNo());
+        vh.linkName.setText("项目联系人："+data.getCustLinkMan());
+        vh.projectNum.setText("项目编号：" + data.getProjectNo());
         String timeStr = data.getCreateDate().substring(0, 10);
-        vh.ceateTime.setText("时间：" + timeStr);
+        vh.ceateTime.setText("登记时间：" + timeStr);
 
         double success = data.getSuccessRate() * 100;
         if (success < 30) {

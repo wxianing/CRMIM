@@ -1,0 +1,62 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/default_background_color"
+    android:orientation="vertical"
+    android:paddingBottom="2dp">
+
+    <TextView
+        android:id="@+id/day_plan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="今天" />
+
+    <include layout="@layout/horizontal_line" />
+
+    <TextView
+        android:id="@+id/week_plan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="一周内" />
+
+    <include layout="@layout/horizontal_line" />
+
+    <TextView
+        android:id="@+id/month_plan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="一个月内" />
+
+    <include layout="@layout/horizontal_line" />
+
+    <TextView
+        android:id="@+id/quarter_plan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="一个季度" />
+
+    <include layout="@layout/horizontal_line" />
+
+    <TextView
+        android:id="@+id/year_plan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="一年内" />
+
+    <include layout="@layout/horizontal_line" />
+
+
+    <TextView
+        android:id="@+id/all_date_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="全部" />
+
+    <include layout="@layout/horizontal_line" />
+</LinearLayout>

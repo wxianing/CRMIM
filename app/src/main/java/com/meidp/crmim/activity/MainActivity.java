@@ -36,8 +36,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         mainActivity = this;
         mFragments = new ArrayList<>();
         mFragments.add(new HomeFragment());
-        mFragments.add(new ContactsFragment());
         mFragments.add(new ConversationListStaticFragment());
+        mFragments.add(new ContactsFragment());
         mFragments.add(new MyFragment());
 
         ((RadioButton) mRadioGroup.getChildAt(0)).setChecked(true);

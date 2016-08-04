@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.meidp.crmim.activity.OpenSeaPoolActivity">
+    tools:context="com.meidp.crmim.activity.ProjectSearchActivity">
 
-    <include layout="@layout/titlebar_search_layout" />
+    <include layout="@layout/titlebar_search" />
 
     <LinearLayout
         android:id="@+id/layout"

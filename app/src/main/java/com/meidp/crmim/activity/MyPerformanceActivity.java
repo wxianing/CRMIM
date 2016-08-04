@@ -32,7 +32,6 @@ public class MyPerformanceActivity extends BaseActivity {
         titles = new String[]{"已收到金额", "未收到金额"};
         values = new double[]{5588, 29994};
 
-
         BudgetPieChart intent = new BudgetPieChart();
         View viewChart = intent.createView(this, titles, values);
         view.addView(viewChart);

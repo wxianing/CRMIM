@@ -36,7 +36,7 @@ public class FriendsAdapter extends BasicAdapter<Friends> {
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-        vh.userName.setText(mDatas.get(position).getLoginName());
+        vh.userName.setText(mDatas.get(position).getEmployeeName());
         return convertView;
     }
 

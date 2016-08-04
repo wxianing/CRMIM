@@ -9,30 +9,26 @@
 
     <include layout="@layout/titlebar" />
 
-    <include layout="@layout/search_layout" />
-
     <LinearLayout
-        android:id="@+id/customer_layout"
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp5"
-        android:background="@color/white">
+        android:layout_height="45dp"
+        android:background="#DBDBDB"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp8">
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="@dimen/dp5"
-            android:src="@mipmap/my_customer_icon" />
+        <EditText
+            android:id="@+id/search_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/search_edittext"
+            android:drawableLeft="@mipmap/search_icon"
+            android:focusable="false"
+            android:hint="请输入关键字搜索"
+            android:textSize="@dimen/sp14" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/dp5"
-            android:text="我的客户" />
     </LinearLayout>
-
-    <include layout="@layout/horizontal_line" />
 
     <LinearLayout
         android:id="@+id/group_layout"
@@ -42,8 +38,8 @@
 
         <ImageView
             android:id="@+id/header_img"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_margin="@dimen/dp5"
             android:src="@mipmap/my_group_icon" />
 
@@ -64,8 +60,9 @@
         android:background="@color/white">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_margin="@dimen/dp5"
             android:src="@mipmap/my_contacts_icon" />
 
@@ -75,6 +72,28 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/dp5"
             android:text="通讯录" />
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_line" />
+
+    <LinearLayout
+        android:id="@+id/customer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="@dimen/dp5"
+            android:src="@mipmap/my_customer_icon" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp5"
+            android:text="公司部门" />
     </LinearLayout>
 
     <include layout="@layout/horizontal_line" />
@@ -151,7 +170,6 @@
                 android:text="我的群组" />
         </LinearLayout>
     </LinearLayout>
-
 
     <FrameLayout
         android:id="@+id/friends_list"

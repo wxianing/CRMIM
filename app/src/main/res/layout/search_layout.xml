@@ -28,4 +28,5 @@
         android:layout_marginLeft="@dimen/dp10"
         android:background="@drawable/edit_white_bg"
         android:text="搜索" />
+    
 </LinearLayout>

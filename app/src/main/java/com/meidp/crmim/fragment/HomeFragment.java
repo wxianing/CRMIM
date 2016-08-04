@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.meidp.crmim.R;
 import com.meidp.crmim.activity.AnnouncementActivity;
+import com.meidp.crmim.activity.ApprovalProcessActivity;
 import com.meidp.crmim.activity.ConventionApplyForActivity;
 import com.meidp.crmim.activity.CostManagerActivity;
 import com.meidp.crmim.activity.CustomerListActivity;
@@ -72,6 +73,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     public void onInit() {
         backImg.setVisibility(View.GONE);
         title.setText(R.string.title_name);
+        mGridView.setFocusable(false);
         imageUrls = new ArrayList<>();
         entrities = new ArrayList<>();
         entrities.add(new HomeEntrity(R.mipmap.home_announcement_icon, "公告"));
@@ -87,6 +89,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         entrities.add(new HomeEntrity(R.mipmap.work_plan, "工作计划"));
         entrities.add(new HomeEntrity(R.mipmap.work_plan, "企业文化"));
         entrities.add(new HomeEntrity(R.mipmap.work_plan, "参展申请"));
+        entrities.add(new HomeEntrity(R.mipmap.work_plan, "审批"));
         mGirdViewAdapter = new HomeGvAdapter(entrities, getActivity());
         mGridView.setAdapter(mGirdViewAdapter);
         mGridView.setOnItemClickListener(this);
@@ -168,16 +171,20 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 intent.setClass(getActivity(), MyPerformanceActivity.class);
                 startActivity(intent);
                 break;
-            case 9:
+            case 9://工作计划
                 intent.setClass(getActivity(), WorkPlanActivity.class);
                 startActivity(intent);
                 break;
-            case 10:
+            case 10://企业文化
                 intent.setClass(getActivity(), EnterpriseCultureActivity.class);
                 startActivity(intent);
                 break;
-            case 11:
+            case 11://展会申请
                 intent.setClass(getActivity(), ConventionApplyForActivity.class);
+                startActivity(intent);
+                break;
+            case 12:
+                intent.setClass(getActivity(), ApprovalProcessActivity.class);
                 startActivity(intent);
                 break;
         }

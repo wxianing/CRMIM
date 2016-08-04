@@ -34,7 +34,7 @@ public class ModelApplyAdapter extends BasicAdapter<ModelApply> {
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-        vh.produceName.setText(mDatas.get(position).getProductName());
+        vh.produceName.setText(mDatas.get(position).getTitle());
         return convertView;
     }
 

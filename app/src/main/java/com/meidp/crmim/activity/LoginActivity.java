@@ -1,6 +1,7 @@
 package com.meidp.crmim.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.text.Editable;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +30,8 @@ import java.io.File;
 import java.util.HashMap;
 
 import cn.jpush.android.api.JPushInterface;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 
 @ContentView(R.layout.activity_login)
 public class LoginActivity extends BaseActivity {
@@ -46,6 +49,10 @@ public class LoginActivity extends BaseActivity {
     @ViewInject(R.id.checked_img)
     private CheckBox checkBox;
     private boolean isRmb;
+    private String headPhotoS;
+    private String name;
+    private UserInfo users = null;
+
 
     @Override
     public void onInit() {
@@ -116,21 +123,40 @@ public class LoginActivity extends BaseActivity {
 
         @Override
         public void onSuccess(String resutl) {
-            AppBean<User> appBean = JSONObject.parseObject(resutl, new TypeReference<AppBean<User>>() {
+            final AppBean<User> appBean = JSONObject.parseObject(resutl, new TypeReference<AppBean<User>>() {
             });
             if (appBean != null && appBean.getEnumcode() == 0) {
 
                 saveData(appBean);
 
+                headPhotoS = appBean.getData().getPhotoURL();
+                name = appBean.getData().getEmployeeName();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
 
                 IMkitConnectUtils.connect(appBean.getData().getRongcloudToken(), getApplicationContext());
+                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+                    @Override
+                    public UserInfo getUserInfo(String userId) {
+                        return findUserById(userId);//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
+                    }
+                }, true);
+
                 finish();
             } else {
                 ToastUtils.shows(LoginActivity.this, appBean.getMsg());
             }
         }
+    }
+
+    private UserInfo findUserById(String userId) {
+        String avatar = headPhotoS;
+        if (NullUtils.isNull(avatar)) {
+            avatar = Constant.HEADPHOTO;
+        }
+        String name1 = name;
+        users = new UserInfo(userId, null, Uri.parse(avatar));
+        return users;
     }
 
     private void saveData(AppBean<User> appBean) {

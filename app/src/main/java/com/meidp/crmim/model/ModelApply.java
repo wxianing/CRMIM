@@ -38,6 +38,7 @@ public class ModelApply implements Serializable {
     private String BarCode;
     private int TypeID;
     private String BigType;
+    private String Title;
     private int UnitID;
     private int Brand;
     private Object Specification;
@@ -51,6 +52,14 @@ public class ModelApply implements Serializable {
     private Object Description;
     private Object SellPrice;
     private int SaleUnitID;
+
+    public String getTitle() {
+        return Title;
+    }
+
+    public void setTitle(String title) {
+        Title = title;
+    }
 
     public int getID() {
         return ID;

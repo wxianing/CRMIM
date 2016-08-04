@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.meidp.crmim.R;
 import com.meidp.crmim.activity.CustomerListActivity;
+import com.meidp.crmim.activity.DepartmentContactsActivity;
 import com.meidp.crmim.activity.GroupActivity;
 import com.meidp.crmim.activity.SearchFriendActivity;
 import com.meidp.crmim.adapter.FriendsAdapter;
@@ -48,8 +49,8 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
     @ViewInject(R.id.listview)
     private ListView mListVeiw;
     private FriendsAdapter mAdapter;
-
     private List<Friends> mDatas;
+
 
     public ContactsFragment() {
 
@@ -70,10 +71,8 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
 
     @Override
     public void onInitData() {
-
         HashMap params = new HashMap();
         params.put("sType", 1);
-
         HttpRequestUtils.getmInstance().send(getActivity(), Constant.FRIEND_LIST_URL, params, new HttpRequestCallBack<String>() {
             @Override
             public void onSuccess(String result) {
@@ -108,8 +107,7 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
                 startActivity(intent);
                 break;
             case R.id.customer_layout:
-                intent = new Intent();
-                intent.setClass(getActivity(), CustomerListActivity.class);
+                intent = new Intent(getActivity(), DepartmentContactsActivity.class);
                 startActivity(intent);
                 break;
         }
@@ -117,7 +115,7 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        RongIM.getInstance().startPrivateChat(getActivity(), Integer.toString(mDatas.get(position).getUserID()), mDatas.get(position).getLoginName());
+        RongIM.getInstance().startPrivateChat(getActivity(), Integer.toString(mDatas.get(position).getUserID()), mDatas.get(position).getEmployeeName());
     }
 
 }

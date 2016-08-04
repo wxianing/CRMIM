@@ -21,7 +21,8 @@ public class Constant {
     public static final int FILE_SELECT_CODE = 1001;
     public static final String ACTION_NEW_VERSION = "com.meten.ifuture.ACTION_NEW_VERSION";
     public static final String VERSION_NAME = "versionName";
-
+    //默认头像
+    public static final String HEADPHOTO = "http://www.qqbody.com/uploads/allimg/201411/18-200811_37.jpg";
     //广告轮播图
     public static final String BANNER_URL = BASE_URL + "systemset/getadvertiselist";//
     //资讯列表
@@ -100,4 +101,8 @@ public class Constant {
     public static final String SAVE_FEEDBACK_URL = BASE_URL + "office/office/personaladvicesendsave";
     //我的专业知识
     public static final String MY_KNOWLEDGE_URL = BASE_URL + "office/office/getculturedocpagelist";
+    //获取待审核样机列表
+    public static final String FORCHECK_LIST = BASE_URL + "order/getsellsamplepagelistforcheck";
+    //公海池
+    public static final String OPEN_SEAR_PROJECT = BASE_URL + "projects/getpublicprojectpagelist";
 }

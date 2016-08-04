@@ -1,6 +1,7 @@
 package com.meidp.crmim.imkit;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * Package： com.meidp.crmim.imkit
@@ -48,6 +50,7 @@ public class ConversationActivity extends BaseActivity {
         titleRight.setVisibility(View.VISIBLE);
         mTargetId = getIntent().getData().getQueryParameter("targetId");//获取聊天对象的Id
         String titleName = getIntent().getData().getQueryParameter("title");//获取聊天对象的Id
+
         title.setText(titleName);
     }
 

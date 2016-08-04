@@ -9,18 +9,19 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
-@ContentView(R.layout.activity_payment_manager)
-public class PaymentManagerActivity extends BaseActivity {
+@ContentView(R.layout.activity_department_contacts)
+public class DepartmentContactsActivity extends BaseActivity {
+
     @ViewInject(R.id.title_tv)
     private TextView title;
 
     @Override
     public void onInit() {
-        title.setText("货款管理");
+        title.setText("我的部门");
     }
 
-    @Event(value = {R.id.back_arrows})
-    private void onClick(View v) {
+    @Event({R.id.back_arrows})
+    private void click(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();

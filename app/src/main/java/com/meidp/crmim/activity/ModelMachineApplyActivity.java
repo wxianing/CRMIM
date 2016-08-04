@@ -132,22 +132,24 @@ public class ModelMachineApplyActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode) {
-            case 1003:
-                custId = data.getIntExtra("OID", -1);
-                String custName = data.getStringExtra("CustName");
-                customerEt.setText(custName);
-                break;
-            case 1004:
-                projectId = data.getIntExtra("ProjectId", -1);
-                String projectName = data.getStringExtra("ProjectName");
-                projectEt.setText(projectName);
-                break;
-            case 1005:
-                productID = data.getIntExtra("ProductID", -1);
-                productName = data.getStringExtra("ProductName");
-                prototypeEt.setText(productName);
-                break;
+        if (data != null) {
+            switch (resultCode) {
+                case 1003:
+                    custId = data.getIntExtra("OID", -1);
+                    String custName = data.getStringExtra("CustName");
+                    customerEt.setText(custName);
+                    break;
+                case 1004:
+                    projectId = data.getIntExtra("ProjectId", -1);
+                    String projectName = data.getStringExtra("ProjectName");
+                    projectEt.setText(projectName);
+                    break;
+                case 1005:
+                    productID = data.getIntExtra("ProductID", -1);
+                    productName = data.getStringExtra("ProductName");
+                    prototypeEt.setText(productName);
+                    break;
+            }
         }
     }
 }

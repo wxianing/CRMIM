@@ -64,14 +64,7 @@ public class MyApplication extends Application {
                 "io.rong.push".equals(getCurProcessName(getApplicationContext()))) {
             RongIM.init(this);
 
-//            RongIM.getInstance().setCurrentUserInfo(findUserById("10011"));
-//            RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-//                @Override
-//                public UserInfo getUserInfo(String userId) {
-//                    Log.e("userId>>>>>>>>>", userId);
-//                    return findUserById(userId);
-//                }
-//            }, true);
+
         }
     }
 

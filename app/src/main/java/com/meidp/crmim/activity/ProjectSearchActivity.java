@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -31,15 +32,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * 公海池
- */
-@ContentView(R.layout.activity_open_sea_pool)
-public class OpenSeaPoolActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2<ListView>, AdapterView.OnItemClickListener, View.OnClickListener {
+@ContentView(R.layout.activity_project_search)
+public class ProjectSearchActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2<ListView>, AdapterView.OnItemClickListener, View.OnClickListener {
 
     private int pageIndex = 1;
     private int pageSize = 8;
-    private int sType = 0;
+    private int sType = -1;
     @ViewInject(R.id.listview)
     private PullToRefreshListView mListView;
     private List<Projects> mDatas;
@@ -50,10 +48,17 @@ public class OpenSeaPoolActivity extends BaseActivity implements PullToRefreshBa
     private int criticalType;
     @ViewInject(R.id.line)
     private LinearLayout layout;
-    private int sType2 = 0;
+    @ViewInject(R.id.search_edittext)
+    private EditText search;
+
+    private String keyWord = "";
+    private int sType2;
+    private int flag;
+    private String url;
 
     @Override
     public void onInit() {
+        flag = getIntent().getIntExtra("FLAG", -1);
         mListView.setMode(PullToRefreshBase.Mode.BOTH);
         mDatas = new ArrayList<>();
         mAdapter = new OpenProjectAdapter(mDatas, this);
@@ -61,20 +66,26 @@ public class OpenSeaPoolActivity extends BaseActivity implements PullToRefreshBa
         mListView.setOnRefreshListener(this);
         mListView.setOnItemClickListener(this);
         initPopupWindow();
+        if (flag == 0) {
+            url = Constant.PROJECT_MANAGER;
+        } else {
+            url = Constant.OPEN_SEAR_PROJECT;
+        }
     }
 
     @Override
     public void onInitData() {
-//        loadData(pageIndex);
+        loadData(pageIndex, keyWord);
     }
 
-    private void loadData(int pageIndex) {
+    private void loadData(int pageIndex, String keyWord) {
         HashMap params = new HashMap();
+        params.put("Keyword", keyWord);//2公海池
         params.put("sType", sType);//2公海池
         params.put("sType2", sType2);//2公海池
         params.put("PageIndex", pageIndex);
         params.put("PageSize", pageSize);
-        HttpRequestUtils.getmInstance().send(OpenSeaPoolActivity.this, Constant.OPEN_SEAR_PROJECT, params, new HttpRequestCallBack<String>() {
+        HttpRequestUtils.getmInstance().send(ProjectSearchActivity.this, Constant.PROJECT_MANAGER, params, new HttpRequestCallBack<String>() {
             @Override
             public void onSuccess(String result) {
                 AppDatas<Projects> appDatas = JSONObject.parseObject(result, new TypeReference<AppDatas<Projects>>() {
@@ -88,9 +99,8 @@ public class OpenSeaPoolActivity extends BaseActivity implements PullToRefreshBa
         });
     }
 
-    @Event(value = {R.id.back_arrows, R.id.time_tv, R.id.type_tv, R.id.search_edittext, R.id.right_img})
+    @Event(value = {R.id.back_arrows, R.id.time_tv, R.id.type_tv, R.id.right_tv})
     private void click(View v) {
-        Intent intent = null;
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
@@ -112,13 +122,10 @@ public class OpenSeaPoolActivity extends BaseActivity implements PullToRefreshBa
                     mTypePopWindow.dismiss();
                 }
                 break;
-            case R.id.search_edittext:
-                intent = new Intent(this, ProjectSearchActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.right_img:
-                intent = new Intent(this, SubmitActivity.class);
-                startActivity(intent);
+            case R.id.right_tv:
+                keyWord = search.getText().toString().trim();
+                mDatas.clear();
+                loadData(pageIndex, keyWord);
                 break;
         }
     }
@@ -139,7 +146,7 @@ public class OpenSeaPoolActivity extends BaseActivity implements PullToRefreshBa
 
 
     private void initPopupWindow() {
-        View contentView = LayoutInflater.from(OpenSeaPoolActivity.this).inflate(R.layout.popup_success_layout, null);
+        View contentView = LayoutInflater.from(ProjectSearchActivity.this).inflate(R.layout.popup_success_layout, null);
         mTypePopWindow = new PopupWindow(contentView,
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         mTypePopWindow.setContentView(contentView);
@@ -153,7 +160,7 @@ public class OpenSeaPoolActivity extends BaseActivity implements PullToRefreshBa
         tv22.setOnClickListener(this);
 
         //设置contentView
-        View contentView1 = LayoutInflater.from(OpenSeaPoolActivity.this).inflate(R.layout.popup_time_layout, null);
+        View contentView1 = LayoutInflater.from(ProjectSearchActivity.this).inflate(R.layout.popup_time_layout, null);
         mDatePopWindow = new PopupWindow(contentView,
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         mDatePopWindow.setContentView(contentView1);
@@ -177,14 +184,14 @@ public class OpenSeaPoolActivity extends BaseActivity implements PullToRefreshBa
     @Override
     protected void onResume() {
         super.onResume();
-        mDatas.clear();
-        loadData(pageIndex);
+//        mDatas.clear();
+//        loadData(pageIndex);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this, ProjecDetailsActivity.class);
-        intent.putExtra("TYPE", 1);//1公海池，0我的项目
+        intent.putExtra("TYPE", flag);//1公海池，0我的项目
         intent.putExtra("OID", mDatas.get(position - 1).getID());
         startActivity(intent);
     }
@@ -193,13 +200,13 @@ public class OpenSeaPoolActivity extends BaseActivity implements PullToRefreshBa
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
         pageIndex = 1;
         mDatas.clear();
-        loadData(pageIndex);
+        loadData(pageIndex, keyWord);
     }
 
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
         pageIndex++;
-        loadData(pageIndex);
+        loadData(pageIndex, keyWord);
     }
 
     @Override
@@ -239,11 +246,11 @@ public class OpenSeaPoolActivity extends BaseActivity implements PullToRefreshBa
                 mTypePopWindow.dismiss();
                 break;
             case R.id.all_type_tv:
-                sType2 = 0;
+                criticalType = 0;
                 mTypePopWindow.dismiss();
                 break;
         }
         mDatas.clear();
-        loadData(pageIndex);
+        loadData(pageIndex, keyWord);
     }
 }

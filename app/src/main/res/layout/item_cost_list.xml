@@ -53,7 +53,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dp20"
-            android:src="@mipmap/cost_agree_icon" />
+            android:src="@mipmap/cost_agree_icon"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </RelativeLayout>

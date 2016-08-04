@@ -173,18 +173,20 @@ public class CostReimbursementActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode) {
-            case 1001:
-                String customName = data.getStringExtra("customName");
-                custId = data.getIntExtra("CustomerId", 0);
-                customerEt.setText(customName);
-                break;
-            case 1002:
-                String codeName = data.getStringExtra("CodeName");
-                typeId = data.getIntExtra("OID", -1);
-                expId = data.getIntExtra("ExpID", -1);
-                costType.setText(codeName);
-                break;
+        if (data != null) {
+            switch (resultCode) {
+                case 1001:
+                    String customName = data.getStringExtra("customName");
+                    custId = data.getIntExtra("CustomerId", 0);
+                    customerEt.setText(customName);
+                    break;
+                case 1002:
+                    String codeName = data.getStringExtra("CodeName");
+                    typeId = data.getIntExtra("OID", -1);
+                    expId = data.getIntExtra("ExpID", -1);
+                    costType.setText(codeName);
+                    break;
+            }
         }
     }
 

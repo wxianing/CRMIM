@@ -14,13 +14,13 @@
 
     <RadioButton
         style="@style/mainRgStyle"
-        android:drawableTop="@drawable/main_rg_contact_icon"
-        android:text="联系人" />
+        android:drawableTop="@drawable/main_rg_message_icon"
+        android:text="消息" />
 
     <RadioButton
         style="@style/mainRgStyle"
-        android:drawableTop="@drawable/main_rg_message_icon"
-        android:text="消息" />
+        android:drawableTop="@drawable/main_rg_contact_icon"
+        android:text="联系人" />
 
     <RadioButton
         style="@style/mainRgStyle"

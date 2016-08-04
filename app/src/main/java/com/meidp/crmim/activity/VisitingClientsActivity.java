@@ -177,17 +177,14 @@ public class VisitingClientsActivity extends BaseActivity implements BDLocationL
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case 1:
-                if (NullUtils.isNull(data.getStringExtra("ADDRESS"))) {
-                    addressTv.setText(data.getStringExtra("ADDRESS"));
-                }
-                break;
-            case 1003:
-                custId = data.getIntExtra("OID", -1);
-                custName = data.getStringExtra("CustName");
-                customerName.setText(custName);
-                break;
+        if (requestCode == 1 && data != null) {
+            if (NullUtils.isNull(data.getStringExtra("ADDRESS"))) {
+                addressTv.setText(data.getStringExtra("ADDRESS"));
+            }
+        } else if (requestCode == 1003 && data != null) {
+            custId = data.getIntExtra("OID", -1);
+            custName = data.getStringExtra("CustName");
+            customerName.setText(custName);
         }
     }
 
@@ -204,7 +201,6 @@ public class VisitingClientsActivity extends BaseActivity implements BDLocationL
                 startActivityForResult(intent, Constant.RESULTCODE);
                 break;
             case R.id.customer_name:
-                ToastUtils.shows(this, "点击了按钮");
                 intent = new Intent();
                 intent.setClass(this, CustomerListActivity.class);
                 intent.putExtra("FLAG", "Apply");

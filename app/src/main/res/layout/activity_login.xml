@@ -37,7 +37,7 @@
             android:layout_height="@dimen/dp0.5"
             android:layout_marginLeft="@dimen/dp10"
             android:layout_marginRight="@dimen/dp10"
-            android:background="#DBDBDB" />
+            android:background="#F0F0F0" />
 
         <EditText
             android:id="@+id/password_edittext"
