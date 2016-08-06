@@ -45,4 +45,5 @@ dependencies {
     compile project(':IMKit')
     compile files('libs/achartengine-1.1.0.jar')
     compile files('libs/jpush-android-2.1.7.jar')
+    compile files('libs/badgeview.jar')
 }

@@ -1,26 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="160dp"
+    android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/dp10"
     android:background="@drawable/linear_bg_white">
 
-    <TextView
-        android:id="@+id/title_name"
+    <LinearLayout
+        android:id="@+id/announcement_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxEms="10"
-        android:singleLine="true"
-        android:text="海南告急"
-        android:textColor="@color/textcolor_black"
-        android:textSize="@dimen/sp16" />
+        android:layout_marginTop="@dimen/dp8">
+
+        <ImageView
+            android:id="@+id/read_flag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/red_round_icon"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/title_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp5"
+            android:ellipsize="end"
+            android:maxEms="10"
+            android:singleLine="true"
+            android:text="海南告急"
+            android:textColor="@color/textcolor_black"
+            android:textSize="@dimen/sp16" />
+
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/ocntent_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title_name"
+        android:layout_below="@+id/announcement_layout"
         android:layout_marginTop="@dimen/dp10"
         android:maxLines="5"
         android:paddingBottom="@dimen/dp10"
@@ -29,7 +47,8 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/ocntent_tv">
 
         <TextView
             android:id="@+id/system_announcement"

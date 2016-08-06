@@ -20,6 +20,7 @@ import java.util.List;
  * 时  间： 2016/7/22
  */
 public class ModelApplyAdapter extends BasicAdapter<ModelApply> {
+    
     public ModelApplyAdapter(List<ModelApply> mDatas, Context context) {
         super(mDatas, context);
     }
@@ -34,13 +35,34 @@ public class ModelApplyAdapter extends BasicAdapter<ModelApply> {
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-        vh.produceName.setText(mDatas.get(position).getTitle());
+        vh.titleName.setText(mDatas.get(position).getTitle());
+        vh.produceName.setText("产品名：" + mDatas.get(position).getProductName());
+        vh.customerName.setText("客户：" + mDatas.get(position).getCustName());
+        vh.totalMoney.setText("￥" + Integer.toString(mDatas.get(position).getTotalFee()));
+        vh.principal.setText(mDatas.get(position).getCreatorName());
+        vh.createTime.setText(mDatas.get(position).getCreateDate());
+        vh.applyCount.setText("申请数量：" + Integer.toString(mDatas.get(position).getProductCount()));
+        vh.checkStatus.setText(mDatas.get(position).getCheckStatusName());
         return convertView;
     }
 
     private static class ViewHolder {
         @ViewInject(R.id.produce_name)
         private TextView produceName;
+        @ViewInject(R.id.title_name)
+        private TextView titleName;
+        @ViewInject(R.id.customer_name)
+        private TextView customerName;
+        @ViewInject(R.id.total_money)
+        private TextView totalMoney;
+        @ViewInject(R.id.principal)
+        private TextView principal;
+        @ViewInject(R.id.create_time)
+        private TextView createTime;
+        @ViewInject(R.id.apply_count)
+        private TextView applyCount;
+        @ViewInject(R.id.checked_status)
+        private TextView checkStatus;
 
         public ViewHolder(View view) {
             x.view().inject(this, view);

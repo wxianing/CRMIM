@@ -11,10 +11,20 @@ import java.io.Serializable;
 public class HomeEntrity implements Serializable {
     private int resId;
     private String resName;
+    private int unReader;
 
-    public HomeEntrity(int resId, String resName) {
+    public HomeEntrity(int resId, String resName, int unReader) {
         this.resId = resId;
         this.resName = resName;
+        this.unReader = unReader;
+    }
+
+    public int getUnReader() {
+        return unReader;
+    }
+
+    public void setUnReader(int unReader) {
+        this.unReader = unReader;
     }
 
     public int getResId() {

@@ -2,6 +2,7 @@ package com.meidp.crmim.activity;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,10 +28,10 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * 我的样机
+ * 样机管理
  */
 @ContentView(R.layout.activity_my_prototype)
-public class MyPrototypeActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2<ListView> {
+public class MyPrototypeActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2<ListView>, AdapterView.OnItemClickListener {
 
     @ViewInject(R.id.title_right)
     private TextView titleRight;
@@ -51,12 +52,13 @@ public class MyPrototypeActivity extends BaseActivity implements PullToRefreshBa
     public void onInit() {
         titleRight.setText("申请");
         titleRight.setVisibility(View.VISIBLE);
-        title.setText("我的样机");
+        title.setText("样机管理");
         mListView.setMode(PullToRefreshBase.Mode.BOTH);
         mDatas = new ArrayList<>();
         mAdapter = new ModelApplyAdapter(mDatas, this);
         mListView.setAdapter(mAdapter);
         mListView.setOnRefreshListener(this);
+        mListView.setOnItemClickListener(this);
     }
 
     @Override
@@ -114,5 +116,12 @@ public class MyPrototypeActivity extends BaseActivity implements PullToRefreshBa
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
         pageIndex++;
         loadData(pageIndex, keyword);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(this, PrototypeDetailsActivity.class);
+        intent.putExtra("ID", mDatas.get(position).getID());
+        startActivity(intent);
     }
 }

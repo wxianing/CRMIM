@@ -1,7 +1,6 @@
 package com.meidp.crmim.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Package： com.meidp.crmim.model
@@ -12,102 +11,76 @@ import java.util.List;
 public class Announcements implements Serializable {
 
     /**
-     * PageIndex : 1
-     * RecordCount : 8
-     * DataList : [{"ID":32,"NewsTitle":"测试公告","NewsContent":"下午加餐","ComfirmDate":"2016-07-15T14:37:19.12","CreatorName":null},{"ID":30,"NewsTitle":"xzzxzxz","NewsContent":"zxxzzxzxzx","ComfirmDate":"2010-08-20T10:35:44.5","CreatorName":null},{"ID":29,"NewsTitle":"qwe123","NewsContent":"123123","ComfirmDate":"2010-08-20T10:11:36.327","CreatorName":null},{"ID":11,"NewsTitle":"222","NewsContent":"222","ComfirmDate":"2010-08-20T09:50:52.127","CreatorName":null}]
-     * TotalModel :
-     */
-
-    private int PageIndex;
-    private int RecordCount;
-    private String TotalModel;
-    /**
      * ID : 32
-     * NewsTitle : 测试公告
-     * NewsContent : 下午加餐
-     * ComfirmDate : 2016-07-15T14:37:19.12
-     * CreatorName : null
+     * NewsTitle : 综合会诊显示方案
+     * NewsContent : 巨烽远程会诊系统主要由影像诊断工作站、医用会诊大屏、高清视音频交互终端、网络设备以及配套设备组成，可以实现远程会诊、远程影像与心电专科诊断、远程监护、手术示教、视频会议、远程培训、会诊教学等功能，为各级医院提供远程会诊需求。
+     * ComfirmDate : 2016-07-15 14:37
+     * CreatorName :
+     * IsRead : 0
+     * ImgUrl : http://beacon.meidp.com
      */
 
-    private List<DataListBean> DataList;
+    private int ID;
+    private String NewsTitle;
+    private String NewsContent;
+    private String ComfirmDate;
+    private String CreatorName;
+    private int IsRead;
+    private String ImgUrl;
 
-    public int getPageIndex() {
-        return PageIndex;
+    public int getID() {
+        return ID;
     }
 
-    public void setPageIndex(int PageIndex) {
-        this.PageIndex = PageIndex;
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
-    public int getRecordCount() {
-        return RecordCount;
+    public String getNewsTitle() {
+        return NewsTitle;
     }
 
-    public void setRecordCount(int RecordCount) {
-        this.RecordCount = RecordCount;
+    public void setNewsTitle(String NewsTitle) {
+        this.NewsTitle = NewsTitle;
     }
 
-    public String getTotalModel() {
-        return TotalModel;
+    public String getNewsContent() {
+        return NewsContent;
     }
 
-    public void setTotalModel(String TotalModel) {
-        this.TotalModel = TotalModel;
+    public void setNewsContent(String NewsContent) {
+        this.NewsContent = NewsContent;
     }
 
-    public List<DataListBean> getDataList() {
-        return DataList;
+    public String getComfirmDate() {
+        return ComfirmDate;
     }
 
-    public void setDataList(List<DataListBean> DataList) {
-        this.DataList = DataList;
+    public void setComfirmDate(String ComfirmDate) {
+        this.ComfirmDate = ComfirmDate;
     }
 
-    public static class DataListBean {
-        private int ID;
-        private String NewsTitle;
-        private String NewsContent;
-        private String ComfirmDate;
-        private Object CreatorName;
+    public String getCreatorName() {
+        return CreatorName;
+    }
 
-        public int getID() {
-            return ID;
-        }
+    public void setCreatorName(String CreatorName) {
+        this.CreatorName = CreatorName;
+    }
 
-        public void setID(int ID) {
-            this.ID = ID;
-        }
+    public int getIsRead() {
+        return IsRead;
+    }
 
-        public String getNewsTitle() {
-            return NewsTitle;
-        }
+    public void setIsRead(int IsRead) {
+        this.IsRead = IsRead;
+    }
 
-        public void setNewsTitle(String NewsTitle) {
-            this.NewsTitle = NewsTitle;
-        }
+    public String getImgUrl() {
+        return ImgUrl;
+    }
 
-        public String getNewsContent() {
-            return NewsContent;
-        }
-
-        public void setNewsContent(String NewsContent) {
-            this.NewsContent = NewsContent;
-        }
-
-        public String getComfirmDate() {
-            return ComfirmDate;
-        }
-
-        public void setComfirmDate(String ComfirmDate) {
-            this.ComfirmDate = ComfirmDate;
-        }
-
-        public Object getCreatorName() {
-            return CreatorName;
-        }
-
-        public void setCreatorName(Object CreatorName) {
-            this.CreatorName = CreatorName;
-        }
+    public void setImgUrl(String ImgUrl) {
+        this.ImgUrl = ImgUrl;
     }
 }

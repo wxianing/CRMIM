@@ -19,13 +19,16 @@
     <color name="textcolor_black">#343434</color>
     <color name="textcolor_orange">#EC6000</color>
     <color name="textcolor_blue">#00BAED</color>
-    <color name="main_rg_text_color">#00b8ec</color>
+    <color name="main_rg_text_color">#00AFF1</color>
     <color name="gray_line">#DBDBDB</color>
     <color name="ashen_while">#F7F7F7</color>
     <color name="text_color_red">#ff0000</color>
     <color name="login_btn_bg">#008FCE</color>
     <color name="light_drak">#BDBDBD</color>
+
+
     <color name="statusbar_bg">#00AFF1</color>
+
     <color name="drak_orange">#EB8949</color>
     <color name="head_bg_color">#087CF5</color>
     <color name="listview_item_normal">#eef0ed</color>

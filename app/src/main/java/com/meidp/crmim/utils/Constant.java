@@ -101,8 +101,16 @@ public class Constant {
     public static final String SAVE_FEEDBACK_URL = BASE_URL + "office/office/personaladvicesendsave";
     //我的专业知识
     public static final String MY_KNOWLEDGE_URL = BASE_URL + "office/office/getculturedocpagelist";
+
     //获取待审核样机列表
     public static final String FORCHECK_LIST = BASE_URL + "order/getsellsamplepagelistforcheck";
+
     //公海池
     public static final String OPEN_SEAR_PROJECT = BASE_URL + "projects/getpublicprojectpagelist";
+    //未读消息
+    public static final String UNREADER_MESSAGE_URL = BASE_URL + "common/mpublic/getalertlist";
+    //标记已读消息
+    public static final String SAVE_UNREADER = BASE_URL + "common/mpublic/readsave";
+    //样机详情
+    public static final String PROTOTYPE_DETAILS_URL = BASE_URL + "order/getsellsample";
 }

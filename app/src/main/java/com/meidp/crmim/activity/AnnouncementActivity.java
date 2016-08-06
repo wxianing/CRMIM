@@ -16,6 +16,7 @@ import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.Announcements;
 import com.meidp.crmim.model.AppBean;
+import com.meidp.crmim.model.AppDatas;
 import com.meidp.crmim.utils.Constant;
 
 import org.xutils.view.annotation.ContentView;
@@ -36,12 +37,14 @@ public class AnnouncementActivity extends BaseActivity implements PullToRefreshB
     private int pageIndex = 1;
     @ViewInject(R.id.listview)
     private PullToRefreshListView mListView;
-    private List<Announcements.DataListBean> mDatas;
+    private List<Announcements> mDatas;
     private AnnouncementAdapter mAdapter;
+    public static AnnouncementActivity announcementActivity;
 
     @Override
     public void onInit() {
         title.setText("详细内容");
+        announcementActivity = this;
         mListView.setMode(PullToRefreshBase.Mode.BOTH);
         mDatas = new ArrayList<>();
         mAdapter = new AnnouncementAdapter(mDatas, this);
@@ -52,7 +55,7 @@ public class AnnouncementActivity extends BaseActivity implements PullToRefreshB
 
     @Override
     public void onInitData() {
-        loadData(pageIndex);
+//        loadData(pageIndex);
     }
 
     private void loadData(int pageIndex) {
@@ -62,7 +65,7 @@ public class AnnouncementActivity extends BaseActivity implements PullToRefreshB
         HttpRequestUtils.getmInstance().send(AnnouncementActivity.this, Constant.ANNOUCEMENT_URL, params, new HttpRequestCallBack<String>() {
             @Override
             public void onSuccess(String result) {
-                AppBean<Announcements> appBean = JSONObject.parseObject(result, new TypeReference<AppBean<Announcements>>() {
+                AppDatas<Announcements> appBean = JSONObject.parseObject(result, new TypeReference<AppDatas<Announcements>>() {
                 });
                 if (appBean != null && appBean.getEnumcode() == 0) {
                     mDatas.addAll(appBean.getData().getDataList());
@@ -106,7 +109,22 @@ public class AnnouncementActivity extends BaseActivity implements PullToRefreshB
         Intent intent = new Intent(this, AnnounDetailsActivity.class);
         intent.putExtra("newsTitle", newsTitle);
         intent.putExtra("newsContent", newsContent);
+        intent.putExtra("OID", mDatas.get(position - 1).getID());
         intent.putExtra("createTime", createTime);
+        intent.putExtra("IsRead", mDatas.get(position - 1).getIsRead());
         startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        loadData(pageIndex);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mDatas.clear();
+        loadData(pageIndex);
     }
 }

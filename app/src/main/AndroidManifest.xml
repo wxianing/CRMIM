@@ -259,7 +259,8 @@
         <activity android:name=".activity.ApprovalProcessActivity" />
         <activity android:name=".activity.NewApprovalProcessActivity" />
         <activity android:name=".activity.DepartmentContactsActivity" />
-        <activity android:name=".activity.ProjectSearchActivity"></activity>
+        <activity android:name=".activity.ProjectSearchActivity" />
+        <activity android:name=".activity.PrototypeDetailsActivity"></activity>
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package com.meidp.crmim.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,7 @@ public class ProjectManagerActivity extends BaseActivity implements PullToRefres
     @ViewInject(R.id.line)
     private LinearLayout layout;
     private int sType2 = 0;
+    private String mark;
 
     @Override
     public void onInit() {
@@ -63,6 +65,8 @@ public class ProjectManagerActivity extends BaseActivity implements PullToRefres
         mListView.setOnRefreshListener(this);
         mListView.setOnItemClickListener(this);
         initPopupWindow();
+        mark = getIntent().getStringExtra("FLAG");
+//        Log.e("FLAG", mark);
     }
 
     @Override
@@ -188,10 +192,18 @@ public class ProjectManagerActivity extends BaseActivity implements PullToRefres
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(this, ProjecDetailsActivity.class);
-        intent.putExtra("TYPE", 0);//1公海池，0我的项目
-        intent.putExtra("OID", mDatas.get(position - 1).getID());
-        startActivity(intent);
+        if (NullUtils.isNull(mark) && mark.equals("Apply")) {
+            Intent intent = new Intent();
+            intent.putExtra("ProjectId", mDatas.get(position - 1).getID());
+            intent.putExtra("ProjectName", mDatas.get(position - 1).getProjectName());
+            setResult(1004, intent);
+            finish();
+        } else {
+            Intent intent = new Intent(this, ProjecDetailsActivity.class);
+            intent.putExtra("TYPE", 0);//1公海池，0我的项目
+            intent.putExtra("OID", mDatas.get(position - 1).getID());
+            startActivity(intent);
+        }
     }
 
     @Override

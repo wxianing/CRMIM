@@ -3,6 +3,7 @@ package com.meidp.crmim.adapter;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.meidp.crmim.R;
@@ -19,14 +20,14 @@ import java.util.List;
  * 作  用：
  * 时  间： 2016/7/18
  */
-public class AnnouncementAdapter extends BasicAdapter<Announcements.DataListBean> {
-    public AnnouncementAdapter(List<Announcements.DataListBean> mDatas, Context context) {
+public class AnnouncementAdapter extends BasicAdapter<Announcements> {
+    public AnnouncementAdapter(List<Announcements> mDatas, Context context) {
         super(mDatas, context);
     }
 
     @Override
     public View createView(int position, View convertView, ViewGroup parent) {
-        Announcements.DataListBean data = mDatas.get(position);
+        Announcements data = mDatas.get(position);
         ViewHolder vh = null;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.item_announcement_list, parent, false);
@@ -40,6 +41,10 @@ public class AnnouncementAdapter extends BasicAdapter<Announcements.DataListBean
         vh.content.setText("内容：" + data.getNewsContent());
         vh.time.setText(data.getComfirmDate());
 
+        if (data.getIsRead() == 0) {
+            vh.readFlag.setVisibility(View.VISIBLE);
+        }
+
         return convertView;
     }
 
@@ -50,10 +55,11 @@ public class AnnouncementAdapter extends BasicAdapter<Announcements.DataListBean
         private TextView time;
         @ViewInject(R.id.ocntent_tv)
         private TextView content;
+        @ViewInject(R.id.read_flag)
+        private ImageView readFlag;
 
         public ViewHolder(View view) {
             x.view().inject(this, view);
-
         }
     }
 }

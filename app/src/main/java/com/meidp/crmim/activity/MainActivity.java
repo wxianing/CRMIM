@@ -4,10 +4,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.jauker.widget.BadgeView;
 import com.meidp.crmim.R;
 import com.meidp.crmim.fragment.HomeFragment;
 import com.meidp.crmim.fragment.MyFragment;
@@ -30,6 +32,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     private FragmentManager manager;
     private long exitTime = 0;
     public static MainActivity mainActivity;
+//    @ViewInject(R.id.btn_msg)
+//    private Button message;
 
     @Override
     public void onInit() {
@@ -40,7 +44,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         mFragments.add(new ContactsFragment());
         mFragments.add(new MyFragment());
 
-        ((RadioButton) mRadioGroup.getChildAt(0)).setChecked(true);
+//        ((RadioButton) mRadioGroup.getChildAt(0)).setChecked(true);
         manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.main_fragments_contents, mFragments.get(0));
@@ -50,6 +54,9 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         mRadioGroup.setOnCheckedChangeListener(this);
         System.out.println(SPUtils.get(this, "CODE", ""));
 
+//        BadgeView badgeView = new BadgeView(this);
+//        badgeView.setTargetView(message);
+//        badgeView.setBadgeCount(3);
     }
 
     @Override

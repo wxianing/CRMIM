@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.jauker.widget.BadgeView;
 import com.meidp.crmim.R;
 import com.meidp.crmim.activity.AnnouncementActivity;
 import com.meidp.crmim.activity.ApprovalProcessActivity;
@@ -31,9 +32,12 @@ import com.meidp.crmim.adapter.HomeGvAdapter;
 import com.meidp.crmim.adapter.ImagePagerAdapter;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
+import com.meidp.crmim.model.AppBean;
 import com.meidp.crmim.model.AppBeans;
+import com.meidp.crmim.model.AppDatas;
 import com.meidp.crmim.model.Banner;
 import com.meidp.crmim.model.HomeEntrity;
+import com.meidp.crmim.model.UnReaderMsg;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.widget.AutoScrollViewPager;
 
@@ -65,6 +69,14 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     @ViewInject(R.id.grid_view)
     private GridView mGridView;
     private HomeGvAdapter mGirdViewAdapter;
+    @ViewInject(R.id.linear_layout)
+    private LinearLayout linearLayout;
+
+    private int unReaderCount = 0;
+
+    private int pubNoticeNewCount = 0;
+
+    private int noCheckCount = 0;
 
     public HomeFragment() {
     }
@@ -73,26 +85,33 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     public void onInit() {
         backImg.setVisibility(View.GONE);
         title.setText(R.string.title_name);
-        mGridView.setFocusable(false);
+//        mGridView.setFocusable(false);
+        linearLayout.setFocusable(true);
+        linearLayout.setFocusableInTouchMode(true);
+        linearLayout.requestFocus();
         imageUrls = new ArrayList<>();
         entrities = new ArrayList<>();
-        entrities.add(new HomeEntrity(R.mipmap.home_announcement_icon, "公告"));
-        entrities.add(new HomeEntrity(R.mipmap.home_opensea_icon, "公海池"));
-        entrities.add(new HomeEntrity(R.mipmap.home_project_manager_icon, "项目管理"));
-//        entrities.add(new HomeEntrity(R.mipmap.home_follow_project_icon, "项目跟进"));
-        entrities.add(new HomeEntrity(R.mipmap.home_customer_visit_icon, "客户拜访"));
-        entrities.add(new HomeEntrity(R.mipmap.home_expense_reimbursement_icon, "费用报销"));
-        entrities.add(new HomeEntrity(R.mipmap.home_new_project_icon, "新建项目"));
-        entrities.add(new HomeEntrity(R.mipmap.home_customer_archives_icon, "客户档案"));
-        entrities.add(new HomeEntrity(R.mipmap.home_my_prototype_icon, "我的样机"));
-        entrities.add(new HomeEntrity(R.mipmap.home_my_performance_icon, "我的业绩"));
-        entrities.add(new HomeEntrity(R.mipmap.work_plan, "工作计划"));
-        entrities.add(new HomeEntrity(R.mipmap.work_plan, "企业文化"));
-        entrities.add(new HomeEntrity(R.mipmap.work_plan, "参展申请"));
-        entrities.add(new HomeEntrity(R.mipmap.work_plan, "审批"));
+        initData(pubNoticeNewCount, noCheckCount);
         mGirdViewAdapter = new HomeGvAdapter(entrities, getActivity());
         mGridView.setAdapter(mGirdViewAdapter);
         mGridView.setOnItemClickListener(this);
+    }
+
+    private void initData(int pubNoticeNewCount, int noCheckCount) {
+        entrities.add(new HomeEntrity(R.mipmap.home_announcement_icon, "公告", pubNoticeNewCount));
+        entrities.add(new HomeEntrity(R.mipmap.home_opensea_icon, "公海池", unReaderCount));
+        entrities.add(new HomeEntrity(R.mipmap.home_project_manager_icon, "项目管理", unReaderCount));
+//        entrities.add(new HomeEntrity(R.mipmap.home_follow_project_icon, "项目跟进"));
+        entrities.add(new HomeEntrity(R.mipmap.home_customer_visit_icon, "客户拜访", unReaderCount));
+        entrities.add(new HomeEntrity(R.mipmap.home_expense_reimbursement_icon, "费用报销", unReaderCount));
+        entrities.add(new HomeEntrity(R.mipmap.home_new_project_icon, "新建项目", unReaderCount));
+        entrities.add(new HomeEntrity(R.mipmap.home_customer_archives_icon, "客户档案", unReaderCount));
+        entrities.add(new HomeEntrity(R.mipmap.home_my_prototype_icon, "样机管理", unReaderCount));
+        entrities.add(new HomeEntrity(R.mipmap.home_my_performance_icon, "我的业绩", unReaderCount));
+        entrities.add(new HomeEntrity(R.mipmap.work_plan, "工作计划", unReaderCount));
+        entrities.add(new HomeEntrity(R.mipmap.work_plan, "企业文化", unReaderCount));
+        entrities.add(new HomeEntrity(R.mipmap.work_plan, "参展申请", unReaderCount));
+        entrities.add(new HomeEntrity(R.mipmap.work_plan, "审批", noCheckCount));
     }
 
     @Override
@@ -113,12 +132,29 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 }
             }
         });
+
+    }
+
+    private void loadUnreaderMsg() {
+        HttpRequestUtils.getmInstance().send(getActivity(), Constant.UNREADER_MESSAGE_URL, null, new HttpRequestCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                AppBean<UnReaderMsg> appBean = JSONObject.parseObject(result, new TypeReference<AppBean<UnReaderMsg>>() {
+                });
+                if (appBean != null && appBean.getEnumcode() == 0) {
+                    entrities.clear();
+                    initData(appBean.getData().getNewsCount(), appBean.getData().getNoCheckCount());
+                    mGirdViewAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mViewPager.startAutoScroll();
+        loadUnreaderMsg();
     }
 
     @Override

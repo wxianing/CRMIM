@@ -1,30 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:paddingBottom="2dp">
+    android:background="@color/white">
 
-    <RadioButton
-        style="@style/mainRgStyle"
-        android:drawableTop="@drawable/main_rg_home_icon"
-        android:text="工作" />
+    <RadioGroup
+        android:id="@+id/main_bottom_rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-    <RadioButton
-        style="@style/mainRgStyle"
-        android:drawableTop="@drawable/main_rg_message_icon"
-        android:text="消息" />
+        <RadioButton
+            style="@style/mainRgStyle"
+            android:drawableTop="@drawable/main_rg_home_icon"
+            android:text="工作" />
 
-    <RadioButton
-        style="@style/mainRgStyle"
-        android:drawableTop="@drawable/main_rg_contact_icon"
-        android:text="联系人" />
+        <RadioButton
+            style="@style/mainRgStyle"
+            android:drawableTop="@drawable/main_rg_message_icon"
+            android:text="消息" />
 
-    <RadioButton
-        style="@style/mainRgStyle"
-        android:drawableTop="@drawable/main_rg_my_icon"
-        android:text="我的" />
+        <RadioButton
+            style="@style/mainRgStyle"
+            android:drawableTop="@drawable/main_rg_contact_icon"
+            android:text="联系人" />
 
-</RadioGroup>
+        <RadioButton
+            style="@style/mainRgStyle"
+            android:drawableTop="@drawable/main_rg_my_icon"
+            android:text="我的" />
+    </RadioGroup>
+
+    <!--<com.mne.mainaer.ui.view.FlowLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="#00000000"-->
+        <!--android:numColumns="5"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:rating="1">-->
+
+        <!--<Button-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:visibility="invisible" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/btn_msg"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="#00000000"-->
+            <!--android:visibility="invisible" />-->
+
+        <!--<Button-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:visibility="invisible" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/btn_my"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:visibility="invisible" />-->
+    <!--</com.mne.mainaer.ui.view.FlowLayout>-->
+</RelativeLayout>
