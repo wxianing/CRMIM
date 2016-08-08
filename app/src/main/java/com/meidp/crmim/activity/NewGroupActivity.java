@@ -30,6 +30,7 @@ import java.util.List;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Discussion;
 
 @ContentView(R.layout.activity_new_group)
 public class NewGroupActivity extends BaseActivity implements AdapterView.OnItemClickListener {
@@ -97,7 +98,6 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
                 if (NullUtils.isNull(groupName)) {
                     RongIM.getInstance().createDiscussionChat(this, userIds, groupName, mCallBack);
                 }
-
                 break;
         }
     }
@@ -124,6 +124,7 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
 
         @Override
         public void onSuccess(String s) {
+
             Log.e("讨论组：", "创建成功" + s);
             String userStr = "";
             for (int i = 0; i < userIds.size(); i++) {
@@ -152,4 +153,6 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
             Log.e("讨论组：", "创建失败");
         }
     }
+
+
 }

@@ -3,16 +3,22 @@ package com.meidp.crmim.imkit;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.meidp.crmim.R;
 import com.meidp.crmim.activity.BaseActivity;
 import com.meidp.crmim.activity.ChattingRecordsActivity;
+import com.meidp.crmim.activity.GroupActivity;
+import com.meidp.crmim.activity.GroupMenberActivity;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.util.Locale;
+
+import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
@@ -26,8 +32,8 @@ import io.rong.imlib.model.UserInfo;
 public class ConversationActivity extends BaseActivity {
     @ViewInject(R.id.title_tv)
     private TextView title;
-    @ViewInject(R.id.title_right)
-    private TextView titleRight;
+    @ViewInject(R.id.right_img)
+    private ImageView titleRight;
 
     /**
      * 目标 Id
@@ -46,23 +52,30 @@ public class ConversationActivity extends BaseActivity {
 
     @Override
     public void onInit() {
-        titleRight.setText("聊天记录");
+        //获取聊天类型
+        mConversationType = Conversation.ConversationType.valueOf(getIntent().getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
+
         titleRight.setVisibility(View.VISIBLE);
+        titleRight.setImageResource(R.mipmap.three_dot);
         mTargetId = getIntent().getData().getQueryParameter("targetId");//获取聊天对象的Id
         String titleName = getIntent().getData().getQueryParameter("title");//获取聊天对象的Id
+        Log.e(">>>>>>>>>>", mConversationType.getName());
 
         title.setText(titleName);
+        if (mConversationType.getName().equals("private")) {
+            titleRight.setVisibility(View.GONE);
+        }
     }
 
-    @Event(value = {R.id.back_arrows, R.id.title_right})
+    @Event(value = {R.id.back_arrows, R.id.right_img})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
                 break;
-            case R.id.title_right:
-                Intent intent = new Intent(this, ChattingRecordsActivity.class);
-                intent.putExtra("userId", mTargetId);
+            case R.id.right_img:
+                Intent intent = new Intent(this, GroupMenberActivity.class);
+                intent.putExtra("mTargetId", mTargetId);
                 startActivity(intent);
                 break;
         }

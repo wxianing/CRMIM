@@ -268,7 +268,8 @@
         <activity android:name=".activity.RegulatoryFrameworkActivity" />
         <activity android:name=".activity.DimensionCodeActivity" />
         <activity android:name=".activity.MipcaCaptureActivity" />
-        <activity android:name=".activity.WebViewActivity"></activity>
+        <activity android:name=".activity.WebViewActivity" />
+        <activity android:name=".activity.GroupMenberActivity"></activity>
     </application>
 
 </manifest>

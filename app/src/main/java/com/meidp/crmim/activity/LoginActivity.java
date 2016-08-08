@@ -34,7 +34,7 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
 
 @ContentView(R.layout.activity_login)
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements RongIM.UserInfoProvider {
     @ViewInject(R.id.username_edittext)
     private EditText usernameEt;
     @ViewInject(R.id.password_edittext)
@@ -95,16 +95,15 @@ public class LoginActivity extends BaseActivity {
                 }
             }
         });
+
     }
 
     @Event(value = {R.id.login_btn})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_btn:
-
                 userName = usernameEt.getText().toString().trim();
                 passWord = passwordEt.getText().toString().trim();
-
                 HashMap params = new HashMap();
                 params.put("UserName", userName);
                 params.put("Password", passWord);
@@ -117,6 +116,19 @@ public class LoginActivity extends BaseActivity {
 
                 break;
         }
+    }
+
+    @Override
+    public UserInfo getUserInfo(String s) {
+        String avatar = headPhotoS;
+        if (NullUtils.isNull(avatar)) {
+            avatar = Constant.HEADPHOTO;
+        }
+        String name1 = name;
+        users = new UserInfo(s, "马云" +
+                "" +
+                "", Uri.parse(avatar));
+        return users;
     }
 
     class HttpCallBack extends HttpRequestCallBack<String> {
@@ -135,13 +147,8 @@ public class LoginActivity extends BaseActivity {
                 startActivity(intent);
 
                 IMkitConnectUtils.connect(appBean.getData().getRongcloudToken(), getApplicationContext());
-                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-                    @Override
-                    public UserInfo getUserInfo(String userId) {
-                        return findUserById(userId);//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
-                    }
-                }, true);
 
+//                RongIM.setUserInfoProvider(LoginActivity.this, false);
                 finish();
             } else {
                 ToastUtils.shows(LoginActivity.this, appBean.getMsg());

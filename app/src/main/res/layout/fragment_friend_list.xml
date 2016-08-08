@@ -279,7 +279,6 @@
             android:text="财务部" />
     </LinearLayout>
 
-
     <FrameLayout
         android:id="@+id/friends_list"
         android:layout_width="match_parent"

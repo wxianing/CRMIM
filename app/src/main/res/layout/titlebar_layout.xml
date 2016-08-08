@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="45dp"
-    android:background="@color/statusbar_bg"
+    android:background="@color/white"
     android:clipToPadding="true"
     android:orientation="vertical">
 
@@ -28,7 +28,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="标题"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="@dimen/sp20" />
 
         <ImageView
