@@ -43,7 +43,7 @@ public class AnnouncementActivity extends BaseActivity implements PullToRefreshB
 
     @Override
     public void onInit() {
-        title.setText("详细内容");
+        title.setText("公告");
         announcementActivity = this;
         mListView.setMode(PullToRefreshBase.Mode.BOTH);
         mDatas = new ArrayList<>();

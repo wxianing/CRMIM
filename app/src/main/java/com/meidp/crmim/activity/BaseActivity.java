@@ -13,7 +13,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtils.setStatusBarColor(this, R.color.statusbar_bg);
+        StatusBarUtils.setStatusBarColor(this, R.color.black);
         x.view().inject(this);
         onInit();
         onInitData();

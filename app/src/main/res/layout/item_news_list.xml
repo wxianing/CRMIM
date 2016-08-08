@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="@dimen/dp120"
+            android:layout_height="@dimen/dp120"
+            android:padding="@dimen/dp10"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/hugh" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/dp10"
+            android:paddingRight="@dimen/dp10"
+            android:paddingTop="@dimen/dp8">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:src="@mipmap/red_round_icon" />
+
+            <TextView
+                android:id="@+id/news_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp5"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="新闻标题"
+                android:textColor="@color/textcolor_black"
+                android:textSize="@dimen/sp16" />
+
+            <TextView
+                android:id="@+id/news_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/news_title"
+                android:layout_marginTop="@dimen/dp5"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="@string/announcement_content" />
+
+            <TextView
+                android:id="@+id/curr_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/news_content"
+                android:layout_marginTop="@dimen/dp5"
+                android:gravity="end"
+                android:text="2016.8.8"
+                android:textColor="@color/textcolor_gray" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

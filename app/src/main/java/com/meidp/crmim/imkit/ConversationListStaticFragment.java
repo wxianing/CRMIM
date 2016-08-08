@@ -1,14 +1,20 @@
 package com.meidp.crmim.imkit;
 
+import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.INotificationSideChannel;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.meidp.crmim.R;
+import com.meidp.crmim.activity.DimensionCodeActivity;
+import com.meidp.crmim.activity.NewGroupActivity;
+import com.meidp.crmim.activity.SearchMsgActivity;
 import com.meidp.crmim.fragment.BaseFragment;
 
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import io.rong.imkit.fragment.ConversationListFragment;
@@ -41,5 +47,25 @@ public class ConversationListStaticFragment extends BaseFragment {
                 .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")//设置系统会话非聚合显示
                 .build();
         fragment.setUri(uri);
+    }
+
+
+    @Event({R.id.search_edittext, R.id.right_add, R.id.right_scan})
+    private void onClick(View v) {
+        Intent intent = null;
+        switch (v.getId()) {
+            case R.id.search_edittext:
+                intent = new Intent(getActivity(), SearchMsgActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.right_add:
+                intent = new Intent(getActivity(), NewGroupActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.right_scan:
+                intent = new Intent(getActivity(), DimensionCodeActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 }

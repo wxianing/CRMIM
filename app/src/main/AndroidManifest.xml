@@ -261,7 +261,14 @@
         <activity android:name=".activity.DepartmentContactsActivity" />
         <activity android:name=".activity.ProjectSearchActivity" />
         <activity android:name=".activity.PrototypeDetailsActivity" />
-        <activity android:name=".activity.ContactsActivity"></activity>
+        <activity android:name=".activity.ContactsActivity" />
+        <activity android:name=".activity.ApprovalDetailsActivity" />
+        <activity android:name=".activity.SearchMsgActivity" />
+        <activity android:name=".activity.NewsActivity" />
+        <activity android:name=".activity.RegulatoryFrameworkActivity" />
+        <activity android:name=".activity.DimensionCodeActivity" />
+        <activity android:name=".activity.MipcaCaptureActivity" />
+        <activity android:name=".activity.WebViewActivity"></activity>
     </application>
 
 </manifest>

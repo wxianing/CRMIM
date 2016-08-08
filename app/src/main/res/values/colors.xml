@@ -33,5 +33,10 @@
     <color name="head_bg_color">#087CF5</color>
     <color name="listview_item_normal">#eef0ed</color>
     <color name="listview_item_pressed">#d4d4d4</color>
+    <color name="tc_gray">#BDBDBD</color>
+
+    <color name="result_view">#b0000000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="possible_result_points">#c0ffff00</color>
 
 </resources>

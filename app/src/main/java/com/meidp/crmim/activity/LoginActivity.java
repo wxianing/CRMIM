@@ -155,7 +155,9 @@ public class LoginActivity extends BaseActivity {
             avatar = Constant.HEADPHOTO;
         }
         String name1 = name;
-        users = new UserInfo(userId, null, Uri.parse(avatar));
+        users = new UserInfo(userId, "马云" +
+                "" +
+                "", Uri.parse(avatar));
         return users;
     }
 

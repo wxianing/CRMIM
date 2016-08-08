@@ -113,4 +113,13 @@ public class Constant {
     public static final String SAVE_UNREADER = BASE_URL + "common/mpublic/readsave";
     //样机详情
     public static final String PROTOTYPE_DETAILS_URL = BASE_URL + "order/getsellsample";
+
+    //流程保存审核
+    public static final String CHECKFOR_SAVE_URL = BASE_URL + "common/mpublic/flowstepcheck";
+    //公司制度
+    public static final String REGULATORY_FRAMEWORK_URL = BASE_URL + "office/office/getculturedocpagelist";
+
+    //资讯类分
+    public static final String CLASSIFY_URL =BASE_URL+ "office/office/getculturetypes";
+
 }

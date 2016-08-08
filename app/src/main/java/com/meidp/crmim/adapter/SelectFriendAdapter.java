@@ -50,7 +50,7 @@ public class SelectFriendAdapter extends BasicAdapter<Friends> {
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-        vh.userName.setText(mDatas.get(position).getLoginName());
+        vh.userName.setText(mDatas.get(position).getEmployeeName());
 //        vh.checkBox.setChecked(getIsSelected().get(position));
         return convertView;
     }

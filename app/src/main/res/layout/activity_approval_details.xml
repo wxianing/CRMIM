@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.meidp.crmim.activity.ApprovalDetailsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/titlebar" />
+
+        <TextView
+            android:id="@+id/title_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp30"
+            android:background="@color/white"
+            android:padding="@dimen/dp10"
+            android:text="标题：" />
+
+        <include layout="@layout/horizontal_line" />
+
+        <TextView
+            android:id="@+id/curr_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="@dimen/dp10"
+            android:text="标题："
+            android:textColor="@color/textcolor_orange" />
+
+        <TextView
+            android:id="@+id/project_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp30"
+            android:background="@color/white"
+            android:padding="@dimen/dp10"
+            android:text="项目名：" />
+
+        <include layout="@layout/horizontal_line" />
+
+        <TextView
+            android:id="@+id/cust_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="@dimen/dp10"
+            android:text="客户名：" />
+
+        <include layout="@layout/horizontal_line" />
+
+        <TextView
+            android:id="@+id/duty_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="@dimen/dp10"
+            android:text="负责人：" />
+
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp30" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/follow_layout"
+        android:layout_marginTop="30dp"
+        android:background="@color/white"
+        android:paddingBottom="@dimen/dp5"
+        android:paddingTop="5dp">
+
+
+        <Button
+            android:id="@+id/refuse_btn"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/dp15"
+            android:layout_marginRight="@dimen/dp30"
+            android:layout_weight="1"
+            android:background="@drawable/button_tranning"
+            android:text="拒     绝"
+            android:textColor="#E7762B"
+            android:textSize="@dimen/sp16" />
+
+        <Button
+            android:id="@+id/agree_btn"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/dp30"
+            android:layout_marginRight="@dimen/dp15"
+            android:layout_weight="1"
+            android:background="@drawable/button_shape"
+            android:text="同     意"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp16" />
+    </LinearLayout>
+
+</RelativeLayout>

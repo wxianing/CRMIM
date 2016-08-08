@@ -61,6 +61,17 @@
         <item name="android:textColorHint">#A8A8A8</item>
     </style>
 
+    <style name="group_editext">
+        <item name="android:textSize">14dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_margin">1dp</item>
+        <item name="android:textColor">@color/textcolor_gray</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/edittext_tran</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColorHint">#A8A8A8</item>
+    </style>
+
     <style name="sub_button">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
