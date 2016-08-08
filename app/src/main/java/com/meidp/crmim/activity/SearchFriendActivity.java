@@ -26,7 +26,7 @@ public class SearchFriendActivity extends BaseActivity {
     private EditText searchEt;
 
 
-    @Event(value = {R.id.search_btn})
+    @Event(value = {R.id.search_btn, R.id.back_arrows})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.search_btn:
@@ -35,6 +35,10 @@ public class SearchFriendActivity extends BaseActivity {
                     ToastUtils.shows(this, keyWord);
                 }
                 break;
+            case R.id.back_arrows:
+                finish();
+                break;
+
         }
     }
 }

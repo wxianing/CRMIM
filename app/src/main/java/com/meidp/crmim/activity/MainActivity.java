@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.jauker.widget.BadgeView;
 import com.meidp.crmim.R;
+import com.meidp.crmim.fragment.CompanyFragment;
 import com.meidp.crmim.fragment.HomeFragment;
 import com.meidp.crmim.fragment.MyFragment;
 import com.meidp.crmim.imkit.ContactsFragment;
@@ -39,12 +40,13 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     public void onInit() {
         mainActivity = this;
         mFragments = new ArrayList<>();
-        mFragments.add(new HomeFragment());
         mFragments.add(new ConversationListStaticFragment());
+        mFragments.add(new CompanyFragment());
+        mFragments.add(new HomeFragment());
         mFragments.add(new ContactsFragment());
         mFragments.add(new MyFragment());
 
-//        ((RadioButton) mRadioGroup.getChildAt(0)).setChecked(true);
+        ((RadioButton) mRadioGroup.getChildAt(0)).setChecked(true);
         manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.main_fragments_contents, mFragments.get(0));
@@ -57,6 +59,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 //        BadgeView badgeView = new BadgeView(this);
 //        badgeView.setTargetView(message);
 //        badgeView.setBadgeCount(3);
+
     }
 
     @Override

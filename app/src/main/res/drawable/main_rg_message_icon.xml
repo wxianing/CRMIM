@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@mipmap/home_bottom_tab_icon_message_highlight" android:state_checked="true" />
-    <item android:drawable="@mipmap/home_bottom_tab_icon_message_normal" />
+    <item android:drawable="@mipmap/tab_message_checked_icon" android:state_checked="true" />
+    <item android:drawable="@mipmap/tab_message_normal_icon" />
 
 </selector>

@@ -14,13 +14,19 @@
 
         <RadioButton
             style="@style/mainRgStyle"
-            android:drawableTop="@drawable/main_rg_home_icon"
-            android:text="工作" />
+            android:drawableTop="@drawable/main_rg_message_icon"
+            android:text="消息" />
 
         <RadioButton
             style="@style/mainRgStyle"
-            android:drawableTop="@drawable/main_rg_message_icon"
-            android:text="消息" />
+            android:drawableTop="@drawable/main_rg_company_icon"
+            android:text="公司" />
+
+        <RadioButton
+            style="@style/mainRgStyle"
+            android:drawableTop="@drawable/main_rg_home_icon"
+            android:text="工作" />
+
 
         <RadioButton
             style="@style/mainRgStyle"
@@ -33,39 +39,45 @@
             android:text="我的" />
     </RadioGroup>
 
-    <!--<com.mne.mainaer.ui.view.FlowLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:background="#00000000"-->
-        <!--android:numColumns="5"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:rating="1">-->
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#00000000"
+        android:orientation="horizontal">
 
-        <!--<Button-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:visibility="invisible" />-->
+        <Button
 
-        <!--<Button-->
-            <!--android:id="@+id/btn_msg"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="#00000000"-->
-            <!--android:visibility="invisible" />-->
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="#00000000" />
+        <!-- 占位置的button，以便适应不同分辨率手机 -->
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:visibility="invisible" />
+        <!-- 占位置的button，以便适应不同分辨率手机 -->
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:visibility="invisible" />
+        <!-- 占位置的button，以便适应不同分辨率手机 -->
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:visibility="invisible" />
+        <!-- 占位置的button，以便适应不同分辨率手机 -->
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:visibility="invisible" />
+    </LinearLayout>
 
-        <!--<Button-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:visibility="invisible" />-->
 
-        <!--<Button-->
-            <!--android:id="@+id/btn_my"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:visibility="invisible" />-->
-    <!--</com.mne.mainaer.ui.view.FlowLayout>-->
 </RelativeLayout>

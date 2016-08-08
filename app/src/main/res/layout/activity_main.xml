@@ -18,7 +18,6 @@
     <include
         layout="@layout/widget_bottom_layout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true" />
+        android:layout_height="50dp" />
 
 </LinearLayout>

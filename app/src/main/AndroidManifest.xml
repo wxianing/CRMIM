@@ -260,7 +260,8 @@
         <activity android:name=".activity.NewApprovalProcessActivity" />
         <activity android:name=".activity.DepartmentContactsActivity" />
         <activity android:name=".activity.ProjectSearchActivity" />
-        <activity android:name=".activity.PrototypeDetailsActivity"></activity>
+        <activity android:name=".activity.PrototypeDetailsActivity" />
+        <activity android:name=".activity.ContactsActivity"></activity>
     </application>
 
 </manifest>

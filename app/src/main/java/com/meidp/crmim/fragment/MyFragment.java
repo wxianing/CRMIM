@@ -37,10 +37,6 @@ import org.xutils.view.annotation.ViewInject;
 @ContentView(R.layout.fragment_my)
 public class MyFragment extends BaseFragment {
 
-    @ViewInject(R.id.title_tv)
-    private TextView title;
-    @ViewInject(R.id.back_arrows)
-    private ImageView backImg;
     @ViewInject(R.id.header_img)
     private ImageView header;
     @ViewInject(R.id.username)
@@ -55,14 +51,11 @@ public class MyFragment extends BaseFragment {
 
     @Override
     public void onInit() {
-        backImg.setVisibility(View.GONE);
-        title.setText("个人信息");
-
         String phone = (String) SPUtils.get(getActivity(), "PHONE", "");
         phoneNum.setText("电话：" + phone);
     }
 
-    @Event(value = {R.id.person_center, R.id.my_performance, R.id.my_assess, R.id.my_projec, R.id.my_credit, R.id.my_cost, R.id.my_property, R.id.my_achievements, R.id.logout, R.id.feedback_layout, R.id.my_knowledge, R.id.visit_record})
+    @Event(value = {R.id.person_center, R.id.my_performance, R.id.my_assess, R.id.my_projec, R.id.my_credit, R.id.logout, R.id.feedback_layout,  R.id.visit_record})
     private void onClick(View v) {
         Intent intent = new Intent();
         switch (v.getId()) {
@@ -82,18 +75,18 @@ public class MyFragment extends BaseFragment {
                 intent.setClass(getActivity(), MyCreditActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.my_cost://我的费用
-                intent.setClass(getActivity(), CostManagerActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.my_achievements:
-                intent.setClass(getActivity(), MyAchievementsActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.my_property://我的财产
-                intent.setClass(getActivity(), MyPrototypeActivity.class);
-                startActivity(intent);
-                break;
+//            case R.id.my_cost://我的费用
+//                intent.setClass(getActivity(), CostManagerActivity.class);
+//                startActivity(intent);
+//                break;
+//            case R.id.my_achievements:
+//                intent.setClass(getActivity(), MyAchievementsActivity.class);
+//                startActivity(intent);
+//                break;
+//            case R.id.my_property://我的财产
+//                intent.setClass(getActivity(), MyPrototypeActivity.class);
+//                startActivity(intent);
+//                break;
             case R.id.logout://退出登录
                 SPUtils.setLoginTag(getActivity(), false);
                 intent.setClass(getActivity(), LoginActivity.class);
@@ -133,7 +126,6 @@ public class MyFragment extends BaseFragment {
         String niceName = (String) SPUtils.get(getActivity(), "EmployeeName", "");
         userName.setText(niceName);
         String deptName = (String) SPUtils.get(getActivity(), "DeptName", "");
-        jobTitle.setText("部门："+deptName);
-
+        jobTitle.setText("部门：" + deptName);
     }
 }

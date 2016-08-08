@@ -1,0 +1,293 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.meidp.crmim.fragment.CompanyFragment">
+
+    <include layout="@layout/titlebar" />
+
+    <LinearLayout
+        android:id="@+id/company_announcement_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp8"
+            android:src="@mipmap/company_announcement_icon" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/announcement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="公告"
+                android:textColor="@color/textcolor_black"
+                android:textSize="@dimen/sp16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/announcement"
+                android:layout_marginTop="@dimen/dp5"
+                android:text="巨烽的企业文化"
+                android:textColor="#BDBDBD" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dp5"
+                android:src="@mipmap/arrow_right" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_full_line" />
+
+    <LinearLayout
+        android:id="@+id/company_institutional_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp8"
+            android:src="@mipmap/company_institutional_icon" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/institutional"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="制度"
+                android:textColor="@color/textcolor_black"
+                android:textSize="@dimen/sp16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/institutional"
+                android:layout_marginTop="@dimen/dp5"
+                android:text="巨烽的规章制度"
+                android:textColor="#BDBDBD" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dp5"
+                android:src="@mipmap/arrow_right" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_full_line" />
+
+    <LinearLayout
+        android:id="@+id/company_cultrue_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp8"
+            android:src="@mipmap/company_culture_icon" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/culture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="文化"
+                android:textColor="@color/textcolor_black"
+                android:textSize="@dimen/sp16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/culture"
+                android:layout_marginTop="@dimen/dp5"
+                android:text="巨烽的企业文化"
+                android:textColor="#BDBDBD" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dp5"
+                android:src="@mipmap/arrow_right" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_full_line" />
+
+    <LinearLayout
+        android:id="@+id/company_news_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp8"
+            android:src="@mipmap/company_news_icon" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/news"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="新闻"
+                android:textColor="@color/textcolor_black"
+                android:textSize="@dimen/sp16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/news"
+                android:layout_marginTop="@dimen/dp5"
+                android:text="巨烽新闻直播间"
+                android:textColor="#BDBDBD" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dp5"
+                android:src="@mipmap/arrow_right" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_full_line" />
+
+    <LinearLayout
+        android:id="@+id/company_activities_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp8"
+            android:src="@mipmap/company_activities_icon" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/activities"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="活动"
+                android:textColor="@color/textcolor_black"
+                android:textSize="@dimen/sp16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/activities"
+                android:layout_marginTop="@dimen/dp5"
+                android:text="活动及会展详情回顾"
+                android:textColor="#BDBDBD" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dp5"
+                android:src="@mipmap/arrow_right" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_full_line" />
+
+    <LinearLayout
+        android:id="@+id/company_structure_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp8"
+            android:src="@mipmap/company_structure_icon" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/structure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="组织架构"
+                android:textColor="@color/textcolor_black"
+                android:textSize="@dimen/sp16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/structure"
+                android:layout_marginTop="@dimen/dp5"
+                android:text="企业管理架构"
+                android:textColor="#BDBDBD" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dp5"
+                android:src="@mipmap/arrow_right" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_full_line" />
+
+
+</LinearLayout>
