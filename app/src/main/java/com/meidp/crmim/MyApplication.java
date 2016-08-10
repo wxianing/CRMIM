@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
-import android.net.Uri;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 
 import com.android.volley.Request;
@@ -18,6 +18,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import org.xutils.x;
 
@@ -27,7 +28,6 @@ import java.util.ListIterator;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.model.UserInfo;
 
 /**
  * Package：com.meidp.crmim
@@ -40,6 +40,7 @@ public class MyApplication extends Application {
     public static DisplayImageOptions options;
 
     private static MyApplication mInstance;
+    public static DisplayImageOptions optionsRounds;
     private List<Activity> activitys = new LinkedList<Activity>();
     public static final String TAG = "VolleyPatterns";
     private RequestQueue mRequestQueue;
@@ -55,7 +56,6 @@ public class MyApplication extends Application {
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
 
-
         /**
          * 初始化融云
          * io.rong.push 为融云 push 进程名称，不可修改。
@@ -64,22 +64,7 @@ public class MyApplication extends Application {
                 "io.rong.push".equals(getCurProcessName(getApplicationContext()))) {
             RongIM.init(this);
 
-
         }
-    }
-
-    /**
-     * 设置头像、用户名等信息
-     *
-     * @param userId
-     * @return
-     */
-    private UserInfo findUserById(String userId) {
-        UserInfo userInfo = null;
-        if (userInfo == null) {
-            userInfo = new UserInfo(userId, userId, Uri.parse("http://www.qqbody.com/uploads/allimg/201411/18-200811_37.jpg"));
-        }
-        return userInfo;
     }
 
     public static void initImageLoader(Context context) {
@@ -89,6 +74,16 @@ public class MyApplication extends Application {
                 .showImageOnFail(R.mipmap.default_icon)//加载失败时显示的图片
                 .cacheInMemory()
                 .cacheOnDisc()
+                .build();
+
+        optionsRounds = new DisplayImageOptions.Builder()
+                .showStubImage(R.drawable.ic_launcher)
+                .showImageForEmptyUri(R.drawable.ic_launcher)
+                .showImageOnFail(R.drawable.ic_launcher)
+                .cacheInMemory(true)
+                .cacheOnDisc(true)
+                .bitmapConfig(Bitmap.Config.ARGB_8888)   //设置图片的解码类型
+                .displayer(new RoundedBitmapDisplayer(10))
                 .build();
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
                 context).threadPriority(Thread.NORM_PRIORITY - 2)

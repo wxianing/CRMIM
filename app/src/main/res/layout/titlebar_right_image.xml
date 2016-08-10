@@ -33,9 +33,10 @@
 
 
         <ImageView
+            android:padding="@dimen/dp5"
             android:id="@+id/right_scan"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dp5"
             android:layout_toLeftOf="@+id/right_add"
@@ -44,9 +45,10 @@
             android:textColor="@color/white" />
 
         <ImageView
+            android:padding="@dimen/dp5"
             android:id="@+id/right_add"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dp5"

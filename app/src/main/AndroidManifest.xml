@@ -269,7 +269,16 @@
         <activity android:name=".activity.DimensionCodeActivity" />
         <activity android:name=".activity.MipcaCaptureActivity" />
         <activity android:name=".activity.WebViewActivity" />
-        <activity android:name=".activity.GroupMenberActivity"></activity>
+        <activity android:name=".activity.GroupMenberActivity" />
+        <activity android:name=".activity.CompanytructureActivity" />
+        <activity android:name=".activity.MyValuesActivity" />
+        <activity android:name=".activity.LifeNavigationActivity" />
+        <activity android:name=".activity.ImportantActivity" />
+        <activity android:name=".activity.AboutActivity" />
+        <activity android:name=".activity.FollowListActivity" />
+        <activity android:name=".activity.SecretaryActivity" />
+        <activity android:name=".activity.NearContactsActivity" />
+        <activity android:name=".activity.CostDetailsActivity"></activity>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.meidp.crmim.activity;
 
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -7,11 +8,19 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.meidp.crmim.R;
+import com.meidp.crmim.http.HttpRequestCallBack;
+import com.meidp.crmim.http.HttpRequestUtils;
+import com.meidp.crmim.model.AppMsg;
+import com.meidp.crmim.utils.Constant;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
+
+import java.util.HashMap;
 
 @ContentView(R.layout.activity_web_view)
 public class WebViewActivity extends BaseActivity {
@@ -20,10 +29,13 @@ public class WebViewActivity extends BaseActivity {
 
     @ViewInject(R.id.webview)
     private WebView mWebView;
+    private int oid;
+    private int sType;
 
     @Override
     public void onInit() {
-        title.setText("详情");
+        String titleName = getIntent().getStringExtra("TITLE");
+        title.setText(titleName);
         String link = getIntent().getStringExtra("ClickUrl");
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -35,6 +47,37 @@ public class WebViewActivity extends BaseActivity {
         mWebView.loadUrl(link);
         //设置Web视图
         mWebView.setWebViewClient(new MyWebViewClient());
+        oid = getIntent().getIntExtra("OID", -1);
+        sType = getIntent().getIntExtra("sType", -1);
+        if (sType != -1) {
+            sendMsg(sType);
+        }
+    }
+
+    /**
+     * "IdTwo": 1,
+     * "IdThree": 2,
+     * "Id": 3
+     */
+    private void sendMsg(int sType) {
+        HashMap params = new HashMap();
+
+        params.put("IdTwo", 2);
+        params.put("IdThree", sType);
+        params.put("Id", oid);
+
+        HttpRequestUtils.getmInstance().send(WebViewActivity.this, Constant.SAVE_UNREADER, params, new HttpRequestCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                AppMsg appMsg = JSONObject.parseObject(result, new TypeReference<AppMsg>() {
+                });
+                if (appMsg != null && appMsg.getEnumcode() == 0) {
+                    Log.e("未读标记", "标记成功");
+                } else {
+                    Log.e("未读标记", "标记失败");
+                }
+            }
+        });
     }
 
 

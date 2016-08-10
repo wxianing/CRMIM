@@ -157,14 +157,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="项目跟进" />
+            android:text="项目状态" />
 
-        <ImageView
+        <TextView
+            android:id="@+id/follow_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/arrow_right" />
+            android:layout_marginRight="@dimen/dp20"
+            android:text="已提交，等待审核"
+            android:textColor="#BDBDBD" />
 
     </RelativeLayout>
 

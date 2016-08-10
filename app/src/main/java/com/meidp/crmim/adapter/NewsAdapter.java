@@ -41,7 +41,14 @@ public class NewsAdapter extends BasicAdapter<Informations> {
         ImageLoader.getInstance().displayImage(mDatas.get(position).getImgUrl(), vh.img, MyApplication.options);
         vh.newsTitle.setText(mDatas.get(position).getTitle());
         vh.content.setText(mDatas.get(position).getCulturetent());
-        vh.currTime.setText(mDatas.get(position).getModifiedDate());
+
+        String time = mDatas.get(position).getModifiedDate();
+        time = time.substring(0,16);
+
+        vh.currTime.setText(time);
+        if (mDatas.get(position).getIsRead() == 0) {
+            vh.redDot.setVisibility(View.VISIBLE);
+        }
         return convertView;
     }
 
@@ -56,6 +63,8 @@ public class NewsAdapter extends BasicAdapter<Informations> {
         private TextView content;
         @ViewInject(R.id.curr_time)
         private TextView currTime;
+        @ViewInject(R.id.red_dot)
+        private ImageView redDot;
 
         public ViewHolder(View view) {
             x.view().inject(this, view);

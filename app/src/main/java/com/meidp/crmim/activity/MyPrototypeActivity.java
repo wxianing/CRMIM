@@ -121,7 +121,7 @@ public class MyPrototypeActivity extends BaseActivity implements PullToRefreshBa
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this, PrototypeDetailsActivity.class);
-        intent.putExtra("ID", mDatas.get(position).getID());
+        intent.putExtra("OID", mDatas.get(position).getID());
         startActivity(intent);
     }
 }

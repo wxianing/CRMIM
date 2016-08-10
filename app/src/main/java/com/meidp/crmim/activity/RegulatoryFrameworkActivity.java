@@ -1,5 +1,6 @@
 package com.meidp.crmim.activity;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,6 +10,7 @@ import com.meidp.crmim.R;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppDatas;
+import com.meidp.crmim.model.AppMsg;
 import com.meidp.crmim.model.Rules;
 import com.meidp.crmim.utils.Constant;
 
@@ -55,11 +57,39 @@ public class RegulatoryFrameworkActivity extends BaseActivity {
                     if (appDatas.getData().getDataList().size() > 0) {
                         String contents = appDatas.getData().getDataList().get(0).getCulturetent();
                         content.setText(contents);
+                        sendMsg(appDatas.getData().getDataList().get(0).getID());
                     }
                 }
             }
         });
     }
+
+    /**
+     * "IdTwo": 1,
+     * "IdThree": 2,
+     * "Id": 3
+     */
+    private void sendMsg(int oid) {
+        HashMap params = new HashMap();
+
+        params.put("IdTwo", 2);
+        params.put("IdThree", 25);
+        params.put("Id", oid);
+
+        HttpRequestUtils.getmInstance().send(RegulatoryFrameworkActivity.this, Constant.SAVE_UNREADER, params, new HttpRequestCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                AppMsg appMsg = JSONObject.parseObject(result, new TypeReference<AppMsg>() {
+                });
+                if (appMsg != null && appMsg.getEnumcode() == 0) {
+                    Log.e("未读标记", "标记成功");
+                } else {
+                    Log.e("未读标记", "标记失败");
+                }
+            }
+        });
+    }
+
 
     @Event({R.id.back_arrows})
     private void onClick(View v) {

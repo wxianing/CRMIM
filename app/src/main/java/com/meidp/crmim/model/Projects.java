@@ -10,18 +10,57 @@ import java.io.Serializable;
  */
 public class Projects implements Serializable {
 
+    /**
+     * ID : 38
+     * ProjectNo : XM2016070017
+     * ProjectName : 10MP灰阶一体双屏
+     * CreateDate : 2016-07-21 15:39:22
+     * Creator : 1875
+     * StartDate :
+     * EndDate :
+     * CustID : 253
+     * CustLinkMan : 郑三炮
+     * LinkTel : 15889356386
+     * SuccessRate : 0.8
+     * Remark :
+     * Investment : 150000
+     * AcceptMoney : 0
+     * AcceptDate :
+     * ExpectAcceptDate :
+     * LinkMan : 0
+     * ProjectDirectionId : 0
+     * ProjectDirectionName :
+     * CreatorName : 王显宁
+     * CompanyId : 0
+     * CompanyName :
+     * DepartmentName : null
+     * ZhiWu : null
+     */
+
     private int ID;
     private String ProjectNo;
     private String ProjectName;
     private String CreateDate;
-    private String Creator;
+    private int Creator;
     private String StartDate;
-    private String EdnDate;
+    private String EndDate;
     private int CustID;
     private String CustLinkMan;
     private String LinkTel;
     private double SuccessRate;
     private String Remark;
+    private int Investment;
+    private int AcceptMoney;
+    private String AcceptDate;
+    private String ExpectAcceptDate;
+    private int LinkMan;
+    private int ProjectDirectionId;
+    private String ProjectDirectionName;
+    private String CreatorName;
+    private int CompanyId;
+    private String CompanyName;
+    private Object DepartmentName;
+    private Object ZhiWu;
 
     public int getID() {
         return ID;
@@ -55,11 +94,11 @@ public class Projects implements Serializable {
         this.CreateDate = CreateDate;
     }
 
-    public String getCreator() {
+    public int getCreator() {
         return Creator;
     }
 
-    public void setCreator(String Creator) {
+    public void setCreator(int Creator) {
         this.Creator = Creator;
     }
 
@@ -71,12 +110,12 @@ public class Projects implements Serializable {
         this.StartDate = StartDate;
     }
 
-    public String getEdnDate() {
-        return EdnDate;
+    public String getEndDate() {
+        return EndDate;
     }
 
-    public void setEdnDate(String EdnDate) {
-        this.EdnDate = EdnDate;
+    public void setEndDate(String EndDate) {
+        this.EndDate = EndDate;
     }
 
     public int getCustID() {
@@ -117,5 +156,101 @@ public class Projects implements Serializable {
 
     public void setRemark(String Remark) {
         this.Remark = Remark;
+    }
+
+    public int getInvestment() {
+        return Investment;
+    }
+
+    public void setInvestment(int Investment) {
+        this.Investment = Investment;
+    }
+
+    public int getAcceptMoney() {
+        return AcceptMoney;
+    }
+
+    public void setAcceptMoney(int AcceptMoney) {
+        this.AcceptMoney = AcceptMoney;
+    }
+
+    public String getAcceptDate() {
+        return AcceptDate;
+    }
+
+    public void setAcceptDate(String AcceptDate) {
+        this.AcceptDate = AcceptDate;
+    }
+
+    public String getExpectAcceptDate() {
+        return ExpectAcceptDate;
+    }
+
+    public void setExpectAcceptDate(String ExpectAcceptDate) {
+        this.ExpectAcceptDate = ExpectAcceptDate;
+    }
+
+    public int getLinkMan() {
+        return LinkMan;
+    }
+
+    public void setLinkMan(int LinkMan) {
+        this.LinkMan = LinkMan;
+    }
+
+    public int getProjectDirectionId() {
+        return ProjectDirectionId;
+    }
+
+    public void setProjectDirectionId(int ProjectDirectionId) {
+        this.ProjectDirectionId = ProjectDirectionId;
+    }
+
+    public String getProjectDirectionName() {
+        return ProjectDirectionName;
+    }
+
+    public void setProjectDirectionName(String ProjectDirectionName) {
+        this.ProjectDirectionName = ProjectDirectionName;
+    }
+
+    public String getCreatorName() {
+        return CreatorName;
+    }
+
+    public void setCreatorName(String CreatorName) {
+        this.CreatorName = CreatorName;
+    }
+
+    public int getCompanyId() {
+        return CompanyId;
+    }
+
+    public void setCompanyId(int CompanyId) {
+        this.CompanyId = CompanyId;
+    }
+
+    public String getCompanyName() {
+        return CompanyName;
+    }
+
+    public void setCompanyName(String CompanyName) {
+        this.CompanyName = CompanyName;
+    }
+
+    public Object getDepartmentName() {
+        return DepartmentName;
+    }
+
+    public void setDepartmentName(Object DepartmentName) {
+        this.DepartmentName = DepartmentName;
+    }
+
+    public Object getZhiWu() {
+        return ZhiWu;
+    }
+
+    public void setZhiWu(Object ZhiWu) {
+        this.ZhiWu = ZhiWu;
     }
 }

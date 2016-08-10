@@ -5,78 +5,86 @@
     android:background="@color/default_background_color"
     android:orientation="vertical">
 
-    <include layout="@layout/titlebar_right_image" />
-
-    <include layout="@layout/horizontal_full_line" />
-
     <LinearLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/search_edittext"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_margin="@dimen/dp5"
-            android:background="@drawable/search_et_sp"
-            android:drawableLeft="@mipmap/search_icon"
-            android:focusable="false"
-            android:hint="搜索"
-            android:textColorHint="@color/tc_gray"
-            android:textSize="@dimen/sp14" />
+        <include layout="@layout/titlebar_right_image" />
+
+        <include layout="@layout/horizontal_full_line" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp10">
+            android:background="@color/white"
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:padding="@dimen/dp5"
-                android:src="@mipmap/hugh" />
+            <EditText
+                android:id="@+id/search_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_margin="@dimen/dp5"
+                android:background="@drawable/search_et_sp"
+                android:drawableLeft="@mipmap/search_icon"
+                android:focusable="false"
+                android:hint="搜索"
+                android:textColorHint="@color/tc_gray"
+                android:textSize="@dimen/sp14" />
 
             <LinearLayout
+                android:id="@+id/secretary_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/dp10"
-                android:orientation="vertical">
+                android:layout_marginLeft="@dimen/dp10">
 
-                <RelativeLayout
+                <ImageView
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:padding="@dimen/dp5"
+                    android:src="@mipmap/secretary_icon" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="巨峰小秘书" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/dp15"
-                        android:text="11:50"
-                        android:textColor="#979797" />
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp5"
-                    android:text="消息推送小助手"
-                    android:textColor="@color/tc_gray"
-                    android:textSize="@dimen/sp13" />
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="巨峰小秘书" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/dp15"
+                            android:text="11:50"
+                            android:textColor="#979797" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp5"
+                        android:text="消息推送小助手"
+                        android:textColor="@color/tc_gray"
+                        android:textSize="@dimen/sp13" />
+                </LinearLayout>
+
+
             </LinearLayout>
-
-
         </LinearLayout>
-    </LinearLayout>
 
-    <include layout="@layout/horizontal_full_line" />
+        <include layout="@layout/horizontal_full_line" />
+    </LinearLayout>
 
     <fragment
         android:id="@+id/conversationlist"

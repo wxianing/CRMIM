@@ -30,7 +30,7 @@ public class GroupAdapter extends BasicAdapter<Groups> {
         ViewHolder vh = null;
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.item_friends_list, parent, false);
+            convertView = inflater.inflate(R.layout.item_group_list, parent, false);
             vh = new ViewHolder(convertView);
             convertView.setTag(vh);
         } else {

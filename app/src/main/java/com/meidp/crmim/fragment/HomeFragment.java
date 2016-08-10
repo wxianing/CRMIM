@@ -20,9 +20,14 @@ import com.meidp.crmim.activity.CostManagerActivity;
 import com.meidp.crmim.activity.CustomerListActivity;
 import com.meidp.crmim.activity.CustomerVisitActivity;
 import com.meidp.crmim.activity.EnterpriseCultureActivity;
+import com.meidp.crmim.activity.ImportantActivity;
+import com.meidp.crmim.activity.LifeNavigationActivity;
 import com.meidp.crmim.activity.MyAchievementsActivity;
+import com.meidp.crmim.activity.MyCreditActivity;
+import com.meidp.crmim.activity.MyKnowledgeActivity;
 import com.meidp.crmim.activity.MyPerformanceActivity;
 import com.meidp.crmim.activity.MyPrototypeActivity;
+import com.meidp.crmim.activity.MyValuesActivity;
 import com.meidp.crmim.activity.OpenSeaPoolActivity;
 import com.meidp.crmim.activity.ProjectManagerActivity;
 import com.meidp.crmim.activity.SubmitActivity;
@@ -42,6 +47,7 @@ import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.widget.AutoScrollViewPager;
 
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
@@ -54,25 +60,10 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     private TextView title;
     @ViewInject(R.id.back_arrows)
     private ImageView backImg;
-    /**
-     * 头部广告
-     */
-    @ViewInject(R.id.home_banner_viewpager)
-    protected AutoScrollViewPager mViewPager;
-    @ViewInject(R.id.home_dot_ll)
-    protected LinearLayout dotLL;
-    private List<Banner> imageUrls;
-    private ImagePagerAdapter pagerAdapter;
 
-    private List<HomeEntrity> entrities;
-
-    @ViewInject(R.id.grid_view)
-    private GridView mGridView;
-    private HomeGvAdapter mGirdViewAdapter;
     @ViewInject(R.id.linear_layout)
     private LinearLayout linearLayout;
 
-    private int unReaderCount = 0;
 
     private int pubNoticeNewCount = 0;
 
@@ -89,78 +80,62 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         linearLayout.setFocusable(true);
         linearLayout.setFocusableInTouchMode(true);
         linearLayout.requestFocus();
-        imageUrls = new ArrayList<>();
-        entrities = new ArrayList<>();
-        initData(pubNoticeNewCount, noCheckCount);
-        mGirdViewAdapter = new HomeGvAdapter(entrities, getActivity());
-        mGridView.setAdapter(mGirdViewAdapter);
-        mGridView.setOnItemClickListener(this);
-    }
-
-    private void initData(int pubNoticeNewCount, int noCheckCount) {
-        entrities.add(new HomeEntrity(R.mipmap.home_announcement_icon, "公告", pubNoticeNewCount));
-        entrities.add(new HomeEntrity(R.mipmap.home_opensea_icon, "公海池", unReaderCount));
-        entrities.add(new HomeEntrity(R.mipmap.home_project_manager_icon, "项目管理", unReaderCount));
-//        entrities.add(new HomeEntrity(R.mipmap.home_follow_project_icon, "项目跟进"));
-        entrities.add(new HomeEntrity(R.mipmap.home_customer_visit_icon, "客户拜访", unReaderCount));
-        entrities.add(new HomeEntrity(R.mipmap.home_expense_reimbursement_icon, "费用报销", unReaderCount));
-        entrities.add(new HomeEntrity(R.mipmap.home_new_project_icon, "新建项目", unReaderCount));
-        entrities.add(new HomeEntrity(R.mipmap.home_customer_archives_icon, "客户档案", unReaderCount));
-        entrities.add(new HomeEntrity(R.mipmap.home_my_prototype_icon, "样机管理", unReaderCount));
-        entrities.add(new HomeEntrity(R.mipmap.home_my_performance_icon, "我的业绩", unReaderCount));
-        entrities.add(new HomeEntrity(R.mipmap.work_plan, "工作计划", unReaderCount));
-        entrities.add(new HomeEntrity(R.mipmap.work_plan, "企业文化", unReaderCount));
-        entrities.add(new HomeEntrity(R.mipmap.work_plan, "参展申请", unReaderCount));
-        entrities.add(new HomeEntrity(R.mipmap.work_plan, "审批", noCheckCount));
     }
 
     @Override
     public void onInitData() {
-        HashMap params = new HashMap();
-        HttpRequestUtils.getmInstance().send(getActivity(), Constant.BANNER_URL, params, new HttpRequestCallBack<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.e("HomeFragment", result);
-                AppBeans<Banner> appBean = JSONObject.parseObject(result, new TypeReference<AppBeans<Banner>>() {
-                });
-                if (appBean != null && appBean.getEnumcode() == 0) {
-                    imageUrls.addAll(appBean.getData());
-                    pagerAdapter = new ImagePagerAdapter(getActivity(), imageUrls, dotLL);
-                    mViewPager.setAdapter(pagerAdapter);
-                    mViewPager.setOnPageChangeListener(pagerAdapter);
-                    pagerAdapter.refreshData(true);
-                }
-            }
-        });
 
     }
 
-    private void loadUnreaderMsg() {
-        HttpRequestUtils.getmInstance().send(getActivity(), Constant.UNREADER_MESSAGE_URL, null, new HttpRequestCallBack() {
-            @Override
-            public void onSuccess(String result) {
-                AppBean<UnReaderMsg> appBean = JSONObject.parseObject(result, new TypeReference<AppBean<UnReaderMsg>>() {
-                });
-                if (appBean != null && appBean.getEnumcode() == 0) {
-                    entrities.clear();
-                    initData(appBean.getData().getNewsCount(), appBean.getData().getNoCheckCount());
-                    mGirdViewAdapter.notifyDataSetChanged();
-                }
-            }
-        });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mViewPager.startAutoScroll();
-        loadUnreaderMsg();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mViewPager.stopAutoScroll();
+    @Event({R.id.visiting_customer, R.id.project_manager, R.id.cost_manager, R.id.prototype_manager, R.id.my_project, R.id.my_performance, R.id.my_values, R.id.my_integrity, R.id.life_navigation, R.id.improtment_thing, R.id.knowledge})
+    private void onClick(View v) {
+        Intent intent = null;
+        switch (v.getId()) {
+            case R.id.visiting_customer://客户拜访
+                intent = new Intent(getActivity(), VisitingClientsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.project_manager://项目管理
+                intent = new Intent(getActivity(), ProjectManagerActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.cost_manager://费用管理
+                intent = new Intent(getActivity(), CostManagerActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.prototype_manager://样机管理
+                intent = new Intent(getActivity(), MyPrototypeActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.my_project:
+                intent = new Intent(getActivity(), ProjectManagerActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.my_performance:
+                intent = new Intent(getActivity(), MyPerformanceActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.my_values:
+                intent = new Intent(getActivity(), MyValuesActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.my_integrity:
+                intent = new Intent(getActivity(), MyCreditActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.life_navigation:
+                intent = new Intent(getActivity(), LifeNavigationActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.improtment_thing:
+                intent = new Intent(getActivity(), ImportantActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.knowledge:
+                intent = new Intent(getActivity(), MyKnowledgeActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 
     @Override

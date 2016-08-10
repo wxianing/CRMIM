@@ -13,16 +13,20 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.meidp.crmim.MyApplication;
 import com.meidp.crmim.R;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
+import com.meidp.crmim.model.AppBean;
 import com.meidp.crmim.model.AppMsg;
+import com.meidp.crmim.model.User;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.ImageUtils;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.utils.ToastUtils;
 import com.meidp.crmim.view.DActionSheetDialog;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -30,6 +34,10 @@ import org.xutils.view.annotation.ViewInject;
 
 import java.io.File;
 import java.util.HashMap;
+
+import io.rong.imkit.RongContext;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 
 @ContentView(R.layout.activity_person_centor)
 public class PersonCentorActivity extends BaseActivity {
@@ -53,6 +61,7 @@ public class PersonCentorActivity extends BaseActivity {
     private ImageView headerImg;
     @ViewInject(R.id.duty_tv)
     private TextView duty;
+    private UserInfo userInfo;
 
 
     @Override
@@ -78,9 +87,12 @@ public class PersonCentorActivity extends BaseActivity {
         nickNameEt.setText(employeeName);
         String phone = (String) SPUtils.get(this, "PHONE", "");
         phoneNumEt.setText(phone);
+        String headerPhoto = (String) SPUtils.get(this, "PhotoURL", "");
+        ImageLoader.getInstance().displayImage(headerPhoto, headerImg, MyApplication.options);
+
     }
 
-    @Event(value = {R.id.back_arrows, R.id.title_right, R.id.header_img})
+    @Event(value = {R.id.back_arrows, R.id.title_right, R.id.header_img, R.id.header_layout})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
@@ -108,6 +120,9 @@ public class PersonCentorActivity extends BaseActivity {
                 });
                 break;
             case R.id.header_img:
+                selectIconPhoto();
+                break;
+            case R.id.header_layout:
                 selectIconPhoto();
                 break;
         }
@@ -231,19 +246,54 @@ public class PersonCentorActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    //上传头像
     private void upload(final String photoString) {
         HashMap params = new HashMap();
         params.put("PothoData", photoString);
         HttpRequestUtils.getmInstance().send(PersonCentorActivity.this, Constant.UPDATE_HEADER, params, new HttpRequestCallBack<String>() {
             @Override
             public void onSuccess(String result) {
-                AppMsg appMsg = JSONObject.parseObject(result, new TypeReference<AppMsg>() {
+                AppBean<User> appBean = JSONObject.parseObject(result, new TypeReference<AppBean<User>>() {
                 });
-                if (appMsg != null && appMsg.getEnumcode() == 0) {
+                if (appBean != null && appBean.getEnumcode() == 0) {
                     Log.e("头像上传成功", result);
                     SPUtils.save(PersonCentorActivity.this, "headPortrait", photoString);
+                    SPUtils.save(PersonCentorActivity.this, "PhotoURL", appBean.getData().getPhotoURL());//保存头像
+                    if (appBean != null && appBean.getEnumcode() == 0) {
+                        String avatar = appBean.getData().getPhotoURL();
+                        String name = appBean.getData().getEmployeeName();
+                        userInfo = new UserInfo(Integer.toString(appBean.getData().getUserID()), name, Uri.parse(avatar));
+                        RongIM.getInstance().refreshUserInfoCache(userInfo);//刷新用户数据
+                    }
                 }
             }
         });
     }
+
+//    private UserInfo findUserById(final String userId) {
+//        HashMap params = new HashMap();
+//        params.put("Id", Integer.valueOf(userId));
+//        HttpRequestUtils.getmInstance().post(PersonCentorActivity.this, Constant.GET_PERSON_INFORMATION, params, new HttpRequestCallBack() {
+//            @Override
+//            public void onSuccess(String result) {
+//                AppBean<User> appBean = JSONObject.parseObject(result, new TypeReference<AppBean<User>>() {
+//                });
+//                if (appBean != null && appBean.getEnumcode() == 0) {
+//
+//                }
+//            }
+//        });
+//        return userInfo;
+//    }
+
+//    private void refreshUserInfo(UserInfo userInfo) {
+//        if (userInfo == null||mRrongIMClient == null) {
+//            throw new IllegalArgumentException();
+//        }
+//
+//        if(RongContext.getInstance()!=null){
+//            RongContext.getInstance().getUserInfoCache().put(userInfo.getUserId(),userInfo);
+//        }
+//    }
+
 }

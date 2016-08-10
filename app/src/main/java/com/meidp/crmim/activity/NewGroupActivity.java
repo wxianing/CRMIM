@@ -1,6 +1,9 @@
 package com.meidp.crmim.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -30,7 +33,6 @@ import java.util.List;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Discussion;
 
 @ContentView(R.layout.activity_new_group)
 public class NewGroupActivity extends BaseActivity implements AdapterView.OnItemClickListener {
@@ -44,17 +46,18 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
     @ViewInject(R.id.listview)
     private ListView mListView;
     private int checkNum;
-    @ViewInject(R.id.edittext_group_name)
-    private EditText groupNameEt;//群名
 
     private List<String> userIds;
     private RongCreateGroupCallBack mCallBack;
     private String groupName;
+    private String keyWord = "";
+    @ViewInject(R.id.search_edittext)
+    private EditText searchEditText;
 
     @Override
     public void onInit() {
         titleRight.setVisibility(View.VISIBLE);
-        titleRight.setText("保存");
+        titleRight.setText("确定");
         title.setText("新建群组");
         mDatas = new ArrayList<>();
         mAdapter = new SelectFriendAdapter(mDatas, this);
@@ -67,11 +70,12 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
 
     @Override
     public void onInitData() {
-        loadData();
+        loadData(keyWord);
     }
 
-    private void loadData() {
+    private void loadData(String keyWord) {
         HashMap params = new HashMap();
+        params.put("Keyword", keyWord);
         params.put("sType", 1);
 
         HttpRequestUtils.getmInstance().send(NewGroupActivity.this, Constant.FRIEND_LIST_URL, params, new HttpRequestCallBack<String>() {
@@ -87,20 +91,40 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
         });
     }
 
-    @Event(value = {R.id.back_arrows, R.id.title_right})
+    @Event(value = {R.id.back_arrows, R.id.title_right, R.id.search_btn})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
                 break;
             case R.id.title_right:
-                groupName = groupNameEt.getText().toString().trim();
-                if (NullUtils.isNull(groupName)) {
-                    RongIM.getInstance().createDiscussionChat(this, userIds, groupName, mCallBack);
-                }
+                final View dialogView = LayoutInflater.from(this).inflate(R.layout.edittext_layout, null);
+                new AlertDialog.Builder(this).setView(
+                        dialogView).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EditText editText = (EditText) dialogView.findViewById(R.id.edit_text);
+                        groupName = editText.getText().toString().trim();
+                        if (NullUtils.isNull(groupName)) {
+                            RongIM.getInstance().createDiscussionChat(NewGroupActivity.this, userIds, groupName, mCallBack);
+                        }
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
+
+                break;
+            case R.id.search_btn:
+                keyWord = searchEditText.getText().toString().trim();
+                mDatas.clear();
+                loadData(keyWord);
                 break;
         }
     }
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -143,6 +167,7 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
                     });
                     if (appMsg != null && appMsg.getEnumcode() == 0) {
                         ToastUtils.shows(NewGroupActivity.this, "创建成功");
+                        finish();
                     }
                 }
             });
@@ -153,6 +178,4 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
             Log.e("讨论组：", "创建失败");
         }
     }
-
-
 }

@@ -8,4 +8,74 @@
 
     <include layout="@layout/titlebar" />
 
+    <TextView
+        android:id="@+id/title_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp20"
+        android:background="@color/white"
+        android:padding="@dimen/dp10"
+        android:text="标题" />
+
+    <TextView
+        android:id="@+id/prototype_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp20"
+        android:background="@color/white"
+        android:padding="@dimen/dp10"
+        android:text="样机名称" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:background="#F5F5F5" />
+
+    <TextView
+        android:id="@+id/count_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/dp10"
+        android:text="数量：" />
+
+    <TextView
+        android:id="@+id/apply_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp20"
+        android:background="@color/white"
+        android:padding="@dimen/dp10"
+        android:text="申请时间：" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:background="#F5F5F5" />
+
+    <TextView
+        android:id="@+id/apply_person"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/dp10"
+        android:text="申请人：" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:background="#F5F5F5" />
+
+    <TextView
+        android:id="@+id/phone_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/dp10"
+        android:text="联系电话：：" />
+
+
 </LinearLayout>

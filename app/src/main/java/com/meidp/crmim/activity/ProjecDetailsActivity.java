@@ -1,6 +1,7 @@
 package com.meidp.crmim.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,7 +22,12 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import static com.meidp.crmim.R.color.textcolor_gray;
 
 /**
  * 项目详情
@@ -54,6 +60,11 @@ public class ProjecDetailsActivity extends BaseActivity {
     @ViewInject(R.id.success_rate)
     private TextView successRate;
 
+    @ViewInject(R.id.follow_status)
+    private TextView followStatus;
+
+    private ArrayList<ProjectDetails.ConstructionDetailsBean> mDatas;
+
     private String url;
 
     @Override
@@ -71,6 +82,7 @@ public class ProjecDetailsActivity extends BaseActivity {
 
             url = Constant.PUT_TO_OPENPOOL;
         }
+        mDatas = new ArrayList<>();
     }
 
     @Override
@@ -89,22 +101,26 @@ public class ProjecDetailsActivity extends BaseActivity {
                     linkmanPhone.setText("电话号码：" + appBean.getData().getLinkTel());
                     totalMoney.setText("" + appBean.getData().getInvestment());
                     registerDate.setText("项目登记时间: " + appBean.getData().getCreateDate());
-
                     double rate = appBean.getData().getSuccessRate() * 100;//成功率
-
                     successRate.setText(rate + "%");
                     if (NullUtils.isNull(appBean.getData().getRemark())) {
                         remarkTv.setText("备注:" + appBean.getData().getRemark());
                     } else {
                         remarkTv.setText("备注:（无）");
                     }
+                    mDatas.addAll(appBean.getData().getConstructionDetails());
+                    if (mDatas != null && !mDatas.isEmpty()) {
+                        followStatus.setText("最新跟进状态");
+                        followStatus.setTextColor(Color.rgb(255, 163, 0));
+                    }
                 }
             }
         });
     }
 
-    @Event(value = {R.id.back_arrows, R.id.button, R.id.follow_btn})
+    @Event(value = {R.id.back_arrows, R.id.button, R.id.follow_btn, R.id.follow_layout})
     private void onClick(View v) {
+        Intent intent = null;
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
@@ -133,10 +149,17 @@ public class ProjecDetailsActivity extends BaseActivity {
                 });
                 break;
             case R.id.follow_btn:
-                Intent intent = new Intent();
+                intent = new Intent();
                 intent.setClass(this, FollowProjectActivity.class);
                 intent.putExtra("OID", oid);
                 startActivity(intent);
+                break;
+            case R.id.follow_layout:
+                if (mDatas != null && !mDatas.isEmpty()) {
+                    intent = new Intent(this, FollowListActivity.class);
+                    intent.putExtra("mDatas", (Serializable) mDatas);
+                    startActivity(intent);
+                }
                 break;
         }
     }

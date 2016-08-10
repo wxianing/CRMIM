@@ -2,17 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <com.meidp.crmim.view.CircleImageView
+    <ImageView
         android:id="@+id/header_img"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_margin="@dimen/dp5"
-        android:src="@mipmap/hugh"
-        app:civ_border_color="@color/textcolor_gray"
-        app:civ_border_width="2dp" />
+        android:src="@mipmap/headerphoto" />
 
     <TextView
         android:id="@+id/username"
@@ -21,5 +22,11 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:text="隔壁老王" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp50"
+        android:background="#F5F5F5" />
 
 </LinearLayout>

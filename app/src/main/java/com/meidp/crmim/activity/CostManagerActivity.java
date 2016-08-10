@@ -58,11 +58,9 @@ public class CostManagerActivity extends BaseActivity implements PullToRefreshBa
 
     private void loadData(int pageIndex, String keyword) {
         HashMap params = new HashMap();
-
         params.put("Keyword", keyword);
         params.put("PageIndex", pageIndex);
         params.put("PageSize", 8);
-
         HttpRequestUtils.getmInstance().send(CostManagerActivity.this, Constant.GET_MY_COSTLIST_URL, params, new HttpRequestCallBack() {
             @Override
             public void onSuccess(String result) {

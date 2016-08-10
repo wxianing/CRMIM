@@ -12,17 +12,24 @@ public class User implements Serializable {
 
 
     /**
-     * CompanyCD : sample string 1
-     * UserID : 2
-     * LoginName : sample string 3
-     * EmployeeID : 1
-     * IsRoot : sample string 4
-     * EmployeeName : sample string 5
-     * PhotoURL : sample string 6
-     * DeptID : 7
-     * DeptName : sample string 8
-     * ZhiWu : sample string 9
-     * userCode : sample string 10
+     *
+     *
+     "CompanyCD": "C1002",
+     "UserID": 3,
+     "LoginName": "wang",
+     "EmployeeID": 1875,
+     "IsRoot": "0",
+     "EmployeeName": "王显宁",
+     "PhotoURL": "http://beacon.meidp.comC1002/20160709102108552577.jpg",
+     "PothoData": null,
+     "DeptID": 229,
+     "DeptName": "销售一部",
+     "ZhiWu": null,
+     "userCode": null,
+     "Mobile": "15889356386",
+     "Email": null,
+     "NickName": null,
+     "rongcloudToken": "fus8AJ25Hn7uhYmEnrL4elA+OIcFr5b3w8RT1pmYxlcNiQi3j3zfLhwjArmCW5FBcnNFKjQCNsuQLwNiXsNt7Q=="
      */
 
     private String CompanyCD;
@@ -37,6 +44,18 @@ public class User implements Serializable {
     private String ZhiWu;
     private String userCode;
     private String rongcloudToken;
+    /**
+     * PothoData : null
+     * Mobile : 15889356386
+     * Email : null
+     * NickName : null
+     */
+
+    private Object PothoData;
+    private String Mobile;
+    private Object Email;
+    private Object NickName;
+
 
     public String getRongcloudToken() {
         return rongcloudToken;
@@ -132,5 +151,37 @@ public class User implements Serializable {
 
     public void setUserCode(String userCode) {
         this.userCode = userCode;
+    }
+
+    public Object getPothoData() {
+        return PothoData;
+    }
+
+    public void setPothoData(Object PothoData) {
+        this.PothoData = PothoData;
+    }
+
+    public String getMobile() {
+        return Mobile;
+    }
+
+    public void setMobile(String Mobile) {
+        this.Mobile = Mobile;
+    }
+
+    public Object getEmail() {
+        return Email;
+    }
+
+    public void setEmail(Object Email) {
+        this.Email = Email;
+    }
+
+    public Object getNickName() {
+        return NickName;
+    }
+
+    public void setNickName(Object NickName) {
+        this.NickName = NickName;
     }
 }

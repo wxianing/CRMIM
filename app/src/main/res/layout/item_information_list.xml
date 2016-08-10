@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <LinearLayout
         android:id="@+id/company_announcement_layout"
         android:layout_width="match_parent"
@@ -11,8 +12,8 @@
 
         <ImageView
             android:id="@+id/img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:padding="@dimen/dp8"
             android:src="@mipmap/company_announcement_icon" />
 
@@ -32,6 +33,7 @@
                 android:textSize="@dimen/sp16" />
 
             <TextView
+                android:id="@+id/explain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/announcement"
@@ -48,7 +50,7 @@
                 android:layout_marginRight="@dimen/dp10"
                 android:padding="@dimen/dp5"
                 android:src="@mipmap/arrow_right"
-                android:visibility="gone" />
+                android:visibility="invisible" />
 
         </RelativeLayout>
     </LinearLayout>

@@ -13,21 +13,32 @@ public class ProjectDetails implements Serializable {
 
 
     /**
-     * ConstructionDetails : []
-     * ID : 39
-     * ProjectNo : XM2016070018
-     * ProjectName : 华硕主板
-     * CreateDate : 2016-07-21 15:54:37
-     * Creator : 1873
-     * StartDate : null
-     * EndDate : null
-     * CustID : 0
-     * CustLinkMan : 老李
-     * LinkTel : 15889356386
-     * SuccessRate : 0.5
-     * Remark : null
-     * Investment : 150000
+     * ConstructionDetails : [{"ID":106,"SummaryName":"测试","DutyPerson":null,"CompanyCD":"C1002","projectID":48,"ProcessScale":10000,"PersonNum":1,"Rate":0.2,"ProessID":null,"BeginDate":"2016-08-09 00:00:00","EndDate":"2016-08-09 00:00:00","ProjectMemo":"无","Creator":1874,"CreateDate":"2016-08-09 15:55:13"}]
+     * ID : 48
+     * ProjectNo : XM2016080027
+     * ProjectName : 2MP灰阶医用显示器推广
+     * CreateDate : 2016-08-04 16:54:53
+     * Creator : 1874
+     * StartDate :
+     * EndDate :
+     * CustID : 258
+     * CustLinkMan : 梁健聪
+     * LinkTel : 13530003777
+     * SuccessRate : 0.2
+     * Remark : 无
+     * Investment : 1000
+     * AcceptMoney : 0
+     * AcceptDate :
+     * ExpectAcceptDate :
      * LinkMan : 0
+     * ProjectDirectionId : 0
+     * ProjectDirectionName : null
+     * CreatorName : null
+     * CompanyId : 0
+     * CompanyName :
+     * DepartmentName : null
+     * ZhiWu : null
+     * IsAppoint : null
      */
 
     private int ID;
@@ -35,16 +46,44 @@ public class ProjectDetails implements Serializable {
     private String ProjectName;
     private String CreateDate;
     private int Creator;
-    private Object StartDate;
-    private Object EndDate;
+    private String StartDate;
+    private String EndDate;
     private int CustID;
     private String CustLinkMan;
     private String LinkTel;
     private double SuccessRate;
     private String Remark;
     private int Investment;
+    private int AcceptMoney;
+    private String AcceptDate;
+    private String ExpectAcceptDate;
     private int LinkMan;
-    private List<?> ConstructionDetails;
+    private int ProjectDirectionId;
+    private Object ProjectDirectionName;
+    private Object CreatorName;
+    private int CompanyId;
+    private String CompanyName;
+    private Object DepartmentName;
+    private Object ZhiWu;
+    private Object IsAppoint;
+    /**
+     * ID : 106
+     * SummaryName : 测试
+     * DutyPerson : null
+     * CompanyCD : C1002
+     * projectID : 48
+     * ProcessScale : 10000
+     * PersonNum : 1
+     * Rate : 0.2
+     * ProessID : null
+     * BeginDate : 2016-08-09 00:00:00
+     * EndDate : 2016-08-09 00:00:00
+     * ProjectMemo : 无
+     * Creator : 1874
+     * CreateDate : 2016-08-09 15:55:13
+     */
+
+    private List<ConstructionDetailsBean> ConstructionDetails;
 
     public int getID() {
         return ID;
@@ -86,19 +125,19 @@ public class ProjectDetails implements Serializable {
         this.Creator = Creator;
     }
 
-    public Object getStartDate() {
+    public String getStartDate() {
         return StartDate;
     }
 
-    public void setStartDate(Object StartDate) {
+    public void setStartDate(String StartDate) {
         this.StartDate = StartDate;
     }
 
-    public Object getEndDate() {
+    public String getEndDate() {
         return EndDate;
     }
 
-    public void setEndDate(Object EndDate) {
+    public void setEndDate(String EndDate) {
         this.EndDate = EndDate;
     }
 
@@ -138,8 +177,8 @@ public class ProjectDetails implements Serializable {
         return Remark;
     }
 
-    public void setRemark(String remark) {
-        Remark = remark;
+    public void setRemark(String Remark) {
+        this.Remark = Remark;
     }
 
     public int getInvestment() {
@@ -150,6 +189,30 @@ public class ProjectDetails implements Serializable {
         this.Investment = Investment;
     }
 
+    public int getAcceptMoney() {
+        return AcceptMoney;
+    }
+
+    public void setAcceptMoney(int AcceptMoney) {
+        this.AcceptMoney = AcceptMoney;
+    }
+
+    public String getAcceptDate() {
+        return AcceptDate;
+    }
+
+    public void setAcceptDate(String AcceptDate) {
+        this.AcceptDate = AcceptDate;
+    }
+
+    public String getExpectAcceptDate() {
+        return ExpectAcceptDate;
+    }
+
+    public void setExpectAcceptDate(String ExpectAcceptDate) {
+        this.ExpectAcceptDate = ExpectAcceptDate;
+    }
+
     public int getLinkMan() {
         return LinkMan;
     }
@@ -158,11 +221,204 @@ public class ProjectDetails implements Serializable {
         this.LinkMan = LinkMan;
     }
 
-    public List<?> getConstructionDetails() {
+    public int getProjectDirectionId() {
+        return ProjectDirectionId;
+    }
+
+    public void setProjectDirectionId(int ProjectDirectionId) {
+        this.ProjectDirectionId = ProjectDirectionId;
+    }
+
+    public Object getProjectDirectionName() {
+        return ProjectDirectionName;
+    }
+
+    public void setProjectDirectionName(Object ProjectDirectionName) {
+        this.ProjectDirectionName = ProjectDirectionName;
+    }
+
+    public Object getCreatorName() {
+        return CreatorName;
+    }
+
+    public void setCreatorName(Object CreatorName) {
+        this.CreatorName = CreatorName;
+    }
+
+    public int getCompanyId() {
+        return CompanyId;
+    }
+
+    public void setCompanyId(int CompanyId) {
+        this.CompanyId = CompanyId;
+    }
+
+    public String getCompanyName() {
+        return CompanyName;
+    }
+
+    public void setCompanyName(String CompanyName) {
+        this.CompanyName = CompanyName;
+    }
+
+    public Object getDepartmentName() {
+        return DepartmentName;
+    }
+
+    public void setDepartmentName(Object DepartmentName) {
+        this.DepartmentName = DepartmentName;
+    }
+
+    public Object getZhiWu() {
+        return ZhiWu;
+    }
+
+    public void setZhiWu(Object ZhiWu) {
+        this.ZhiWu = ZhiWu;
+    }
+
+    public Object getIsAppoint() {
+        return IsAppoint;
+    }
+
+    public void setIsAppoint(Object IsAppoint) {
+        this.IsAppoint = IsAppoint;
+    }
+
+    public List<ConstructionDetailsBean> getConstructionDetails() {
         return ConstructionDetails;
     }
 
-    public void setConstructionDetails(List<?> ConstructionDetails) {
+    public void setConstructionDetails(List<ConstructionDetailsBean> ConstructionDetails) {
         this.ConstructionDetails = ConstructionDetails;
+    }
+
+    public static class ConstructionDetailsBean implements Serializable{
+        private int ID;
+        private String SummaryName;
+        private Object DutyPerson;
+        private String CompanyCD;
+        private int projectID;
+        private int ProcessScale;
+        private int PersonNum;
+        private double Rate;
+        private Object ProessID;
+        private String BeginDate;
+        private String EndDate;
+        private String ProjectMemo;
+        private int Creator;
+        private String CreateDate;
+
+        public int getID() {
+            return ID;
+        }
+
+        public void setID(int ID) {
+            this.ID = ID;
+        }
+
+        public String getSummaryName() {
+            return SummaryName;
+        }
+
+        public void setSummaryName(String SummaryName) {
+            this.SummaryName = SummaryName;
+        }
+
+        public Object getDutyPerson() {
+            return DutyPerson;
+        }
+
+        public void setDutyPerson(Object DutyPerson) {
+            this.DutyPerson = DutyPerson;
+        }
+
+        public String getCompanyCD() {
+            return CompanyCD;
+        }
+
+        public void setCompanyCD(String CompanyCD) {
+            this.CompanyCD = CompanyCD;
+        }
+
+        public int getProjectID() {
+            return projectID;
+        }
+
+        public void setProjectID(int projectID) {
+            this.projectID = projectID;
+        }
+
+        public int getProcessScale() {
+            return ProcessScale;
+        }
+
+        public void setProcessScale(int ProcessScale) {
+            this.ProcessScale = ProcessScale;
+        }
+
+        public int getPersonNum() {
+            return PersonNum;
+        }
+
+        public void setPersonNum(int PersonNum) {
+            this.PersonNum = PersonNum;
+        }
+
+        public double getRate() {
+            return Rate;
+        }
+
+        public void setRate(double Rate) {
+            this.Rate = Rate;
+        }
+
+        public Object getProessID() {
+            return ProessID;
+        }
+
+        public void setProessID(Object ProessID) {
+            this.ProessID = ProessID;
+        }
+
+        public String getBeginDate() {
+            return BeginDate;
+        }
+
+        public void setBeginDate(String BeginDate) {
+            this.BeginDate = BeginDate;
+        }
+
+        public String getEndDate() {
+            return EndDate;
+        }
+
+        public void setEndDate(String EndDate) {
+            this.EndDate = EndDate;
+        }
+
+        public String getProjectMemo() {
+            return ProjectMemo;
+        }
+
+        public void setProjectMemo(String ProjectMemo) {
+            this.ProjectMemo = ProjectMemo;
+        }
+
+        public int getCreator() {
+            return Creator;
+        }
+
+        public void setCreator(int Creator) {
+            this.Creator = Creator;
+        }
+
+        public String getCreateDate() {
+            return CreateDate;
+        }
+
+        public void setCreateDate(String CreateDate) {
+            this.CreateDate = CreateDate;
+        }
     }
 }

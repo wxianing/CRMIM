@@ -37,7 +37,7 @@ public class OpenProjectAdapter extends BasicAdapter<Projects> {
             vh = (ViewHolder) convertView.getTag();
         }
         vh.projectName.setText(data.getProjectName());
-        vh.linkName.setText("项目联系人："+data.getCustLinkMan());
+        vh.linkName.setText("项目联系人：" + data.getCustLinkMan());
         vh.projectNum.setText("项目编号：" + data.getProjectNo());
         String timeStr = data.getCreateDate().substring(0, 10);
         vh.ceateTime.setText("登记时间：" + timeStr);
@@ -48,10 +48,11 @@ public class OpenProjectAdapter extends BasicAdapter<Projects> {
         } else if (success < 50) {
             vh.successRate.setTextColor(Color.rgb(255, 194, 0));
         } else {
-            vh.successRate.setTextColor(Color.GREEN);
+            vh.successRate.setTextColor(Color.BLUE);
         }
 
         vh.successRate.setText(success + "%");
+        vh.dutyPerson.setText("负责人：" + data.getCreatorName());
 
         return convertView;
     }
@@ -68,6 +69,8 @@ public class OpenProjectAdapter extends BasicAdapter<Projects> {
         private TextView ceateTime;
         @ViewInject(R.id.success_rate)
         private TextView successRate;
+        @ViewInject(R.id.duty_person)
+        private TextView dutyPerson;
 
         public ViewHolder(View view) {
             x.view().inject(this, view);

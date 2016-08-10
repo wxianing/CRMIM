@@ -40,7 +40,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     public void onInit() {
         mainActivity = this;
         mFragments = new ArrayList<>();
-        mFragments.add(new ConversationListStaticFragment());
+        mFragments.add( ConversationListStaticFragment.newInstance("PUBLIC"));
         mFragments.add(new CompanyFragment());
         mFragments.add(new HomeFragment());
         mFragments.add(new ContactsFragment());

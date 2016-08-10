@@ -31,7 +31,7 @@
                     android:layout_margin="@dimen/dp5"
                     android:src="@mipmap/hugh"
                     app:civ_border_color="@color/textcolor_gray"
-                    app:civ_border_width="2dp" />
+                    app:civ_border_width="0dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -40,10 +40,10 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/dp50"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <ImageView
-
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:src="@mipmap/my_group_icon" />
@@ -57,6 +57,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/header_img"
@@ -68,13 +69,11 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:id="@+id/person_center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:visibility="gone">
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -84,7 +83,6 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp5"
@@ -117,11 +115,11 @@
                     android:visibility="gone" />
             </LinearLayout>
 
+
             <LinearLayout
-                android:id="@+id/my_projec"
+                android:id="@+id/my_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp10"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingBottom="@dimen/dp10"
@@ -132,28 +130,27 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/my_project_icon" />
+                    android:src="@mipmap/build_group" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginLeft="@dimen/dp10"
                     android:layout_weight="1"
-                    android:text="我的项目"
+                    android:text="我的团队"
                     android:textSize="@dimen/sp16" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/arrow_right"
-                    android:visibility="gone" />
+                    android:src="@mipmap/arrow_right" />
 
             </LinearLayout>
 
             <include layout="@layout/horizontal_line" />
 
             <LinearLayout
-                android:id="@+id/my_performance"
+                android:id="@+id/person_center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -166,59 +163,27 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/my_performent_icon" />
+                    android:src="@mipmap/material_icon" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginLeft="@dimen/dp10"
                     android:layout_weight="1"
-                    android:text="我的业绩表现"
+                    android:text="个人资料"
                     android:textSize="@dimen/sp16" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/arrow_right"
-                    android:visibility="gone" />
+                    android:src="@mipmap/arrow_right" />
 
             </LinearLayout>
 
             <include layout="@layout/horizontal_line" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp10"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:paddingBottom="@dimen/dp10"
-                android:paddingLeft="@dimen/dp10"
-                android:paddingRight="@dimen/dp5"
-                android:paddingTop="@dimen/dp10">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/my_costing_icon" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp5"
-                    android:layout_weight="1"
-                    android:text="我的成本"
-                    android:textSize="@dimen/sp16" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/arrow_right"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-
-            <LinearLayout
+                android:id="@+id/reset_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -231,266 +196,27 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/my_values_icon" />
+                    android:src="@mipmap/forget_password" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginLeft="@dimen/dp10"
                     android:layout_weight="1"
-                    android:text="我的价值"
+                    android:text="修改密码"
                     android:textSize="@dimen/sp16" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/arrow_right"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-
-
-            <include layout="@layout/horizontal_line" />
-
-            <LinearLayout
-                android:id="@+id/my_credit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp10"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:paddingBottom="@dimen/dp10"
-                android:paddingLeft="@dimen/dp10"
-                android:paddingRight="@dimen/dp5"
-                android:paddingTop="@dimen/dp10">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/my_hardworking_icoc" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp5"
-                    android:layout_weight="1"
-                    android:text="我的勤奋度"
-                    android:textSize="@dimen/sp16" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/arrow_right"
-                    android:visibility="gone" />
+                    android:src="@mipmap/arrow_right" />
 
             </LinearLayout>
 
             <include layout="@layout/horizontal_line" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:paddingBottom="@dimen/dp10"
-                android:paddingLeft="@dimen/dp10"
-                android:paddingRight="@dimen/dp5"
-                android:paddingTop="@dimen/dp10">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/my_credit_icon" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp5"
-                    android:layout_weight="1"
-                    android:text="我的诚信度"
-                    android:textSize="@dimen/sp16" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/arrow_right"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-
-            <include layout="@layout/horizontal_line" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:paddingBottom="@dimen/dp10"
-                android:paddingLeft="@dimen/dp10"
-                android:paddingRight="@dimen/dp5"
-                android:paddingTop="@dimen/dp10">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/my_like_icon" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp5"
-                    android:layout_weight="1"
-                    android:text="我的热爱指数"
-                    android:textSize="@dimen/sp16" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/arrow_right"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-
-            <include layout="@layout/horizontal_line" />
-
-
-            <LinearLayout
-                android:id="@+id/my_knowledge"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp10"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:paddingBottom="@dimen/dp10"
-                android:paddingLeft="@dimen/dp10"
-                android:paddingRight="@dimen/dp5"
-                android:paddingTop="@dimen/dp10">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/my_knowledge_icon" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp5"
-                    android:layout_weight="1"
-                    android:text="我的专业知识"
-                    android:textSize="@dimen/sp16" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/arrow_right"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:paddingBottom="@dimen/dp10"
-                android:paddingLeft="@dimen/dp10"
-                android:paddingRight="@dimen/dp5"
-                android:paddingTop="@dimen/dp10">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/my_execution_icon" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp5"
-                    android:layout_weight="1"
-                    android:text="我的执行力"
-                    android:textSize="@dimen/sp16" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/arrow_right"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-
-
-            <include layout="@layout/horizontal_line" />
-
-            <LinearLayout
-                android:id="@+id/visit_record"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:paddingBottom="@dimen/dp10"
-                android:paddingLeft="@dimen/dp10"
-                android:paddingRight="@dimen/dp5"
-                android:paddingTop="@dimen/dp10">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/my_visit_record_icon" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp5"
-                    android:layout_weight="1"
-                    android:text="我的历史拜访记录"
-                    android:textSize="@dimen/sp16" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/arrow_right"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-
-            <include layout="@layout/horizontal_line" />
-
-            <LinearLayout
-                android:id="@+id/my_assess"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:paddingBottom="@dimen/dp10"
-                android:paddingLeft="@dimen/dp10"
-                android:paddingRight="@dimen/dp5"
-                android:paddingTop="@dimen/dp10">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/my_assess_icon" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp5"
-                    android:layout_weight="1"
-                    android:text="我的评估"
-                    android:textSize="@dimen/sp16" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/arrow_right"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-
-            <include layout="@layout/horizontal_line" />
-
-            <LinearLayout
-                android:id="@+id/feedback_layout"
+                android:id="@+id/about_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp20"
@@ -504,31 +230,35 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/my_feedbook_icon" />
+                    android:src="@mipmap/about_icon" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginLeft="@dimen/dp10"
                     android:layout_weight="1"
-                    android:text="意见反馈"
+                    android:text="关于"
                     android:textSize="@dimen/sp16" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/arrow_right"
-                    android:visibility="gone" />
+                    android:src="@mipmap/arrow_right" />
 
             </LinearLayout>
 
             <include layout="@layout/horizontal_line" />
+
+
+            <include layout="@layout/horizontal_line" />
+
 
             <LinearLayout
                 android:id="@+id/logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp30"
+                android:layout_marginTop="@dimen/dp20"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingBottom="@dimen/dp10"
@@ -544,7 +274,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginLeft="@dimen/dp10"
                     android:layout_weight="1"
                     android:text="退出登录"
                     android:textSize="@dimen/sp16" />

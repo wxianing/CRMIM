@@ -27,14 +27,16 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
 
 @ContentView(R.layout.activity_login)
-public class LoginActivity extends BaseActivity implements RongIM.UserInfoProvider {
+public class LoginActivity extends BaseActivity {
     @ViewInject(R.id.username_edittext)
     private EditText usernameEt;
     @ViewInject(R.id.password_edittext)
@@ -53,6 +55,8 @@ public class LoginActivity extends BaseActivity implements RongIM.UserInfoProvid
     private String name;
     private UserInfo users = null;
 
+    private List<UserInfo> mDatas;
+
 
     @Override
     public void onInit() {
@@ -61,7 +65,7 @@ public class LoginActivity extends BaseActivity implements RongIM.UserInfoProvid
         Editable et = usernameEt.getText();
         usernameEt.setSelection(et.length());
         usernameEt.clearFocus();//默认不获取光标
-
+        mDatas = new ArrayList<>();
         //自动登录
 //        boolean isLogin = SPUtils.getLoginTag(this);
         if (false) {
@@ -70,7 +74,7 @@ public class LoginActivity extends BaseActivity implements RongIM.UserInfoProvid
         }
         //记住密码
         isRmb = (boolean) SPUtils.get(LoginActivity.this, "isRmb", false);
-        if (isRmb) {
+        if (true) {
             user = (String) SPUtils.get(this, "USERNAME", "");
             pwd = (String) SPUtils.get(this, "PASSWORD", "");
             checkBox.setChecked(true);
@@ -89,7 +93,6 @@ public class LoginActivity extends BaseActivity implements RongIM.UserInfoProvid
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     SPUtils.save(LoginActivity.this, "isRmb", true);
-
                 } else {
                     SPUtils.save(LoginActivity.this, "isRmb", false);
                 }
@@ -118,19 +121,6 @@ public class LoginActivity extends BaseActivity implements RongIM.UserInfoProvid
         }
     }
 
-    @Override
-    public UserInfo getUserInfo(String s) {
-        String avatar = headPhotoS;
-        if (NullUtils.isNull(avatar)) {
-            avatar = Constant.HEADPHOTO;
-        }
-        String name1 = name;
-        users = new UserInfo(s, "马云" +
-                "" +
-                "", Uri.parse(avatar));
-        return users;
-    }
-
     class HttpCallBack extends HttpRequestCallBack<String> {
 
         @Override
@@ -148,7 +138,19 @@ public class LoginActivity extends BaseActivity implements RongIM.UserInfoProvid
 
                 IMkitConnectUtils.connect(appBean.getData().getRongcloudToken(), getApplicationContext());
 
-//                RongIM.setUserInfoProvider(LoginActivity.this, false);
+                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+                    @Override
+                    public UserInfo getUserInfo(String userId) {
+                        Log.e("userInfo", "userInfo正在执行");
+                        for (int i = 0; i < mDatas.size(); i++) {
+                            Log.e("mDatas", ">>>>>>>>>>>>" + mDatas.get(i).getUserId());
+                            RongIM.getInstance().refreshUserInfoCache(mDatas.get(i));//刷新用户数据
+                        }
+                        RongIM.getInstance().refreshUserInfoCache(users);//刷新用户数据
+                        return findUserById(userId);//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
+                    }
+                }, true);
+
                 finish();
             } else {
                 ToastUtils.shows(LoginActivity.this, appBean.getMsg());
@@ -156,15 +158,26 @@ public class LoginActivity extends BaseActivity implements RongIM.UserInfoProvid
         }
     }
 
-    private UserInfo findUserById(String userId) {
-        String avatar = headPhotoS;
-        if (NullUtils.isNull(avatar)) {
-            avatar = Constant.HEADPHOTO;
-        }
-        String name1 = name;
-        users = new UserInfo(userId, "马云" +
-                "" +
-                "", Uri.parse(avatar));
+    private UserInfo findUserById(final String userId) {
+        HashMap params = new HashMap();
+        params.put("Id", Integer.valueOf(userId));
+        HttpRequestUtils.getmInstance().post(LoginActivity.this, Constant.GET_PERSON_INFORMATION, params, new HttpRequestCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                AppBean<User> appBean = JSONObject.parseObject(result, new TypeReference<AppBean<User>>() {
+                });
+                if (appBean != null && appBean.getEnumcode() == 0) {
+                    String avatar = appBean.getData().getPhotoURL();
+                    String name = appBean.getData().getEmployeeName();
+                    users = new UserInfo(userId, name, Uri.parse(avatar));
+                    mDatas.add(users);
+                    for (int i = 0; i < mDatas.size(); i++) {
+                        Log.e("mDatas>>>name", mDatas.get(i).getName());
+                    }
+                    RongIM.getInstance().refreshUserInfoCache(users);//刷新用户数据
+                }
+            }
+        });
         return users;
     }
 

@@ -2,35 +2,38 @@ package com.meidp.crmim.imkit;
 
 
 import android.content.Intent;
-import android.provider.Contacts;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.meidp.crmim.R;
-import com.meidp.crmim.activity.CustomerListActivity;
-import com.meidp.crmim.activity.DepartmentContactsActivity;
 import com.meidp.crmim.activity.GroupActivity;
-import com.meidp.crmim.activity.SearchFriendActivity;
-import com.meidp.crmim.adapter.FriendsAdapter;
+import com.meidp.crmim.activity.NearContactsActivity;
+import com.meidp.crmim.activity.SearchMsgActivity;
+import com.meidp.crmim.adapter.ExpandableAdapter;
+import com.meidp.crmim.adapter.NearContactsAdapter;
 import com.meidp.crmim.fragment.BaseFragment;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
-import com.meidp.crmim.model.AppDatas;
+import com.meidp.crmim.model.AppBeans;
+import com.meidp.crmim.model.Contact;
 import com.meidp.crmim.model.Friends;
 import com.meidp.crmim.utils.Constant;
+import com.meidp.crmim.view.ExpListView;
+import com.meidp.crmim.view.ListViewForScrollView;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import io.rong.imkit.RongIM;
@@ -39,7 +42,7 @@ import io.rong.imkit.RongIM;
  * A simple {@link Fragment} subclass.
  */
 @ContentView(R.layout.fragment_friend_list)
-public class ContactsFragment extends BaseFragment implements AdapterView.OnItemClickListener {
+public class ContactsFragment extends BaseFragment implements AdapterView.OnItemClickListener, ExpandableListView.OnChildClickListener {
 
     @ViewInject(R.id.title_tv)
     private TextView title;
@@ -47,10 +50,18 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
     private ImageView backImg;
     private List<String> userIds;
     @ViewInject(R.id.listview)
-    private ListView mListVeiw;
-    private FriendsAdapter mAdapter;
+    private ListViewForScrollView mListVeiw;
+    private NearContactsAdapter mAdapter;
     private List<Friends> mDatas;
 
+    @ViewInject(R.id.expListView)
+    protected ExpListView expListView;
+
+    private List<Contact> contactList;
+
+    private ExpandableAdapter expandableAdapter;
+    @ViewInject(R.id.friends_list)
+    private FrameLayout friendsList;
 
     public ContactsFragment() {
 
@@ -64,51 +75,53 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
         userIds.add("1");
         userIds.add("3");
         mDatas = new ArrayList<>();
-        mAdapter = new FriendsAdapter(mDatas, getActivity());
-        mListVeiw.setAdapter(mAdapter);
+//        mAdapter = new NearContactsAdapter(userLists, getActivity());
         mListVeiw.setOnItemClickListener(this);
+        contactList = new ArrayList<>();
+        expandableAdapter = new ExpandableAdapter(contactList, getActivity());
+        expListView.setOnChildClickListener(this);
+        expListView.setAdapter(expandableAdapter);
+//        expListView.expandGroup(0);//默认展开选项
+//        expListView.setGroupIndicator(null);
     }
 
     @Override
     public void onInitData() {
-        HashMap params = new HashMap();
-        params.put("sType", 1);
-        HttpRequestUtils.getmInstance().send(getActivity(), Constant.FRIEND_LIST_URL, params, new HttpRequestCallBack<String>() {
+
+        HttpRequestUtils.getmInstance().send(getActivity(), Constant.GET_CONTACTS_URL, null, new HttpRequestCallBack() {
             @Override
             public void onSuccess(String result) {
-                AppDatas<Friends> appDatas = JSONObject.parseObject(result, new TypeReference<AppDatas<Friends>>() {
+                AppBeans<Contact> appBean = JSONObject.parseObject(result, new TypeReference<AppBeans<Contact>>() {
                 });
-                if (appDatas != null && appDatas.getEnumcode() == 0) {
-                    mDatas.addAll(appDatas.getData().getDataList());
-                    mAdapter.notifyDataSetChanged();
+                if (appBean != null && appBean.getEnumcode() == 0) {
+                    contactList.clear();
+                    contactList.addAll(appBean.getData());
+                    expandableAdapter.notifyDataSetChanged();
                 }
             }
         });
     }
 
-    @Event(value = {R.id.search_edittext, R.id.create_group, R.id.group_layout, R.id.contacts_layout, R.id.customer_layout})
+    @Event(value = {R.id.search_edittext, R.id.group_layout, R.id.recent_contacts})
     private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
             case R.id.search_edittext:
-                intent = new Intent();
-                intent.setClass(getActivity(), SearchFriendActivity.class);
+                intent = new Intent(getActivity(), SearchMsgActivity.class);
                 startActivity(intent);
                 break;
             case R.id.group_layout:
-//                ToastUtils.shows(getActivity(), "创建群组");
-//                RongIM.getInstance().createDiscussionChat(getActivity(), userIds, "移动办公软件", mCallBack);
                 startActivity(new Intent(getActivity(), GroupActivity.class));
                 break;
-            case R.id.contacts_layout:
-                intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.setData(Contacts.People.CONTENT_URI);
-                startActivity(intent);
-                break;
-            case R.id.customer_layout:
-                intent = new Intent(getActivity(), DepartmentContactsActivity.class);
-                startActivity(intent);
+            case R.id.recent_contacts:
+                Intent intent1 = new Intent(getActivity(), NearContactsActivity.class);
+                startActivity(intent1);
+
+                if (friendsList.getVisibility() == View.GONE) {
+                    friendsList.setVisibility(View.VISIBLE);
+                } else {
+                    friendsList.setVisibility(View.GONE);
+                }
                 break;
         }
     }
@@ -118,4 +131,12 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
         RongIM.getInstance().startPrivateChat(getActivity(), Integer.toString(mDatas.get(position).getUserID()), mDatas.get(position).getEmployeeName());
     }
 
+    @Override
+    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+        String userId = Integer.toString(contactList.get(groupPosition).getUsers().get(childPosition).getUserID());
+        Log.e("userId>>>>>>>>>", userId);
+        String employeeName = contactList.get(groupPosition).getUsers().get(childPosition).getEmployeeName();
+        RongIM.getInstance().startPrivateChat(getActivity(), userId, employeeName);
+        return true;
+    }
 }

@@ -12,9 +12,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.meidp.crmim.MyApplication;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.CustomDialogUtils;
+import com.meidp.crmim.utils.ToastUtils;
 
 import org.json.JSONObject;
 import org.xutils.common.Callback;
+import org.xutils.ex.HttpException;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
@@ -43,49 +45,49 @@ public class HttpRequestUtils {
     /**
      * 发送post请求
      */
-//    public void post(final Context mContext, String url, HashMap<String, Object> map, final HttpRequestCallBack mCallBack) {
+    public void post(final Context mContext, String url, HashMap<String, Object> map, final HttpRequestCallBack mCallBack) {
 //        CustomDialogUtils.showProgressDialog(mContext);
-//        RequestParams params = new RequestParams(url);
-//        params.addHeader("_appId", Constant.APPID);
-//        params.addHeader("_code", Constant.CODE);
-//        params.addBodyParameter("content-type", "application/json");
-//        if (null != map) {
-//            for (Map.Entry<String, Object> entry : map.entrySet()) {
-//                params.addParameter(entry.getKey(), entry.getValue());
-//            }
-//        }
-//        Log.e("params", params.toJSONString());
-//        x.http().post(params, new Callback.CommonCallback<String>() {
-//            @Override
-//            public void onSuccess(String result) {
-//                Log.e("HttpResponse", result);
-//                mCallBack.onSuccess(result);
+        RequestParams params = new RequestParams(url);
+        params.addHeader("_appId", Constant.APPID);
+        params.addHeader("_code", Constant.CODE);
+        params.addBodyParameter("content-type", "application/json");
+        if (null != map) {
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                params.addParameter(entry.getKey(), entry.getValue());
+            }
+        }
+        Log.e("params", params.toJSONString());
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("HttpResponse", result);
+                mCallBack.onSuccess(result);
 //                CustomDialogUtils.cannelProgressDialog();
-//            }
-//
-//            @Override
-//            public void onError(Throwable ex, boolean isOnCallback) {
-//                ToastUtils.showl(mContext, ex.getMessage());
-//                if (ex instanceof HttpException) {//网络异常
-//                    HttpException httpEx = (HttpException) ex;
-//                    int responseCode = httpEx.getCode();
-//                    String responseMsg = httpEx.getMessage();
-//                    String errorResult = httpEx.getResult();
-//                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                ToastUtils.showl(mContext, ex.getMessage());
+                if (ex instanceof HttpException) {//网络异常
+                    HttpException httpEx = (HttpException) ex;
+                    int responseCode = httpEx.getCode();
+                    String responseMsg = httpEx.getMessage();
+                    String errorResult = httpEx.getResult();
+                }
 //                CustomDialogUtils.cannelProgressDialog();
-//            }
-//
-//            @Override
-//            public void onCancelled(CancelledException cex) {
-//                CustomDialogUtils.cannelProgressDialog();
-//            }
-//
-//            @Override
-//            public void onFinished() {
-//                CustomDialogUtils.cannelProgressDialog();
-//            }
-//        });
-//    }
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+                CustomDialogUtils.cannelProgressDialog();
+            }
+
+            @Override
+            public void onFinished() {
+                CustomDialogUtils.cannelProgressDialog();
+            }
+        });
+    }
 
     /**
      * 发送get请求

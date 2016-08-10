@@ -83,4 +83,9 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <!--CheckBox风格-->
+    <style name="MyCheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/checkbox_selector</item>
+    </style>
+
 </resources>

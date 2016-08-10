@@ -120,6 +120,17 @@ public class Constant {
     public static final String REGULATORY_FRAMEWORK_URL = BASE_URL + "office/office/getculturedocpagelist";
 
     //资讯类分
-    public static final String CLASSIFY_URL =BASE_URL+ "office/office/getculturetypes";
+    public static final String CLASSIFY_URL = BASE_URL + "office/office/getculturetypes";
+
+    public static final String GET_PERSON_INFORMATION = BASE_URL + "systemset/account/getuser";
+    //获取系统消息
+    public static final String GET_SYSTEM_MESSAGE = BASE_URL + "common/mpublic/getjpushpagelist";
+
+    //获取联系人
+    public static final String GET_CONTACTS_URL = BASE_URL + "common/user/getdeptusers";
+
+    //费用详情
+    public static final String FEELAPPLY_URL = BASE_URL + "office/office/getfeeapply";
+
 
 }

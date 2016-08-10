@@ -2,16 +2,20 @@ package com.meidp.crmim.imkit;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.app.INotificationSideChannel;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.meidp.crmim.R;
 import com.meidp.crmim.activity.DimensionCodeActivity;
 import com.meidp.crmim.activity.NewGroupActivity;
 import com.meidp.crmim.activity.SearchMsgActivity;
+import com.meidp.crmim.activity.SecretaryActivity;
 import com.meidp.crmim.fragment.BaseFragment;
+import com.meidp.crmim.utils.NullUtils;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -29,28 +33,65 @@ import io.rong.imlib.model.Conversation;
 @ContentView(R.layout.conversationlist)
 public class ConversationListStaticFragment extends BaseFragment {
 
+    private static final String ARG_PARAM1 = "KEY";
+    private String mParams;
+
     @ViewInject(R.id.title_tv)
     private TextView title;
     @ViewInject(R.id.back_arrows)
     private ImageView backImg;
+    @ViewInject(R.id.layout)
+    private LinearLayout layout;
+
+    public static ConversationListStaticFragment newInstance(String params) {
+        ConversationListStaticFragment fragment = new ConversationListStaticFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, params);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParams = getArguments().getString(ARG_PARAM1);
+            Log.e("mParam", mParams);
+        }
+    }
 
     @Override
     public void onInit() {
         backImg.setVisibility(View.GONE);
         title.setText("消息");
+
         ConversationListFragment fragment = (ConversationListFragment) getChildFragmentManager().findFragmentById(R.id.conversationlist);
-        Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
-                .appendPath("conversationlist")
-                .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话非聚合显示
-                .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//设置群组会话聚合显示
-                .appendQueryParameter(Conversation.ConversationType.DISCUSSION.getName(), "false")//设置讨论组会话非聚合显示
-                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")//设置系统会话非聚合显示
-                .build();
-        fragment.setUri(uri);
+
+        if (NullUtils.isNull(mParams) && mParams.equals("PRIVATE")) {
+            layout.setVisibility(View.GONE);
+            Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
+                    .appendPath("conversationlist")
+                    .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话非聚合显示
+//                    .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//设置群组会话聚合显示
+//                    .appendQueryParameter(Conversation.ConversationType.DISCUSSION.getName(), "false")//设置讨论组会话非聚合显示
+//                    .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")//设置系统会话非聚合显示
+                    .build();
+            fragment.setUri(uri);
+        } else {
+            Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
+                    .appendPath("conversationlist")
+                    .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话非聚合显示
+                    .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//设置群组会话聚合显示
+                    .appendQueryParameter(Conversation.ConversationType.DISCUSSION.getName(), "false")//设置讨论组会话非聚合显示
+                    .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")//设置系统会话非聚合显示
+                    .build();
+            fragment.setUri(uri);
+        }
     }
 
 
-    @Event({R.id.search_edittext, R.id.right_add, R.id.right_scan})
+    @Event({R.id.search_edittext, R.id.right_add, R.id.right_scan, R.id.secretary_layout})
     private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -65,6 +106,14 @@ public class ConversationListStaticFragment extends BaseFragment {
             case R.id.right_scan:
                 intent = new Intent(getActivity(), DimensionCodeActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.secretary_layout:
+
+//                intent = new Intent(getActivity(), GroupActivity.class);
+//                startActivity(intent);
+                intent = new Intent(getActivity(), SecretaryActivity.class);
+                startActivity(intent);
+
                 break;
         }
     }

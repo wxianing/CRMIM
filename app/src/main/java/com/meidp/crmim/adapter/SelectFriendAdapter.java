@@ -7,8 +7,10 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.meidp.crmim.MyApplication;
 import com.meidp.crmim.R;
 import com.meidp.crmim.model.Friends;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -51,6 +53,7 @@ public class SelectFriendAdapter extends BasicAdapter<Friends> {
             vh = (ViewHolder) convertView.getTag();
         }
         vh.userName.setText(mDatas.get(position).getEmployeeName());
+        ImageLoader.getInstance().displayImage(mDatas.get(position).getPhotoURL(), vh.img, MyApplication.options);
 //        vh.checkBox.setChecked(getIsSelected().get(position));
         return convertView;
     }

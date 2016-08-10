@@ -27,11 +27,13 @@
             android:paddingTop="@dimen/dp8">
 
             <ImageView
+                android:id="@+id/red_dot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="end"
-                android:src="@mipmap/red_round_icon" />
+                android:src="@mipmap/red_round_icon"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/news_title"

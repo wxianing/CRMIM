@@ -20,7 +20,7 @@ import java.util.List;
  * 时  间： 2016/7/22
  */
 public class ModelApplyAdapter extends BasicAdapter<ModelApply> {
-    
+
     public ModelApplyAdapter(List<ModelApply> mDatas, Context context) {
         super(mDatas, context);
     }
@@ -39,7 +39,7 @@ public class ModelApplyAdapter extends BasicAdapter<ModelApply> {
         vh.produceName.setText("产品名：" + mDatas.get(position).getProductName());
         vh.customerName.setText("客户：" + mDatas.get(position).getCustName());
         vh.totalMoney.setText("￥" + Integer.toString(mDatas.get(position).getTotalFee()));
-        vh.principal.setText(mDatas.get(position).getCreatorName());
+        vh.principal.setText("负责人：" + mDatas.get(position).getCreatorName());
         vh.createTime.setText(mDatas.get(position).getCreateDate());
         vh.applyCount.setText("申请数量：" + Integer.toString(mDatas.get(position).getProductCount()));
         vh.checkStatus.setText(mDatas.get(position).getCheckStatusName());

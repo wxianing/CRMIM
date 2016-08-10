@@ -10,6 +10,7 @@
     <include layout="@layout/titlebar" />
 
     <RelativeLayout
+        android:id="@+id/header_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp10"
@@ -31,7 +32,7 @@
             android:layout_margin="@dimen/dp5"
             android:src="@mipmap/hugh"
             app:civ_border_color="@color/textcolor_gray"
-            app:civ_border_width="1dp" />
+            app:civ_border_width="0dp" />
     </RelativeLayout>
 
     <include layout="@layout/horizontal_line" />
