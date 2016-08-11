@@ -191,7 +191,9 @@ public class LoginActivity extends BaseActivity {
 
         SPUtils.save(this, "EmployeeName", appBean.getData().getEmployeeName());
         SPUtils.save(this, "DeptName", appBean.getData().getDeptName());
-
+        if (NullUtils.isNull(appBean.getData().getZhiWu())) {
+            SPUtils.save(this, "ZHIWU", appBean.getData().getZhiWu());
+        }
         SPUtils.save(this, "PhotoURL", appBean.getData().getPhotoURL());//保存头像
         SPUtils.setLoginTag(LoginActivity.this, true);//自动登录标志
         String JPushUserId = String.valueOf(appBean.getData().getUserID());

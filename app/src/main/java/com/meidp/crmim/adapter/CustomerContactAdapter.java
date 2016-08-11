@@ -37,13 +37,15 @@ public class CustomerContactAdapter extends BasicAdapter<CustomContacts> {
         }
 
         vh.name.setText(mDatas.get(position).getLinkManName());
-
+        vh.phoneNum.setText(mDatas.get(position).getWorkTel());
         return convertView;
     }
 
     private static class ViewHolder {
         @ViewInject(R.id.name_tv)
         private TextView name;
+        @ViewInject(R.id.phone_num)
+        private TextView phoneNum;
 
         public ViewHolder(View view) {
             x.view().inject(this, view);

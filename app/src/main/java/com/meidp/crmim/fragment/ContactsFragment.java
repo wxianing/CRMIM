@@ -1,4 +1,4 @@
-package com.meidp.crmim.imkit;
+package com.meidp.crmim.fragment;
 
 
 import android.content.Intent;
@@ -70,7 +70,7 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
     @Override
     public void onInit() {
         backImg.setVisibility(View.GONE);
-        title.setText("联系人");
+        title.setText("通讯录");
         userIds = new ArrayList<>();
         userIds.add("1");
         userIds.add("3");
@@ -81,13 +81,15 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
         expandableAdapter = new ExpandableAdapter(contactList, getActivity());
         expListView.setOnChildClickListener(this);
         expListView.setAdapter(expandableAdapter);
-//        expListView.expandGroup(0);//默认展开选项
-//        expListView.setGroupIndicator(null);
+        expListView.setGroupIndicator(null);
     }
 
     @Override
     public void onInitData() {
 
+    }
+
+    private void loadData() {
         HttpRequestUtils.getmInstance().send(getActivity(), Constant.GET_CONTACTS_URL, null, new HttpRequestCallBack() {
             @Override
             public void onSuccess(String result) {
@@ -97,9 +99,19 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
                     contactList.clear();
                     contactList.addAll(appBean.getData());
                     expandableAdapter.notifyDataSetChanged();
+                    for (int i = 0; i < contactList.size(); i++) {
+                        expListView.expandGroup(i);//默认展开选项
+                    }
                 }
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mDatas.clear();
+        loadData();
     }
 
     @Event(value = {R.id.search_edittext, R.id.group_layout, R.id.recent_contacts})

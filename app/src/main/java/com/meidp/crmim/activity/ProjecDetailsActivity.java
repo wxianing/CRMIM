@@ -35,6 +35,8 @@ import static com.meidp.crmim.R.color.textcolor_gray;
 
 @ContentView(R.layout.activity_projec_details)
 public class ProjecDetailsActivity extends BaseActivity {
+    @ViewInject(R.id.title_right)
+    private TextView titleRight;
     @ViewInject(R.id.title_tv)
     private TextView title;
     @ViewInject(R.id.project_name)
@@ -69,6 +71,8 @@ public class ProjecDetailsActivity extends BaseActivity {
 
     @Override
     public void onInit() {
+        titleRight.setVisibility(View.VISIBLE);
+        titleRight.setText("样机申请");
         title.setText("项目详情");
         oid = getIntent().getIntExtra("OID", -1);
         type = getIntent().getIntExtra("TYPE", -1);
@@ -118,7 +122,7 @@ public class ProjecDetailsActivity extends BaseActivity {
         });
     }
 
-    @Event(value = {R.id.back_arrows, R.id.button, R.id.follow_btn, R.id.follow_layout})
+    @Event(value = {R.id.back_arrows, R.id.button, R.id.follow_btn, R.id.follow_layout, R.id.title_right})
     private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -160,6 +164,10 @@ public class ProjecDetailsActivity extends BaseActivity {
                     intent.putExtra("mDatas", (Serializable) mDatas);
                     startActivity(intent);
                 }
+                break;
+            case R.id.title_right:
+                intent = new Intent(ProjecDetailsActivity.this, ModelMachineApplyActivity.class);
+                startActivity(intent);
                 break;
         }
     }

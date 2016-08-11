@@ -38,6 +38,7 @@ public class CustomContactActivity extends BaseActivity implements AdapterView.O
     private List<CustomContacts> mDatas;
     private CustomerContactAdapter mAdapter;
     private String custNo;
+    private String custName;
 
     @Override
     public void onInit() {
@@ -46,6 +47,7 @@ public class CustomContactActivity extends BaseActivity implements AdapterView.O
         title.setText("客户联系人");
         oid = getIntent().getIntExtra("OID", -1);
         custNo = getIntent().getStringExtra("CustNo");
+        custName = getIntent().getStringExtra("CustName");
         mDatas = new ArrayList<>();
         mAdapter = new CustomerContactAdapter(mDatas, this);
         mListView.setAdapter(mAdapter);
@@ -99,8 +101,9 @@ public class CustomContactActivity extends BaseActivity implements AdapterView.O
         Intent intent = new Intent();
         intent.putExtra("customName", mDatas.get(position).getLinkManName());
         intent.putExtra("CustomerId", oid);
+        intent.putExtra("ContactPhone", mDatas.get(position).getWorkTel());
+        intent.putExtra("CustName", custName);
         setResult(1001, intent);
-
         finish();
     }
 }

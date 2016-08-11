@@ -101,10 +101,8 @@ public class Constant {
     public static final String SAVE_FEEDBACK_URL = BASE_URL + "office/office/personaladvicesendsave";
     //我的专业知识
     public static final String MY_KNOWLEDGE_URL = BASE_URL + "office/office/getculturedocpagelist";
-
     //获取待审核样机列表
     public static final String FORCHECK_LIST = BASE_URL + "order/getsellsamplepagelistforcheck";
-
     //公海池
     public static final String OPEN_SEAR_PROJECT = BASE_URL + "projects/getpublicprojectpagelist";
     //未读消息
@@ -113,24 +111,27 @@ public class Constant {
     public static final String SAVE_UNREADER = BASE_URL + "common/mpublic/readsave";
     //样机详情
     public static final String PROTOTYPE_DETAILS_URL = BASE_URL + "order/getsellsample";
-
     //流程保存审核
     public static final String CHECKFOR_SAVE_URL = BASE_URL + "common/mpublic/flowstepcheck";
     //公司制度
     public static final String REGULATORY_FRAMEWORK_URL = BASE_URL + "office/office/getculturedocpagelist";
-
     //资讯类分
     public static final String CLASSIFY_URL = BASE_URL + "office/office/getculturetypes";
-
+    //获取个人信息
     public static final String GET_PERSON_INFORMATION = BASE_URL + "systemset/account/getuser";
     //获取系统消息
     public static final String GET_SYSTEM_MESSAGE = BASE_URL + "common/mpublic/getjpushpagelist";
-
     //获取联系人
     public static final String GET_CONTACTS_URL = BASE_URL + "common/user/getdeptusers";
-
     //费用详情
     public static final String FEELAPPLY_URL = BASE_URL + "office/office/getfeeapply";
+    //获取我的建议列表
+    public static final String GET_FEEDBACK_LIST_URL = BASE_URL + "office/office/getpersonaladvicesendpagelist";
 
+    //保存我的团队
+    public static final String SAVE_TEAM_LIST = BASE_URL + "office/employee/employeeteamsave";
+
+    //我的团队列表
+    public static final String MY_TEAM_LIST = BASE_URL + "office/employee/getemployeeteampagelist";
 
 }

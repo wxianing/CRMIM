@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/default_background_color"
     android:orientation="vertical"
-    tools:context=".imkit.ContactsFragment">
+    tools:context=".fragment.ContactsFragment">
 
     <include layout="@layout/titlebar" />
 
@@ -50,6 +50,7 @@
                     android:id="@+id/recent_contacts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
                     android:background="@color/white">
 
                     <ImageView
@@ -64,7 +65,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/dp5"
                         android:layout_weight="1"
-                        android:text="最近联系人" />
+                        android:text="常用联系人" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -78,7 +79,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="@dimen/dp55"
+                    android:layout_marginLeft="@dimen/dp15"
                     android:background="#F5F5F5" />
 
                 <FrameLayout
@@ -101,6 +102,7 @@
                     android:id="@+id/group_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
                     android:background="@color/white">
 
                     <ImageView
@@ -121,12 +123,12 @@
 
             <include layout="@layout/horizontal_line" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#F2F2F2"
-                android:padding="@dimen/dp10"
-                android:text="公司联系人" />
+            <!--            <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#F2F2F2"
+                            android:padding="@dimen/dp10"
+                            android:text="公司联系人" />-->
 
             <com.meidp.crmim.view.ExpListView
                 android:id="@+id/expListView"

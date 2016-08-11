@@ -31,7 +31,7 @@
         <RadioButton
             style="@style/mainRgStyle"
             android:drawableTop="@drawable/main_rg_contact_icon"
-            android:text="联系人" />
+            android:text="通讯录" />
 
         <RadioButton
             style="@style/mainRgStyle"

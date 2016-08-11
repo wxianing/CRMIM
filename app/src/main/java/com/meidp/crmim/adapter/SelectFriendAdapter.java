@@ -27,7 +27,6 @@ import java.util.List;
 public class SelectFriendAdapter extends BasicAdapter<Friends> {
     private static HashMap<Integer, Boolean> isSelected;
 
-
     public SelectFriendAdapter(List<Friends> mDatas, Context context) {
         super(mDatas, context);
         isSelected = new HashMap<Integer, Boolean>();

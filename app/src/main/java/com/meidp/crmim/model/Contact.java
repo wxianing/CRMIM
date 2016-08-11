@@ -284,7 +284,7 @@ public class Contact implements Serializable {
         private Object NameEn;
         private String PhotoURL;
         private int DeptID;
-        private Object QuarterName;
+        private String QuarterName;
         private String Mobile;
         private Object Telephone;
         private String DeptName;
@@ -410,11 +410,11 @@ public class Contact implements Serializable {
             this.DeptID = DeptID;
         }
 
-        public Object getQuarterName() {
+        public String getQuarterName() {
             return QuarterName;
         }
 
-        public void setQuarterName(Object QuarterName) {
+        public void setQuarterName(String QuarterName) {
             this.QuarterName = QuarterName;
         }
 

@@ -43,42 +43,13 @@ public class InformationAdapter extends BasicAdapter<InformationClassify> {
 
         ImageLoader.getInstance().displayImage(mDatas.get(position).getIcon(), vh.imageView, MyApplication.options);
         vh.titleName.setText(mDatas.get(position).getTypeName());
-
+        vh.explain.setText(mDatas.get(position).getLastDataTitle());
         int unReaderCount = mDatas.get(position).getNoReadTotal();
 
-        switch (position) {
-            case 0:
-                BadgeView badgeView1 = new BadgeView(context);
-                badgeView1.setTargetView(vh.announcementImg);
-                badgeView1.setBadgeCount(unReaderCount);
-                vh.explain.setText("巨烽的企业文化");
-                break;
-            case 1:
-                BadgeView badgeView2 = new BadgeView(context);
-                badgeView2.setTargetView(vh.announcementImg);
-                badgeView2.setBadgeCount(unReaderCount);
-                vh.explain.setText("巨烽的规章制度");
-                break;
-            case 2:
-                BadgeView badgeView3 = new BadgeView(context);
-                badgeView3.setTargetView(vh.announcementImg);
-                badgeView3.setBadgeCount(unReaderCount);
-                vh.explain.setText("巨烽新闻直播间");
-                break;
-            case 3:
-                BadgeView badgeView4 = new BadgeView(context);
-                badgeView4.setTargetView(vh.announcementImg);
-                badgeView4.setBadgeCount(unReaderCount);
-                vh.explain.setText("回顾过往活动及展会详情");
-                break;
-            case 4:
-                BadgeView badgeView5 = new BadgeView(context);
-                badgeView5.setTargetView(vh.announcementImg);
-                badgeView5.setBadgeCount(unReaderCount);
-                vh.explain.setText("企业组织架构一览");
-                break;
-        }
-        unReaderCount = 0;
+        BadgeView badgeView = new BadgeView(context);
+        badgeView.setTargetView(vh.announcementImg);
+        badgeView.setBadgeCount(unReaderCount);
+
         return convertView;
     }
 

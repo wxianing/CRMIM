@@ -49,6 +49,7 @@ public class CompanyFragment extends BaseFragment implements AdapterView.OnItemC
     @ViewInject(R.id.listview)
     private ListView mListView;
     private List<InformationClassify> mDatas;
+
     private InformationAdapter mAdapter;
 
     /**
@@ -147,39 +148,43 @@ public class CompanyFragment extends BaseFragment implements AdapterView.OnItemC
         Intent intent = new Intent();
         int sType = mDatas.get(position).getID();
         String titleName = mDatas.get(position).getTypeName();
-        switch (position) {
-            case 1:
-                intent.setClass(getActivity(), NewsActivity.class);
-                intent.putExtra("sType", sType);
-                intent.putExtra("sType2", 25);
-                intent.putExtra("title", titleName);
-                startActivity(intent);
-                break;
-            case 2:
-                intent.setClass(getActivity(), NewsActivity.class);
-                intent.putExtra("sType", sType);
-                intent.putExtra("title", titleName);
-                startActivity(intent);
-                break;
-            case 3:
-                intent.setClass(getActivity(), NewsActivity.class);
-                intent.putExtra("sType", sType);
-                intent.putExtra("title", titleName);
-                startActivity(intent);
-                break;
-            case 4:
-                intent.setClass(getActivity(), NewsActivity.class);
-                intent.putExtra("sType", sType);
-                intent.putExtra("title", titleName);
-                startActivity(intent);
-                break;
-            case 5:
-                intent.setClass(getActivity(), NewsActivity.class);
-                intent.putExtra("sType", sType);
-                intent.putExtra("title", titleName);
-                startActivity(intent);
-                break;
-        }
+        intent.setClass(getActivity(), NewsActivity.class);
+        intent.putExtra("sType", sType);
+        intent.putExtra("title", titleName);
+        startActivity(intent);
+//        switch (position) {
+//            case 0:
+//                intent.setClass(getActivity(), NewsActivity.class);
+//                intent.putExtra("sType", sType);
+//                intent.putExtra("sType2", 25);
+//                intent.putExtra("title", titleName);
+//                startActivity(intent);
+//                break;
+//            case 1:
+//                intent.setClass(getActivity(), NewsActivity.class);
+//                intent.putExtra("sType", sType);
+//                intent.putExtra("title", titleName);
+//                startActivity(intent);
+//                break;
+//            case 2:
+//                intent.setClass(getActivity(), NewsActivity.class);
+//                intent.putExtra("sType", sType);
+//                intent.putExtra("title", titleName);
+//                startActivity(intent);
+//                break;
+//            case 3:
+//                intent.setClass(getActivity(), NewsActivity.class);
+//                intent.putExtra("sType", sType);
+//                intent.putExtra("title", titleName);
+//                startActivity(intent);
+//                break;
+//            case 4:
+//                intent.setClass(getActivity(), NewsActivity.class);
+//                intent.putExtra("sType", sType);
+//                intent.putExtra("title", titleName);
+//                startActivity(intent);
+//                break;
+//        }
     }
 
     /**

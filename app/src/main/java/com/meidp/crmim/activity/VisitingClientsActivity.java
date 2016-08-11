@@ -62,6 +62,8 @@ public class VisitingClientsActivity extends BaseActivity implements BDLocationL
     private TextView customerName;
     @ViewInject(R.id.content_tv)
     private EditText contentTv;
+    @ViewInject(R.id.phone_num)
+    private EditText phoneNumEt;
 
 
     private MapView mMapView = null;
@@ -75,6 +77,7 @@ public class VisitingClientsActivity extends BaseActivity implements BDLocationL
     private double latitude;
     private double longitude;
     private String address;
+    private String contactPhone;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -185,6 +188,13 @@ public class VisitingClientsActivity extends BaseActivity implements BDLocationL
             custId = data.getIntExtra("OID", -1);
             custName = data.getStringExtra("CustName");
             customerName.setText(custName);
+        } else if (requestCode == 1001 && data != null) {
+            custId = data.getIntExtra("OID", -1);
+            custName = data.getStringExtra("CustName");
+            contactPhone = data.getStringExtra("ContactPhone");
+            Log.e("contact", contactPhone);
+            phoneNumEt.setText(contactPhone);
+            customerName.setText(custName);
         }
     }
 
@@ -204,7 +214,7 @@ public class VisitingClientsActivity extends BaseActivity implements BDLocationL
                 intent = new Intent();
                 intent.setClass(this, CustomerListActivity.class);
                 intent.putExtra("FLAG", "Apply");
-                startActivityForResult(intent, 1003);
+                startActivityForResult(intent, 1001);
                 break;
             case R.id.sign_in:
                 String addr = addressTv.getText().toString().trim();

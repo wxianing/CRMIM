@@ -95,7 +95,7 @@ public class NewsActivity extends BaseActivity implements AdapterView.OnItemClic
         intent.putExtra("ClickUrl", mDatas.get(position).getClickUrl());
         intent.putExtra("OID", mDatas.get(position).getID());
         intent.putExtra("sType", sType2);
-        intent.putExtra("TITLE", titleName);
+        intent.putExtra("TITLE", titleName);//标题
         startActivity(intent);
     }
 }

@@ -91,6 +91,7 @@ public class CostManagerActivity extends BaseActivity implements PullToRefreshBa
             case R.id.search_btn:
                 keyword = search.getText().toString().trim();
                 pageIndex = 1;
+                mDatas.clear();
                 loadData(pageIndex, keyword);
                 break;
         }

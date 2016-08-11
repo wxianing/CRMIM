@@ -77,14 +77,15 @@ public class MyApplication extends Application {
                 .build();
 
         optionsRounds = new DisplayImageOptions.Builder()
-                .showStubImage(R.drawable.ic_launcher)
-                .showImageForEmptyUri(R.drawable.ic_launcher)
-                .showImageOnFail(R.drawable.ic_launcher)
+                .showStubImage(R.mipmap.headerphoto)
+                .showImageForEmptyUri(R.mipmap.headerphoto)
+                .showImageOnFail(R.mipmap.headerphoto)
                 .cacheInMemory(true)
                 .cacheOnDisc(true)
                 .bitmapConfig(Bitmap.Config.ARGB_8888)   //设置图片的解码类型
                 .displayer(new RoundedBitmapDisplayer(10))
                 .build();
+
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
                 context).threadPriority(Thread.NORM_PRIORITY - 2)
                 .denyCacheImageMultipleSizesInMemory()

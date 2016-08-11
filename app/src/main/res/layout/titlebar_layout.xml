@@ -39,6 +39,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dp5"
             android:layout_weight="2"
+            android:padding="@dimen/dp5"
             android:src="@mipmap/add_icon"
             android:textColor="@color/white" />
 

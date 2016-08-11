@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/dp10">
+
+    <TextView
+        android:id="@+id/teams_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:text="团队名称"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp16" />
+
+    <TextView
+        android:id="@+id/teams_member"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp5"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/textcolor_gray" />
+
+</LinearLayout>

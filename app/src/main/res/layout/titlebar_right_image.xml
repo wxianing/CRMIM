@@ -33,7 +33,6 @@
 
 
         <ImageView
-            android:padding="@dimen/dp5"
             android:id="@+id/right_scan"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -41,11 +40,12 @@
             android:layout_marginRight="@dimen/dp5"
             android:layout_toLeftOf="@+id/right_add"
             android:layout_weight="2"
+            android:padding="@dimen/dp5"
             android:src="@mipmap/scan_icon"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:visibility="gone" />
 
         <ImageView
-            android:padding="@dimen/dp5"
             android:id="@+id/right_add"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -53,6 +53,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dp5"
             android:layout_weight="2"
+            android:padding="@dimen/dp5"
             android:src="@mipmap/add_icon"
             android:textColor="@color/white" />
 

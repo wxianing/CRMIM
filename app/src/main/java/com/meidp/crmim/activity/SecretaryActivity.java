@@ -103,7 +103,5 @@ public class SecretaryActivity extends BaseActivity implements AdapterView.OnIte
             intent.putExtra("OID", mDatas.get(position).getBillId());
             startActivity(intent);
         }
-
-
     }
 }

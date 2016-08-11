@@ -7,7 +7,6 @@ import android.support.v4.view.ViewPager;
 
 import com.meidp.crmim.R;
 import com.meidp.crmim.adapter.SectionsPagerAdapter;
-import com.meidp.crmim.imkit.ContactsFragment;
 import com.meidp.crmim.imkit.ConversationListStaticFragment;
 import com.meidp.crmim.model.Fragments;
 

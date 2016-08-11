@@ -278,7 +278,11 @@
         <activity android:name=".activity.FollowListActivity" />
         <activity android:name=".activity.SecretaryActivity" />
         <activity android:name=".activity.NearContactsActivity" />
-        <activity android:name=".activity.CostDetailsActivity"></activity>
+        <activity android:name=".activity.CostDetailsActivity" />
+        <activity android:name=".activity.AddFeedbackActivity" />
+        <activity android:name=".activity.MyTeamActivity" />
+        <activity android:name=".activity.AddTeamActivity" />
+        <activity android:name=".activity.FeedbackDetailsActivity"></activity>
     </application>
 
 </manifest>

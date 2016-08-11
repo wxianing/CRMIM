@@ -10,14 +10,17 @@ import java.io.Serializable;
  */
 public class InformationClassify implements Serializable {
 
+
     /**
-     * ID : 1
+     * ID : 5
      * CompanyCD : C1002
-     * TypeName : 企业文化
+     * TypeName : 公告
      * SupperTypeID : 0
-     * Path : 1
-     * icon : http://beacon.meidp.com/upload/Basic/Culture/1.png
-     * NoReadTotal : 2
+     * Path : 5
+     * icon : http://beacon.meidp.com/upload/Basic/Culture/5.png
+     * NoReadTotal : 0
+     * LastDataTitle : 医学影像显示器的调试方法
+     * LastDataTime : 2016-08-10 01:00
      */
 
     private int ID;
@@ -27,6 +30,8 @@ public class InformationClassify implements Serializable {
     private String Path;
     private String icon;
     private int NoReadTotal;
+    private String LastDataTitle;
+    private String LastDataTime;
 
     public int getID() {
         return ID;
@@ -82,5 +87,21 @@ public class InformationClassify implements Serializable {
 
     public void setNoReadTotal(int NoReadTotal) {
         this.NoReadTotal = NoReadTotal;
+    }
+
+    public String getLastDataTitle() {
+        return LastDataTitle;
+    }
+
+    public void setLastDataTitle(String LastDataTitle) {
+        this.LastDataTitle = LastDataTitle;
+    }
+
+    public String getLastDataTime() {
+        return LastDataTime;
+    }
+
+    public void setLastDataTime(String LastDataTime) {
+        this.LastDataTime = LastDataTime;
     }
 }

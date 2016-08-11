@@ -1,6 +1,7 @@
 package com.meidp.crmim.activity;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -103,15 +104,17 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (NullUtils.isNull(flag) && "Apply".equals(flag)) {//直接返回客户
-            Intent intent = new Intent();
-            intent.putExtra("CustName", mDatas.get(position - 1).getCustName());
-            intent.putExtra("OID", mDatas.get(position - 1).getID());
-            setResult(1003, intent);
-            finish();
-        } else {
+//        if (NullUtils.isNull(flag) && "Apply".equals(flag)) {//直接返回客户
+//            Intent intent = new Intent();
+//            intent.putExtra("CustName", mDatas.get(position - 1).getCustName());
+//            intent.putExtra("OID", mDatas.get(position - 1).getID());
+//            setResult(1003, intent);
+//            finish();
+//        } else
+        {
             Intent intent = new Intent();
             intent.setClass(CustomerListActivity.this, CustomContactActivity.class);
+            intent.putExtra("CustName", mDatas.get(position).getCustName());
             intent.putExtra("OID", mDatas.get(position - 1).getID());
             intent.putExtra("CustNo", mDatas.get(position - 1).getCustNo());
             startActivityForResult(intent, 1001);
@@ -127,7 +130,19 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
             Intent intent = new Intent();
             intent.putExtra("customName", customName);
             intent.putExtra("customerId", customerId);
+
+            intent.putExtra("ContactPhone", data.getStringExtra("ContactPhone"));
+
+            Log.e("ContactPhone>>>>>", data.getStringExtra("ContactPhone"));
+
+            intent.putExtra("CustName", data.getStringExtra("CustName"));
             setResult(1001, intent);
+            finish();
+        } else if (requestCode == 1003) {
+            Intent intent = new Intent();
+            intent.putExtra("CustName", "");
+            intent.putExtra("OID", "");
+            setResult(1003, intent);
             finish();
         }
     }

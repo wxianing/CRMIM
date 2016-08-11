@@ -161,6 +161,7 @@
             android:text="客户电话" />
 
         <EditText
+            android:id="@+id/phone_num"
             style="@style/sub_editext"
             android:layout_toLeftOf="@+id/arror_right_img"
             android:layout_weight="1"

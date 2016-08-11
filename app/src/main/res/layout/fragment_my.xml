@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/default_background_color"
+    android:background="#F2F2F2"
     android:orientation="vertical"
     tools:context="com.meidp.crmim.fragment.MyFragment">
 
@@ -17,56 +17,55 @@
             android:layout_height="1200dp"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:background="@color/statusbar_bg">
+            <include layout="@layout/titlebar" />
 
-                <com.meidp.crmim.view.CircleImageView
+            <LinearLayout
+                android:id="@+id/person_center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp20"
+                android:background="@color/white"
+                android:padding="@dimen/dp10">
+
+                <ImageView
                     android:id="@+id/header_img"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:layout_margin="@dimen/dp5"
-                    android:src="@mipmap/hugh"
-                    app:civ_border_color="@color/textcolor_gray"
-                    app:civ_border_width="0dp" />
+                    android:src="@mipmap/hugh" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dp50"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@mipmap/my_group_icon" />
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/username"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp10"
-                        android:text="我的团队"
-                        android:textColor="@color/white" />
-                </LinearLayout>
+                        android:layout_below="@+id/header_img"
+                        android:layout_centerHorizontal="true"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp16" />
 
-                <TextView
-                    android:id="@+id/username"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/header_img"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/dp10"
-                    android:text="胡汉三"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp16" />
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/phone_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/header_img"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dp10"
+                        android:text="手机号码："
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp14" />
+
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -91,14 +90,6 @@
                         android:textSize="@dimen/sp16" />
 
                     <TextView
-                        android:id="@+id/phone_num"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp5"
-                        android:text="手机：13812345678"
-                        android:textSize="@dimen/sp14" />
-
-                    <TextView
                         android:id="@+id/job_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -120,6 +111,7 @@
                 android:id="@+id/my_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp20"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingBottom="@dimen/dp10"
@@ -130,7 +122,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/build_group" />
+                    android:src="@mipmap/group_icon" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -143,16 +135,17 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/arrow_right" />
+                    android:src="@mipmap/arrow_right"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
             <include layout="@layout/horizontal_line" />
 
             <LinearLayout
-                android:id="@+id/person_center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp20"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingBottom="@dimen/dp10"
@@ -163,20 +156,27 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/material_icon" />
+                    android:src="@mipmap/no_trouble_icon" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp10"
                     android:layout_weight="1"
-                    android:text="个人资料"
+                    android:text="勿扰模式"
                     android:textSize="@dimen/sp16" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/arrow_right" />
+                <ToggleButton
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:background="@android:color/transparent"
+                    android:button="@drawable/switch_btn"
+                    android:checked="false"
+                    android:text=""
+                    android:textOff=""
+                    android:textOn="" />
 
             </LinearLayout>
 
@@ -209,7 +209,43 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/arrow_right" />
+                    android:src="@mipmap/arrow_right"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:id="@+id/feedbook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp20"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingBottom="@dimen/dp10"
+                android:paddingLeft="@dimen/dp10"
+                android:paddingRight="@dimen/dp5"
+                android:paddingTop="@dimen/dp10">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/feedbook" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_weight="1"
+                    android:text="意见反馈"
+                    android:textSize="@dimen/sp16" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/arrow_right"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -219,7 +255,6 @@
                 android:id="@+id/about_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp20"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingBottom="@dimen/dp10"
@@ -243,15 +278,12 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/arrow_right" />
+                    android:src="@mipmap/arrow_right"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
             <include layout="@layout/horizontal_line" />
-
-
-            <include layout="@layout/horizontal_line" />
-
 
             <LinearLayout
                 android:id="@+id/logout"

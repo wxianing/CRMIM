@@ -4,17 +4,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.jauker.widget.BadgeView;
 import com.meidp.crmim.R;
 import com.meidp.crmim.fragment.CompanyFragment;
 import com.meidp.crmim.fragment.HomeFragment;
 import com.meidp.crmim.fragment.MyFragment;
-import com.meidp.crmim.imkit.ContactsFragment;
+import com.meidp.crmim.fragment.ContactsFragment;
 import com.meidp.crmim.imkit.ConversationListStaticFragment;
 import com.meidp.crmim.utils.SPUtils;
 
