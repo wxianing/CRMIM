@@ -37,8 +37,9 @@ public class CustomerListAdapter extends BasicAdapter<CustomerLists> {
             vh = (ViewHolder) convertView.getTag();
         }
 
-        vh.name.setText(mDatas.get(position).getCustName());
-        vh.number.setText(mDatas.get(position).getCustNo());
+        vh.name.setText(mDatas.get(position).getCreatorName());
+        vh.number.setText("电话：" + mDatas.get(position).getMobile());
+        vh.custName.setText(mDatas.get(position).getCustName());
 
         return convertView;
     }
@@ -48,6 +49,8 @@ public class CustomerListAdapter extends BasicAdapter<CustomerLists> {
         private TextView name;
         @ViewInject(R.id.number)
         private TextView number;
+        @ViewInject(R.id.cust_name)
+        private TextView custName;
 
         public ViewHolder(View view) {
             x.view().inject(this, view);

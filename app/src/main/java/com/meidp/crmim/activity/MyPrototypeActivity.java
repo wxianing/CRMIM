@@ -33,8 +33,6 @@ import java.util.List;
 @ContentView(R.layout.activity_my_prototype)
 public class MyPrototypeActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2<ListView>, AdapterView.OnItemClickListener {
 
-    @ViewInject(R.id.title_right)
-    private TextView titleRight;
 
     @ViewInject(R.id.title_tv)
     private TextView title;
@@ -50,8 +48,6 @@ public class MyPrototypeActivity extends BaseActivity implements PullToRefreshBa
 
     @Override
     public void onInit() {
-        titleRight.setText("申请");
-        titleRight.setVisibility(View.VISIBLE);
         title.setText("样机管理");
         mListView.setMode(PullToRefreshBase.Mode.BOTH);
         mDatas = new ArrayList<>();
@@ -63,7 +59,7 @@ public class MyPrototypeActivity extends BaseActivity implements PullToRefreshBa
 
     @Override
     public void onInitData() {
-        loadData(pageIndex, keyword);
+//        loadData(pageIndex, keyword);
     }
 
     private void loadData(int pageIndex, String keyword) {
@@ -86,13 +82,20 @@ public class MyPrototypeActivity extends BaseActivity implements PullToRefreshBa
         });
     }
 
-    @Event(value = {R.id.back_arrows, R.id.title_right, R.id.search_btn})
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mDatas.clear();
+        loadData(pageIndex, keyword);
+    }
+
+    @Event(value = {R.id.back_arrows, R.id.search_btn, R.id.right_img})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
                 break;
-            case R.id.title_right:
+            case R.id.right_img:
                 Intent intent = new Intent(this, ModelMachineApplyActivity.class);
                 startActivity(intent);
                 break;
@@ -121,7 +124,7 @@ public class MyPrototypeActivity extends BaseActivity implements PullToRefreshBa
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this, PrototypeDetailsActivity.class);
-        intent.putExtra("OID", mDatas.get(position).getID());
+        intent.putExtra("OID", mDatas.get(position - 1).getID());
         startActivity(intent);
     }
 }

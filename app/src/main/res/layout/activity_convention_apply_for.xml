@@ -33,6 +33,7 @@
                     android:text="展会名称:" />
 
                 <EditText
+                    android:id="@+id/title_name"
                     style="@style/sub_editext"
                     android:gravity="end"
                     android:hint="点击输入" />
@@ -61,6 +62,7 @@
                     android:text="联系人姓名:" />
 
                 <EditText
+                    android:id="@+id/linkman"
                     style="@style/sub_editext"
                     android:gravity="end"
                     android:hint="点击输入" />
@@ -82,6 +84,7 @@
                     android:text="电话号码:" />
 
                 <EditText
+                    android:id="@+id/link_phone"
                     style="@style/sub_editext"
                     android:gravity="end"
                     android:hint="点击输入"
@@ -134,9 +137,11 @@
                     android:text="参会人数:" />
 
                 <EditText
+                    android:id="@+id/perosn_count"
                     style="@style/sub_editext"
                     android:gravity="end"
-                    android:hint="点击输入" />
+                    android:hint="点击输入"
+                    android:inputType="number" />
 
             </LinearLayout>
 
@@ -152,10 +157,42 @@
 
                 <TextView
                     style="@style/textview_submit_setting"
-                    android:text="展会时间:" />
+                    android:text="开始时间:" />
 
                 <EditText
+                    android:id="@+id/start_date"
                     style="@style/sub_editext"
+                    android:focusable="false"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+                <Button
+                    android:id="@+id/pickdate_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="选择日期"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="结束时间:" />
+
+                <EditText
+                    android:id="@+id/over_date"
+                    style="@style/sub_editext"
+                    android:focusable="false"
                     android:gravity="end"
                     android:hint="点击输入" />
 
@@ -176,6 +213,7 @@
                     android:text="展会地点:" />
 
                 <EditText
+                    android:id="@+id/address_et"
                     style="@style/sub_editext"
                     android:gravity="end"
                     android:hint="点击输入" />
@@ -191,6 +229,7 @@
                 android:text="参展目标及计划" />
 
             <EditText
+                android:id="@+id/plan_content"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:background="@drawable/white_bg"
@@ -206,6 +245,7 @@
                 android:text="合作伙伴" />
 
             <EditText
+                android:id="@+id/unionPartner"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:background="@drawable/white_bg"
@@ -221,11 +261,13 @@
                 android:text="参展或赞助规格及费用" />
 
             <EditText
+                android:id="@+id/total_money"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:background="@drawable/white_bg"
                 android:gravity="top"
                 android:hint="点击输入"
+                android:inputType="number"
                 android:textColorHint="@color/textcolor_gray"
                 android:textSize="@dimen/sp14" />
 
@@ -248,9 +290,11 @@
                     android:text="机器型号:" />
 
                 <EditText
+                    android:id="@+id/model_machine"
                     style="@style/sub_editext"
+                    android:focusable="false"
                     android:gravity="end"
-                    android:hint="点击输入" />
+                    android:hint="点击选择" />
 
             </LinearLayout>
 
@@ -269,7 +313,9 @@
                     android:text="归还日期:" />
 
                 <EditText
+                    android:id="@+id/give_back_date"
                     style="@style/sub_editext"
+                    android:focusable="false"
                     android:gravity="end"
                     android:hint="点击输入" />
 
@@ -282,6 +328,7 @@
                 android:text="竞争对手参展及赞助情况" />
 
             <EditText
+                android:id="@+id/competitors"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_marginBottom="@dimen/dp30"

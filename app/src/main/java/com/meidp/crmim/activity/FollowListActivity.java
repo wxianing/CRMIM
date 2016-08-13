@@ -27,9 +27,9 @@ public class FollowListActivity extends BaseActivity {
     @Override
     public void onInit() {
         title.setText("项目跟进");
-        ArrayList<ProjectDetails.ConstructionDetailsBean> mDatas = (ArrayList<ProjectDetails.ConstructionDetailsBean>) getIntent().getSerializableExtra("listobj");
+        ArrayList<ProjectDetails.ConstructionDetailsBean> mDatas = (ArrayList<ProjectDetails.ConstructionDetailsBean>) getIntent().getSerializableExtra("mDatas");
         mAdapter = new FollowAdapter(mDatas, this);
-//        mListView.setAdapter(mAdapter);
+        mListView.setAdapter(mAdapter);
     }
 
     @Event({R.id.back_arrows})

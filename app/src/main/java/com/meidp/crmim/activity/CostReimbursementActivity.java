@@ -20,6 +20,7 @@ import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppMsg;
 import com.meidp.crmim.model.CostEntrity;
 import com.meidp.crmim.utils.Constant;
+import com.meidp.crmim.utils.DataUtils;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.ToastUtils;
 
@@ -78,6 +79,8 @@ public class CostReimbursementActivity extends BaseActivity {
         title.setText("费用报销");
         titleRight.setText("保存");
         titleRight.setVisibility(View.VISIBLE);
+        applyTimeEt.setText(DataUtils.getDate2());
+        needTime.setText(DataUtils.getDate2());
     }
 
     @Event(value = {R.id.customer_et, R.id.cost_type, R.id.apply_time, R.id.need_time, R.id.title_right, R.id.back_arrows})
@@ -258,5 +261,4 @@ public class CostReimbursementActivity extends BaseActivity {
                     .append((mDay < 10) ? "0" + mDay : mDay));
         }
     }
-
 }

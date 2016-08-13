@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.CustomerVisitActivity">
+
+    <include layout="@layout/titlebar" />
+
+    <RelativeLayout
+        android:id="@+id/customer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp20"
+        android:background="@color/white"
+        android:padding="@dimen/dp10">
+
+        <ImageView
+            android:id="@+id/customer_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/address_icon"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/customer_icon"
+            android:text="客 户 名：" />
+
+        <EditText
+            android:id="@+id/customer_name"
+            style="@style/sub_editext"
+            android:layout_toLeftOf="@+id/arror_right_img"
+            android:layout_toRightOf="@+id/name_tv"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:hint="点击选择" />
+
+        <ImageView
+            android:id="@+id/arror_right_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/arrow_right"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/horizontal_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/dp10">
+
+        <ImageView
+            android:id="@+id/customer_phone_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/customer_phone_icon"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/customer_phone_icon"
+            android:text="客户电话:" />
+
+        <EditText
+            android:id="@+id/phone_num"
+            style="@style/sub_editext"
+            android:layout_toLeftOf="@+id/arror_right_img"
+            android:layout_weight="1"
+            android:hint="可不填" />
+
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/dp10">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/customer_phone_icon"
+            android:text="医     院:" />
+
+        <EditText
+            android:id="@+id/hospital_name"
+            style="@style/sub_editext"
+            android:layout_toLeftOf="@+id/arror_right_img"
+            android:layout_weight="1"
+            android:hint="请输入" />
+
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/dp10">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/customer_phone_icon"
+            android:text="科     室:" />
+
+        <EditText
+            style="@style/sub_editext"
+            android:layout_toLeftOf="@+id/arror_right_img"
+            android:layout_weight="1"
+            android:hint="请输入" />
+
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/dp10">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/customer_phone_icon"
+            android:text="项 目 名:" />
+
+        <EditText
+            android:id="@+id/project_name"
+            style="@style/sub_editext"
+            android:layout_toLeftOf="@+id/arror_right_img"
+            android:layout_weight="1"
+            android:hint="请输入" />
+
+        <ImageView
+            android:id="@+id/add_project"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@mipmap/add_icon" />
+
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sign_linear"
+        android:layout_marginTop="15dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/content_tv"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:background="@drawable/edittext_shape"
+            android:gravity="top"
+            android:hint="请添加内容..."
+            android:textSize="@dimen/sp14" />
+
+        <GridView
+            android:id="@+id/add_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:horizontalSpacing="3dp"
+            android:numColumns="4"
+            android:scrollbars="none"
+            android:verticalSpacing="5dp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp10"
+            android:visibility="gone">
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp20"
+            android:background="@drawable/linear_shape"
+            android:padding="@dimen/dp10"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/map_linear"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_weight="2">
+
+                <com.baidu.mapapi.map.MapView
+                    android:id="@+id/bmapView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:focusable="false" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

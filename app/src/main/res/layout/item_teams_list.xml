@@ -3,25 +3,35 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:orientation="vertical"
     android:padding="@dimen/dp10">
 
-    <TextView
-        android:id="@+id/teams_name"
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@mipmap/group_icon" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:text="团队名称"
-        android:textColor="@color/black"
-        android:textSize="@dimen/sp16" />
+        android:layout_marginLeft="@dimen/dp10"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/teams_member"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp5"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textColor="@color/textcolor_gray" />
+        <TextView
+            android:id="@+id/teams_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:text="团队名称"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp16" />
 
+        <TextView
+            android:id="@+id/teams_member"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp5"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/textcolor_gray" />
+    </LinearLayout>
 </LinearLayout>

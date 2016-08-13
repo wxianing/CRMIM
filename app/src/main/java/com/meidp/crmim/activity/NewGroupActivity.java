@@ -86,17 +86,17 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                Log.e(">>>>>>>>>>>>>>>", "id" + checkedLists.get(position).getUserID());
 
-               int checkId = checkedLists.get(position).getUserID();
-
-                for (int i = 0; i < mDatas.size(); i++) {
-                    if (mDatas.get(i).getUserID() == checkId) {
-                        holder.checkBox.toggle();
-                        checkNum--;
-                        SelectFriendAdapter.getIsSelected().put(i, holder.checkBox.isChecked());//取消ListView  CheckBox选择
-                        checkedLists.remove(position);
-                        checkedAdapter.notifyDataSetChanged();
-                    }
-                }
+//               int checkId = checkedLists.get(position).getUserID();
+//
+//                for (int i = 0; i < mDatas.size(); i++) {
+//                    if (mDatas.get(i).getUserID() == checkId) {
+//                        holder.checkBox.toggle();
+//                        checkNum--;
+//                        SelectFriendAdapter.getIsSelected().put(i, holder.checkBox.isChecked());//取消ListView  CheckBox选择
+//                        checkedLists.remove(position);
+//                        checkedAdapter.notifyDataSetChanged();
+//                    }
+//                }
             }
         });
     }

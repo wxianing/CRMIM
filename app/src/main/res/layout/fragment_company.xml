@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context="com.meidp.crmim.fragment.CompanyFragment">
 
-    <include layout="@layout/titlebar" />
+    <include layout="@layout/titlebar_layout" />
 
     <include layout="@layout/auto_viewpager" />
 

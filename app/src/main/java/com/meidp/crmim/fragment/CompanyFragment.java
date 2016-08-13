@@ -1,13 +1,16 @@
 package com.meidp.crmim.fragment;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -15,7 +18,11 @@ import com.alibaba.fastjson.TypeReference;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.meidp.crmim.R;
 import com.meidp.crmim.activity.CompanytructureActivity;
+import com.meidp.crmim.activity.ModelMachineApplyActivity;
+import com.meidp.crmim.activity.NewGroupActivity;
 import com.meidp.crmim.activity.NewsActivity;
+import com.meidp.crmim.activity.SubmitActivity;
+import com.meidp.crmim.activity.VisitingClientsActivity;
 import com.meidp.crmim.adapter.ImagePagerAdapter;
 import com.meidp.crmim.adapter.InformationAdapter;
 import com.meidp.crmim.http.HttpRequestCallBack;
@@ -27,7 +34,9 @@ import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.widget.AutoScrollViewPager;
 
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,12 +71,16 @@ public class CompanyFragment extends BaseFragment implements AdapterView.OnItemC
     private List<Banner> imageUrls;
     private ImagePagerAdapter pagerAdapter;
 
+    @ViewInject(R.id.right_img)
+    private ImageView rightImg;
+    private PopupWindow mPopupWindow;
+
     @Override
     public void onInit() {
         backImg.setVisibility(View.GONE);
         title.setText(R.string.title_name);
         imageUrls = new ArrayList<>();
-
+        initPopupWindow();
         View headerView = LayoutInflater.from(getActivity()).inflate(R.layout.auto_viewpager, null);
         View footerView = LayoutInflater.from(getActivity()).inflate(R.layout.company_list_footer, null);
 
@@ -83,6 +96,40 @@ public class CompanyFragment extends BaseFragment implements AdapterView.OnItemC
         mDatas = new ArrayList<>();
         mListView.setOnItemClickListener(this);
 //        mListView.setOnRefreshListener(this);
+    }
+
+    @Event({R.id.visit_client, R.id.new_group, R.id.submit_project, R.id.apply_model, R.id.right_img})
+    private void onClick(View v) {
+        Intent intent = null;
+        switch (v.getId()) {
+            case R.id.visit_client://客户拜访
+                intent = new Intent(getActivity(), VisitingClientsActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.new_group://新建群组
+                intent = new Intent(getActivity(), NewGroupActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.submit_project://申报项目
+                intent = new Intent(getActivity(), SubmitActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.apply_model:
+                intent = new Intent(getActivity(), ModelMachineApplyActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.right_img:
+                if (!mPopupWindow.isShowing()) {
+                    showPopupWindow();
+                } else {
+                    mPopupWindow.dismiss();
+                }
+                break;
+        }
     }
 
     @Override
@@ -152,39 +199,6 @@ public class CompanyFragment extends BaseFragment implements AdapterView.OnItemC
         intent.putExtra("sType", sType);
         intent.putExtra("title", titleName);
         startActivity(intent);
-//        switch (position) {
-//            case 0:
-//                intent.setClass(getActivity(), NewsActivity.class);
-//                intent.putExtra("sType", sType);
-//                intent.putExtra("sType2", 25);
-//                intent.putExtra("title", titleName);
-//                startActivity(intent);
-//                break;
-//            case 1:
-//                intent.setClass(getActivity(), NewsActivity.class);
-//                intent.putExtra("sType", sType);
-//                intent.putExtra("title", titleName);
-//                startActivity(intent);
-//                break;
-//            case 2:
-//                intent.setClass(getActivity(), NewsActivity.class);
-//                intent.putExtra("sType", sType);
-//                intent.putExtra("title", titleName);
-//                startActivity(intent);
-//                break;
-//            case 3:
-//                intent.setClass(getActivity(), NewsActivity.class);
-//                intent.putExtra("sType", sType);
-//                intent.putExtra("title", titleName);
-//                startActivity(intent);
-//                break;
-//            case 4:
-//                intent.setClass(getActivity(), NewsActivity.class);
-//                intent.putExtra("sType", sType);
-//                intent.putExtra("title", titleName);
-//                startActivity(intent);
-//                break;
-//        }
     }
 
     /**
@@ -202,5 +216,19 @@ public class CompanyFragment extends BaseFragment implements AdapterView.OnItemC
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
         mDatas.clear();
         loadData();
+    }
+
+    private void showPopupWindow() {
+//        mPopupWindow.showAsDropDown(titlebar );
+        mPopupWindow.showAsDropDown(rightImg, 0, 0);
+    }
+
+    private void initPopupWindow() {
+        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.popup_list_layout, null);
+        x.view().inject(this, contentView);
+        mPopupWindow = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        mPopupWindow.setContentView(contentView);
+        mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
     }
 }

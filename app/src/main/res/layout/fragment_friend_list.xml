@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".fragment.ContactsFragment">
 
-    <include layout="@layout/titlebar" />
+    <include layout="@layout/titlebar_layout" />
 
     <ScrollView
         android:layout_width="match_parent"

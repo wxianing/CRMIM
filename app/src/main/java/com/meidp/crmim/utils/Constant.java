@@ -127,11 +127,16 @@ public class Constant {
     public static final String FEELAPPLY_URL = BASE_URL + "office/office/getfeeapply";
     //获取我的建议列表
     public static final String GET_FEEDBACK_LIST_URL = BASE_URL + "office/office/getpersonaladvicesendpagelist";
-
     //保存我的团队
     public static final String SAVE_TEAM_LIST = BASE_URL + "office/employee/employeeteamsave";
-
     //我的团队列表
     public static final String MY_TEAM_LIST = BASE_URL + "office/employee/getemployeeteampagelist";
-
+    //团队详情
+    public static final String TEAM_DETAILS_URL = BASE_URL + "office/employee/getemployeeteam";
+    //保存真会申请
+    public static final String SAVE_CONVERNTIONAPPLYFOR = BASE_URL + "order/sellexhibitionsave";
+    //商品中心
+    public static final String PRODUCE_LIST = BASE_URL + "product/getproductpagelist";
+    //展会申请
+    public static final String CONVERSATION_LIST = BASE_URL + "order/getsellexhibitionpagelist";
 }

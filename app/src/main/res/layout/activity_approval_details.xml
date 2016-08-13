@@ -5,68 +5,77 @@
     android:layout_height="match_parent"
     tools:context="com.meidp.crmim.activity.ApprovalDetailsActivity">
 
-    <LinearLayout
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/titlebar" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/titlebar" />
-
-        <TextView
-            android:id="@+id/title_name"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp30"
-            android:background="@color/white"
-            android:padding="@dimen/dp10"
-            android:text="标题：" />
+            android:layout_below="@+id/title_bar"
+            android:orientation="vertical">
 
-        <include layout="@layout/horizontal_line" />
 
-        <TextView
-            android:id="@+id/curr_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="@dimen/dp10"
-            android:text="标题："
-            android:textColor="@color/textcolor_orange" />
+            <TextView
+                android:id="@+id/title_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp30"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="标题：" />
 
-        <TextView
-            android:id="@+id/project_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp30"
-            android:background="@color/white"
-            android:padding="@dimen/dp10"
-            android:text="项目名：" />
+            <include layout="@layout/horizontal_line" />
 
-        <include layout="@layout/horizontal_line" />
+            <TextView
+                android:id="@+id/curr_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="标题："
+                android:textColor="@color/textcolor_orange" />
 
-        <TextView
-            android:id="@+id/cust_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="@dimen/dp10"
-            android:text="客户名：" />
+            <TextView
+                android:id="@+id/project_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp30"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="项目名：" />
 
-        <include layout="@layout/horizontal_line" />
+            <include layout="@layout/horizontal_line" />
 
-        <TextView
-            android:id="@+id/duty_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="@dimen/dp10"
-            android:text="负责人：" />
+            <TextView
+                android:id="@+id/cust_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="客户名：" />
 
-        <ListView
-            android:id="@+id/listview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp30" />
-    </LinearLayout>
+            <include layout="@layout/horizontal_line" />
+
+            <TextView
+                android:id="@+id/duty_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="负责人：" />
+
+            <com.meidp.crmim.view.ListViewForScrollView
+                android:id="@+id/listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp30" />
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"

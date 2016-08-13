@@ -1,8 +1,6 @@
 package com.meidp.crmim.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -10,27 +8,12 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BitmapDescriptor;
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
-import com.baidu.mapapi.map.MapStatus;
-import com.baidu.mapapi.map.MapStatusUpdateFactory;
-import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.MyLocationConfiguration;
-import com.baidu.mapapi.map.MyLocationData;
-import com.baidu.mapapi.model.LatLng;
 import com.meidp.crmim.R;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppMsg;
 import com.meidp.crmim.utils.Constant;
-import com.meidp.crmim.utils.DataUtils;
 import com.meidp.crmim.utils.NullUtils;
-import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.utils.ToastUtils;
 
 import org.xutils.view.annotation.ContentView;
@@ -45,19 +28,14 @@ import java.util.HashMap;
  * 作  用：
  * 时  间： 2016/8/1
  */
-@ContentView(R.layout.activity_signin_main)
-public class VisitingClientsActivity extends BaseActivity implements BDLocationListener {
+@ContentView(R.layout.activity_visit_client)
+public class VisitingClientsActivity extends BaseActivity {
 
     @ViewInject(R.id.title_right)
     private TextView titleRight;
     @ViewInject(R.id.title_tv)
     private TextView title;
-    @ViewInject(R.id.date_tv)
-    private TextView currDate;
-    @ViewInject(R.id.curr_time)
-    private TextView currTime;
-    @ViewInject(R.id.address_tv)
-    private TextView addressTv;
+
     @ViewInject(R.id.customer_name)
     private TextView customerName;
     @ViewInject(R.id.content_tv)
@@ -65,125 +43,35 @@ public class VisitingClientsActivity extends BaseActivity implements BDLocationL
     @ViewInject(R.id.phone_num)
     private EditText phoneNumEt;
 
-
-    private MapView mMapView = null;
-    private BaiduMap mBaiduMap;
-    private LocationClient mLocalClient;
-    private boolean isFirstLoc = true; // 是否首次定位
-    private BitmapDescriptor mCurrentMarker;
-    private MyLocationConfiguration.LocationMode mCurrentMode;
     private int custId;
     private String custName;
     private double latitude;
     private double longitude;
     private String address;
     private String contactPhone;
+    private int projectId;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
+    @ViewInject(R.id.project_name)
+    private EditText projectNameEt;
+    private String custContact;
+    @ViewInject(R.id.hospital_name)
+    private EditText hospitalName;
 
     @Override
     public void onInit() {
         titleRight.setVisibility(View.VISIBLE);
-        titleRight.setText("历史记录");
-        title.setText("客户拜访");
-        currDate.setText(DataUtils.getDate() + "  " + DataUtils.getWeek());
-        currTime.setText(DataUtils.getTime());
-        mMapView = (MapView) findViewById(R.id.bmapView);
-        mBaiduMap = mMapView.getMap();
-        mMapView.showZoomControls(false);
-
-        mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
-        mCurrentMarker = BitmapDescriptorFactory.fromResource(R.mipmap.marker_red);
-        mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(mCurrentMode, true, mCurrentMarker));
-        mBaiduMap.setMyLocationEnabled(true);
-        mLocalClient = new LocationClient(VisitingClientsActivity.this);
-        mLocalClient.registerLocationListener(this);
-        LocationClientOption option = new LocationClientOption();
-//        option.setOpenGps(true);//打开GPS定位
-        option.setIsNeedAddress(true);
-        option.setCoorType("bd09ll");
-        option.setScanSpan(1000);
-        mLocalClient.setLocOption(option);
-        mLocalClient.start();
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
-        mMapView.onDestroy();
-        mMapView = null;
-        mLocalClient.stop();
-        // 关闭定位图层
-        mBaiduMap.setMyLocationEnabled(false);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //在activity执行onResume时执行mMapView. onResume ()，实现地图生命周期管理
-        mMapView.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //在activity执行onPause时执行mMapView. onPause ()，实现地图生命周期管理
-        mMapView.onPause();
-    }
-
-
-    @Override
-    public void onReceiveLocation(BDLocation bdLocation) {
-        if (bdLocation == null || mMapView == null) {
-            return;
-        }
-        MyLocationData locData = new MyLocationData.Builder()
-                .accuracy(bdLocation.getRadius())
-                // 此处设置开发者获取到的方向信息，顺时针0-360
-                .direction(0).latitude(bdLocation.getLatitude())
-                .longitude(bdLocation.getLongitude()).build();
-        Log.e("location", bdLocation.getAddrStr() + ">>>>>" + bdLocation.getLatitude() + ">>>>" + bdLocation.getLongitude());
-
-        latitude = bdLocation.getLatitude();
-        longitude = bdLocation.getLongitude();
-        address = bdLocation.getAddrStr();
-        if (NullUtils.isNull(bdLocation.getAddrStr())) {
-            mLocalClient.stop();
-        }
-        addressTv.setText(bdLocation.getAddrStr());
-
-        mBaiduMap.setMyLocationData(locData);
-        if (isFirstLoc) {
-            isFirstLoc = false;
-            LatLng ll = new LatLng(bdLocation.getLatitude(),
-                    bdLocation.getLongitude());
-            MapStatus.Builder builder = new MapStatus.Builder();
-            builder.target(ll).zoom(18.0f);
-            mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
-        }
-    }
-
-    /**
-     * 方法必须重写
-     */
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+        titleRight.setText("确定");
+        title.setText("确认拜访");
+        longitude = getIntent().getDoubleExtra("LONGITUDE", 0);
+        latitude = getIntent().getDoubleExtra("LATITUDE", 0);
+        address = getIntent().getStringExtra("Address");
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && data != null) {
-            if (NullUtils.isNull(data.getStringExtra("ADDRESS"))) {
-                addressTv.setText(data.getStringExtra("ADDRESS"));
-            }
+
         } else if (requestCode == 1003 && data != null) {
             custId = data.getIntExtra("OID", -1);
             custName = data.getStringExtra("CustName");
@@ -192,13 +80,20 @@ public class VisitingClientsActivity extends BaseActivity implements BDLocationL
             custId = data.getIntExtra("OID", -1);
             custName = data.getStringExtra("CustName");
             contactPhone = data.getStringExtra("ContactPhone");
-            Log.e("contact", contactPhone);
-            phoneNumEt.setText(contactPhone);
-            customerName.setText(custName);
+            custContact = data.getStringExtra("CustContact");//客户名称
+            String custPhone = data.getStringExtra("CustPhone");
+//            Log.e("contact", contactPhone);
+            phoneNumEt.setText(custPhone);
+            customerName.setText(custContact);
+            hospitalName.setText(custName);
+        } else if (resultCode == 1004) {
+            projectId = data.getIntExtra("ProjectId", -1);
+            String projectName = data.getStringExtra("ProjectName");
+            projectNameEt.setText(projectName);
         }
     }
 
-    @Event(value = {R.id.back_arrows, R.id.address_trim, R.id.customer_name, R.id.sign_in, R.id.title_right})
+    @Event(value = {R.id.back_arrows, R.id.customer_name, R.id.title_right, R.id.add_project})
     private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -216,9 +111,8 @@ public class VisitingClientsActivity extends BaseActivity implements BDLocationL
                 intent.putExtra("FLAG", "Apply");
                 startActivityForResult(intent, 1001);
                 break;
-            case R.id.sign_in:
-                String addr = addressTv.getText().toString().trim();
-                if (NullUtils.isNull(addr)) {
+            case R.id.title_right:
+                if (NullUtils.isNull(address)) {
                     String content = contentTv.getText().toString().trim();
                     ToastUtils.shows(this, "正在提交");
                     HashMap params = new HashMap();
@@ -248,9 +142,10 @@ public class VisitingClientsActivity extends BaseActivity implements BDLocationL
                     ToastUtils.shows(this, "定位失败");
                 }
                 break;
-            case R.id.title_right:
-                intent = new Intent(VisitingClientsActivity.this, VisitRecordActivity.class);
-                startActivity(intent);
+            case R.id.add_project:
+                intent = new Intent(this, ProjectManagerActivity.class);
+                intent.putExtra("FLAG", "Apply");
+                startActivityForResult(intent, 1004);
                 break;
         }
     }

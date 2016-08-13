@@ -22,6 +22,16 @@ public class CustomerLists implements Serializable {
     private String email;
     private String Remark;
 
+    private String CreatorName;
+
+    public String getCreatorName() {
+        return CreatorName;
+    }
+
+    public void setCreatorName(String creatorName) {
+        CreatorName = creatorName;
+    }
+
     public int getID() {
         return ID;
     }

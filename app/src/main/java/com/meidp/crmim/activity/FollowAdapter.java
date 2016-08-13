@@ -62,23 +62,29 @@ public class FollowAdapter extends BaseAdapter {
             vh = (ViewHolder) convertView.getTag();
         }
 
-        vh.name.setText(mDatas.get(position).getSummaryName());
-        vh.startDate.setText("开始时间：" + mDatas.get(position).getBeginDate());
-        vh.endDate.setText("结束时间：" + mDatas.get(position).getEndDate());
-        vh.remark.setText(mDatas.get(position).getProjectMemo());
+        vh.personCount.setText("预计人数：" + mDatas.get(position).getPersonNum());
+
+        String startTime = mDatas.get(position).getBeginDate();
+        String overTime = mDatas.get(position).getEndDate();
+        startTime = startTime.substring(0, 11);
+        overTime = overTime.substring(0, 11);
+        vh.startDate.setText(startTime + "~" + overTime);
+        vh.remark.setText("备注：" + mDatas.get(position).getProjectMemo());
         vh.rate.setText("成功率:" + mDatas.get(position).getRate());
+        vh.schedule.setText("进度：" + "0.3");
         return convertView;
     }
 
     private static class ViewHolder {
-        @ViewInject(R.id.name)
-        private TextView name;
+        @ViewInject(R.id.perosn_count)
+        private TextView personCount;
         @ViewInject(R.id.rate)
         private TextView rate;
         @ViewInject(R.id.start_date)
         private TextView startDate;
-        @ViewInject(R.id.end_date)
-        private TextView endDate;
+        @ViewInject(R.id.schedule)
+        private TextView schedule;
+
         @ViewInject(R.id.remark)
         private TextView remark;
 

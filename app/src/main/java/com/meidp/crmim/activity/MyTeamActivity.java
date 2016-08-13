@@ -2,6 +2,7 @@ package com.meidp.crmim.activity;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,7 +30,7 @@ import java.util.List;
  * 我的团队
  */
 @ContentView(R.layout.activity_my_team)
-public class MyTeamActivity extends BaseActivity {
+public class MyTeamActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
     @ViewInject(R.id.title_tv)
     private TextView title;
@@ -49,6 +50,7 @@ public class MyTeamActivity extends BaseActivity {
         mAdapter = new TeamsAdapter(mDatas, this);
         mListView.setAdapter(mAdapter);
         loadData(pageIndex);
+        mListView.setOnItemClickListener(this);
     }
 
 
@@ -81,5 +83,13 @@ public class MyTeamActivity extends BaseActivity {
                 startActivity(intent);
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(this, TeamDetailsActivity.class);
+        intent.putExtra("teamId", mDatas.get(position).getID());
+        intent.putExtra("TeamName", mDatas.get(position).getTeamName());
+        startActivity(intent);
     }
 }

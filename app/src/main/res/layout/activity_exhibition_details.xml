@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.meidp.crmim.activity.ExhibitionDetailsActivity">
+
+    <include layout="@layout/titlebar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1200dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp30"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="标题：" />
+
+            <TextView
+                android:id="@+id/link_man"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp30"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="联系人:" />
+
+            <include layout="@layout/horizontal_line" />
+
+            <TextView
+                android:id="@+id/link_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="联系电话:" />
+
+            <TextView
+                android:id="@+id/start_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp30"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="开始日期:" />
+
+            <include layout="@layout/horizontal_line" />
+
+            <TextView
+                android:id="@+id/over_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="结束日期:" />
+
+            <include layout="@layout/horizontal_line" />
+
+            <TextView
+                android:id="@+id/count_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="规模人数:" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="@dimen/dp10"
+                    android:text="费用总投资：" />
+
+                <TextView
+                    android:id="@+id/total_money"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="@dimen/dp10"
+                    android:text="："
+                    android:textColor="@color/textcolor_orange" />
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <TextView
+                android:id="@+id/aim_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp30"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="展会目的:" />
+
+            <include layout="@layout/horizontal_line" />
+
+            <TextView
+                android:id="@+id/plan_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="展会计划:" />
+
+            <include layout="@layout/horizontal_line" />
+
+            <TextView
+                android:id="@+id/partner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="合作伙伴:" />
+
+            <include layout="@layout/horizontal_line" />
+
+            <TextView
+                android:id="@+id/competitor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="合作伙伴:" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

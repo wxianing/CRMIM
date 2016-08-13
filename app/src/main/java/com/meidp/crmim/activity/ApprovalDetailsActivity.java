@@ -14,6 +14,7 @@ import com.meidp.crmim.model.AppMsg;
 import com.meidp.crmim.model.CheckforApply;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.ToastUtils;
+import com.meidp.crmim.view.ListViewForScrollView;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -40,7 +41,7 @@ public class ApprovalDetailsActivity extends BaseActivity {
     @ViewInject(R.id.duty_name)
     private TextView dutyName;
     @ViewInject(R.id.listview)
-    private ListView mListView;
+    private ListViewForScrollView mListView;
     private List<CheckforApply.FlowStepsBean> mDatas;
     private CheckAdapter mAdapter;
     private String billNo;

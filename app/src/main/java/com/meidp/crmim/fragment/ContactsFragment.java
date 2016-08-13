@@ -2,21 +2,29 @@ package com.meidp.crmim.fragment;
 
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.meidp.crmim.R;
 import com.meidp.crmim.activity.GroupActivity;
+import com.meidp.crmim.activity.ModelMachineApplyActivity;
 import com.meidp.crmim.activity.NearContactsActivity;
+import com.meidp.crmim.activity.NewGroupActivity;
 import com.meidp.crmim.activity.SearchMsgActivity;
+import com.meidp.crmim.activity.SubmitActivity;
+import com.meidp.crmim.activity.VisitingClientsActivity;
 import com.meidp.crmim.adapter.ExpandableAdapter;
 import com.meidp.crmim.adapter.NearContactsAdapter;
 import com.meidp.crmim.fragment.BaseFragment;
@@ -32,6 +40,7 @@ import com.meidp.crmim.view.ListViewForScrollView;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +71,10 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
     private ExpandableAdapter expandableAdapter;
     @ViewInject(R.id.friends_list)
     private FrameLayout friendsList;
+    @ViewInject(R.id.right_img)
+    private ImageView rightImg;
+    private PopupWindow mPopupWindow;
+
 
     public ContactsFragment() {
 
@@ -71,6 +84,7 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
     public void onInit() {
         backImg.setVisibility(View.GONE);
         title.setText("通讯录");
+        initPopupWindow();
         userIds = new ArrayList<>();
         userIds.add("1");
         userIds.add("3");
@@ -114,7 +128,7 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
         loadData();
     }
 
-    @Event(value = {R.id.search_edittext, R.id.group_layout, R.id.recent_contacts})
+    @Event(value = {R.id.search_edittext, R.id.group_layout, R.id.recent_contacts, R.id.visit_client, R.id.new_group, R.id.submit_project, R.id.apply_model, R.id.right_img})
     private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -135,6 +149,33 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
                     friendsList.setVisibility(View.GONE);
                 }
                 break;
+            case R.id.visit_client://客户拜访
+                intent = new Intent(getActivity(), VisitingClientsActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.new_group://新建群组
+                intent = new Intent(getActivity(), NewGroupActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.submit_project://申报项目
+                intent = new Intent(getActivity(), SubmitActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.apply_model:
+                intent = new Intent(getActivity(), ModelMachineApplyActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.right_img:
+                if (!mPopupWindow.isShowing()) {
+                    showPopupWindow();
+                } else {
+                    mPopupWindow.dismiss();
+                }
+                break;
         }
     }
 
@@ -151,4 +192,18 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
         RongIM.getInstance().startPrivateChat(getActivity(), userId, employeeName);
         return true;
     }
+
+    private void showPopupWindow() {
+        mPopupWindow.showAsDropDown(rightImg, 0, 0);
+    }
+
+    private void initPopupWindow() {
+        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.popup_list_layout, null);
+        x.view().inject(this, contentView);
+        mPopupWindow = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        mPopupWindow.setContentView(contentView);
+        mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+    }
+
 }

@@ -28,19 +28,19 @@ public class CostTypeAdapter extends BasicAdapter<CostType> {
     public View createView(int position, View convertView, ViewGroup parent) {
         ViewHolder vh = null;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.item_modelapply_list, parent, false);
+            convertView = inflater.inflate(R.layout.item_cost_classfiy, parent, false);
             vh = new ViewHolder(convertView);
             convertView.setTag(vh);
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-        vh.produceName.setText(mDatas.get(position).getTypeName());
+        vh.typeName.setText(mDatas.get(position).getTypeName());
         return convertView;
     }
 
     private static class ViewHolder {
-        @ViewInject(R.id.produce_name)
-        private TextView produceName;
+        @ViewInject(R.id.type_name)
+        private TextView typeName;
 
         public ViewHolder(View view) {
             x.view().inject(this, view);

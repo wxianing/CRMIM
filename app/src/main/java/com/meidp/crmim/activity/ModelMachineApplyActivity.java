@@ -57,11 +57,11 @@ public class ModelMachineApplyActivity extends BaseActivity {
     @Override
     public void onInit() {
         titleRight.setText("保存");
-        titleRight.setVisibility(View.VISIBLE);
+//        titleRight.setVisibility(View.VISIBLE);
         title.setText("样机申请");
     }
 
-    @Event(value = {R.id.back_arrows, R.id.title_right, R.id.customer_et, R.id.project_et, R.id.prototype_et})
+    @Event(value = {R.id.back_arrows, R.id.title_right, R.id.customer_et, R.id.project_et, R.id.prototype_et, R.id.save_btn})
     private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -69,13 +69,13 @@ public class ModelMachineApplyActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.title_right:
-                sendMsg();
+
                 break;
             case R.id.customer_et://选择客户
                 intent = new Intent();
                 intent.setClass(this, CustomerListActivity.class);
                 intent.putExtra("FLAG", "Apply");
-                startActivityForResult(intent, 1003);//客户
+                startActivityForResult(intent, 1001);//客户
                 break;
             case R.id.project_et://选择项目
                 intent = new Intent(this, ProjectManagerActivity.class);
@@ -85,6 +85,9 @@ public class ModelMachineApplyActivity extends BaseActivity {
             case R.id.prototype_et:
                 intent = new Intent(this, PrototypeListActivity.class);
                 startActivityForResult(intent, 1005);
+                break;
+            case R.id.save_btn:
+                sendMsg();
                 break;
         }
     }
@@ -134,7 +137,7 @@ public class ModelMachineApplyActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (data != null) {
             switch (resultCode) {
-                case 1003:
+                case 1001:
                     custId = data.getIntExtra("OID", -1);
                     String custName = data.getStringExtra("CustName");
                     customerEt.setText(custName);

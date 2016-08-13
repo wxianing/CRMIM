@@ -12,6 +12,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.meidp.crmim.MyApplication;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.CustomDialogUtils;
+import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.utils.ToastUtils;
 
 import org.json.JSONObject;
@@ -47,9 +48,10 @@ public class HttpRequestUtils {
      */
     public void post(final Context mContext, String url, HashMap<String, Object> map, final HttpRequestCallBack mCallBack) {
 //        CustomDialogUtils.showProgressDialog(mContext);
+        String code = (String) SPUtils.get(mContext, "CODE", "");
         RequestParams params = new RequestParams(url);
         params.addHeader("_appId", Constant.APPID);
-        params.addHeader("_code", Constant.CODE);
+        params.addHeader("_code", code);
         params.addBodyParameter("content-type", "application/json");
         if (null != map) {
             for (Map.Entry<String, Object> entry : map.entrySet()) {

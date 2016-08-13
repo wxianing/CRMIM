@@ -282,7 +282,12 @@
         <activity android:name=".activity.AddFeedbackActivity" />
         <activity android:name=".activity.MyTeamActivity" />
         <activity android:name=".activity.AddTeamActivity" />
-        <activity android:name=".activity.FeedbackDetailsActivity"></activity>
+        <activity android:name=".activity.FeedbackDetailsActivity" />
+        <activity android:name=".activity.SigninMainActivity" />
+        <activity android:name=".activity.TeamDetailsActivity" />
+        <activity android:name=".activity.ExhibitionManagerActivity" />
+        <activity android:name=".activity.ProduceCenterActivity" />
+        <activity android:name=".activity.ExhibitionDetailsActivity"></activity>
     </application>
 
 </manifest>

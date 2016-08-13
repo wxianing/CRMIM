@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context="com.meidp.crmim.activity.ModelMachineApplyActivity">
 
-    <include layout="@layout/titlebar" />
+    <include layout="@layout/titlebar_layout" />
 
     <include layout="@layout/search_layout" />
 

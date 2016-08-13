@@ -50,6 +50,10 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
     public void onInit() {
         activity = this;
         title.setText("客户档案");
+        String titleName = getIntent().getStringExtra("TitleName");
+        if (NullUtils.isNull(titleName)) {
+            title.setText(titleName);
+        }
         mListView.setMode(PullToRefreshBase.Mode.BOTH);
         mDatas = new ArrayList<>();
         mAdapter = new CustomerListAdapter(mDatas, this);
@@ -104,17 +108,18 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        if (NullUtils.isNull(flag) && "Apply".equals(flag)) {//直接返回客户
-//            Intent intent = new Intent();
-//            intent.putExtra("CustName", mDatas.get(position - 1).getCustName());
-//            intent.putExtra("OID", mDatas.get(position - 1).getID());
-//            setResult(1003, intent);
-//            finish();
-//        } else
-        {
+        if (NullUtils.isNull(flag) && "Apply".equals(flag)) {//直接返回客户
+            Intent intent = new Intent();
+            intent.putExtra("CustName", mDatas.get(position - 1).getCustName());
+            intent.putExtra("CustContact", mDatas.get(position - 1).getCreatorName());
+            intent.putExtra("CustPhone", mDatas.get(position - 1).getMobile());
+            intent.putExtra("OID", mDatas.get(position - 1).getID());
+            setResult(1001, intent);
+            finish();
+        } else {
             Intent intent = new Intent();
             intent.setClass(CustomerListActivity.this, CustomContactActivity.class);
-            intent.putExtra("CustName", mDatas.get(position).getCustName());
+            intent.putExtra("CustName", mDatas.get(position - 1).getCustName());
             intent.putExtra("OID", mDatas.get(position - 1).getID());
             intent.putExtra("CustNo", mDatas.get(position - 1).getCustNo());
             startActivityForResult(intent, 1001);

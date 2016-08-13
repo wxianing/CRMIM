@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
@@ -28,9 +27,8 @@ import com.meidp.crmim.utils.DataUtils;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.utils.ToastUtils;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 public class SigninMainActivity extends BaseActivity implements BDLocationListener, View.OnClickListener {
@@ -44,9 +42,6 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
     private boolean isFirstLoc = true; // 是否首次定位
 
     private TextView address;
-
-    @ViewInject(R.id.customer_layout)
-    private RelativeLayout customerLayout;
 
     private BitmapDescriptor mCurrentMarker;
     private MyLocationConfiguration.LocationMode mCurrentMode;
@@ -63,6 +58,13 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
     private int cusId;
     private EditText contentTv;
 
+    private TextView userName;//名称
+
+    private ImageView headerImg;//头像
+    private double latitude;
+    private double longitude;
+    private String addressStr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,11 +73,6 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
         mMapView = (MapView) findViewById(R.id.bmapView);
         initView();
     }
-
-//    @Event(R.id.customer_layout)
-//    private void click(View v) {
-//        ToastUtils.shows(this, "点击了客户");
-//    }
 
     private void initView() {
         title = (TextView) findViewById(R.id.title_tv);
@@ -112,7 +109,7 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
         signIn = (ImageView) findViewById(R.id.sign_in);
 
         currDate.setText(DataUtils.getDate() + "  " + DataUtils.getWeek());
-        currTime.setText(DataUtils.getTime());
+        currTime.setText("当前时间：" + DataUtils.getTime());
         signIn.setOnClickListener(this);
         backImg = (ImageView) findViewById(R.id.back_arrows);
         titleRight = (TextView) findViewById(R.id.title_right);
@@ -124,13 +121,19 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
         titleRight.setOnClickListener(this);
 
         backImg.setOnClickListener(this);
-        customerName.setOnClickListener(this);
 
         customName = getIntent().getStringExtra("customName");
         if (NullUtils.isNull(customName)) {
             customerName.setText(customName);
         }
         cusId = getIntent().getIntExtra("CustomerId", -1);
+        userName = (TextView) findViewById(R.id.username);
+        String employeeName = (String) SPUtils.get(this, "EmployeeName", "");
+        userName.setText(employeeName);
+
+        headerImg = (ImageView) findViewById(R.id.header_img);
+        String photoURL = (String) SPUtils.get(this, "PhotoURL", "");
+        ImageLoader.getInstance().displayImage(photoURL, headerImg);
     }
 
     @Override
@@ -173,6 +176,10 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
         SPUtils.save(this, "Latitude", bdLocation.getLatitude());
         SPUtils.save(this, "Longitude", bdLocation.getLongitude());
         SPUtils.save(this, "Address", bdLocation.getAddrStr());
+        latitude = bdLocation.getLatitude();
+        longitude = bdLocation.getLongitude();
+        addressStr =  bdLocation.getAddrStr();
+
         if (NullUtils.isNull(bdLocation.getAddrStr())) {
             mLocalClient.stop();
         }
@@ -209,51 +216,20 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
 
     @Override
     public void onClick(View v) {
+        Intent intent = null;
         switch (v.getId()) {
             case R.id.sign_in:
-//                String addr = address.getText().toString().trim();
-//                if (NullUtils.isNull(addr)) {
-//                    Intent intent = new Intent(this, SigninTextActivity.class);
-//                    intent.putExtra("ADDRESS", addr);
-//                    startActivity(intent);
-//
-//                    double latitude = (double) SPUtils.get(this, "Latitude", 0.0);
-//                    double longitude = (double) SPUtils.get(this, "Longitude", 0.0);
-//                    String address = (String) SPUtils.get(this, "Address", "");
-//                    String content = contentTv.getText().toString().trim();
-//                    ToastUtils.shows(this, "正在提交");
-//                    HashMap params = new HashMap();
-//                    params.put("Contents", content);
-//                    params.put("CustID", cusId);
-//                    params.put("Title", "拜访" + customName);
-//                    params.put("Lat", latitude);
-//                    params.put("Lon", longitude);
-//                    params.put("LocationAddress", address);
-//                    HttpRequestUtils.getmInstance().send(SigninMainActivity.this, Constant.SAVE_VISIT_CUSTOMER, params, new HttpRequestCallBack<String>() {
-//                        @Override
-//                        public void onSuccess(String result) {
-//                            Log.e("visit", result);
-//                            AppMsg appMsg = JSONObject.parseObject(result, new TypeReference<AppMsg>() {
-//                            });
-//                            if (appMsg != null && appMsg.getEnumcode() == 0) {
-//                                Intent intent = new Intent(SigninMainActivity.this, CustomerVisitActivity.class);
-//                                ToastUtils.shows(SigninMainActivity.this, "拜访成功");
-//                                startActivity(intent);
-//                                finish();
-//                            } else {
-//                                ToastUtils.shows(SigninMainActivity.this, "拜访失败");
-//                            }
-//                        }
-//                    });
-//                } else {
-//                    ToastUtils.shows(this, "定位失败");
-//                }
+                intent = new Intent(this, VisitingClientsActivity.class);
+                intent.putExtra("LONGITUDE", longitude);
+                intent.putExtra("LATITUDE", latitude);
+                intent.putExtra("Address",addressStr);
+                startActivity(intent);
                 break;
             case R.id.back_arrows:
                 finish();
                 break;
             case R.id.title_right:
-                Intent intent = new Intent(this, VisitRecordActivity.class);
+                intent = new Intent(this, VisitRecordActivity.class);
                 startActivity(intent);
                 break;
             case R.id.customer_name:

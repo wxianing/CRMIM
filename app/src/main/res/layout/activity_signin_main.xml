@@ -9,7 +9,7 @@
 
     <include layout="@layout/titlebar" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp10"
@@ -17,212 +17,98 @@
         android:padding="@dimen/dp10">
 
         <ImageView
-            android:id="@+id/clock_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/clock_icon" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/clock_icon"
-            android:text="时间" />
-
-        <TextView
-            android:id="@+id/curr_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_weight="1"
-            android:text="11:32" />
-
-        <TextView
-            android:id="@+id/date_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dp5"
-            android:layout_toLeftOf="@id/curr_time"
-            android:layout_weight="1"
-            android:text="2016.08.20  星期四" />
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp10"
-        android:background="@color/white"
-        android:padding="@dimen/dp10">
-
-        <ImageView
-            android:id="@+id/address_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/address_icon" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/address_icon"
-            android:text="地点" />
-
-        <TextView
-            android:id="@+id/address_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/dp5"
-            android:text="福田区八卦三路301号"
-            android:textColor="@color/textcolor_gray" />
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dp5">
-
-        <TextView
-            android:id="@+id/address_trim"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/dp5"
-            android:layout_marginTop="@dimen/dp5"
-            android:text="地点微调"
-            android:textColor="@color/textcolor_blue" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/customer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:padding="@dimen/dp10">
-
-        <ImageView
-            android:id="@+id/customer_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/address_icon" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/customer_icon"
-            android:text="客户" />
-
-        <EditText
-            android:id="@+id/customer_name"
-            style="@style/sub_editext"
-            android:layout_toLeftOf="@+id/arror_right_img"
-            android:layout_weight="1"
-            android:focusable="false"
-            android:gravity="end"
-            android:hint="点击选择" />
-
-        <ImageView
-            android:id="@+id/arror_right_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/arrow_right" />
-
-    </RelativeLayout>
-
-    <include layout="@layout/horizontal_line" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:padding="@dimen/dp10">
-
-        <ImageView
-            android:id="@+id/customer_phone_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/customer_phone_icon" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/customer_phone_icon"
-            android:text="客户电话" />
-
-        <EditText
-            android:id="@+id/phone_num"
-            style="@style/sub_editext"
-            android:layout_toLeftOf="@+id/arror_right_img"
-            android:layout_weight="1"
-            android:focusable="false"
-            android:gravity="end"
-            android:hint="点击填写" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/sign_linear"
-        android:layout_marginTop="15dp"
-        android:background="@color/white"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/content_tv"
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:background="@drawable/edittext_shape"
-            android:gravity="top"
-            android:hint="请添加内容..."
-            android:textSize="@dimen/sp14" />
-
-        <GridView
-            android:id="@+id/add_photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:horizontalSpacing="3dp"
-            android:numColumns="4"
-            android:scrollbars="none"
-            android:verticalSpacing="5dp"
-            android:visibility="gone" />
-    </LinearLayout>
-
-    <include layout="@layout/horizontal_line" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical">
+            android:id="@+id/header_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/headerphoto" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dp10"
-            android:visibility="gone">
+            android:layout_marginLeft="@dimen/dp10"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="请确认签到相关信息无误"
+                android:textColor="@color/textcolor_gray"
+                android:textSize="@dimen/sp13" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_full_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:padding="@dimen/dp10">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/clock_icon" />
+
+            <TextView
+                android:id="@+id/date_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp5"
+                android:layout_marginRight="@dimen/dp5"
+                android:text="星期四   2016.08.20" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:padding="@dimen/dp10">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/clock_icon" />
+
+            <TextView
+                android:id="@+id/curr_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/dp5"
+                android:layout_weight="1"
+                android:text="当前时间：11:32" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp20"
             android:background="@drawable/linear_shape"
-            android:padding="@dimen/dp10"
-            android:visibility="gone">
+            android:padding="@dimen/dp10">
 
             <LinearLayout
                 android:id="@+id/map_linear"
@@ -235,18 +121,50 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:focusable="false" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="当前所在的位置：" />
+
+                <TextView
+                    android:id="@+id/address_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:text="福田区八卦三路301号"
+                    android:textColor="@color/textcolor_gray" />
+
+                <TextView
+                    android:id="@+id/address_trim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:text="地点微调"
+                    android:textColor="@color/textcolor_blue" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
     <ImageView
         android:id="@+id/sign_in"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dp30"
-        android:background="@mipmap/see_icon">
-    </ImageView>
+        android:background="@mipmap/see_icon"/>
 
 
 </LinearLayout>

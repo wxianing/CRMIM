@@ -83,7 +83,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
         }
         final String phone = ch.getMobile();
         if (NullUtils.isNull(phone)) {
-            cvh.phoneNum.setText("      " + ch.getMobile());
+            cvh.phoneNum.setText("  " + ch.getMobile());
         } else {
             cvh.phoneImg.setVisibility(View.GONE);
         }

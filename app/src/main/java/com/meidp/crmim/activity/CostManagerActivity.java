@@ -43,7 +43,7 @@ public class CostManagerActivity extends BaseActivity implements PullToRefreshBa
 
     @Override
     public void onInit() {
-        title.setText("我的费用");
+        title.setText("费用管理");
         mListView.setMode(PullToRefreshBase.Mode.BOTH);
         mDatas = new ArrayList<>();
         mAdapter = new MyCostAdapter(mDatas, this);

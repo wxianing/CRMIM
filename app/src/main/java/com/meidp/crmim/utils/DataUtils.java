@@ -21,6 +21,17 @@ public class DataUtils {
         return mYear + "." + mMonth + "." + mDay;
     }
 
+    public static String getDate2() {
+        final Calendar c = Calendar.getInstance();
+        c.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+        mYear = String.valueOf(c.get(Calendar.YEAR)); // 获取当前年份
+        mMonth = String.valueOf(c.get(Calendar.MONTH) + 1);// 获取当前月份
+        mDay = String.valueOf(c.get(Calendar.DAY_OF_MONTH));// 获取当前月份的日期号码
+        mWay = String.valueOf(c.get(Calendar.DAY_OF_WEEK));
+
+        return mYear + "-" + mMonth + "-" + mDay;
+    }
+
     public static String getWeek() {
         final Calendar c = Calendar.getInstance();
         c.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));

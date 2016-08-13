@@ -1,58 +1,43 @@
 package com.meidp.crmim.fragment;
 
 import android.content.Intent;
-import android.util.Log;
+import android.graphics.drawable.BitmapDrawable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
-import com.jauker.widget.BadgeView;
 import com.meidp.crmim.R;
 import com.meidp.crmim.activity.AnnouncementActivity;
 import com.meidp.crmim.activity.ApprovalProcessActivity;
 import com.meidp.crmim.activity.ConventionApplyForActivity;
 import com.meidp.crmim.activity.CostManagerActivity;
 import com.meidp.crmim.activity.CustomerListActivity;
-import com.meidp.crmim.activity.CustomerVisitActivity;
 import com.meidp.crmim.activity.EnterpriseCultureActivity;
+import com.meidp.crmim.activity.ExhibitionManagerActivity;
 import com.meidp.crmim.activity.ImportantActivity;
 import com.meidp.crmim.activity.LifeNavigationActivity;
-import com.meidp.crmim.activity.MyAchievementsActivity;
+import com.meidp.crmim.activity.ModelMachineApplyActivity;
 import com.meidp.crmim.activity.MyCreditActivity;
-import com.meidp.crmim.activity.MyKnowledgeActivity;
 import com.meidp.crmim.activity.MyPerformanceActivity;
 import com.meidp.crmim.activity.MyPrototypeActivity;
 import com.meidp.crmim.activity.MyValuesActivity;
+import com.meidp.crmim.activity.NewGroupActivity;
+import com.meidp.crmim.activity.NewsActivity;
 import com.meidp.crmim.activity.OpenSeaPoolActivity;
 import com.meidp.crmim.activity.ProjectManagerActivity;
 import com.meidp.crmim.activity.SubmitActivity;
 import com.meidp.crmim.activity.VisitingClientsActivity;
 import com.meidp.crmim.activity.WorkPlanActivity;
-import com.meidp.crmim.adapter.HomeGvAdapter;
-import com.meidp.crmim.adapter.ImagePagerAdapter;
-import com.meidp.crmim.http.HttpRequestCallBack;
-import com.meidp.crmim.http.HttpRequestUtils;
-import com.meidp.crmim.model.AppBean;
-import com.meidp.crmim.model.AppBeans;
-import com.meidp.crmim.model.AppDatas;
-import com.meidp.crmim.model.Banner;
-import com.meidp.crmim.model.HomeEntrity;
-import com.meidp.crmim.model.UnReaderMsg;
-import com.meidp.crmim.utils.Constant;
-import com.meidp.crmim.widget.AutoScrollViewPager;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import org.xutils.x;
 
 @ContentView(R.layout.fragment_home)
 public class HomeFragment extends BaseFragment implements AdapterView.OnItemClickListener {
@@ -61,13 +46,14 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     @ViewInject(R.id.back_arrows)
     private ImageView backImg;
 
+    @ViewInject(R.id.right_img)
+    private ImageView rightImg;
+    private PopupWindow mPopupWindow;
+
     @ViewInject(R.id.linear_layout)
     private LinearLayout linearLayout;
 
 
-    private int pubNoticeNewCount = 0;
-
-    private int noCheckCount = 0;
 
     public HomeFragment() {
     }
@@ -75,11 +61,12 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public void onInit() {
         backImg.setVisibility(View.GONE);
-        title.setText(R.string.title_name);
+        title.setText("工作");
 //        mGridView.setFocusable(false);
         linearLayout.setFocusable(true);
         linearLayout.setFocusableInTouchMode(true);
         linearLayout.requestFocus();
+        initPopupWindow();
     }
 
     @Override
@@ -87,12 +74,12 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     }
 
-    @Event({R.id.visiting_customer, R.id.project_manager, R.id.cost_manager, R.id.prototype_manager, R.id.my_project, R.id.my_performance, R.id.my_values, R.id.my_integrity, R.id.life_navigation, R.id.improtment_thing, R.id.knowledge})
-    private void onClick(View v) {
+    @Event({R.id.open_sea, R.id.exhibition_manager, R.id.approval_manager, R.id.apply_model, R.id.submit_project, R.id.new_group, R.id.visiting_customer, R.id.project_manager, R.id.cost_manager, R.id.prototype_manager, R.id.my_performance, R.id.my_values, R.id.my_integrity, R.id.life_navigation, R.id.improtment_thing, R.id.knowledge, R.id.right_img, R.id.visit_client})
+    private void onclick(View v) {
         Intent intent = null;
         switch (v.getId()) {
             case R.id.visiting_customer://客户拜访
-                intent = new Intent(getActivity(), VisitingClientsActivity.class);
+                intent = new Intent(getActivity(), CustomerListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.project_manager://项目管理
@@ -107,35 +94,93 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 intent = new Intent(getActivity(), MyPrototypeActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.my_project:
-                intent = new Intent(getActivity(), ProjectManagerActivity.class);
+            case R.id.approval_manager://审批管理
+                intent = new Intent(getActivity(), ApprovalProcessActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.my_performance:
+            case R.id.my_performance://业绩表现
                 intent = new Intent(getActivity(), MyPerformanceActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.my_values:
+            case R.id.my_values://我的价值
                 intent = new Intent(getActivity(), MyValuesActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.my_integrity:
+            case R.id.my_integrity://我的诚信度
                 intent = new Intent(getActivity(), MyCreditActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.life_navigation:
+            case R.id.life_navigation://人生导航
                 intent = new Intent(getActivity(), LifeNavigationActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.improtment_thing:
+            case R.id.improtment_thing://重要事项
                 intent = new Intent(getActivity(), ImportantActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.knowledge:
-                intent = new Intent(getActivity(), MyKnowledgeActivity.class);
+            case R.id.knowledge://专业知识
+//                intent = new Intent(getActivity(), MyKnowledgeActivity.class);
+//                startActivity(intent);
+                intent = new Intent();
+                intent.setClass(getActivity(), NewsActivity.class);
+                intent.putExtra("sType", 7);
+                intent.putExtra("title", "专业知识");
+                startActivity(intent);
+                break;
+            case R.id.right_img:
+                if (!mPopupWindow.isShowing()) {
+                    showPopupWindow();
+                } else {
+                    mPopupWindow.dismiss();
+                }
+                break;
+            case R.id.visit_client://客户拜访
+                intent = new Intent(getActivity(), VisitingClientsActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.new_group://新建群组
+                intent = new Intent(getActivity(), NewGroupActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.submit_project://申报项目
+                intent = new Intent(getActivity(), SubmitActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.apply_model:
+                intent = new Intent(getActivity(), ModelMachineApplyActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.exhibition_manager://展会管理
+                intent = new Intent(getActivity(), ExhibitionManagerActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.open_sea://公海池
+                intent = new Intent(getActivity(), OpenSeaPoolActivity.class);
                 startActivity(intent);
                 break;
         }
+    }
+
+
+    @ViewInject(R.id.visit_client)
+    private TextView visitClient;
+
+    private void showPopupWindow() {
+//        mPopupWindow.showAsDropDown(titlebar );
+        mPopupWindow.showAsDropDown(rightImg, 0, 0);
+    }
+
+    private void initPopupWindow() {
+        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.popup_list_layout, null);
+        x.view().inject(this, contentView);
+        mPopupWindow = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        mPopupWindow.setContentView(contentView);
+        mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
     }
 
     @Override
