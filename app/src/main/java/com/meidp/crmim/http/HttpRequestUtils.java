@@ -49,6 +49,7 @@ public class HttpRequestUtils {
     public void post(final Context mContext, String url, HashMap<String, Object> map, final HttpRequestCallBack mCallBack) {
 //        CustomDialogUtils.showProgressDialog(mContext);
         String code = (String) SPUtils.get(mContext, "CODE", "");
+        Log.e("code", code);
         RequestParams params = new RequestParams(url);
         params.addHeader("_appId", Constant.APPID);
         params.addHeader("_code", code);

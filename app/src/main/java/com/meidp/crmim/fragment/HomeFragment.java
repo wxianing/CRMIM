@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.meidp.crmim.R;
 import com.meidp.crmim.activity.AnnouncementActivity;
 import com.meidp.crmim.activity.ApprovalProcessActivity;
+import com.meidp.crmim.activity.ApprovalTypeActivity;
 import com.meidp.crmim.activity.ConventionApplyForActivity;
 import com.meidp.crmim.activity.CostManagerActivity;
 import com.meidp.crmim.activity.CustomerListActivity;
@@ -95,7 +96,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 startActivity(intent);
                 break;
             case R.id.approval_manager://审批管理
-                intent = new Intent(getActivity(), ApprovalProcessActivity.class);
+                intent = new Intent(getActivity(), ApprovalTypeActivity.class);
                 startActivity(intent);
                 break;
             case R.id.my_performance://业绩表现

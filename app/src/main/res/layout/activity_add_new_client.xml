@@ -6,16 +6,10 @@
 
     <include layout="@layout/titlebar" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dp10"
-        android:text="公司信息" />
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp10"
         android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal"
@@ -23,18 +17,17 @@
 
         <TextView
             style="@style/textview_submit_setting"
-            android:text="公司名称：" />
+            android:text="客户名称：" />
 
         <EditText
             android:id="@+id/customer_name"
             style="@style/sub_editext"
             android:gravity="right"
-            android:hint="点击填写" />
+            android:hint="必填" />
 
     </LinearLayout>
 
     <include layout="@layout/horizontal_line" />
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,28 +35,21 @@
         android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/dp10"
-        android:paddingLeft="@dimen/dp10"
-        android:paddingTop="@dimen/dp10">
+        android:padding="@dimen/dp10">
 
         <TextView
             style="@style/textview_submit_setting"
-            android:text="所在省份：" />
+            android:text="性别：" />
 
         <EditText
-            android:id="@+id/province"
+            android:id="@+id/sex_et"
             style="@style/sub_editext"
-            android:layout_weight="1"
             android:focusable="false"
-            android:gravity="end"
-            android:hint="点击选择" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/arrow_right" />
+            android:gravity="right"
+            android:hint="" />
 
     </LinearLayout>
+
 
     <include layout="@layout/horizontal_line" />
 
@@ -77,103 +63,53 @@
 
         <TextView
             style="@style/textview_submit_setting"
-            android:text="经营范围：" />
-
-        <EditText
-            android:id="@+id/sellArea"
-            style="@style/sub_editext"
-            android:gravity="right"
-            android:hint="点击填写" />
-
-    </LinearLayout>
-
-    <include layout="@layout/horizontal_line" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dp10"
-        android:text="联系方式" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp10">
-
-        <TextView
-            style="@style/textview_submit_setting"
-            android:text="座机：" />
-
-        <EditText
-            android:id="@+id/customer_phone"
-            style="@style/sub_editext"
-            android:gravity="right"
-            android:hint="点击填写" />
-
-    </LinearLayout>
-
-    <include layout="@layout/horizontal_line" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp10"
-        android:visibility="gone">
-
-        <TextView
-            style="@style/textview_submit_setting"
-            android:text="城  市  名：" />
-
-        <EditText
-            android:id="@+id/city_name"
-            style="@style/sub_editext"
-            android:gravity="right"
-            android:hint="点击填写" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp10"
-        android:visibility="gone">
-
-        <TextView
-            style="@style/textview_submit_setting"
-            android:text="联  系  人：" />
-
-        <EditText
-            android:id="@+id/linkman"
-            style="@style/sub_editext"
-            android:gravity="right"
-            android:hint="点击填写" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp10">
-
-        <TextView
-            style="@style/textview_submit_setting"
-            android:text="手机：" />
+            android:text="工作电话：" />
 
         <EditText
             android:id="@+id/linkman_phone"
+            style="@style/sub_editext"
+            android:gravity="right"
+            android:hint="必填"
+            android:inputType="number" />
+
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp10">
+
+        <TextView
+            style="@style/textview_submit_setting"
+            android:text="部门：" />
+
+        <EditText
+            android:id="@+id/department"
+            style="@style/sub_editext"
+            android:gravity="right"
+            android:hint="选填" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp10">
+
+        <TextView
+            style="@style/textview_submit_setting"
+            android:text="职位：" />
+
+        <EditText
+            android:id="@+id/positions"
             style="@style/sub_editext"
             android:gravity="right"
             android:hint="选填" />
@@ -214,18 +150,39 @@
 
         <TextView
             style="@style/textview_submit_setting"
-            android:text="地址：" />
+            android:text="QQ：" />
 
         <EditText
-            android:id="@+id/customer_address"
+            android:id="@+id/qq_et"
             style="@style/sub_editext"
             android:gravity="right"
-            android:hint="选填" />
+            android:hint="选填"
+            android:inputType="number" />
 
     </LinearLayout>
 
     <include layout="@layout/horizontal_line" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp10">
+
+        <TextView
+            style="@style/textview_submit_setting"
+            android:text="年龄：" />
+
+        <EditText
+            android:id="@+id/age_et"
+            style="@style/sub_editext"
+            android:gravity="right"
+            android:hint="选填"
+            android:inputType="number" />
+
+    </LinearLayout>
 
     <include layout="@layout/horizontal_line" />
 
@@ -246,6 +203,29 @@
             style="@style/sub_editext"
             android:gravity="right"
             android:hint="选填" />
+
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp10">
+
+        <TextView
+            style="@style/textview_submit_setting"
+            android:text="所属公司/医院：" />
+
+        <EditText
+            android:id="@+id/company_et"
+            style="@style/sub_editext"
+            android:focusable="false"
+            android:gravity="right"
+            android:hint="必填" />
 
     </LinearLayout>
 

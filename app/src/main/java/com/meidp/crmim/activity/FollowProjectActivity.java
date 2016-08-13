@@ -17,6 +17,7 @@ import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppMsg;
 import com.meidp.crmim.utils.Constant;
+import com.meidp.crmim.utils.DataUtils;
 import com.meidp.crmim.utils.ToastUtils;
 
 import org.xutils.view.annotation.ContentView;
@@ -68,6 +69,8 @@ public class FollowProjectActivity extends BaseActivity {
         titleRight.setText("保存");
         titleRight.setVisibility(View.VISIBLE);
         projectId = getIntent().getIntExtra("OID", -1);
+        startDate.setText(DataUtils.getDate2());
+        overDate.setText(DataUtils.getDate2());
     }
 
     @Event(value = {R.id.back_arrows, R.id.start_date, R.id.over_date, R.id.title_right})

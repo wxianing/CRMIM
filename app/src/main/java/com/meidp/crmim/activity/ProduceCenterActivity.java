@@ -17,6 +17,7 @@ import com.meidp.crmim.model.Product;
 import com.meidp.crmim.utils.Constant;
 
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
@@ -69,9 +70,11 @@ public class ProduceCenterActivity extends BaseActivity implements AdapterView.O
         });
     }
 
+    @Event({R.id.back_arrows})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
+                finish();
                 break;
         }
     }

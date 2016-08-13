@@ -6,7 +6,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.meidp.crmim.R;
+import com.meidp.crmim.model.ClientContacts;
 import com.meidp.crmim.model.CustomerLists;
+import com.meidp.crmim.utils.NullUtils;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -19,8 +21,8 @@ import java.util.List;
  * 作  用：
  * 时  间： 2016/7/19
  */
-public class CustomerListAdapter extends BasicAdapter<CustomerLists> {
-    public CustomerListAdapter(List<CustomerLists> mDatas, Context context) {
+public class CustomerListAdapter extends BasicAdapter<ClientContacts> {
+    public CustomerListAdapter(List<ClientContacts> mDatas, Context context) {
         super(mDatas, context);
     }
 
@@ -37,10 +39,14 @@ public class CustomerListAdapter extends BasicAdapter<CustomerLists> {
             vh = (ViewHolder) convertView.getTag();
         }
 
-        vh.name.setText(mDatas.get(position).getCreatorName());
-        vh.number.setText("电话：" + mDatas.get(position).getMobile());
+        vh.name.setText("姓名：" + mDatas.get(position).getLinkManName());
+        vh.number.setText(mDatas.get(position).getWorkTel());
         vh.custName.setText(mDatas.get(position).getCustName());
+        vh.administrative.setText("科室：" + mDatas.get(position).getDepartment());
 
+        if (NullUtils.isNull(mDatas.get(position).getPosition())) {
+            vh.dutyName.setText("职务：" + mDatas.get(position).getPosition());
+        }
         return convertView;
     }
 
@@ -51,6 +57,10 @@ public class CustomerListAdapter extends BasicAdapter<CustomerLists> {
         private TextView number;
         @ViewInject(R.id.cust_name)
         private TextView custName;
+        @ViewInject(R.id.administrative_office)
+        private TextView administrative;//科室
+        @ViewInject(R.id.duty_name)
+        private TextView dutyName;
 
         public ViewHolder(View view) {
             x.view().inject(this, view);

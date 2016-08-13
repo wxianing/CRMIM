@@ -3,7 +3,7 @@
 
     <corners android:radius="@dimen/dp5" />
 
-    <solid android:color="@color/ashen_while" />
+    <solid android:color="@color/white" />
 
     <stroke
         android:width="@dimen/dp1"

@@ -59,7 +59,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="巨峰小秘书" />
+                            android:text="巨峰小助手" />
 
                         <TextView
                             android:layout_width="wrap_content"

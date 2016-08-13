@@ -14,13 +14,13 @@
         android:textSize="@dimen/sp16" />
 
     <EditText
-
         android:id="@+id/edit_text"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginLeft="@dimen/dp20"
         android:layout_marginRight="@dimen/dp20"
         android:layout_marginTop="@dimen/dp10"
-        android:background="@drawable/edit_white_bg" />
+        android:background="@drawable/edit_white_bg"
+        android:inputType="number" />
 
 </LinearLayout>

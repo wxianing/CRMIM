@@ -4,9 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.meidp.crmim.activity.ApprovalProcessActivity">
+    tools:context="com.meidp.crmim.activity.AddTeamActivity">
 
     <include layout="@layout/titlebar" />
+
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:numColumns="6" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="请选择添加成员" />
 
     <ListView
         android:id="@+id/listview"

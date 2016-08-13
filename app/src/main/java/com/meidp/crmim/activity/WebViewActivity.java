@@ -37,6 +37,7 @@ public class WebViewActivity extends BaseActivity {
         String titleName = getIntent().getStringExtra("TITLE");
         title.setText(titleName);
         String link = getIntent().getStringExtra("ClickUrl");
+
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         //设置可以访问文件

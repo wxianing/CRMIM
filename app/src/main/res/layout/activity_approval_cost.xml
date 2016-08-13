@@ -4,13 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.meidp.crmim.activity.ApprovalProcessActivity">
+    tools:context="com.meidp.crmim.activity.ApprovalCostActivity">
 
     <include layout="@layout/titlebar" />
-
-    <ListView
-        android:id="@+id/listview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
 </LinearLayout>

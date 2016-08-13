@@ -287,7 +287,16 @@
         <activity android:name=".activity.TeamDetailsActivity" />
         <activity android:name=".activity.ExhibitionManagerActivity" />
         <activity android:name=".activity.ProduceCenterActivity" />
-        <activity android:name=".activity.ExhibitionDetailsActivity"></activity>
+        <activity android:name=".activity.ExhibitionDetailsActivity" />
+        <activity android:name=".activity.ImportantDetailsActivity" />
+        <activity android:name=".activity.AddImportantActivity" />
+        <activity android:name=".activity.AddLifeNavigationActivity" />
+        <activity android:name=".activity.SexSelectActivity" />
+        <activity android:name=".activity.HospitalListActivity" />
+        <activity android:name=".activity.ClientDetailsActivity" />
+        <activity android:name=".activity.ApprovalTypeActivity" />
+        <activity android:name=".activity.ApprovalCostActivity" />
+        <activity android:name=".activity.SelectEmpolyeeActivity"></activity>
     </application>
 
 </manifest>

@@ -39,7 +39,11 @@ public class MyCostAdapter extends BasicAdapter<CostLists> {
         vh.title.setText(data.getTitle());
         vh.ariseDate.setText("申请时间：" + data.getAriseDate());
         vh.needTime.setText("需要时间：" + data.getNeedDate());
-        vh.reason.setText("申请理由：" + data.getReason());
+        vh.reason.setText("申请原因：" + data.getReason());
+        vh.projectName.setText("关联项目：" + data.getProjectName());
+        vh.applyPerson.setText("申请人：" + data.getCreatorName());
+        vh.totalMoney.setText("￥" + data.getTotalAmount());
+
         return convertView;
     }
 
@@ -52,6 +56,12 @@ public class MyCostAdapter extends BasicAdapter<CostLists> {
         private TextView needTime;
         @ViewInject(R.id.reason)
         private TextView reason;
+        @ViewInject(R.id.project_name)
+        private TextView projectName;
+        @ViewInject(R.id.apply_person)
+        private TextView applyPerson;
+        @ViewInject(R.id.total_money)
+        private TextView totalMoney;
 
         public ViewHolder(View view) {
             x.view().inject(this, view);

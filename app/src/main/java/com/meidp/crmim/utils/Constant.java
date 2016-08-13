@@ -139,4 +139,21 @@ public class Constant {
     public static final String PRODUCE_LIST = BASE_URL + "product/getproductpagelist";
     //展会申请
     public static final String CONVERSATION_LIST = BASE_URL + "order/getsellexhibitionpagelist";
+    //重要事项详情
+    public static final String IMPORTANT_DETAILS_URL = BASE_URL + "office/office/getpersonaldatearrange";
+    //重要事项列表
+    public static final String IMPORTANT_LIST_URL = BASE_URL + "office/office/getpersonaldatearrangepagelist";
+    //保存重要事项
+    public static final String ADD_IMPORTANT_URL = BASE_URL + "office/office/personaldatearrangesave";
+    //保存人生导航
+    public static final String SAVE_NAV_URL = BASE_URL + "office/employee/saveemployeenav";
+    //获取我的人生导航
+    public static final String GET_LIFE_NAV = BASE_URL + "office/employee/getemployeenav";
+    //保存客户联系人
+    public static final String CUSTOMER_CONTACTS_URL = BASE_URL + "crm/getminelinkmanpagelist";
+    public static final String CUSTOMER_CONTACTS_DETAILS = BASE_URL + "crm/getcustinfo";
+    //展会详情
+    public static final String CONVERSATION_DETAILS_URL = BASE_URL + "order/getsellexhibition";
+    //人生导航
+    public static final java.lang.String LIFE_NAV_URL = "http://beacon.meidp.com:98/Mobi/Office/EmployeeNav?UserId=2";
 }

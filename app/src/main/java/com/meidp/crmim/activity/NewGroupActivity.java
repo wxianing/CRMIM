@@ -173,6 +173,7 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
                 break;
             case R.id.title_right:
                 final View dialogView = LayoutInflater.from(this).inflate(R.layout.edittext_layout, null);
+
                 new AlertDialog.Builder(this).setView(
                         dialogView).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override

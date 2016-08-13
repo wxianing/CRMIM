@@ -10,6 +10,7 @@ import com.meidp.crmim.R;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppBean;
+import com.meidp.crmim.model.AppDatas;
 import com.meidp.crmim.model.ExhibitionDetails;
 import com.meidp.crmim.utils.Constant;
 
@@ -58,10 +59,12 @@ public class ExhibitionDetailsActivity extends BaseActivity {
     public void onInitData() {
         HashMap params = new HashMap();
         params.put("Id", oid);
-        HttpRequestUtils.getmInstance().send(ExhibitionDetailsActivity.this, Constant.CONVERSATION_LIST, params, new HttpRequestCallBack() {
+        HttpRequestUtils.getmInstance().send(ExhibitionDetailsActivity.this, Constant.CONVERSATION_DETAILS_URL, params, new HttpRequestCallBack() {
             @Override
             public void onSuccess(String result) {
-                ExhibitionDetails appDatas = JSONObject.parseObject(result,new TypeReference<ExhibitionDetails>(){});
+                Log.e("展会详情", result);
+                AppBean<ExhibitionDetails> appDatas = JSONObject.parseObject(result, new TypeReference<AppBean<ExhibitionDetails>>() {
+                });
                 if (appDatas != null && appDatas.getEnumcode() == 0) {
 //                    Log.e("app", appDatas.getData().getTitle());/
 //
@@ -72,7 +75,7 @@ public class ExhibitionDetailsActivity extends BaseActivity {
                     start_date.setText("开始时间：" + appDatas.getData().getExhibitionStartDate());
                     over_date.setText("结束时间：" + appDatas.getData().getExhibitionEndDate());
                     count_tv.setText("人数规模：" + appDatas.getData().getAttendPersons());
-                    total_money.setText("" + appDatas.getData().getPlanFee());
+                    total_money.setText("￥" + appDatas.getData().getPlanFee());
                     aim_tv.setText("展会的目的：" + appDatas.getData().getExhibitionAim());
                     plan_tv.setText("展会的目的：" + appDatas.getData().getExhibitionPlan());
                     partner.setText("展会的目的：" + appDatas.getData().getUnionPartner());

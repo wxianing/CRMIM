@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.meidp.crmim.activity.AddLifeNavigationActivity">
+
+    <include layout="@layout/titlebar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="@dimen/dp10">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="★一、个人财富、事业目标："
+                android:textColor="@color/textcolor_black"
+                android:textSize="@dimen/sp16" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp5"
+                android:layout_marginTop="@dimen/dp5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1、我2016年要在公司平台实现______万元个人财富？"
+                    android:textSize="@dimen/sp14" />
+
+                <TextView
+                    android:id="@+id/text12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:text="2、我未来5年要在公司平台实现______万元个人财富？"
+                    android:textSize="@dimen/sp14" />
+
+                <TextView
+                    android:id="@+id/text13"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:text="3、我2016年要发展多大的团队？成就_____人？"
+                    android:textSize="@dimen/sp14" />
+
+                <TextView
+                    android:id="@+id/text14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:text="4、我未来5年要在公司平台发展多大的团队?成就_____人？"
+                    android:textSize="@dimen/sp14" />
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10"
+                android:text="★二、我的机会："
+                android:textColor="@color/textcolor_black"
+                android:textSize="@dimen/sp16" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text21"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:text="1、3D解剖临床应用解决方案：我有机会让这____家医院实现销售："
+                    android:textSize="@dimen/sp14" />
+
+                <EditText
+                    android:id="@+id/content21"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:background="@drawable/white_bg"
+                    android:gravity="top"
+                    android:hint="1.\n2.\n3.\n...\n"
+                    android:textColorHint="@color/textcolor_gray"
+                    android:textSize="@dimen/sp14" />
+
+                <TextView
+                    android:id="@+id/text22"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:text="2、一键式医疗信息平台解决方案：我有机会让这____家医院实现销售"
+                    android:textSize="@dimen/sp14" />
+
+                <EditText
+                    android:id="@+id/content22"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:background="@drawable/white_bg"
+                    android:gravity="top"
+                    android:hint="1.\n2.\n3.\n...\n"
+                    android:textColorHint="@color/textcolor_gray"
+                    android:textSize="@dimen/sp14" />
+
+                <TextView
+                    android:id="@+id/text23"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:text="3、DSA智能信号处理解决方案：我有机会让这____家医院实现销售"
+                    android:textSize="@dimen/sp14" />
+
+                <EditText
+                    android:id="@+id/content23"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:background="@drawable/white_bg"
+                    android:gravity="top"
+                    android:hint="1.\n2.\n3.\n...\n"
+                    android:textColorHint="@color/textcolor_gray"
+                    android:textSize="@dimen/sp14" />
+
+                <TextView
+                    android:id="@+id/text24"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:text="4、智能影像中心解决方案：我有机会让这____家医院实现销售"
+                    android:textSize="@dimen/sp14" />
+
+                <EditText
+                    android:id="@+id/content24"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:background="@drawable/white_bg"
+                    android:gravity="top"
+                    android:hint="1.\n2.\n3.\n...\n"
+                    android:textColorHint="@color/textcolor_gray"
+                    android:textSize="@dimen/sp14" />
+
+                <TextView
+                    android:id="@+id/text25"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:text="5、其他专业医疗显示解决方案：我有机会让这____家医院实现销售"
+                    android:textSize="@dimen/sp14" />
+
+                <EditText
+                    android:id="@+id/content25"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:background="@drawable/white_bg"
+                    android:gravity="top"
+                    android:hint="1.\n2.\n3.\n...\n"
+                    android:textColorHint="@color/textcolor_gray"
+                    android:textSize="@dimen/sp14" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10"
+                android:text="★三、我的行动："
+                android:textColor="@color/textcolor_black"
+                android:textSize="@dimen/sp16" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp5"
+                android:layout_marginTop="@dimen/dp5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text31"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1、我每天拜访____家客户;"
+                    android:textSize="@dimen/sp14" />
+
+                <TextView
+                    android:id="@+id/text32"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:text="2、我2016年总共要达到____家客户;"
+                    android:textSize="@dimen/sp14" />
+
+                <TextView
+                    android:id="@+id/text33"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:text="3、我2016年要让___家客户成为我的一伙人合作伙伴."
+                    android:textSize="@dimen/sp14" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10"
+                android:text="★四、我的预期成果："
+                android:textColor="@color/textcolor_black"
+                android:textSize="@dimen/sp16" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp50"
+                android:layout_marginLeft="@dimen/dp5"
+                android:layout_marginTop="@dimen/dp5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text41"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:text="1、根据以上结果，我2016年总共可以完成____个项目？"
+                    android:textSize="@dimen/sp14" />
+
+                <TextView
+                    android:id="@+id/text42"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:text="2、这些项目总共可以实现____万元销售额？"
+                    android:textSize="@dimen/sp14" />
+
+                <TextView
+                    android:id="@+id/text43"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:text="3、我2016年要让___家客户成为我的一伙人合作伙伴."
+                    android:textSize="@dimen/sp14" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

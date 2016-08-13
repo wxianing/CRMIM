@@ -83,8 +83,12 @@ public class ProjecDetailsActivity extends BaseActivity {
         }
         if (type == 0) {
             button.setText("丢进公海池");
-
             url = Constant.PUT_TO_OPENPOOL;
+        }
+        if (type == -1) {
+            followBtn.setVisibility(View.GONE);
+            button.setVisibility(View.GONE);
+            titleRight.setVisibility(View.GONE);
         }
         mDatas = new ArrayList<>();
     }

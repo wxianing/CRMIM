@@ -126,55 +126,6 @@
 
             </LinearLayout>
 
-            <include layout="@layout/horizontal_line" />
-
-            <LinearLayout
-                android:id="@+id/exhibition_manager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingBottom="@dimen/dp5"
-                android:paddingTop="@dimen/dp5">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:src="@mipmap/conver_icon" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:text="展会管理" />
-
-            </LinearLayout>
-
-            <include layout="@layout/horizontal_line" />
-
-            <LinearLayout
-                android:id="@+id/open_sea"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingBottom="@dimen/dp5"
-                android:paddingTop="@dimen/dp5">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:src="@mipmap/open_sea" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:text="公海池" />
-
-            </LinearLayout>
 
             <include layout="@layout/horizontal_line" />
 
@@ -290,7 +241,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@mipmap/star_icon"
                 android:padding="@dimen/dp8"
-                android:text="人生导航" />
+                android:text="其他" />
 
 
             <LinearLayout
@@ -313,6 +264,57 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dp10"
                     android:text="人生导航" />
+
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:id="@+id/exhibition_manager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/dp5"
+                android:paddingTop="@dimen/dp5">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:src="@mipmap/conver_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:text="展会管理" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:id="@+id/open_sea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/dp5"
+                android:paddingTop="@dimen/dp5">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:src="@mipmap/open_sea" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:text="公海池" />
 
             </LinearLayout>
 

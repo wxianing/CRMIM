@@ -43,6 +43,29 @@ public class CostLists implements Serializable {
     private String CreateDate;
     private int ExpType;
     private int CustID;
+    /**
+     * ExpCode : null
+     * TotalAmount : 50000
+     * PayType : null
+     * ModifiedDate : null
+     * Confirmor : null
+     * ConfirmDate : null
+     * ProjectID : 57
+     * ProjectName : 心血管疾病分析设备
+     * Attachment : null
+     * CreatorName : 汪志红
+     */
+
+    private Object ExpCode;
+    private int TotalAmount;
+    private Object PayType;
+    private Object ModifiedDate;
+    private Object Confirmor;
+    private Object ConfirmDate;
+    private int ProjectID;
+    private String ProjectName;
+    private Object Attachment;
+    private String CreatorName;
 
     public int getID() {
         return ID;
@@ -130,5 +153,85 @@ public class CostLists implements Serializable {
 
     public void setCustID(int CustID) {
         this.CustID = CustID;
+    }
+
+    public Object getExpCode() {
+        return ExpCode;
+    }
+
+    public void setExpCode(Object ExpCode) {
+        this.ExpCode = ExpCode;
+    }
+
+    public int getTotalAmount() {
+        return TotalAmount;
+    }
+
+    public void setTotalAmount(int TotalAmount) {
+        this.TotalAmount = TotalAmount;
+    }
+
+    public Object getPayType() {
+        return PayType;
+    }
+
+    public void setPayType(Object PayType) {
+        this.PayType = PayType;
+    }
+
+    public Object getModifiedDate() {
+        return ModifiedDate;
+    }
+
+    public void setModifiedDate(Object ModifiedDate) {
+        this.ModifiedDate = ModifiedDate;
+    }
+
+    public Object getConfirmor() {
+        return Confirmor;
+    }
+
+    public void setConfirmor(Object Confirmor) {
+        this.Confirmor = Confirmor;
+    }
+
+    public Object getConfirmDate() {
+        return ConfirmDate;
+    }
+
+    public void setConfirmDate(Object ConfirmDate) {
+        this.ConfirmDate = ConfirmDate;
+    }
+
+    public int getProjectID() {
+        return ProjectID;
+    }
+
+    public void setProjectID(int ProjectID) {
+        this.ProjectID = ProjectID;
+    }
+
+    public String getProjectName() {
+        return ProjectName;
+    }
+
+    public void setProjectName(String ProjectName) {
+        this.ProjectName = ProjectName;
+    }
+
+    public Object getAttachment() {
+        return Attachment;
+    }
+
+    public void setAttachment(Object Attachment) {
+        this.Attachment = Attachment;
+    }
+
+    public String getCreatorName() {
+        return CreatorName;
+    }
+
+    public void setCreatorName(String CreatorName) {
+        this.CreatorName = CreatorName;
     }
 }

@@ -1,6 +1,7 @@
 package com.meidp.crmim.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,7 +18,7 @@ import com.meidp.crmim.adapter.CustomerListAdapter;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppDatas;
-import com.meidp.crmim.model.CustomerLists;
+import com.meidp.crmim.model.ClientContacts;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.NullUtils;
 
@@ -38,7 +39,7 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
     @ViewInject(R.id.listview)
     private PullToRefreshListView mListView;
 
-    private List<CustomerLists> mDatas;
+    private List<ClientContacts> mDatas;
     private CustomerListAdapter mAdapter;
     private String flag;
     private int pageIndex = 1;
@@ -92,10 +93,10 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
         params.put("Keyword", keyword);
         params.put("PageIndex", pageIndex);
         params.put("PageSize", 8);
-        HttpRequestUtils.getmInstance().send(CustomerListActivity.this, Constant.CUSTOMER_LIST_URL, params, new HttpRequestCallBack<String>() {
+        HttpRequestUtils.getmInstance().send(CustomerListActivity.this, Constant.CUSTOMER_CONTACTS_URL, params, new HttpRequestCallBack<String>() {
             @Override
             public void onSuccess(String result) {
-                AppDatas<CustomerLists> appDatas = JSONObject.parseObject(result, new TypeReference<AppDatas<CustomerLists>>() {
+                AppDatas<ClientContacts> appDatas = JSONObject.parseObject(result, new TypeReference<AppDatas<ClientContacts>>() {
                 });
                 if (appDatas != null && appDatas.getEnumcode() == 0) {
                     mDatas.addAll(appDatas.getData().getDataList());
@@ -108,21 +109,29 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        ClientContacts contacts = mDatas.get(position);
         if (NullUtils.isNull(flag) && "Apply".equals(flag)) {//直接返回客户
             Intent intent = new Intent();
             intent.putExtra("CustName", mDatas.get(position - 1).getCustName());
-            intent.putExtra("CustContact", mDatas.get(position - 1).getCreatorName());
-            intent.putExtra("CustPhone", mDatas.get(position - 1).getMobile());
+            intent.putExtra("CustContact", mDatas.get(position - 1).getLinkManName());
+            intent.putExtra("CustPhone", mDatas.get(position - 1).getWorkTel());
             intent.putExtra("OID", mDatas.get(position - 1).getID());
             setResult(1001, intent);
             finish();
         } else {
-            Intent intent = new Intent();
-            intent.setClass(CustomerListActivity.this, CustomContactActivity.class);
-            intent.putExtra("CustName", mDatas.get(position - 1).getCustName());
-            intent.putExtra("OID", mDatas.get(position - 1).getID());
-            intent.putExtra("CustNo", mDatas.get(position - 1).getCustNo());
-            startActivityForResult(intent, 1001);
+//            Intent intent = new Intent();
+//            intent.setClass(CustomerListActivity.this, CustomContactActivity.class);
+//            intent.putExtra("CustName", mDatas.get(position - 1).getCustName());
+//            intent.putExtra("OID", mDatas.get(position - 1).getID());
+//            intent.putExtra("CustNo", mDatas.get(position - 1).getCustNo());
+//            startActivityForResult(intent, 1001);
+
+            Intent intent = new Intent(this, ClientDetailsActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("ClientContacts", contacts);
+            intent.putExtras(bundle);
+            startActivity(intent);
+
         }
     }
 
@@ -135,11 +144,8 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
             Intent intent = new Intent();
             intent.putExtra("customName", customName);
             intent.putExtra("customerId", customerId);
-
             intent.putExtra("ContactPhone", data.getStringExtra("ContactPhone"));
-
             Log.e("ContactPhone>>>>>", data.getStringExtra("ContactPhone"));
-
             intent.putExtra("CustName", data.getStringExtra("CustName"));
             setResult(1001, intent);
             finish();

@@ -92,9 +92,9 @@ public class ApprovalDetailsActivity extends BaseActivity {
                 AppMsg appMsg = JSONObject.parseObject(result, new TypeReference<AppMsg>() {
                 });
                 if (appMsg != null && appMsg.getEnumcode() == 0) {
-                    ToastUtils.shows(ApprovalDetailsActivity.this, "保存成功");
+                    ToastUtils.shows(ApprovalDetailsActivity.this, "审批成功");
                 } else {
-                    ToastUtils.shows(ApprovalDetailsActivity.this, "保存失败");
+                    ToastUtils.shows(ApprovalDetailsActivity.this, appMsg.getMsg());
                 }
             }
         });

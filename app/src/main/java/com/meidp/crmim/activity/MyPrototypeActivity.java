@@ -33,7 +33,6 @@ import java.util.List;
 @ContentView(R.layout.activity_my_prototype)
 public class MyPrototypeActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2<ListView>, AdapterView.OnItemClickListener {
 
-
     @ViewInject(R.id.title_tv)
     private TextView title;
     @ViewInject(R.id.listview)
