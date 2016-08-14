@@ -9,10 +9,11 @@
     <include layout="@layout/titlebar" />
 
     <TextView
+
         android:id="@+id/title_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp30"
         android:background="@color/white"
         android:padding="@dimen/dp10"
         android:text="标题" />
@@ -20,22 +21,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp30"
         android:background="@color/white"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/apply_person"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="@dimen/dp10"
-            android:text="申请人" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="0dp"
             android:background="#F5F5F5" />
 
         <TextView
@@ -45,6 +39,16 @@
             android:background="@color/white"
             android:padding="@dimen/dp10"
             android:text="关联项目" />
+
+        <include layout="@layout/horizontal_line" />
+
+        <TextView
+            android:id="@+id/count_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="@dimen/dp10"
+            android:text="数量：" />
     </LinearLayout>
 
     <LinearLayout
@@ -53,7 +57,8 @@
         android:layout_marginTop="@dimen/dp10"
         android:background="@color/white"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/dp80">
+        android:paddingBottom="@dimen/dp10"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/classify"
@@ -61,7 +66,8 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:padding="@dimen/dp10"
-            android:text="费用分类" />
+            android:text="费用分类"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -75,7 +81,8 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:padding="@dimen/dp10"
-            android:text="报销金额" />
+            android:text="报销金额"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -83,13 +90,6 @@
             android:layout_marginLeft="10dp"
             android:background="#F5F5F5" />
 
-        <TextView
-            android:id="@+id/reason"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="@dimen/dp10"
-            android:text="聚会" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -112,7 +112,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp30"
         android:background="@color/white"
         android:orientation="vertical">
 
@@ -122,7 +122,8 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:padding="@dimen/dp10"
-            android:text="审核部门" />
+            android:text="审核部门"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -136,6 +137,28 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:padding="@dimen/dp10"
-            android:text="关联项目" />
+            android:text="申请时间" />
+
+        <include layout="@layout/horizontal_line" />
+
+        <TextView
+            android:id="@+id/apply_person"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="@dimen/dp10"
+            android:text="申请人" />
+
+        <include layout="@layout/horizontal_line" />
+
+        <TextView
+            android:id="@+id/reason"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="@dimen/dp10"
+            android:text="申请原因：" />
+
+
     </LinearLayout>
 </LinearLayout>

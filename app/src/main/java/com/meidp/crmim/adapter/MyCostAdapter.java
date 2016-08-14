@@ -38,7 +38,7 @@ public class MyCostAdapter extends BasicAdapter<CostLists> {
 
         vh.title.setText(data.getTitle());
         vh.ariseDate.setText("申请时间：" + data.getAriseDate());
-        vh.needTime.setText("需要时间：" + data.getNeedDate());
+//        vh.needTime.setText("需要时间：" + data.getNeedDate());
         vh.reason.setText("申请原因：" + data.getReason());
         vh.projectName.setText("关联项目：" + data.getProjectName());
         vh.applyPerson.setText("申请人：" + data.getCreatorName());

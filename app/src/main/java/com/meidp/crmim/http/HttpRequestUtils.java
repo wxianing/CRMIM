@@ -12,6 +12,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.meidp.crmim.MyApplication;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.CustomDialogUtils;
+import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.utils.ToastUtils;
 
@@ -28,6 +29,16 @@ import java.util.Map;
 
 public class HttpRequestUtils {
     private static HttpRequestUtils mInstance;
+
+    private static String userCode;
+
+    public static String getUserCode() {
+        return userCode;
+    }
+
+    public static void setUserCode(String userCode) {
+        HttpRequestUtils.userCode = userCode;
+    }
 
     public HttpRequestUtils() {
     }
@@ -48,7 +59,13 @@ public class HttpRequestUtils {
      */
     public void post(final Context mContext, String url, HashMap<String, Object> map, final HttpRequestCallBack mCallBack) {
 //        CustomDialogUtils.showProgressDialog(mContext);
-        String code = (String) SPUtils.get(mContext, "CODE", "");
+        String code = "";
+        if (!NullUtils.isNull(getUserCode())) {
+            code = (String) SPUtils.get(mContext, "CODE", "");
+        } else {
+            code = userCode;
+            Log.e("userCode", userCode);
+        }
         Log.e("code", code);
         RequestParams params = new RequestParams(url);
         params.addHeader("_appId", Constant.APPID);

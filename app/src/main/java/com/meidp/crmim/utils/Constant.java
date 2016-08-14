@@ -155,5 +155,9 @@ public class Constant {
     //展会详情
     public static final String CONVERSATION_DETAILS_URL = BASE_URL + "order/getsellexhibition";
     //人生导航
-    public static final java.lang.String LIFE_NAV_URL = "http://beacon.meidp.com:98/Mobi/Office/EmployeeNav?UserId=2";
+    public static final String LIFE_NAV_URL = "http://beacon.meidp.com:98/Mobi/Office/EmployeeNav?UserId=2";
+    //获取费用审批列表
+    public static final String GET_COST_CHECK = BASE_URL + "office/office/getfeeapplypagelistforcheck";
+    //业绩统计报表
+    public static final String PERFORMANCE_URL = BASE_URL + "common/mpublic/getachievementtotal";
 }

@@ -18,10 +18,10 @@ public class ApprovalTypeActivity extends BaseActivity {
 
     @Override
     public void onInit() {
-        title.setText("审批");
+        title.setText("审批管理");
     }
 
-    @Event({R.id.back_arrows,R.id.cost,R.id.prototype})
+    @Event({R.id.back_arrows, R.id.cost, R.id.prototype})
     private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -29,11 +29,11 @@ public class ApprovalTypeActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.cost:
-                intent = new Intent(this,ApprovalCostActivity.class);
+                intent = new Intent(this, ApprovalCostActivity.class);
                 startActivity(intent);
                 break;
             case R.id.prototype:
-                intent = new Intent(this,ApprovalProcessActivity.class);
+                intent = new Intent(this, ApprovalProcessActivity.class);
                 startActivity(intent);
                 break;
 

@@ -115,6 +115,7 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
             intent.putExtra("CustName", mDatas.get(position - 1).getCustName());
             intent.putExtra("CustContact", mDatas.get(position - 1).getLinkManName());
             intent.putExtra("CustPhone", mDatas.get(position - 1).getWorkTel());
+            intent.putExtra("CustContactId", mDatas.get(position - 1).getID());
             intent.putExtra("OID", mDatas.get(position - 1).getID());
             setResult(1001, intent);
             finish();

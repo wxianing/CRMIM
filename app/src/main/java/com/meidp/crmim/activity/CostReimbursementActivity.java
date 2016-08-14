@@ -65,6 +65,8 @@ public class CostReimbursementActivity extends BaseActivity {
     private EditText causeEt;
     @ViewInject(R.id.remark_et)
     private EditText remarkEt;
+    @ViewInject(R.id.project_et)
+    private EditText projectEt;
 
     private int typeId;
 
@@ -73,6 +75,9 @@ public class CostReimbursementActivity extends BaseActivity {
     private int mDay;
     private int custId;
     private int expId;
+    private int custContactId;
+    private String custContactName;
+    private int projectId;
 
     @Override
     public void onInit() {
@@ -83,13 +88,14 @@ public class CostReimbursementActivity extends BaseActivity {
         needTime.setText(DataUtils.getDate2());
     }
 
-    @Event(value = {R.id.customer_et, R.id.cost_type, R.id.apply_time, R.id.need_time, R.id.title_right, R.id.back_arrows})
+    @Event(value = {R.id.customer_et, R.id.cost_type, R.id.apply_time, R.id.need_time, R.id.title_right, R.id.back_arrows, R.id.project_et})
     private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
-            case R.id.customer_et:
+            case R.id.customer_et://客户
                 intent = new Intent();
                 intent.setClass(this, CustomerListActivity.class);
+                intent.putExtra("FLAG", "Apply");
                 startActivityForResult(intent, 1001);
                 break;
             case R.id.cost_type://类别
@@ -119,6 +125,11 @@ public class CostReimbursementActivity extends BaseActivity {
                 break;
             case R.id.back_arrows:
                 finish();
+                break;
+            case R.id.project_et:
+                intent = new Intent(this, ProjectManagerActivity.class);
+                intent.putExtra("FLAG", "Apply");
+                startActivityForResult(intent, 1004);
                 break;
         }
     }
@@ -156,6 +167,7 @@ public class CostReimbursementActivity extends BaseActivity {
         params.put("NeedDate", needDate);//使用日期
         params.put("Reason", reason);//原因
         params.put("details", entrityList);//原因
+        params.put("ProjectID", projectId);//项目
 
         HttpRequestUtils.getmInstance().send(CostReimbursementActivity.this, Constant.COST_SAVE_URL, params, new HttpRequestCallBack() {
             @Override
@@ -181,13 +193,20 @@ public class CostReimbursementActivity extends BaseActivity {
                 case 1001:
                     String customName = data.getStringExtra("customName");
                     custId = data.getIntExtra("CustomerId", 0);
-                    customerEt.setText(customName);
+                    custContactId = data.getIntExtra("CustContactId", 0);
+                    custContactName = data.getStringExtra("CustContact");
+                    customerEt.setText(custContactName);
                     break;
                 case 1002:
                     String codeName = data.getStringExtra("CodeName");
                     typeId = data.getIntExtra("OID", -1);
                     expId = data.getIntExtra("ExpID", -1);
                     costType.setText(codeName);
+                    break;
+                case 1004:
+                    projectId = data.getIntExtra("ProjectId", -1);
+                    String projectName = data.getStringExtra("ProjectName");
+                    projectEt.setText(projectName);
                     break;
             }
         }

@@ -183,6 +183,7 @@ public class LoginActivity extends BaseActivity {
 
     private void saveData(AppBean<User> appBean) {
         SPUtils.save(this, "CODE", appBean.getData().getUserCode());
+        HttpRequestUtils.setUserCode(appBean.getData().getUserCode());
         Log.e("CODE", ">>>>>>>" + (String) SPUtils.get(this, "CODE", ""));
         SPUtils.save(this, "USERNAME", userName);
         SPUtils.save(this, "NICENAME", userName);

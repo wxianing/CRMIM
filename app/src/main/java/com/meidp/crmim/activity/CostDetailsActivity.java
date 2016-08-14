@@ -23,7 +23,6 @@ public class CostDetailsActivity extends BaseActivity {
     @ViewInject(R.id.title_tv)
     private TextView title;
 
-
     @ViewInject(R.id.title_name)
     private TextView titleName;
     @ViewInject(R.id.apply_person)
@@ -42,6 +41,9 @@ public class CostDetailsActivity extends BaseActivity {
     private TextView department;
     @ViewInject(R.id.check_time)
     private TextView checkTime;
+    @ViewInject(R.id.count_tv)
+    private TextView count;
+
     private int id;
 
 
@@ -71,7 +73,9 @@ public class CostDetailsActivity extends BaseActivity {
         titleName.setText("标题：" + appBean.getData().getTitle());
         applyPerson.setText("申请人：" + appBean.getData().getCreatorName());
         reason.setText("申请原因：" + appBean.getData().getReason());
-
+        relevanceProject.setText("项目名：" + appBean.getData().getProjectName());
+        count.setText("金额：" + appBean.getData().getTotalAmount());
+        checkTime.setText("申请时间：" + appBean.getData().getCreateDate());
     }
 
     @Event({R.id.back_arrows})

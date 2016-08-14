@@ -22,6 +22,7 @@ import com.meidp.crmim.activity.SecretaryActivity;
 import com.meidp.crmim.activity.SubmitActivity;
 import com.meidp.crmim.activity.VisitingClientsActivity;
 import com.meidp.crmim.fragment.BaseFragment;
+import com.meidp.crmim.utils.DataUtils;
 import com.meidp.crmim.utils.NullUtils;
 
 import org.xutils.view.annotation.ContentView;
@@ -53,6 +54,8 @@ public class ConversationListStaticFragment extends BaseFragment {
 
     @ViewInject(R.id.right_add)
     private ImageView rightImg;
+    @ViewInject(R.id.curr_time)
+    private TextView currTime;
     private PopupWindow mPopupWindow;
 
     public static ConversationListStaticFragment newInstance(String params) {
@@ -77,6 +80,7 @@ public class ConversationListStaticFragment extends BaseFragment {
     public void onInit() {
         backImg.setVisibility(View.GONE);
         title.setText("消息");
+        currTime.setText(DataUtils.getTime2());
         initPopupWindow();
         ConversationListFragment fragment = (ConversationListFragment) getChildFragmentManager().findFragmentById(R.id.conversationlist);
 

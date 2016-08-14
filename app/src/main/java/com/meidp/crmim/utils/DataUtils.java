@@ -1,5 +1,7 @@
 package com.meidp.crmim.utils;
 
+import android.text.format.Time;
+
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -57,7 +59,14 @@ public class DataUtils {
     public static String getTime() {
         final Calendar c = Calendar.getInstance();
         c.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-        mTime = String.valueOf(c.get(Calendar.HOUR) + ":" + c.get(Calendar.MINUTE) + ":" + c.get(Calendar.SECOND));
+        mTime = String.valueOf(c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) + ":" + c.get(Calendar.SECOND));
+        return mTime;
+    }
+
+    public static String getTime2() {
+        final Calendar c = Calendar.getInstance();
+        c.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+        mTime = String.valueOf(c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE));
         return mTime;
     }
 }

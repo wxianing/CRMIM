@@ -16,10 +16,10 @@
         android:layout_below="@+id/title_bar">
 
         <LinearLayout
-            android:layout_marginBottom="@dimen/dp30"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/title_bar"
+            android:layout_marginBottom="@dimen/dp30"
             android:orientation="vertical">
 
             <TextView
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:padding="@dimen/dp10"
-                android:text="标题："
+                android:text="状态："
                 android:textColor="@color/textcolor_orange" />
 
             <TextView
@@ -54,12 +54,12 @@
             <include layout="@layout/horizontal_line" />
 
             <TextView
-                android:id="@+id/cust_name"
+                android:id="@+id/apply_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:padding="@dimen/dp10"
-                android:text="客户名：" />
+                android:text="申请时间：" />
 
             <include layout="@layout/horizontal_line" />
 
@@ -69,7 +69,17 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:padding="@dimen/dp10"
-                android:text="负责人：" />
+                android:text="申请人：" />
+
+            <include layout="@layout/horizontal_line" />
+
+            <TextView
+                android:id="@+id/apply_reason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="申请原因：" />
 
             <com.meidp.crmim.view.ListViewForScrollView
                 android:id="@+id/listview"
@@ -89,7 +99,6 @@
         android:background="@color/white"
         android:paddingBottom="@dimen/dp5"
         android:paddingTop="5dp">
-
 
         <Button
             android:id="@+id/refuse_btn"

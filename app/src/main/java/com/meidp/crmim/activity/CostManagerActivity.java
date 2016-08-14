@@ -3,6 +3,7 @@ package com.meidp.crmim.activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @ContentView(R.layout.activity_cost_manager)
-public class CostManagerActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2<ListView> {
+public class CostManagerActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2<ListView>, AdapterView.OnItemClickListener {
     @ViewInject(R.id.title_tv)
     private TextView title;
     @ViewInject(R.id.listview)
@@ -49,6 +50,7 @@ public class CostManagerActivity extends BaseActivity implements PullToRefreshBa
         mAdapter = new MyCostAdapter(mDatas, this);
         mListView.setAdapter(mAdapter);
         mListView.setOnRefreshListener(this);
+        mListView.setOnItemClickListener(this);
     }
 
     @Override
@@ -108,5 +110,13 @@ public class CostManagerActivity extends BaseActivity implements PullToRefreshBa
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
         pageIndex++;
         loadData(pageIndex, keyword);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(this, CostDetailsActivity.class);
+        intent.putExtra("OID",mDatas.get(position-1).getID());
+
+        startActivity(intent);
     }
 }

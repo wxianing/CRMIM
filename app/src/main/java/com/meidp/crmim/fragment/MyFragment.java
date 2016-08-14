@@ -95,6 +95,8 @@ public class MyFragment extends BaseFragment {
                             MainActivity.mainActivity.finish();
                             MainActivity.mainActivity = null;
                         }
+                        SPUtils.remove(getActivity(), "CODE");
+                        SPUtils.clear(getActivity());
                         startActivity(intent);
                     }
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {

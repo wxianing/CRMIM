@@ -53,6 +53,11 @@ public class CostDetails implements Serializable {
     private Object ProjectID;
     private Object Attachment;
     private String CreatorName;
+    /**
+     * ProjectName :
+     */
+
+    private String ProjectName;
 
     public int getID() {
         return ID;
@@ -212,5 +217,13 @@ public class CostDetails implements Serializable {
 
     public void setCreatorName(String CreatorName) {
         this.CreatorName = CreatorName;
+    }
+
+    public String getProjectName() {
+        return ProjectName;
+    }
+
+    public void setProjectName(String ProjectName) {
+        this.ProjectName = ProjectName;
     }
 }

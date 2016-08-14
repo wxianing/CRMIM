@@ -42,6 +42,7 @@ import org.xutils.x;
 
 @ContentView(R.layout.fragment_home)
 public class HomeFragment extends BaseFragment implements AdapterView.OnItemClickListener {
+
     @ViewInject(R.id.title_tv)
     private TextView title;
     @ViewInject(R.id.back_arrows)
@@ -53,8 +54,6 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @ViewInject(R.id.linear_layout)
     private LinearLayout linearLayout;
-
-
 
     public HomeFragment() {
     }

@@ -139,8 +139,11 @@ public class ModelMachineApplyActivity extends BaseActivity {
             switch (resultCode) {
                 case 1001:
                     custId = data.getIntExtra("OID", -1);
+                    String custContact = data.getStringExtra("CustContact");
                     String custName = data.getStringExtra("CustName");
+                    String custPhone = data.getStringExtra("CustPhone");
                     customerEt.setText(custName);
+                    custTelEt.setText(custPhone);
                     break;
                 case 1004:
                     projectId = data.getIntExtra("ProjectId", -1);
