@@ -224,8 +224,8 @@ public class InstrumentView extends FrameLayout {
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(40);
 
-        paintGap1.setColor(Color.WHITE);
-        paintGap2.setColor(Color.WHITE);
+        paintGap1.setColor(Color.rgb(241,241,241));
+        paintGap2.setColor(Color.rgb(241,241,241));
         paintGap1.setStrokeWidth(2);
         paintGap2.setStrokeWidth(4);
 
@@ -239,7 +239,7 @@ public class InstrumentView extends FrameLayout {
         PathEffect effects = new DashPathEffect(new float[]{5,5,5,5},1);
         paintInnerCircle.setPathEffect(effects);
 
-        paintBg.setColor(Color.WHITE);
+        paintBg.setColor(Color.rgb(241,241,241));
 
         paintText.setColor(Color.GRAY);
         paintText.setTextSize(20);

@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -20,6 +21,7 @@ import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppMsg;
 import com.meidp.crmim.model.ProduceEntity;
 import com.meidp.crmim.model.ProduceEntitys;
+import com.meidp.crmim.model.Product;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.DataUtils;
 import com.meidp.crmim.utils.ToastUtils;
@@ -70,7 +72,7 @@ public class ConventionApplyForActivity extends BaseActivity {
     private EditText giveBackDateEt;
 
     @ViewInject(R.id.model_machine)
-    private EditText modelMachine;
+    private TextView modelMachine;
     private String productName;
     private int productID;
 
@@ -85,6 +87,7 @@ public class ConventionApplyForActivity extends BaseActivity {
         overDateEt.setText(DataUtils.getDate2());
         giveBackDateEt.setText(DataUtils.getDate2());
         entityList = new ArrayList<>();
+        productsLists = new ArrayList<>();
     }
 
     @Event({R.id.back_arrows, R.id.title_right, R.id.start_date, R.id.over_date, R.id.give_back_date, R.id.model_machine})
@@ -140,10 +143,13 @@ public class ConventionApplyForActivity extends BaseActivity {
         String competitors = competitorsEt.getText().toString().trim();
         String address = addressEt.getText().toString().trim();
 
-        ProduceEntitys entity = new ProduceEntitys();
-        entity.setProductID(productID);
-        entity.setProductCount(2);
-        entityList.add(entity);
+        for (int i = 0; i < productsLists.size(); i++) {
+            ProduceEntitys entity = new ProduceEntitys();
+            entity.setProductID(productsLists.get(i).getProductID());
+            entity.setProductCount(1);
+            entityList.add(entity);
+            Log.e("productsLists", productsLists.get(i).getProductName());
+        }
 
         HashMap params = new HashMap();
         params.put("Title", titleName);//标题
@@ -158,7 +164,7 @@ public class ConventionApplyForActivity extends BaseActivity {
         params.put("UnionPartner", unionPartner);//合作伙伴
         params.put("Competitors", competitors);//竞争对手
         params.put("Address", address);
-        params.put("Details", entityList);
+        params.put("Details", entityList);//样机列表
 
         HttpRequestUtils.getmInstance().send(ConventionApplyForActivity.this, Constant.SAVE_CONVERNTIONAPPLYFOR, params, new HttpRequestCallBack() {
             @Override
@@ -175,13 +181,20 @@ public class ConventionApplyForActivity extends BaseActivity {
         });
     }
 
+    private List<Product> productsLists;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 1009 && data != null) {
-            productID = data.getIntExtra("ProductID", 0);
-            productName = data.getStringExtra("ProductName");
-            modelMachine.setText(productName);
+            String str = data.getStringExtra("ProductName");
+            ArrayList<Product> products = (ArrayList<Product>) data.getSerializableExtra("Product");
+            productsLists.addAll(products);
+            for (int i = 0; i < products.size(); i++) {
+                Log.e("produce", "name>>>>>>" + products.get(i).getProductName());
+            }
+            Log.e("str", ">>>>>>>>" + str);
+            modelMachine.setText(str);
         }
     }
 

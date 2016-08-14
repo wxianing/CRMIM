@@ -143,11 +143,11 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
             String customName = data.getStringExtra("customName");
             int customerId = data.getIntExtra("CustomerId", 0);
             Intent intent = new Intent();
-            intent.putExtra("customName", customName);
+            intent.putExtra("customName", customName);//联系人
             intent.putExtra("customerId", customerId);
             intent.putExtra("ContactPhone", data.getStringExtra("ContactPhone"));
             Log.e("ContactPhone>>>>>", data.getStringExtra("ContactPhone"));
-            intent.putExtra("CustName", data.getStringExtra("CustName"));
+            intent.putExtra("CustName", data.getStringExtra("CustName"));//公司
             setResult(1001, intent);
             finish();
         } else if (requestCode == 1003) {

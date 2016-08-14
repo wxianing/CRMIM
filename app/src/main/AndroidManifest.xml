@@ -297,7 +297,8 @@
         <activity android:name=".activity.ApprovalTypeActivity" />
         <activity android:name=".activity.ApprovalCostActivity" />
         <activity android:name=".activity.SelectEmpolyeeActivity" />
-        <activity android:name=".activity.ApprovalCostDetailActivity"></activity>
+        <activity android:name=".activity.ApprovalCostDetailActivity" />
+        <activity android:name=".activity.RateSelectActivity"></activity>
     </application>
 
 </manifest>

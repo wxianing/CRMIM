@@ -1,6 +1,7 @@
 package com.meidp.crmim.activity;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.alibaba.fastjson.serializer.SerialContext;
 import com.meidp.crmim.R;
 import com.meidp.crmim.adapter.ProduceAdapter;
 import com.meidp.crmim.http.HttpRequestCallBack;
@@ -20,6 +22,7 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +31,9 @@ import java.util.List;
 public class ProduceCenterActivity extends BaseActivity implements AdapterView.OnItemClickListener {
     @ViewInject(R.id.title_tv)
     private TextView title;
+    @ViewInject(R.id.title_right)
+    private TextView titleRight;
+
 
     private int pageIndex = 1;
     private String keyword = "";
@@ -35,16 +41,22 @@ public class ProduceCenterActivity extends BaseActivity implements AdapterView.O
     @ViewInject(R.id.listview)
     private ListView mListView;
 
-    private List<Product> mDatas;
+    private ArrayList<Product> mDatas;
     private ProduceAdapter mAdapter;
+    private int checkNum;
+
+    private ArrayList<Product> checkLists;
 
     public ProduceCenterActivity() {
     }
 
     @Override
     public void onInit() {
+        titleRight.setVisibility(View.VISIBLE);
+        titleRight.setText("确定");
         title.setText("产品中心");
         mDatas = new ArrayList<>();
+        checkLists = new ArrayList<>();
         mAdapter = new ProduceAdapter(mDatas, ProduceCenterActivity.this);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
@@ -70,10 +82,21 @@ public class ProduceCenterActivity extends BaseActivity implements AdapterView.O
         });
     }
 
-    @Event({R.id.back_arrows})
+    @Event({R.id.back_arrows, R.id.title_right})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
+                finish();
+                break;
+            case R.id.title_right:
+                String produceNames = "";
+                for (int i = 0; i < checkLists.size(); i++) {
+                    produceNames += checkLists.get(i).getProductName() + "、";
+                }
+                Intent intent = new Intent();
+                intent.putExtra("Product", (Serializable) checkLists);
+                intent.putExtra("ProductName", produceNames);
+                setResult(1009, intent);
                 finish();
                 break;
         }
@@ -81,10 +104,22 @@ public class ProduceCenterActivity extends BaseActivity implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent();
-        intent.putExtra("ProductID", mDatas.get(position).getProductID());
-        intent.putExtra("ProductName", mDatas.get(position).getProductName());
-        setResult(1009, intent);
-        finish();
+        ProduceAdapter.ViewHolder vh = (ProduceAdapter.ViewHolder) view.getTag();
+        vh.checkBox.toggle();
+        ProduceAdapter.getIsSelected().put(position, vh.checkBox.isChecked());
+        if (vh.checkBox.isChecked() == true) {
+            checkNum++;
+            checkLists.add(mDatas.get(position));
+        } else {
+            checkNum--;
+            checkLists.remove(checkNum);
+        }
+
+//        Intent intent = new Intent();
+//        intent.putExtra("ProductID", mDatas.get(position).getProductID());
+//        intent.putExtra("ProductName", mDatas.get(position).getProductName());
+//        setResult(1009, intent);
+//        finish();
+
     }
 }

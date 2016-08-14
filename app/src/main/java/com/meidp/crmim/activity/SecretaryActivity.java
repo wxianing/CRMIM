@@ -44,7 +44,7 @@ public class SecretaryActivity extends BaseActivity implements AdapterView.OnIte
 
     @Override
     public void onInit() {
-        title.setText("小秘书");
+        title.setText("巨烽小秘书");
         mDatas = new ArrayList<>();
         mListView.setMode(PullToRefreshBase.Mode.BOTH);
         mAdapter = new SecretaryAdapter(mDatas, this);

@@ -1,6 +1,7 @@
 package com.meidp.crmim.activity;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -48,17 +49,20 @@ public class ModelMachineApplyActivity extends BaseActivity {
     @ViewInject(R.id.project_et)
     private EditText projectEt;
     @ViewInject(R.id.prototype_et)
-    private EditText prototypeEt;
+    private TextView prototypeEt;
     private int custId;
     private int projectId;
     private int productID;
     private String productName;
+
+    private List<Product> prototypes;
 
     @Override
     public void onInit() {
         titleRight.setText("保存");
 //        titleRight.setVisibility(View.VISIBLE);
         title.setText("样机申请");
+        prototypes = new ArrayList<>();
     }
 
     @Event(value = {R.id.back_arrows, R.id.title_right, R.id.customer_et, R.id.project_et, R.id.prototype_et, R.id.save_btn})
@@ -83,8 +87,8 @@ public class ModelMachineApplyActivity extends BaseActivity {
                 startActivityForResult(intent, 1004);
                 break;
             case R.id.prototype_et:
-                intent = new Intent(this, PrototypeListActivity.class);
-                startActivityForResult(intent, 1005);
+                intent = new Intent(this, ProduceCenterActivity.class);
+                startActivityForResult(intent, 1009);
                 break;
             case R.id.save_btn:
                 sendMsg();
@@ -97,19 +101,19 @@ public class ModelMachineApplyActivity extends BaseActivity {
         String custTel = custTelEt.getText().toString().trim();
         String count = countEt.getText().toString().trim();
         String remark = remarkEt.getText().toString().trim();
-        Product produce = new Product();
-        produce.setProductID(productID);
-        produce.setProductName(productName);
-        produce.setRemark(remark);
-        if (NullUtils.isNull(count)) {
-            produce.setProductCount(Double.valueOf(count));
-        } else {
-            ToastUtils.shows(this, "请填写数量");
-        }
-
         List<Product> produceLists = new ArrayList<>();
-        produceLists.add(produce);
-
+        for (int i = 0; i < prototypes.size(); i++) {
+            Product produce = new Product();
+            produce.setProductID(productID);
+            produce.setProductName(productName);
+            produce.setRemark(remark);
+            if (NullUtils.isNull(count)) {
+                produce.setProductCount(Double.valueOf(count));
+            } else {
+                ToastUtils.shows(this, "请填写数量");
+            }
+            produceLists.add(produce);
+        }
         HashMap params = new HashMap();
         params.put("Title", titleStr);
         params.put("CustID", custId);
@@ -150,7 +154,12 @@ public class ModelMachineApplyActivity extends BaseActivity {
                     String projectName = data.getStringExtra("ProjectName");
                     projectEt.setText(projectName);
                     break;
-                case 1005:
+                case 1009:
+                    ArrayList<Product> products = (ArrayList<Product>) data.getSerializableExtra("Product");
+                    prototypes.addAll(products);
+                    for (int i = 0; i < prototypes.size(); i++) {
+                        Log.e("prototypes", prototypes.get(i).getProductName());
+                    }
                     productID = data.getIntExtra("ProductID", -1);
                     productName = data.getStringExtra("ProductName");
                     prototypeEt.setText(productName);

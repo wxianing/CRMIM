@@ -1,7 +1,6 @@
 package com.meidp.crmim.activity;
 
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -12,7 +11,6 @@ import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppBean;
 import com.meidp.crmim.model.Performances;
 import com.meidp.crmim.utils.Constant;
-import com.meidp.crmim.widget.BudgetPieChart;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;

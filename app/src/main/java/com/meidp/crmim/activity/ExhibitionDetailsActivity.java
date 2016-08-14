@@ -75,11 +75,11 @@ public class ExhibitionDetailsActivity extends BaseActivity {
                     start_date.setText("开始时间：" + appDatas.getData().getExhibitionStartDate());
                     over_date.setText("结束时间：" + appDatas.getData().getExhibitionEndDate());
                     count_tv.setText("人数规模：" + appDatas.getData().getAttendPersons());
-                    total_money.setText("￥" + appDatas.getData().getPlanFee());
-                    aim_tv.setText("展会的目的：" + appDatas.getData().getExhibitionAim());
-                    plan_tv.setText("展会的目的：" + appDatas.getData().getExhibitionPlan());
-                    partner.setText("展会的目的：" + appDatas.getData().getUnionPartner());
-                    competitor.setText("展会的目的：" + appDatas.getData().getCompetitors());
+                    total_money.setText("￥" + appDatas.getData().getPlanFee() + "万元");
+                    aim_tv.setText("展会目的：" + appDatas.getData().getExhibitionAim());
+                    plan_tv.setText("展会计划：" + appDatas.getData().getExhibitionPlan());
+                    partner.setText("合作伙伴：" + appDatas.getData().getUnionPartner());
+                    competitor.setText("竞争对手：" + appDatas.getData().getCompetitors());
 
                 }
             }

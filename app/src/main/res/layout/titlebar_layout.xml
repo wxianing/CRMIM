@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/title_bar"
     android:layout_width="match_parent"
     android:layout_height="45dp"
-    android:id="@+id/title_bar"
     android:background="@color/white"
     android:clipToPadding="true"
     android:orientation="vertical">
@@ -26,11 +26,12 @@
             android:id="@+id/title_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/back_arrows"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:text="标题"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp20" />
+            android:textSize="@dimen/sp18" />
 
         <ImageView
             android:id="@+id/right_img"

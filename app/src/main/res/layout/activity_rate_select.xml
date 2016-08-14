@@ -4,15 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.meidp.crmim.activity.ExhibitionManagerActivity">
+    tools:context="com.meidp.crmim.activity.RateSelectActivity">
 
-    <include layout="@layout/titlebar_layout" />
+    <include layout="@layout/titlebar" />
 
-    <include layout="@layout/search_layout"/>
-
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
+    <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp50" />
 
 </LinearLayout>

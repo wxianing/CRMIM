@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.meidp.crmim.R;
@@ -40,6 +42,9 @@ public class CityListActivity extends BaseActivity implements TextWatcher {
     List<ContactItemInterface> contactList;
     List<ContactItemInterface> filterList;
     private SearchListTask curSearchTask = null;
+    private TextView title;
+
+    private ImageView backImg;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,6 +80,15 @@ public class CityListActivity extends BaseActivity implements TextWatcher {
 
         searchBox = (EditText) findViewById(R.id.input_search_query);
         searchBox.addTextChangedListener(this);
+        title = (TextView) findViewById(R.id.title_tv);
+        title.setText("选择城市");
+        backImg = (ImageView) findViewById(R.id.back_arrows);
+        backImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -129,11 +143,8 @@ public class CityListActivity extends BaseActivity implements TextWatcher {
         }
 
         protected void onPostExecute(String result) {
-
             synchronized (searchLock) {
-
                 if (inSearchMode) {
-
                     CityAdapter adapter = new CityAdapter(context_, R.layout.city_item, filterList);
                     adapter.setInSearchMode(true);
                     listview.setInSearchMode(true);

@@ -77,7 +77,7 @@ public class CompanyFragment extends BaseFragment implements AdapterView.OnItemC
 
     @Override
     public void onInit() {
-        backImg.setVisibility(View.GONE);
+        backImg.setVisibility(View.INVISIBLE);
         title.setText(R.string.title_name);
         imageUrls = new ArrayList<>();
         initPopupWindow();

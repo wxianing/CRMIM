@@ -71,7 +71,7 @@ public class MyFragment extends BaseFragment {
     @Override
     public void onInit() {
         title.setText("个人中心");
-        backImg.setVisibility(View.GONE);
+        backImg.setVisibility(View.INVISIBLE);
         initPopupWindow();
     }
 

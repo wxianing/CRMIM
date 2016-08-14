@@ -82,7 +82,7 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
 
     @Override
     public void onInit() {
-        backImg.setVisibility(View.GONE);
+        backImg.setVisibility(View.INVISIBLE);
         title.setText("通讯录");
         initPopupWindow();
         userIds = new ArrayList<>();

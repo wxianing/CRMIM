@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp10"
-            android:text="新建群组" />
+            android:text="创建群组" />
 
         <include layout="@layout/horizontal_line" />
 
@@ -48,5 +48,6 @@
             android:text="申报样机" />
 
         <include layout="@layout/horizontal_line" />
+
     </LinearLayout>
 </LinearLayout>

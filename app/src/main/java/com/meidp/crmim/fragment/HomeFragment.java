@@ -60,7 +60,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @Override
     public void onInit() {
-        backImg.setVisibility(View.GONE);
+        backImg.setVisibility(View.INVISIBLE);
         title.setText("工作");
 //        mGridView.setFocusable(false);
         linearLayout.setFocusable(true);

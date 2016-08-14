@@ -78,7 +78,7 @@ public class ConversationListStaticFragment extends BaseFragment {
 
     @Override
     public void onInit() {
-        backImg.setVisibility(View.GONE);
+        backImg.setVisibility(View.INVISIBLE);
         title.setText("消息");
         currTime.setText(DataUtils.getTime2());
         initPopupWindow();

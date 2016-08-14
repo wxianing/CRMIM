@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -42,7 +43,8 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
     private PullToRefreshListView mListView;
     private List<CheckforApply> mDatas;
     private ApprovalAdapter mAdapter;
-
+    @ViewInject(R.id.search_edittext)
+    private EditText search;
 
     @Override
     public void onInit() {
@@ -55,11 +57,17 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
         mListView.setOnRefreshListener(this);
     }
 
-    @Event({R.id.back_arrows})
+    @Event({R.id.back_arrows, R.id.search_btn})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
+                break;
+            case R.id.search_btn:
+                keyword = search.getText().toString().trim();
+                mDatas.clear();
+                loadData(pageIndex, keyword);
+                keyword = "";
                 break;
         }
     }

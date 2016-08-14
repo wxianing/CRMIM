@@ -58,7 +58,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/edittext_transing</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:textColorHint">#A8A8A8</item>
+        <item name="android:textColorHint">@color/tc_gray</item>
     </style>
 
     <style name="group_editext">
