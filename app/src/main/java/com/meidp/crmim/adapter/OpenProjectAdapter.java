@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.meidp.crmim.R;
 import com.meidp.crmim.model.Projects;
+import com.meidp.crmim.utils.NullUtils;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -38,10 +39,13 @@ public class OpenProjectAdapter extends BasicAdapter<Projects> {
         }
         vh.projectName.setText(data.getProjectName());
         vh.linkName.setText("项目联系人：" + data.getCustLinkMan());
-        vh.projectNum.setText("项目编号：" + data.getProjectNo());
         String timeStr = data.getCreateDate().substring(0, 10);
         vh.ceateTime.setText("登记时间：" + timeStr);
-        vh.statusName.setText(data.getStatusName());
+        if (NullUtils.isNull(data.getStatusName())) {
+            vh.statusName.setText(data.getStatusName());
+        } else {
+            vh.statusName.setText("待跟进");
+        }
         double success = data.getSuccessRate() * 100;
         if (success < 30) {
             vh.successRate.setTextColor(Color.RED);
@@ -63,8 +67,6 @@ public class OpenProjectAdapter extends BasicAdapter<Projects> {
         private TextView projectName;
         @ViewInject(R.id.link_name)
         private TextView linkName;
-        @ViewInject(R.id.project_num)
-        private TextView projectNum;
         @ViewInject(R.id.project_time)
         private TextView ceateTime;
         @ViewInject(R.id.success_rate)

@@ -1,5 +1,6 @@
 package com.meidp.crmim.activity;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -7,6 +8,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.meidp.crmim.R;
+import com.meidp.crmim.adapter.CheckCostAdapter;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppBean;
@@ -15,12 +17,15 @@ import com.meidp.crmim.model.CostDetails;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.ToastUtils;
+import com.meidp.crmim.view.ListViewForScrollView;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @ContentView(R.layout.activity_cost_details)
 public class CostDetailsActivity extends BaseActivity {
@@ -50,6 +55,10 @@ public class CostDetailsActivity extends BaseActivity {
     @ViewInject(R.id.check_layout)
     private LinearLayout checkLayout;
     private String flag = "";
+
+    @ViewInject(R.id.listview)
+    private ListViewForScrollView mListView;
+    private CheckCostAdapter mAdapter;
 
     private int id;
     private int billNo;
@@ -89,6 +98,12 @@ public class CostDetailsActivity extends BaseActivity {
         count.setText("金额：" + appBean.getData().getTotalAmount());
         checkTime.setText("申请时间：" + appBean.getData().getCreateDate());
         billNo = appBean.getData().getApplyor();
+        List<CostDetails.FlowStepsBean> mDatas = new ArrayList<>();
+        Log.e("TAG", appBean.getData().getFlowSteps().toString());
+        mDatas.addAll(appBean.getData().getFlowSteps());
+        mAdapter = new CheckCostAdapter(mDatas, this);
+        mListView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Event({R.id.back_arrows, R.id.refuse_btn, R.id.agree_btn})

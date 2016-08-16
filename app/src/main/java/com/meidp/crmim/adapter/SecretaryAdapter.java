@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.meidp.crmim.R;
 import com.meidp.crmim.model.Secretary;
+import com.meidp.crmim.utils.NullUtils;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -37,8 +38,11 @@ public class SecretaryAdapter extends BasicAdapter<Secretary> {
 
         vh.title.setText(mDatas.get(position).getTitle());
         vh.content.setText(mDatas.get(position).getMsg());
+        String timeStr = mDatas.get(position).getCreateTime();
+//        if (NullUtils.isNull(timeStr)) {
+//            timeStr = timeStr.substring(0, timeStr.length() - 3);
+//        }
         vh.time.setText(mDatas.get(position).getCreateTime());
-
         return convertView;
     }
 
@@ -53,7 +57,7 @@ public class SecretaryAdapter extends BasicAdapter<Secretary> {
         private TextView time;
 
         public ViewHolder(View v) {
-            x.view().inject(this,v);
+            x.view().inject(this, v);
         }
     }
 }

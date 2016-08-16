@@ -45,7 +45,12 @@ public class CustomerListAdapter extends BasicAdapter<ClientContacts> {
         vh.administrative.setText("科室：" + mDatas.get(position).getDepartment());
 
         if (NullUtils.isNull(mDatas.get(position).getPosition())) {
-            vh.dutyName.setText("职务：" + mDatas.get(position).getPosition());
+            vh.dutyName.setText(mDatas.get(position).getPosition());
+        }
+        String timeStr = mDatas.get(position).getCreatedDate();
+        if (NullUtils.isNull(timeStr)) {
+            timeStr = timeStr.substring(0, timeStr.length() - 3);
+            vh.createTime.setText("创建时间：" + timeStr);
         }
         return convertView;
     }
@@ -61,6 +66,8 @@ public class CustomerListAdapter extends BasicAdapter<ClientContacts> {
         private TextView administrative;//科室
         @ViewInject(R.id.duty_name)
         private TextView dutyName;
+        @ViewInject(R.id.create_time)
+        private TextView createTime;
 
         public ViewHolder(View view) {
             x.view().inject(this, view);

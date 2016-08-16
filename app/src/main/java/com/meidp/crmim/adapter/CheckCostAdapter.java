@@ -5,9 +5,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.baidu.platform.comapi.map.N;
 import com.meidp.crmim.R;
 import com.meidp.crmim.model.CheckforApply;
+import com.meidp.crmim.model.CostDetails;
 import com.meidp.crmim.utils.NullUtils;
 
 import org.xutils.view.annotation.ViewInject;
@@ -21,14 +21,14 @@ import java.util.List;
  * 作  用：
  * 时  间： 2016/8/8
  */
-public class CheckAdapter extends BasicAdapter<CheckforApply.FlowStepsBean> {
-    public CheckAdapter(List<CheckforApply.FlowStepsBean> mDatas, Context context) {
+public class CheckCostAdapter extends BasicAdapter<CostDetails.FlowStepsBean> {
+    public CheckCostAdapter(List<CostDetails.FlowStepsBean> mDatas, Context context) {
         super(mDatas, context);
     }
 
     @Override
     public View createView(int position, View convertView, ViewGroup parent) {
-        CheckforApply.FlowStepsBean data = mDatas.get(position);
+        CostDetails.FlowStepsBean data = mDatas.get(position);
         ViewHolder vh = null;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.item_check_list, parent, false);

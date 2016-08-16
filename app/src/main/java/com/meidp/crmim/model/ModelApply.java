@@ -73,6 +73,16 @@ public class ModelApply implements Serializable {
     private String FlowStatus;
     private int FlowID;
     private String FlowNo;
+    private String FlowStatusName;
+
+    public String getFlowStatusName() {
+        return FlowStatusName;
+    }
+
+    public void setFlowStatusName(String flowStatusName) {
+        FlowStatusName = flowStatusName;
+    }
+
     /**
      * CheckStatus : 0
      * CheckStatusName : 通过

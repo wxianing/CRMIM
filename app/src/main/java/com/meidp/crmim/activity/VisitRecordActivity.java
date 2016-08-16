@@ -98,7 +98,7 @@ public class VisitRecordActivity extends BaseActivity implements PullToRefreshBa
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        VisitRecords records = mDatas.get(position);
+        VisitRecords records = mDatas.get(position - 1);
         Intent intent = new Intent(this, VisitRecodeDetailsActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("VisitRecords", records);

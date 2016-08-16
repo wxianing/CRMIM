@@ -43,6 +43,16 @@ public class CostLists implements Serializable {
     private String CreateDate;
     private int ExpType;
     private int CustID;
+    private String FlowStatusName;
+
+    public String getFlowStatusName() {
+        return FlowStatusName;
+    }
+
+    public void setFlowStatusName(String flowStatusName) {
+        FlowStatusName = flowStatusName;
+    }
+
     /**
      * ExpCode : null
      * TotalAmount : 50000

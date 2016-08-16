@@ -1,5 +1,6 @@
 package com.meidp.crmim.activity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
@@ -46,11 +47,13 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
 
     private UserInfo users = null;
     private List<Menber> menbers;
+    private String groupName;
 
     @Override
     public void onInit() {
         title.setText("群成员");
         mTargetId = getIntent().getStringExtra("mTargetId");
+        Log.e("mTargetId", mTargetId);
         mDatas = new ArrayList<>();
         RongIM.getInstance().getDiscussion(mTargetId, new RongIMgetDiscussionName());
         menbers = new ArrayList<>();
@@ -63,7 +66,21 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
         }, true);
 
         mAdapter = new GroupMenberAdapter(menbers, GroupMenberActivity.this);
+        RongIM.getInstance().getDiscussion(mTargetId, new RongIMClient.ResultCallback<Discussion>() {
+            @Override
+            public void onSuccess(Discussion discussion) {
+                groupName = discussion.getName();
+                List<String> members = discussion.getMemberIdList();
+                for (int i = 0; i < members.size(); i++) {
+                    Log.e("members", members.get(i));
+                }
+            }
 
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+
+            }
+        });
     }
 
     private UserInfo findUserById(final String userId) {
@@ -86,11 +103,18 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
         return users;
     }
 
-    @Event({R.id.back_arrows})
+    @Event({R.id.back_arrows, R.id.right_img})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
+                break;
+            case R.id.right_img:
+                Log.e("discussionId", "discussionId>>>>>>>>" + mTargetId);
+                Intent intent = new Intent(this, NewGroupActivity.class);
+                intent.putExtra("discussionId", mTargetId);
+                intent.putExtra("GroupName", groupName);
+                startActivity(intent);
                 break;
         }
     }

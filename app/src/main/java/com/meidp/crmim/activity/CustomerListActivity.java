@@ -22,6 +22,7 @@ import com.meidp.crmim.model.ClientContacts;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.NullUtils;
 
+import org.xutils.common.util.MD5;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -50,7 +51,7 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
     @Override
     public void onInit() {
         activity = this;
-        title.setText("客户档案");
+        title.setText("客户管理");
         String titleName = getIntent().getStringExtra("TitleName");
         if (NullUtils.isNull(titleName)) {
             title.setText(titleName);
@@ -110,9 +111,10 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        ClientContacts contacts = mDatas.get(position-1);
+        ClientContacts contacts = mDatas.get(position - 1);
         if (NullUtils.isNull(flag) && "Apply".equals(flag)) {//直接返回客户
             Intent intent = new Intent();
+            intent.putExtra("CustId", mDatas.get(position).getCustID());
             intent.putExtra("CustName", mDatas.get(position - 1).getCustName());
             intent.putExtra("CustContact", mDatas.get(position - 1).getLinkManName());
             intent.putExtra("CustPhone", mDatas.get(position - 1).getWorkTel());

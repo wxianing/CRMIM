@@ -7,12 +7,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.meidp.crmim.R;
 import com.meidp.crmim.adapter.CheckAdapter;
+import com.meidp.crmim.adapter.CheckCostAdapter;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppBean;
 import com.meidp.crmim.model.AppMsg;
 import com.meidp.crmim.model.ApprovalCosts;
-import com.meidp.crmim.model.CheckforApply;
 import com.meidp.crmim.model.CostDetails;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.ToastUtils;
@@ -44,8 +44,7 @@ public class ApprovalCostDetailActivity extends BaseActivity {
     private TextView dutyName;
     @ViewInject(R.id.listview)
     private ListViewForScrollView mListView;
-    //    private List<CheckforApply.FlowStepsBean> mDatas;
-    private CheckAdapter mAdapter;
+    private CheckCostAdapter mAdapter;
     private String billNo;
     @ViewInject(R.id.apply_reason)
     private TextView applyReason;
@@ -56,17 +55,9 @@ public class ApprovalCostDetailActivity extends BaseActivity {
     @Override
     public void onInit() {
         title.setText("详情");
-        approvalCosts = (ApprovalCosts) getIntent().getSerializableExtra("ApprovalCosts");
-        if (approvalCosts != null) {
-            titleName.setText("标题：" + approvalCosts.getTitle());
-            projectName.setText("项目名：" + approvalCosts.getProjectName());
-            custName.setText("客户名：" + approvalCosts.getProjectName());
-            dutyName.setText("申请人：" + approvalCosts.getCreatorName());
-            applyReason.setText("申请原因：" + approvalCosts.getReason());
-            applyTime.setText("申请时间：" + approvalCosts.getCreateDate());
-            billNo = approvalCosts.getExpCode();
-        }
         id = getIntent().getIntExtra("OID", 0);
+        approvalCosts = (ApprovalCosts) getIntent().getSerializableExtra("ApprovalCosts");
+
     }
 
 
@@ -88,27 +79,20 @@ public class ApprovalCostDetailActivity extends BaseActivity {
 
     private void bindView(AppBean<CostDetails> appBean) {
         int status = Integer.valueOf(appBean.getData().getStatus());
-        switch (status) {
-            case 0:
-                currStatus.setText("状态：" + "已审核");
-                break;
-            case 1:
-                currStatus.setText("状态：" + "待审核");
-                break;
-        }
-
+        currStatus.setText(appBean.getData().getFlowStatusName());
+        titleName.setText(appBean.getData().getTitle());
         projectName.setText("项目名：" + appBean.getData().getProjectName());
-//        custName.setText("客户名：" + checkforApply.getCustName());
+//        custName.setText("客户名：" + appBean.getData().getC);
         dutyName.setText("申请人：" + appBean.getData().getCreatorName());
         applyReason.setText("申请原因：" + appBean.getData().getReason());
         applyTime.setText("申请时间：" + appBean.getData().getCreateDate());
         billNo = appBean.getData().getExpCode();
 
-////        mDatas = new ArrayList<>();
-////        mDatas.addAll(checkforApply.getFlowSteps());
-////        mAdapter = new CheckAdapter(mDatas, this);
-//        mListView.setAdapter(mAdapter);
-//        mAdapter.notifyDataSetChanged();
+        List<CostDetails.FlowStepsBean> mDatas = new ArrayList<>();
+        mDatas.addAll(appBean.getData().getFlowSteps());
+        mAdapter = new CheckCostAdapter(mDatas, this);
+        mListView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Event({R.id.back_arrows, R.id.agree_btn, R.id.refuse_btn})

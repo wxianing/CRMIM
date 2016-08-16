@@ -10,38 +10,16 @@
 
     <include layout="@layout/titlebar_layout" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#DBDBDB"
-        android:gravity="center_vertical"
-        android:padding="@dimen/dp5">
-
-        <EditText
-            android:id="@+id/search_edittext"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/search_edittext"
-            android:drawableLeft="@mipmap/search_icon"
-            android:hint="请输入关键字搜索"
-            android:textSize="@dimen/sp14" />
-
-        <Button
-            android:id="@+id/search_btn"
-            android:layout_width="@dimen/dp60"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp5"
-            android:background="@drawable/search_edittext"
-            android:text="搜索"
-            android:textColor="@color/textcolor_gray" />
-
-    </LinearLayout>
+    <include layout="@layout/search_layout"/>
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/listview"
-        android:scrollbars="none"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:divider="@color/transparent"
+        android:dividerHeight="8dp"
+        android:scrollbars="none" />
 
 </LinearLayout>

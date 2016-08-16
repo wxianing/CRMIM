@@ -56,12 +56,8 @@ public class ModelApplyAdapter extends BasicAdapter<ModelApply> {
 
         vh.createTime.setText(mDatas.get(position).getCreateDate());
         vh.applyCount.setText("申请数量：" + Integer.toString(mDatas.get(position).getProductCount()));
-        int checkFlag = mDatas.get(position).getCheckStatus();
-        if (checkFlag == 0) {
-            vh.checkStatus.setText("完成");
-        } else {
-            vh.checkStatus.setText("待审核");
-        }
+
+        vh.checkStatus.setText(mDatas.get(position).getFlowStatusName());
         return convertView;
     }
 

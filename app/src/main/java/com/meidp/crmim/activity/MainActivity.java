@@ -14,6 +14,7 @@ import com.meidp.crmim.fragment.CompanyFragment;
 import com.meidp.crmim.fragment.HomeFragment;
 import com.meidp.crmim.fragment.MyFragment;
 import com.meidp.crmim.fragment.ContactsFragment;
+import com.meidp.crmim.http.HttpTask;
 import com.meidp.crmim.imkit.ConversationListStaticFragment;
 import com.meidp.crmim.utils.SPUtils;
 
@@ -45,6 +46,10 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         mFragments.add(new HomeFragment());
         mFragments.add(new ContactsFragment());
         mFragments.add(new MyFragment());
+        userCode = (String) SPUtils.get(this, "CODE", "");
+
+
+        HttpTask.detectionNewAppVersion(this, true, false);//检查版本更新
 
         ((RadioButton) mRadioGroup.getChildAt(0)).setChecked(true);
         manager = getSupportFragmentManager();
@@ -59,7 +64,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 //        BadgeView badgeView = new BadgeView(this);
 //        badgeView.setTargetView(message);
 //        badgeView.setBadgeCount(3);
-        userCode = (String) SPUtils.get(this, "CODE", "");
+
         Log.e("MainActicity", userCode);
     }
 

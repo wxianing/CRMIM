@@ -53,4 +53,16 @@ public class AppUtils {
         return null;
     }
 
+    public static int getAppVersionCode(Context context) {
+        int versionCode = 0;
+        try {
+            PackageInfo info = context.getPackageManager().getPackageInfo(
+                    context.getPackageName(), 0);
+            versionCode = info.versionCode;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return versionCode;
+    }
+
 }

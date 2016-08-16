@@ -160,11 +160,11 @@ public class CostReimbursementActivity extends BaseActivity {
         HashMap params = new HashMap();
 
         params.put("Title", titleStr);
-        params.put("CustID", custId);//客户Id
+//        params.put("CustID", custId);//客户Id
         params.put("ExpType", typeId);//公共分类类别
 
-        params.put("AriseDate", ariseDate);//申请日期
-        params.put("NeedDate", needDate);//使用日期
+//        params.put("AriseDate", ariseDate);//申请日期
+//        params.put("NeedDate", needDate);//使用日期
         params.put("Reason", reason);//原因
         params.put("details", entrityList);//原因
         params.put("ProjectID", projectId);//项目

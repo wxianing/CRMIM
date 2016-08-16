@@ -15,7 +15,6 @@
         android:layout_below="@+id/title_bar">
 
         <LinearLayout
-            android:layout_marginBottom="@dimen/dp20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/title_bar"
@@ -74,8 +73,10 @@
                 android:id="@+id/listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp30"
-                android:layout_marginTop="@dimen/dp30" />
+                android:layout_marginBottom="@dimen/dp20"
+                android:layout_marginLeft="@dimen/dp80"
+                android:layout_marginRight="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10" />
         </LinearLayout>
     </ScrollView>
 

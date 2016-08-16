@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@drawable/linear_shape_bg"
     android:orientation="vertical">
 
     <LinearLayout
@@ -31,18 +31,17 @@
             android:textSize="@dimen/sp13" />
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp10"
         android:layout_marginRight="@dimen/dp10">
 
-
         <TextView
-            android:id="@+id/administrative_office"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="科室：外科"
+            android:layout_alignParentRight="true"
+            android:text="职务:"
             android:textSize="@dimen/sp13" />
 
         <TextView
@@ -50,26 +49,44 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="职务:主任"
+            android:text="主任"
+            android:textColor="@color/textcolor_orange"
             android:textSize="@dimen/sp13" />
-    </RelativeLayout>
+    </LinearLayout>
+
 
     <TextView
+        android:layout_marginTop="@dimen/dp5"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_marginLeft="@dimen/dp10"
+        android:id="@+id/administrative_office"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="科室：外科"
+        android:textSize="@dimen/sp13" />
+
+
+    <TextView
+        android:layout_marginTop="@dimen/dp5"
         android:id="@+id/cust_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/dp10"
         android:paddingLeft="@dimen/dp10"
-        android:text="客户名称"
+        android:text="客户:"
         android:textSize="@dimen/sp13" />
 
-    <ImageView
+    <TextView
+
+        android:layout_marginTop="@dimen/dp5"
+        android:layout_marginBottom="@dimen/dp5"
+        android:id="@+id/create_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp10"
         android:layout_marginRight="@dimen/dp10"
-        android:src="@mipmap/arrow_right"
-        android:visibility="gone" />
+        android:text="创建时间:"
+        android:textColor="@color/tc_gray"
+        android:textSize="@dimen/sp12" />
+
 
 </LinearLayout>

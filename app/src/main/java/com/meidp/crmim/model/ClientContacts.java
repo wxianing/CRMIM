@@ -59,6 +59,15 @@ public class ClientContacts implements Serializable {
     private String CreatedDate;
     private String CustName;
     private int CustType;
+    private int CustID;
+
+    public int getCustID() {
+        return CustID;
+    }
+
+    public void setCustID(int custID) {
+        CustID = custID;
+    }
 
     public int getID() {
         return ID;

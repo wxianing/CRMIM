@@ -59,7 +59,6 @@ public class VisitingClientsActivity extends BaseActivity {
     @ViewInject(R.id.department)
     private EditText department;
 
-
     @Override
     public void onInit() {
         titleRight.setVisibility(View.VISIBLE);
@@ -76,7 +75,8 @@ public class VisitingClientsActivity extends BaseActivity {
         if (requestCode == 1 && data != null) {
 
         } else if (requestCode == 1003 && data != null) {
-            custId = data.getIntExtra("OID", -1);
+//            custId = data.getIntExtra("OID", 0);
+            custId = data.getIntExtra("CustId", 0);
             custName = data.getStringExtra("CustName");
             customerName.setText(custName);
         } else if (requestCode == 1001 && data != null) {

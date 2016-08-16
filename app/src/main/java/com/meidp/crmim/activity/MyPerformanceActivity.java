@@ -48,7 +48,7 @@ public class MyPerformanceActivity extends BaseActivity {
 
     @Override
     public void onInit() {
-        title.setText("我的业绩");
+        title.setText("业绩表现");
 //        titles = new String[]{"已收到金额", "未收到金额"};
 //        values = new double[]{5588, 29994};
 //        BudgetPieChart intent = new BudgetPieChart();

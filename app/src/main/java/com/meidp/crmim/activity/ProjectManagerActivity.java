@@ -2,12 +2,11 @@ package com.meidp.crmim.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.meidp.crmim.R;
 import com.meidp.crmim.adapter.OpenProjectAdapter;
@@ -34,6 +32,7 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 /**
  * 审批
  */
@@ -54,6 +53,10 @@ public class ProjectManagerActivity extends BaseActivity implements PullToRefres
     private LinearLayout layout;
     private int sType2 = 0;
     private String mark;
+    @ViewInject(R.id.time_icon)
+    private ImageView timeImg;
+    @ViewInject(R.id.type_icon)
+    private ImageView typeImg;
 
     @Override
     public void onInit() {
@@ -95,6 +98,8 @@ public class ProjectManagerActivity extends BaseActivity implements PullToRefres
 
     private int flag = 0;
 
+    int timeImgFlag = 0;
+
     @Event(value = {R.id.back_arrows, R.id.time_tv, R.id.type_tv, R.id.search_edittext, R.id.right_img})
     private void click(View v) {
         Intent intent = null;
@@ -104,19 +109,26 @@ public class ProjectManagerActivity extends BaseActivity implements PullToRefres
                 break;
             case R.id.time_tv://选择时间
                 if (!mDatePopWindow.isShowing()) {
-//                    mDatePopWindow.dismiss();
                     showDatePopupWindow();
-                    mTypePopWindow.dismiss();
+                    dismissTypePopupWindow();
                 } else {
-                    mDatePopWindow.dismiss();
+                    dismissTypePopupWindow();
                 }
+
+                if (timeImgFlag == 1) {
+                    timeImg.setImageResource(R.mipmap.arrow_up);
+                    timeImgFlag = 0;
+                } else {
+                    timeImg.setImageResource(R.mipmap.arrow_down);
+                }
+
                 break;
             case R.id.type_tv://选择类型
                 if (!mTypePopWindow.isShowing()) {
                     showTypePopupWindow();
-                    mDatePopWindow.dismiss();
+                    dismissDataPopupWindow();
                 } else {
-                    mTypePopWindow.dismiss();
+                    dismissTypePopupWindow();
                 }
                 break;
             case R.id.search_edittext:
@@ -133,13 +145,25 @@ public class ProjectManagerActivity extends BaseActivity implements PullToRefres
 
     private void showTypePopupWindow() {
         //显示PopupWindow
+        typeImg.setImageResource(R.mipmap.arrow_up);
         View rootview = LayoutInflater.from(this).inflate(R.layout.activity_work_plan, null);
 //        mTypePopWindow.showAtLocation(rootview, Gravity.TOP, 0, 240);
         mTypePopWindow.showAsDropDown(layout);
     }
 
+    private void dismissTypePopupWindow() {
+        mTypePopWindow.dismiss();
+        typeImg.setImageResource(R.mipmap.arrow_down);
+    }
+
+    private void dismissDataPopupWindow() {
+        mDatePopWindow.dismiss();
+        timeImg.setImageResource(R.mipmap.arrow_down);
+    }
+
     private void showDatePopupWindow() {
         //显示PopupWindow
+        timeImg.setImageResource(R.mipmap.arrow_up);
         View rootview = LayoutInflater.from(this).inflate(R.layout.activity_work_plan, null);
 //        mDatePopWindow.showAtLocation(rootview, Gravity.TOP, 0, 240);
         mDatePopWindow.showAsDropDown(layout);
@@ -224,38 +248,47 @@ public class ProjectManagerActivity extends BaseActivity implements PullToRefres
         switch (id) {
             case R.id.day_plan:
                 sType = 1;
+                timeImg.setImageResource(R.mipmap.arrow_down);
                 mDatePopWindow.dismiss();
                 break;
             case R.id.week_plan:
                 sType = 2;
+                timeImg.setImageResource(R.mipmap.arrow_down);
                 mDatePopWindow.dismiss();
                 break;
             case R.id.month_plan:
                 sType = 3;
+                timeImg.setImageResource(R.mipmap.arrow_down);
                 mDatePopWindow.dismiss();
                 break;
             case R.id.quarter_plan:
                 sType = 4;
+                timeImg.setImageResource(R.mipmap.arrow_down);
                 mDatePopWindow.dismiss();
                 break;
             case R.id.year_plan:
                 sType = 5;
+                timeImg.setImageResource(R.mipmap.arrow_down);
                 mDatePopWindow.dismiss();
                 break;
             case R.id.all_date_tv:
                 sType = 0;
+                timeImg.setImageResource(R.mipmap.arrow_down);
                 mDatePopWindow.dismiss();
                 break;
             case R.id.ordinary_tv:
                 sType2 = 1;
+                typeImg.setImageResource(R.mipmap.arrow_down);
                 mTypePopWindow.dismiss();
                 break;
             case R.id.importance_tv:
                 sType2 = 2;
+                typeImg.setImageResource(R.mipmap.arrow_down);
                 mTypePopWindow.dismiss();
                 break;
             case R.id.all_type_tv:
                 sType2 = 0;
+                typeImg.setImageResource(R.mipmap.arrow_down);
                 mTypePopWindow.dismiss();
                 break;
         }

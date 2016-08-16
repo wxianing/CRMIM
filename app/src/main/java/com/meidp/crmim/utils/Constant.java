@@ -167,4 +167,6 @@ public class Constant {
     public static final String SAVE_CUSTOMER_CONTACT_URL = BASE_URL + "crm/custlinkmansave";
     //申请备货
     public static final String STOCK_UP_URL = BASE_URL + "order/sellordersave";
+    //版本升级
+    public static final String VERSION_UPDATE = "http://meistapi.meidp.com/" + "systemset/getlatestversoin";
 }

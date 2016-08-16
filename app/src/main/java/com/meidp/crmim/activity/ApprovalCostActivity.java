@@ -87,11 +87,12 @@ public class ApprovalCostActivity extends BaseActivity implements AdapterView.On
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        ApprovalCosts apply = mDatas.get(position-1);
+        ApprovalCosts apply = mDatas.get(position - 1);
         Intent intent = new Intent(this, ApprovalCostDetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("ApprovalCosts", apply);
         intent.putExtras(bundle);
+        intent.putExtra("OID", apply.getID());
         startActivity(intent);
     }
 

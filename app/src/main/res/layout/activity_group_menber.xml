@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context="com.meidp.crmim.activity.GroupMenberActivity">
 
-    <include layout="@layout/titlebar" />
+    <include layout="@layout/titlebar_layout" />
 
     <ListView
         android:id="@+id/listview"

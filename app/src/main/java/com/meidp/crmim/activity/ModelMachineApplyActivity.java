@@ -56,6 +56,7 @@ public class ModelMachineApplyActivity extends BaseActivity {
     private String productName;
 
     private List<Product> prototypes;
+    private int linkmanId;
 
     @Override
     public void onInit() {
@@ -102,7 +103,6 @@ public class ModelMachineApplyActivity extends BaseActivity {
         String count = countEt.getText().toString().trim();
         String remark = remarkEt.getText().toString().trim();
 
-
         List<Product> produceLists = new ArrayList<>();
         for (int i = 0; i < prototypes.size(); i++) {
             Product produce = new Product();
@@ -125,8 +125,8 @@ public class ModelMachineApplyActivity extends BaseActivity {
         params.put("CustID", custId);
         params.put("CustTel", custTel);
         params.put("ProjectID", projectId);
-
         params.put("details", produceLists);
+        params.put("CustLinkManId", linkmanId);
 
         HttpRequestUtils.getmInstance().send(ModelMachineApplyActivity.this, Constant.PROTOTYPE_SAVE_URL, params, new HttpRequestCallBack() {
             @Override
@@ -149,10 +149,11 @@ public class ModelMachineApplyActivity extends BaseActivity {
         if (data != null) {
             switch (resultCode) {
                 case 1001:
-                    custId = data.getIntExtra("OID", -1);
+                    linkmanId = data.getIntExtra("OID", 0);
                     String custContact = data.getStringExtra("CustContact");
                     String custName = data.getStringExtra("CustName");
                     String custPhone = data.getStringExtra("CustPhone");
+                    custId = data.getIntExtra("CustId", 0);
                     customerEt.setText(custName);
                     custTelEt.setText(custPhone);
                     break;

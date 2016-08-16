@@ -58,7 +58,7 @@ public class MyPrototypeActivity extends BaseActivity implements PullToRefreshBa
 
     @Override
     public void onInitData() {
-//        loadData(pageIndex, keyword);
+        loadData(pageIndex, keyword);
     }
 
     private void loadData(int pageIndex, String keyword) {
@@ -84,8 +84,6 @@ public class MyPrototypeActivity extends BaseActivity implements PullToRefreshBa
     @Override
     protected void onResume() {
         super.onResume();
-        mDatas.clear();
-        loadData(pageIndex, keyword);
     }
 
     @Event(value = {R.id.back_arrows, R.id.search_btn, R.id.right_img})
@@ -96,7 +94,7 @@ public class MyPrototypeActivity extends BaseActivity implements PullToRefreshBa
                 break;
             case R.id.right_img:
                 Intent intent = new Intent(this, ModelMachineApplyActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,1019);
                 break;
             case R.id.search_btn:
                 keyword = search.getText().toString().trim();
@@ -125,5 +123,14 @@ public class MyPrototypeActivity extends BaseActivity implements PullToRefreshBa
         Intent intent = new Intent(this, PrototypeDetailsActivity.class);
         intent.putExtra("OID", mDatas.get(position - 1).getID());
         startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1019){
+            mDatas.clear();
+            loadData(pageIndex, keyword);
+        }
     }
 }

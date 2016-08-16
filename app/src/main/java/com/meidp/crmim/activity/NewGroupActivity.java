@@ -51,7 +51,7 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
     private ListView mListView;
     private int checkNum;
 
-    private List<String> userIds;
+    private ArrayList<String> userIds;
     private RongCreateGroupCallBack mCallBack;
     private String groupName;
     private String keyWord = "";
@@ -66,12 +66,19 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
     private int count;
 
     private List<Integer> positions = new ArrayList<>();
+    private String discussionId;
+    private String newGroupNames;
 
     @Override
     public void onInit() {
         titleRight.setVisibility(View.VISIBLE);
         titleRight.setText("确定");
-        title.setText("新建群组");
+        title.setText("创建群组");
+        discussionId = getIntent().getStringExtra("discussionId");
+        newGroupNames = getIntent().getStringExtra("GroupName");
+        if (NullUtils.isNull(discussionId)) {
+            title.setText("添加群成员");
+        }
         mDatas = new ArrayList<>();
         checkedLists = new ArrayList<>();
         mAdapter = new SelectFriendAdapter(mDatas, this);
@@ -172,24 +179,60 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
                 finish();
                 break;
             case R.id.title_right:
-                final View dialogView = LayoutInflater.from(this).inflate(R.layout.edittext_layout, null);
+                if (NullUtils.isNull(discussionId)) {
 
-                new AlertDialog.Builder(this).setView(
-                        dialogView).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        EditText editText = (EditText) dialogView.findViewById(R.id.edit_text);
-                        groupName = editText.getText().toString().trim();
-                        if (NullUtils.isNull(groupName)) {
-                            RongIM.getInstance().createDiscussionChat(NewGroupActivity.this, userIds, groupName, mCallBack);
+                    RongIM.getInstance().addMemberToDiscussion(discussionId, userIds, new RongIMClient.OperationCallback() {
+                        @Override
+                        public void onSuccess() {
+                            String userStr = "";
+                            for (int i = 0; i < userIds.size(); i++) {
+                                userStr += userIds.get(i) + ",";
+                            }
+                            userStr = userStr.substring(0, userStr.length() - 1);//删除最后的，号
+                            Log.e("userStr", userStr);
+                            HashMap params = new HashMap();
+                            params.put("discussionId", discussionId);
+                            params.put("discussionName", newGroupNames);
+                            params.put("userstrs", userStr);
+                            HttpRequestUtils.getmInstance().send(NewGroupActivity.this, Constant.CREATE_GROUP_URL, params, new HttpRequestCallBack<String>() {
+                                @Override
+                                public void onSuccess(String result) {
+                                    AppMsg appMsg = JSONObject.parseObject(result, new TypeReference<AppMsg>() {
+                                    });
+                                    if (appMsg != null && appMsg.getEnumcode() == 0) {
+                                        ToastUtils.shows(NewGroupActivity.this, "创建成功");
+                                        finish();
+                                    }
+                                }
+                            });
+                            ToastUtils.shows(NewGroupActivity.this, "添加成功");
                         }
-                    }
-                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
 
-                    }
-                }).show();
+                        @Override
+                        public void onError(RongIMClient.ErrorCode errorCode) {
+
+                        }
+                    });
+
+                } else {
+                    final View dialogView = LayoutInflater.from(this).inflate(R.layout.edittext_layout, null);
+                    new AlertDialog.Builder(this).setView(
+                            dialogView).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            EditText editText = (EditText) dialogView.findViewById(R.id.edit_text);
+                            groupName = editText.getText().toString().trim();
+                            if (NullUtils.isNull(groupName)) {
+                                RongIM.getInstance().createDiscussionChat(NewGroupActivity.this, userIds, groupName, mCallBack);
+                            }
+                        }
+                    }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).show();
+                }
 
                 break;
             case R.id.search_btn:

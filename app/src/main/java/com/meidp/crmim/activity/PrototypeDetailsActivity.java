@@ -19,6 +19,7 @@ import com.meidp.crmim.model.AppMsg;
 import com.meidp.crmim.model.PrototypeDetails;
 import com.meidp.crmim.model.PrototypePrepares;
 import com.meidp.crmim.utils.Constant;
+import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.ToastUtils;
 
 import org.xutils.view.annotation.ContentView;
@@ -76,18 +77,23 @@ public class PrototypeDetailsActivity extends BaseActivity {
         });
     }
 
-
-
     private void bindView(AppBean<PrototypeDetails> appBean) {
         titleName.setText("标题：" + appBean.getData().getTitle());
-        if (appBean.getData().getDetails().size() > 0) {
-            prototypeName.setText("样机名称：" + appBean.getData().getDetails().get(0).getProductName());
-            count.setText("数量：" + Integer.toString(appBean.getData().getDetails().get(0).getProductCount()));
+        String prototypeNameString = "";
+        String countString = "";
+        for (int i = 0; i < appBean.getData().getDetails().size(); i++) {
+            prototypeNameString += appBean.getData().getDetails().get(i).getProductName() + "、";
+            countString += appBean.getData().getDetails().get(i).getProductCount() + "、";
         }
+        if (NullUtils.isNull(prototypeNameString)) {
+            prototypeNameString = prototypeNameString.substring(0, prototypeNameString.length() - 1);
+        }
+        countString = countString.substring(0, countString.length() - 1);
+        prototypeName.setText("样机名称：" + prototypeNameString);
+        count.setText("数量：" + countString);
         applyTime.setText("申请时间：" + appBean.getData().getCreateDate());
         applyPerson.setText("申请人：" + appBean.getData().getApplyer());
         phoneNum.setText("联系电话：" + appBean.getData().getCustTel());
-
     }
 
     @Event({R.id.back_arrows, R.id.button})
@@ -120,7 +126,9 @@ public class PrototypeDetailsActivity extends BaseActivity {
                 break;
         }
     }
+
     private List<PrototypePrepares> prototypePrepares = new ArrayList<>();
+
     private void sendMsg(String count) {
         for (int i = 0; i < appBean.getData().getDetails().size(); i++) {
             PrototypePrepares prepares = new PrototypePrepares();

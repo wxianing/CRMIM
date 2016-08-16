@@ -11,19 +11,21 @@ import java.io.Serializable;
 public class Secretary implements Serializable {
 
     /**
-     * Id : 1
-     * Title :
-     * BillId : 0
-     * BillTypeFlag : 1
+     * CreateTimeStr : 2016-08-16 12:50
+     * Id : 205
+     * Title : 项目<10MP灰阶一体双屏>已发货
+     * BillId : 116
+     * BillTypeFlag : 5
      * BillTypeCode : 4
      * StatusName :
-     * Msg : 中医院一键式医疗系统
-     * CreateTime : 2016-08-09 14:41:57
-     * UserId : 1
+     * Msg :
+     * CreateTime : 2016-08-16 12:50:59
+     * UserId : 3
      * Status : 1
-     * StatusTime : 2016-08-09 14:41:57
+     * StatusTime : 2016-08-16 12:50:59
      */
 
+    private String CreateTimeStr;
     private int Id;
     private String Title;
     private int BillId;
@@ -35,6 +37,14 @@ public class Secretary implements Serializable {
     private int UserId;
     private int Status;
     private String StatusTime;
+
+    public String getCreateTimeStr() {
+        return CreateTimeStr;
+    }
+
+    public void setCreateTimeStr(String CreateTimeStr) {
+        this.CreateTimeStr = CreateTimeStr;
+    }
 
     public int getId() {
         return Id;

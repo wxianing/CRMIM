@@ -43,6 +43,7 @@ public class MyCostAdapter extends BasicAdapter<CostLists> {
         vh.projectName.setText("关联项目：" + data.getProjectName());
         vh.applyPerson.setText("申请人：" + data.getCreatorName());
         vh.totalMoney.setText("￥" + data.getTotalAmount());
+        vh.financialDepartment.setText(data.getFlowStatusName());
 
         return convertView;
     }
@@ -62,6 +63,8 @@ public class MyCostAdapter extends BasicAdapter<CostLists> {
         private TextView applyPerson;
         @ViewInject(R.id.total_money)
         private TextView totalMoney;
+        @ViewInject(R.id.financial_department)
+        private TextView financialDepartment;
 
         public ViewHolder(View view) {
             x.view().inject(this, view);

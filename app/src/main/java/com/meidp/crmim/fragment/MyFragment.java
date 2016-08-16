@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 import com.meidp.crmim.MyApplication;
 import com.meidp.crmim.R;
 import com.meidp.crmim.activity.AboutActivity;
+import com.meidp.crmim.activity.ConventionApplyForActivity;
 import com.meidp.crmim.activity.FeedbackActivity;
 import com.meidp.crmim.activity.LoginActivity;
 import com.meidp.crmim.activity.MainActivity;
@@ -27,19 +27,17 @@ import com.meidp.crmim.activity.NewGroupActivity;
 import com.meidp.crmim.activity.PersonCentorActivity;
 import com.meidp.crmim.activity.SigninMainActivity;
 import com.meidp.crmim.activity.SubmitActivity;
-import com.meidp.crmim.activity.VisitingClientsActivity;
 import com.meidp.crmim.utils.ImageUtils;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.utils.ToastUtils;
+import com.meidp.crmim.view.CustomDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
-
-import io.rong.imkit.RongIM;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -118,9 +116,9 @@ public class MyFragment extends BaseFragment {
                 startActivity(intent);
                 break;
             case R.id.reset_password:
-//                ToastUtils.shows(getActivity(), "正在客户服务中心发送修改密码请求");
-//                intent.setClass(getActivity(), ConventionApplyForActivity.class);
-//                startActivity(intent);
+                ToastUtils.shows(getActivity(), "正在客户服务中心发送修改密码请求");
+                intent.setClass(getActivity(), ConventionApplyForActivity.class);
+                startActivity(intent);
                 final View dialogView = LayoutInflater.from(getActivity()).inflate(R.layout.text_layout, null);
                 new AlertDialog.Builder(getActivity()).setView(
                         dialogView).setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -129,6 +127,8 @@ public class MyFragment extends BaseFragment {
 
                     }
                 }).show();
+//                showAlertDialog();
+
                 break;
             case R.id.header_img:
                 intent.setClass(getActivity(), PersonCentorActivity.class);
@@ -168,6 +168,29 @@ public class MyFragment extends BaseFragment {
                 break;
         }
     }
+
+    public void showAlertDialog() {
+
+        CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
+        builder.setMessage("请联系系统管理员修改密码");
+        builder.setTitle("提示");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("取消",
+                new android.content.DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        builder.create().show();
+
+    }
+
 
     @Override
     public void onResume() {

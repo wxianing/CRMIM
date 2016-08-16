@@ -1,39 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dp10"
+    android:paddingRight="@dimen/dp10">
+
+
+    <TextView
+        android:id="@+id/step"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp5"
+        android:text="步骤1"
+        android:textSize="@dimen/sp13" />
 
     <TextView
         android:id="@+id/regulatory_agency"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:padding="@dimen/dp10"
-        android:text="审批部门" />
+        android:text="审批部门"
+        android:textSize="@dimen/sp13" />
 
     <TextView
-
         android:id="@+id/regulatory_idea"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:paddingLeft="@dimen/dp10"
-        android:text="审批部门" />
+        android:text="审批部门"
+        android:textSize="@dimen/sp13" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:paddingBottom="@dimen/dp5"
         android:paddingTop="@dimen/dp5">
 
         <TextView
             android:id="@+id/curr_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp10"
-            android:textColor="@color/textcolor_orange" />
-
+            android:textColor="@color/textcolor_orange"
+            android:textSize="@dimen/sp13" />
 
         <TextView
             android:id="@+id/regulatory_time"
@@ -42,6 +52,7 @@
             android:layout_alignParentRight="true"
             android:background="@color/white"
             android:gravity="end"
-            android:text="2016-07-07" />
+            android:text="2016-07-07"
+            android:textSize="@dimen/sp13" />
     </RelativeLayout>
 </LinearLayout>

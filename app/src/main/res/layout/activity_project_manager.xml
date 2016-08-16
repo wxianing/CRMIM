@@ -14,29 +14,52 @@
         android:layout_height="40dp"
         android:background="@color/white">
 
-        <TextView
+        <LinearLayout
             android:id="@+id/time_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="时间" />
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="时间" />
+
+            <ImageView
+                android:id="@+id/time_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/arrow_down" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/dp5"
-            android:layout_marginTop="@dimen/dp5"
-            android:background="@color/textcolor_gray" />
+            android:layout_marginBottom="@dimen/dp8"
+            android:layout_marginTop="@dimen/dp8"
+            android:background="#DBDBDB" />
 
-        <TextView
+        <LinearLayout
             android:id="@+id/type_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="类型" />
+            android:gravity="center">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="类型" />
+
+            <ImageView
+                android:id="@+id/type_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/arrow_down" />
+        </LinearLayout>
     </LinearLayout>
 
     <include
@@ -48,6 +71,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/dp10"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:divider="@color/transparent"
+        android:dividerHeight="8dp"
         android:scrollbars="none" />
 
 </LinearLayout>

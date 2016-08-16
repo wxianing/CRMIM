@@ -44,6 +44,26 @@ public class PrototypeDetails implements Serializable {
     private int Creator;
     private String CreateDate;
     private int ProjectID;
+    private String CreatorName;
+
+    private String FlowStatusName;
+
+    public String getFlowStatusName() {
+        return FlowStatusName;
+    }
+
+    public void setFlowStatusName(String flowStatusName) {
+        FlowStatusName = flowStatusName;
+    }
+
+    public String getCreatorName() {
+        return CreatorName;
+    }
+
+    public void setCreatorName(String creatorName) {
+        CreatorName = creatorName;
+    }
+
     /**
      * ID : 231
      * ProductID : 124

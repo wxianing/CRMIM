@@ -8,10 +8,63 @@
 
     <include layout="@layout/titlebar" />
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="正在开发..." />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp20"
+        android:background="@color/white"
+        android:padding="@dimen/dp10">
+
+        <TextView
+            android:id="@+id/project_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 申报项目数：" />
+
+        <TextView
+            android:id="@+id/complete_project"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text=" 已完成项目数：" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp10"
+        android:paddingLeft="@dimen/dp10">
+
+        <TextView
+            android:id="@+id/total_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 项目总费用：" />
+
+        <TextView
+            android:id="@+id/projectGathering"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp5"
+            android:text=" 项目已收款：" />
+
+        <TextView
+            android:id="@+id/projectReimburse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp5"
+            android:text=" 项目已报销：" />
+
+        <TextView
+            android:id="@+id/start_end_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp5"
+            android:text=" 项目起止时间：" />
+    </LinearLayout>
 
 </LinearLayout>
