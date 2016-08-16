@@ -23,6 +23,7 @@ import com.meidp.crmim.activity.ModelMachineApplyActivity;
 import com.meidp.crmim.activity.NearContactsActivity;
 import com.meidp.crmim.activity.NewGroupActivity;
 import com.meidp.crmim.activity.SearchMsgActivity;
+import com.meidp.crmim.activity.SigninMainActivity;
 import com.meidp.crmim.activity.SubmitActivity;
 import com.meidp.crmim.activity.VisitingClientsActivity;
 import com.meidp.crmim.adapter.ExpandableAdapter;
@@ -82,6 +83,7 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
 
     @Override
     public void onInit() {
+        rightImg.setImageResource(R.mipmap.more_icon);
         backImg.setVisibility(View.INVISIBLE);
         title.setText("通讯录");
         initPopupWindow();
@@ -150,7 +152,7 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
                 }
                 break;
             case R.id.visit_client://客户拜访
-                intent = new Intent(getActivity(), VisitingClientsActivity.class);
+                intent = new Intent(getActivity(), SigninMainActivity.class);
                 startActivity(intent);
                 mPopupWindow.dismiss();
                 break;

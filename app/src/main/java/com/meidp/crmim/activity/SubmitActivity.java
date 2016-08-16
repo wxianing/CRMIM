@@ -57,10 +57,12 @@ public class SubmitActivity extends BaseActivity {
     @ViewInject(R.id.related_personnel)
     private EditText relatedPersonnel;
     private String empolyeeId;
+    @ViewInject(R.id.direction)
+    private TextView directionEt;
 
     private int projectDirectionId;
     private double successRate;
-    private double rate;
+    private double rate=10;
 
     @Override
     public void onInit() {
@@ -69,7 +71,7 @@ public class SubmitActivity extends BaseActivity {
         title.setText("项目申报");
     }
 
-    @Event(value = {R.id.edittext_success_rate, R.id.back_arrows, R.id.title_right, R.id.edittext_customer_name, R.id.project_area, R.id.related_personnel})
+    @Event(value = {R.id.edittext_success_rate, R.id.back_arrows, R.id.title_right, R.id.edittext_customer_name, R.id.project_area, R.id.related_personnel,R.id.direction})
     private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -128,6 +130,7 @@ public class SubmitActivity extends BaseActivity {
                         }
                     }
                 });
+
                 break;
             case R.id.edittext_success_rate:
                 View outerView = LayoutInflater.from(this).inflate(R.layout.wheel_view, null);
@@ -157,6 +160,10 @@ public class SubmitActivity extends BaseActivity {
 
 //                intent = new Intent(this, RateSelectActivity.class);
 //                startActivityForResult(intent, 1015);
+                break;
+            case R.id.direction:
+                intent = new Intent(this, ProjectDirectionActivity.class);
+                startActivityForResult(intent, 1016);
                 break;
         }
     }
@@ -189,6 +196,11 @@ public class SubmitActivity extends BaseActivity {
             projectSuccessRateEt.setText(rate);
             successRate = Double.valueOf(rate) / 100;
             Log.e("successRate", ">>>>>>>>" + successRate);
+        }
+        if (resultCode==1016){
+            projectDirectionId = data.getIntExtra("ProjectDirectionId",0);
+            String directionName = data.getStringExtra("ProjectDirectionName");
+            directionEt.setText(directionName);
         }
     }
 }

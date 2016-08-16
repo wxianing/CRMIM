@@ -19,6 +19,7 @@ import com.meidp.crmim.activity.ModelMachineApplyActivity;
 import com.meidp.crmim.activity.NewGroupActivity;
 import com.meidp.crmim.activity.SearchMsgActivity;
 import com.meidp.crmim.activity.SecretaryActivity;
+import com.meidp.crmim.activity.SigninMainActivity;
 import com.meidp.crmim.activity.SubmitActivity;
 import com.meidp.crmim.activity.VisitingClientsActivity;
 import com.meidp.crmim.fragment.BaseFragment;
@@ -78,6 +79,7 @@ public class ConversationListStaticFragment extends BaseFragment {
 
     @Override
     public void onInit() {
+        rightImg.setImageResource(R.mipmap.more_icon);
         backImg.setVisibility(View.INVISIBLE);
         title.setText("消息");
         currTime.setText(DataUtils.getTime2());
@@ -133,7 +135,7 @@ public class ConversationListStaticFragment extends BaseFragment {
                 startActivity(intent);
                 break;
             case R.id.visit_client://客户拜访
-                intent = new Intent(getActivity(), VisitingClientsActivity.class);
+                intent = new Intent(getActivity(), SigninMainActivity.class);
                 startActivity(intent);
                 mPopupWindow.dismiss();
                 break;
@@ -162,11 +164,10 @@ public class ConversationListStaticFragment extends BaseFragment {
     }
 
     private void initPopupWindow() {
-        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.popup_list_layout, null);
-        x.view().inject(this, contentView);
-        mPopupWindow = new PopupWindow(contentView,
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        mPopupWindow.setContentView(contentView);
+        View popupView = LayoutInflater.from(getActivity()).inflate(R.layout.popup_list_layout, null);
+        x.view().inject(this, popupView);
+        mPopupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        mPopupWindow.setContentView(popupView);
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
     }
 

@@ -37,7 +37,7 @@ public class VisitRecordAdapter extends BasicAdapter<VisitRecords> {
             vh = (ViewHolder) convertView.getTag();
         }
 
-        vh.customerName.setText(data.getCustName());
+        vh.customerName.setText(data.getTitle());
         vh.address_tv.setText(data.getLocationAddress());
         vh.visitTime.setText(data.getModifiedDate());
 

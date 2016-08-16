@@ -42,7 +42,7 @@ public class ApprovalCosts implements Serializable {
     private int CustID;
     private String CreateDate;
     private String Title;
-    private Object ExpCode;
+    private String ExpCode;
     private String NeedDate;
     private Object ModifiedDate;
     private String Status;
@@ -120,11 +120,11 @@ public class ApprovalCosts implements Serializable {
         this.Title = Title;
     }
 
-    public Object getExpCode() {
+    public String  getExpCode() {
         return ExpCode;
     }
 
-    public void setExpCode(Object ExpCode) {
+    public void setExpCode(String ExpCode) {
         this.ExpCode = ExpCode;
     }
 

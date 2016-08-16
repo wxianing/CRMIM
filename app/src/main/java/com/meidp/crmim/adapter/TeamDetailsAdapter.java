@@ -40,14 +40,14 @@ public class TeamDetailsAdapter extends BasicAdapter<TeamDetails.UsersBean> {
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-        vh.userName.setText(mDatas.get(position).getEmployeeName());
-        ImageLoader.getInstance().displayImage(mDatas.get(position).getPhotoURL(), vh.img, MyApplication.optionsRounds);
-        vh.phoneNum.setText(mDatas.get(position).getMobile());
-        if (NullUtils.isNull(mDatas.get(position).getQuarterName())) {
-            vh.department.setText(mDatas.get(position).getDeptName() + "(" + mDatas.get(position).getQuarterName() + ")");
-        } else {
-            vh.department.setText(mDatas.get(position).getDeptName());
-        }
+        vh.userName.setText(mDatas.get(position).getPersonName());
+//        ImageLoader.getInstance().displayImage(mDatas.get(position).getPhotoURL(), vh.img, MyApplication.optionsRounds);
+//        vh.phoneNum.setText(mDatas.get(position).getMobile());
+//        if (NullUtils.isNull(mDatas.get(position).getQuarterName())) {
+//            vh.department.setText(mDatas.get(position).getDeptName() + "(" + mDatas.get(position).getQuarterName() + ")");
+//        } else {
+//            vh.department.setText(mDatas.get(position).getDeptName());
+//        }
         return convertView;
     }
 

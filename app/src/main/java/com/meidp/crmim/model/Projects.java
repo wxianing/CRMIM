@@ -61,6 +61,15 @@ public class Projects implements Serializable {
     private String CompanyName;
     private Object DepartmentName;
     private Object ZhiWu;
+    /**
+     * IsAppoint : null
+     * Status : 2
+     * StatusName : 备货中
+     */
+
+    private Object IsAppoint;
+    private int Status;
+    private String StatusName;
 
     public int getID() {
         return ID;
@@ -252,5 +261,29 @@ public class Projects implements Serializable {
 
     public void setZhiWu(Object ZhiWu) {
         this.ZhiWu = ZhiWu;
+    }
+
+    public Object getIsAppoint() {
+        return IsAppoint;
+    }
+
+    public void setIsAppoint(Object IsAppoint) {
+        this.IsAppoint = IsAppoint;
+    }
+
+    public int getStatus() {
+        return Status;
+    }
+
+    public void setStatus(int Status) {
+        this.Status = Status;
+    }
+
+    public String getStatusName() {
+        return StatusName;
+    }
+
+    public void setStatusName(String StatusName) {
+        this.StatusName = StatusName;
     }
 }

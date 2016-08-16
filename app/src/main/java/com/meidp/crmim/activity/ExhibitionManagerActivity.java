@@ -109,7 +109,7 @@ public class ExhibitionManagerActivity extends BaseActivity implements AdapterVi
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this, ExhibitionDetailsActivity.class);
-        intent.putExtra("OID", mDatas.get(position).getID());
+        intent.putExtra("OID", mDatas.get(position-1).getID());
         startActivity(intent);
     }
 

@@ -34,7 +34,7 @@ public class CostDetails implements Serializable {
      */
 
     private int ID;
-    private Object ExpCode;
+    private String ExpCode;
     private String Title;
     private int Applyor;
     private String AriseDate;
@@ -67,11 +67,11 @@ public class CostDetails implements Serializable {
         this.ID = ID;
     }
 
-    public Object getExpCode() {
+    public String getExpCode() {
         return ExpCode;
     }
 
-    public void setExpCode(Object ExpCode) {
+    public void setExpCode(String ExpCode) {
         this.ExpCode = ExpCode;
     }
 

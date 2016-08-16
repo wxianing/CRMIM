@@ -32,12 +32,12 @@
 
 
         <TextView
-            android:textSize="@dimen/sp13"
             android:id="@+id/duty_person"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="负责人：XXX" />
+            android:text="负责人：XXX"
+            android:textSize="@dimen/sp13" />
 
     </RelativeLayout>
 
@@ -59,16 +59,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/duty_name"
+            android:layout_toLeftOf="@+id/status_name"
             android:text="状态：" />
 
         <TextView
-            android:id="@+id/duty_name"
+            android:id="@+id/status_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="待审核"
-            android:textColor="@color/textcolor_orange" />
+            android:textColor="@color/textcolor_orange"
+            android:textSize="@dimen/sp13" />
     </RelativeLayout>
 
     <RelativeLayout

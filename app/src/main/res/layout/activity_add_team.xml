@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     tools:context="com.meidp.crmim.activity.AddTeamActivity">
 
@@ -15,11 +17,22 @@
         android:background="@color/white"
         android:numColumns="6" />
 
+    <EditText
+        android:id="@+id/otherPerson"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:background="@drawable/edit_white_bg"
+        android:textSize="@dimen/sp13" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp10"
-        android:text="请选择添加成员" />
+        android:text="公司内部成员" />
+
+    <include layout="@layout/horizontal_full_line" />
 
     <ListView
         android:id="@+id/listview"

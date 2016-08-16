@@ -126,7 +126,7 @@ public class ProjecDetailsActivity extends BaseActivity {
         });
     }
 
-    @Event(value = {R.id.back_arrows, R.id.button, R.id.follow_btn, R.id.follow_layout, R.id.title_right})
+    @Event(value = {R.id.back_arrows, R.id.button, R.id.follow_btn, R.id.follow_layout, R.id.title_right,R.id.button})
     private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {

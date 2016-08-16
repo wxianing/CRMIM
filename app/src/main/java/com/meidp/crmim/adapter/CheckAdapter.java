@@ -5,8 +5,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.baidu.platform.comapi.map.N;
 import com.meidp.crmim.R;
 import com.meidp.crmim.model.CheckforApply;
+import com.meidp.crmim.utils.NullUtils;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -36,9 +38,23 @@ public class CheckAdapter extends BasicAdapter<CheckforApply.FlowStepsBean> {
             vh = (ViewHolder) convertView.getTag();
         }
         vh.regulatoryAgency.setText("审批部门：" + data.getStepName());
-        vh.regulatoryIdea.setText("审批意见：" + data.getNote());
+        if (NullUtils.isNull(data.getNote())) {
+            vh.regulatoryIdea.setText("审批意见：" + data.getNote());
+        } else {
+            vh.regulatoryIdea.setText("审批意见：");
+        }
         vh.regulatoryTime.setText(data.getModifiedDate());
-        vh.currStatus.setText("状态：" + data.getCheckStatusName());
+        String status = data.getCheckStatus();
+        if (NullUtils.isNull(status)){
+        if (status.equals("0")) {
+            vh.currStatus.setText("状态：" + "通过");
+        } else if (status.equals("2")) {
+            vh.currStatus.setText("状态：" + "未通过");
+        } else {
+            vh.currStatus.setText("状态：");
+        }}else {
+            vh.currStatus.setText("状态：");
+        }
         return convertView;
     }
 

@@ -41,7 +41,7 @@ public class OpenProjectAdapter extends BasicAdapter<Projects> {
         vh.projectNum.setText("项目编号：" + data.getProjectNo());
         String timeStr = data.getCreateDate().substring(0, 10);
         vh.ceateTime.setText("登记时间：" + timeStr);
-
+        vh.statusName.setText(data.getStatusName());
         double success = data.getSuccessRate() * 100;
         if (success < 30) {
             vh.successRate.setTextColor(Color.RED);
@@ -71,6 +71,8 @@ public class OpenProjectAdapter extends BasicAdapter<Projects> {
         private TextView successRate;
         @ViewInject(R.id.duty_person)
         private TextView dutyPerson;
+        @ViewInject(R.id.status_name)
+        private TextView statusName;
 
         public ViewHolder(View view) {
             x.view().inject(this, view);

@@ -76,6 +76,6 @@ public class TeamDetailsActivity extends BaseActivity implements AdapterView.OnI
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        RongIM.getInstance().startPrivateChat(this, Integer.toString(mDatas.get(position).getUserID()), mDatas.get(position).getEmployeeName());
+//        RongIM.getInstance().startPrivateChat(this, Integer.toString(mDatas.get(position).getUserID()), mDatas.get(position).getEmployeeName());
     }
 }

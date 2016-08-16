@@ -1,6 +1,9 @@
 package com.meidp.crmim.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -15,17 +18,19 @@ import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppDatas;
 import com.meidp.crmim.model.VisitRecords;
 import com.meidp.crmim.utils.Constant;
+import com.nostra13.universalimageloader.utils.L;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 @ContentView(R.layout.activity_visit_record)
-public class VisitRecordActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2<ListView> {
+public class VisitRecordActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2<ListView>, AdapterView.OnItemClickListener {
     @ViewInject(R.id.title_tv)
     private TextView title;
     @ViewInject(R.id.listview)
@@ -43,6 +48,7 @@ public class VisitRecordActivity extends BaseActivity implements PullToRefreshBa
         mAdapter = new VisitRecordAdapter(mDatas, this);
         mListView.setAdapter(mAdapter);
         mListView.setOnRefreshListener(this);
+        mListView.setOnItemClickListener(this);
     }
 
     @Override
@@ -53,6 +59,7 @@ public class VisitRecordActivity extends BaseActivity implements PullToRefreshBa
     private void loadData(int pageIndex) {
         HashMap params = new HashMap();
         params.put("PageIndex", pageIndex);
+        params.put("PageSize", 4);
         HttpRequestUtils.getmInstance().send(VisitRecordActivity.this, Constant.VISIT_RECORD_URL, params, new HttpRequestCallBack<String>() {
             @Override
             public void onSuccess(String result) {
@@ -87,5 +94,15 @@ public class VisitRecordActivity extends BaseActivity implements PullToRefreshBa
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
         pageIndex++;
         loadData(pageIndex);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        VisitRecords records = mDatas.get(position);
+        Intent intent = new Intent(this, VisitRecodeDetailsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("VisitRecords", records);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

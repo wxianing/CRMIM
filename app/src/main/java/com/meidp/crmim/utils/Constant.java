@@ -151,6 +151,7 @@ public class Constant {
     public static final String GET_LIFE_NAV = BASE_URL + "office/employee/getemployeenav";
     //保存客户联系人
     public static final String CUSTOMER_CONTACTS_URL = BASE_URL + "crm/getminelinkmanpagelist";
+
     public static final String CUSTOMER_CONTACTS_DETAILS = BASE_URL + "crm/getcustinfo";
     //展会详情
     public static final String CONVERSATION_DETAILS_URL = BASE_URL + "order/getsellexhibition";
@@ -160,4 +161,10 @@ public class Constant {
     public static final String GET_COST_CHECK = BASE_URL + "office/office/getfeeapplypagelistforcheck";
     //业绩统计报表
     public static final String PERFORMANCE_URL = BASE_URL + "common/mpublic/getachievementtotal";
+    //项目方向
+    public static final String PROJECT_DIRECTION_URL = BASE_URL + "office/office/getcodepublictypelist";
+    //保存客户联系人
+    public static final String SAVE_CUSTOMER_CONTACT_URL = BASE_URL + "crm/custlinkmansave";
+    //申请备货
+    public static final String STOCK_UP_URL = BASE_URL + "order/sellordersave";
 }

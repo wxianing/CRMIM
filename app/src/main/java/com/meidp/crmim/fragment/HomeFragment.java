@@ -31,6 +31,7 @@ import com.meidp.crmim.activity.NewGroupActivity;
 import com.meidp.crmim.activity.NewsActivity;
 import com.meidp.crmim.activity.OpenSeaPoolActivity;
 import com.meidp.crmim.activity.ProjectManagerActivity;
+import com.meidp.crmim.activity.SigninMainActivity;
 import com.meidp.crmim.activity.SubmitActivity;
 import com.meidp.crmim.activity.VisitingClientsActivity;
 import com.meidp.crmim.activity.WorkPlanActivity;
@@ -60,6 +61,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @Override
     public void onInit() {
+        rightImg.setImageResource(R.mipmap.more_icon);
         backImg.setVisibility(View.INVISIBLE);
         title.setText("工作");
 //        mGridView.setFocusable(false);
@@ -135,7 +137,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 }
                 break;
             case R.id.visit_client://客户拜访
-                intent = new Intent(getActivity(), VisitingClientsActivity.class);
+                intent = new Intent(getActivity(), SigninMainActivity.class);
                 startActivity(intent);
                 mPopupWindow.dismiss();
                 break;

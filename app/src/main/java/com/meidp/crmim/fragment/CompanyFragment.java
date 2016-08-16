@@ -1,6 +1,7 @@
 package com.meidp.crmim.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import com.meidp.crmim.activity.CompanytructureActivity;
 import com.meidp.crmim.activity.ModelMachineApplyActivity;
 import com.meidp.crmim.activity.NewGroupActivity;
 import com.meidp.crmim.activity.NewsActivity;
+import com.meidp.crmim.activity.SigninMainActivity;
 import com.meidp.crmim.activity.SubmitActivity;
 import com.meidp.crmim.activity.VisitingClientsActivity;
 import com.meidp.crmim.adapter.ImagePagerAdapter;
@@ -77,6 +79,7 @@ public class CompanyFragment extends BaseFragment implements AdapterView.OnItemC
 
     @Override
     public void onInit() {
+        rightImg.setImageResource(R.mipmap.more_icon);
         backImg.setVisibility(View.INVISIBLE);
         title.setText(R.string.title_name);
         imageUrls = new ArrayList<>();
@@ -96,6 +99,7 @@ public class CompanyFragment extends BaseFragment implements AdapterView.OnItemC
         mDatas = new ArrayList<>();
         mListView.setOnItemClickListener(this);
 //        mListView.setOnRefreshListener(this);
+
     }
 
     @Event({R.id.visit_client, R.id.new_group, R.id.submit_project, R.id.apply_model, R.id.right_img})
@@ -103,7 +107,7 @@ public class CompanyFragment extends BaseFragment implements AdapterView.OnItemC
         Intent intent = null;
         switch (v.getId()) {
             case R.id.visit_client://客户拜访
-                intent = new Intent(getActivity(), VisitingClientsActivity.class);
+                intent = new Intent(getActivity(), SigninMainActivity.class);
                 startActivity(intent);
                 mPopupWindow.dismiss();
                 break;
@@ -231,4 +235,5 @@ public class CompanyFragment extends BaseFragment implements AdapterView.OnItemC
         mPopupWindow.setContentView(contentView);
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
     }
+
 }

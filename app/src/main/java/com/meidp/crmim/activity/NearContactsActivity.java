@@ -22,7 +22,7 @@ public class NearContactsActivity extends BaseActivity {
 
     @Override
     public void onInit() {
-        title.setText("最近联系人 ");
+        title.setText("常用联系人 ");
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
         ConversationListStaticFragment fragment = ConversationListStaticFragment.newInstance("PRIVATE");

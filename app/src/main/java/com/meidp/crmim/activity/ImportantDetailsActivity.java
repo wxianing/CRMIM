@@ -13,6 +13,7 @@ import com.meidp.crmim.model.ImportantDetails;
 import com.meidp.crmim.utils.Constant;
 
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.HashMap;
@@ -62,6 +63,7 @@ public class ImportantDetailsActivity extends BaseActivity {
 
     }
 
+    @Event({R.id.back_arrows})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:

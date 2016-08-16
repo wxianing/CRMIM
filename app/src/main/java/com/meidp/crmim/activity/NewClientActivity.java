@@ -56,9 +56,7 @@ public class NewClientActivity extends BaseActivity {
     @ViewInject(R.id.positions)
     private EditText positionEt;
 
-
     @Override
-
     public void onInit() {
         titleRight.setVisibility(View.VISIBLE);
         titleRight.setText("保存");
@@ -94,7 +92,7 @@ public class NewClientActivity extends BaseActivity {
                 params.put("CustNo", custNo);
                 params.put("Position", position);
 
-                HttpRequestUtils.getmInstance().send(NewClientActivity.this, Constant.CUSTOMER_CONTACTS_URL, params, new HttpRequestCallBack<String>() {
+                HttpRequestUtils.getmInstance().send(NewClientActivity.this, Constant.SAVE_CUSTOMER_CONTACT_URL, params, new HttpRequestCallBack<String>() {
                     @Override
                     public void onSuccess(String result) {
                         Log.e("New Customer", result);
@@ -140,7 +138,7 @@ public class NewClientActivity extends BaseActivity {
         }
         if (resultCode == 1012) {
             custNo = getIntent().getStringExtra("CustNo");
-            String custName = getIntent().getStringExtra("CustName");
+            String custName = data.getStringExtra("CustName");
             Log.e("cus", "cust" + custName + ">>>>>>>>>>" + custNo);
             custName = (String) SPUtils.get(this, "CustName", "");
             custNo = (String) SPUtils.get(this, "CustNo", "");

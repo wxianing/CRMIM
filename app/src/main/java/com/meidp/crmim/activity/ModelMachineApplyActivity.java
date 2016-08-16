@@ -101,24 +101,31 @@ public class ModelMachineApplyActivity extends BaseActivity {
         String custTel = custTelEt.getText().toString().trim();
         String count = countEt.getText().toString().trim();
         String remark = remarkEt.getText().toString().trim();
+
+
         List<Product> produceLists = new ArrayList<>();
         for (int i = 0; i < prototypes.size(); i++) {
             Product produce = new Product();
-            produce.setProductID(productID);
-            produce.setProductName(productName);
+            produce.setProductID(prototypes.get(i).getID());
+            Log.e("getProductID", "getProductID>>>>>>>>>>" + prototypes.get(i).getID());
+            produce.setProductName(prototypes.get(i).getProductName());
             produce.setRemark(remark);
             if (NullUtils.isNull(count)) {
                 produce.setProductCount(Double.valueOf(count));
             } else {
+                produce.setProductCount(1);
                 ToastUtils.shows(this, "请填写数量");
             }
             produceLists.add(produce);
         }
+
         HashMap params = new HashMap();
+
         params.put("Title", titleStr);
         params.put("CustID", custId);
         params.put("CustTel", custTel);
         params.put("ProjectID", projectId);
+
         params.put("details", produceLists);
 
         HttpRequestUtils.getmInstance().send(ModelMachineApplyActivity.this, Constant.PROTOTYPE_SAVE_URL, params, new HttpRequestCallBack() {

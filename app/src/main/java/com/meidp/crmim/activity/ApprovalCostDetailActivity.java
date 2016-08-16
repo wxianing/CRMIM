@@ -9,9 +9,11 @@ import com.meidp.crmim.R;
 import com.meidp.crmim.adapter.CheckAdapter;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
+import com.meidp.crmim.model.AppBean;
 import com.meidp.crmim.model.AppMsg;
 import com.meidp.crmim.model.ApprovalCosts;
 import com.meidp.crmim.model.CheckforApply;
+import com.meidp.crmim.model.CostDetails;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.ToastUtils;
 import com.meidp.crmim.view.ListViewForScrollView;
@@ -49,13 +51,43 @@ public class ApprovalCostDetailActivity extends BaseActivity {
     private TextView applyReason;
     @ViewInject(R.id.apply_time)
     private TextView applyTime;
+    private int id;
 
     @Override
     public void onInit() {
         title.setText("详情");
         approvalCosts = (ApprovalCosts) getIntent().getSerializableExtra("ApprovalCosts");
-        titleName.setText("标题：" + approvalCosts.getTitle());
-        int status = Integer.valueOf(approvalCosts.getStatus());
+        if (approvalCosts != null) {
+            titleName.setText("标题：" + approvalCosts.getTitle());
+            projectName.setText("项目名：" + approvalCosts.getProjectName());
+            custName.setText("客户名：" + approvalCosts.getProjectName());
+            dutyName.setText("申请人：" + approvalCosts.getCreatorName());
+            applyReason.setText("申请原因：" + approvalCosts.getReason());
+            applyTime.setText("申请时间：" + approvalCosts.getCreateDate());
+            billNo = approvalCosts.getExpCode();
+        }
+        id = getIntent().getIntExtra("OID", 0);
+    }
+
+
+    @Override
+    public void onInitData() {
+        HashMap hashMap = new HashMap();
+        hashMap.put("Id", id);
+        HttpRequestUtils.getmInstance().send(ApprovalCostDetailActivity.this, Constant.FEELAPPLY_URL, hashMap, new HttpRequestCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                AppBean<CostDetails> appBean = JSONObject.parseObject(result, new TypeReference<AppBean<CostDetails>>() {
+                });
+                if (appBean != null && appBean.getEnumcode() == 0) {
+                    bindView(appBean);
+                }
+            }
+        });
+    }
+
+    private void bindView(AppBean<CostDetails> appBean) {
+        int status = Integer.valueOf(appBean.getData().getStatus());
         switch (status) {
             case 0:
                 currStatus.setText("状态：" + "已审核");
@@ -65,12 +97,13 @@ public class ApprovalCostDetailActivity extends BaseActivity {
                 break;
         }
 
-        projectName.setText("项目名：" + approvalCosts.getProjectName());
+        projectName.setText("项目名：" + appBean.getData().getProjectName());
 //        custName.setText("客户名：" + checkforApply.getCustName());
-        dutyName.setText("申请人：" + approvalCosts.getCreatorName());
-        applyReason.setText("申请原因：" + approvalCosts.getReason());
-        applyTime.setText("申请时间：" + approvalCosts.getCreateDate());
-//        billNo = approvalCosts.getApplyNo();
+        dutyName.setText("申请人：" + appBean.getData().getCreatorName());
+        applyReason.setText("申请原因：" + appBean.getData().getReason());
+        applyTime.setText("申请时间：" + appBean.getData().getCreateDate());
+        billNo = appBean.getData().getExpCode();
+
 ////        mDatas = new ArrayList<>();
 ////        mDatas.addAll(checkforApply.getFlowSteps());
 ////        mAdapter = new CheckAdapter(mDatas, this);
@@ -96,8 +129,8 @@ public class ApprovalCostDetailActivity extends BaseActivity {
     private void sendMsg(int state, String note) {
         HashMap params = new HashMap();
         params.put("BillNo", billNo);
-        params.put("BillTypeFlag", 5);
-        params.put("BillTypeCode", 11);
+        params.put("BillTypeFlag", 1);
+        params.put("BillTypeCode", 4);
         params.put("State", state);
         params.put("Note", note);
         HttpRequestUtils.getmInstance().send(ApprovalCostDetailActivity.this, Constant.CHECKFOR_SAVE_URL, params, new HttpRequestCallBack() {

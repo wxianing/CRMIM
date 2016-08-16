@@ -73,12 +73,13 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
             case R.id.right_img:
                 Intent intent = new Intent();
                 intent.setClass(this, NewClientActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1017);
                 break;
             case R.id.search_btn:
                 keyword = searchEdittext.getText().toString().trim();
                 mDatas.clear();
                 loadData(pageIndex, keyword);
+                keyword = "";
                 break;
         }
     }
@@ -109,7 +110,7 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        ClientContacts contacts = mDatas.get(position);
+        ClientContacts contacts = mDatas.get(position-1);
         if (NullUtils.isNull(flag) && "Apply".equals(flag)) {//直接返回客户
             Intent intent = new Intent();
             intent.putExtra("CustName", mDatas.get(position - 1).getCustName());
@@ -117,6 +118,7 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
             intent.putExtra("CustPhone", mDatas.get(position - 1).getWorkTel());
             intent.putExtra("CustContactId", mDatas.get(position - 1).getID());
             intent.putExtra("OID", mDatas.get(position - 1).getID());
+            intent.putExtra("Department", mDatas.get(position - 1).getDepartment());
             setResult(1001, intent);
             finish();
         } else {
@@ -156,6 +158,9 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
             intent.putExtra("OID", "");
             setResult(1003, intent);
             finish();
+        } else if (requestCode == 1017) {
+            mDatas.clear();
+            loadData(pageIndex, keyword);
         }
     }
 

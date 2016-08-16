@@ -10,13 +10,12 @@
         layout="@layout/titlebar" />
 
     <ScrollView
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/title_bar">
 
         <LinearLayout
-            android:layout_marginBottom="@dimen/dp30"
+            android:layout_marginBottom="@dimen/dp20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/title_bar"
@@ -46,7 +45,7 @@
                 android:id="@+id/project_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp30"
+                android:layout_marginTop="@dimen/dp20"
                 android:background="@color/white"
                 android:padding="@dimen/dp10"
                 android:text="项目名：" />
@@ -85,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/follow_layout"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:background="@color/white"
         android:paddingBottom="@dimen/dp5"
         android:paddingTop="5dp">

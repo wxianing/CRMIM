@@ -7,47 +7,102 @@
     android:padding="@dimen/dp5">
 
     <LinearLayout
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/linear_shape_bg"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/visit_client"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dp10"
-            android:text="客户拜访" />
+        <LinearLayout
+            android:paddingLeft="@dimen/dp10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <include layout="@layout/horizontal_line" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/list_visiting_icon" />
 
-        <TextView
-            android:id="@+id/new_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dp10"
-            android:text="创建群组" />
+            <TextView
+                android:id="@+id/visit_client"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dp10"
+                android:paddingLeft="@dimen/dp5"
+                android:paddingRight="@dimen/dp10"
+                android:paddingTop="@dimen/dp10"
+                android:text="客户拜访" />
+        </LinearLayout>
 
-        <include layout="@layout/horizontal_line" />
 
-        <TextView
-            android:id="@+id/submit_project"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dp10"
-            android:text="申报项目" />
+        <LinearLayout
+            android:paddingLeft="@dimen/dp10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <include layout="@layout/horizontal_line" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/list_group_icon" />
 
-        <TextView
-            android:id="@+id/apply_model"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dp10"
-            android:text="申报样机" />
+            <TextView
+                android:id="@+id/new_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dp10"
+                android:paddingLeft="@dimen/dp5"
+                android:paddingRight="@dimen/dp10"
+                android:paddingTop="@dimen/dp10"
+                android:text="创建群组" />
+        </LinearLayout>
 
-        <include layout="@layout/horizontal_line" />
+
+        <LinearLayout
+            android:paddingLeft="@dimen/dp10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/list_project_icon" />
+
+            <TextView
+                android:id="@+id/submit_project"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dp10"
+                android:paddingLeft="@dimen/dp5"
+                android:paddingRight="@dimen/dp10"
+                android:paddingTop="@dimen/dp10"
+                android:text="申报项目" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:paddingLeft="@dimen/dp10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/list_prototype_icon" />
+
+            <TextView
+                android:id="@+id/apply_model"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dp10"
+                android:paddingLeft="@dimen/dp5"
+                android:paddingRight="@dimen/dp10"
+                android:paddingTop="@dimen/dp10"
+                android:text="申报样机" />
+        </LinearLayout>
+
 
     </LinearLayout>
 </LinearLayout>

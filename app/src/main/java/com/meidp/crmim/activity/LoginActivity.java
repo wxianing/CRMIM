@@ -128,7 +128,7 @@ public class LoginActivity extends BaseActivity {
             final AppBean<User> appBean = JSONObject.parseObject(resutl, new TypeReference<AppBean<User>>() {
             });
             if (appBean != null && appBean.getEnumcode() == 0) {
-
+                SPUtils.save(LoginActivity.this, "CODE", appBean.getData().getUserCode());
                 saveData(appBean);
 
                 headPhotoS = appBean.getData().getPhotoURL();
@@ -143,14 +143,12 @@ public class LoginActivity extends BaseActivity {
                     public UserInfo getUserInfo(String userId) {
                         Log.e("userInfo", "userInfo正在执行");
                         for (int i = 0; i < mDatas.size(); i++) {
-                            Log.e("mDatas", ">>>>>>>>>>>>" + mDatas.get(i).getUserId());
                             RongIM.getInstance().refreshUserInfoCache(mDatas.get(i));//刷新用户数据
                         }
                         RongIM.getInstance().refreshUserInfoCache(users);//刷新用户数据
                         return findUserById(userId);//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
                     }
                 }, true);
-
                 finish();
             } else {
                 ToastUtils.shows(LoginActivity.this, appBean.getMsg());
@@ -171,9 +169,6 @@ public class LoginActivity extends BaseActivity {
                     String name = appBean.getData().getEmployeeName();
                     users = new UserInfo(userId, name, Uri.parse(avatar));
                     mDatas.add(users);
-                    for (int i = 0; i < mDatas.size(); i++) {
-                        Log.e("mDatas>>>name", mDatas.get(i).getName());
-                    }
                     RongIM.getInstance().refreshUserInfoCache(users);//刷新用户数据
                 }
             }
@@ -182,7 +177,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void saveData(AppBean<User> appBean) {
-        SPUtils.save(this, "CODE", appBean.getData().getUserCode());
+
         HttpRequestUtils.setUserCode(appBean.getData().getUserCode());
         Log.e("CODE", ">>>>>>>" + (String) SPUtils.get(this, "CODE", ""));
         SPUtils.save(this, "USERNAME", userName);

@@ -58,6 +58,8 @@ public class AddTeamActivity extends BaseActivity implements AdapterView.OnItemC
     private List<String> empolyees;
 
     private int checkNum;
+    @ViewInject(R.id.otherPerson)
+    private EditText otherPersonEt;
 
     private SelectFriendAdapter.ViewHolder holder;
 
@@ -163,6 +165,7 @@ public class AddTeamActivity extends BaseActivity implements AdapterView.OnItemC
     }
 
     private void sendMsg(String teamName) {
+        String otherPersons = otherPersonEt.getText().toString().trim();
         String empolyeeStr = "";
         for (int i = 0; i < empolyees.size(); i++) {
             empolyeeStr += empolyees.get(i) + ",";
@@ -172,6 +175,7 @@ public class AddTeamActivity extends BaseActivity implements AdapterView.OnItemC
         HashMap params = new HashMap();
         params.put("Employees", empolyeeStr);
         params.put("TeamName", teamName);
+        params.put("OtherPerson", otherPersons);
         HttpRequestUtils.getmInstance().send(AddTeamActivity.this, Constant.SAVE_TEAM_LIST, params, new HttpRequestCallBack() {
             @Override
             public void onSuccess(String result) {

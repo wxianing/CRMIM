@@ -267,7 +267,6 @@
                 android:background="@drawable/white_bg"
                 android:gravity="top"
                 android:hint="点击输入"
-                android:inputType="number"
                 android:textColorHint="@color/textcolor_gray"
                 android:textSize="@dimen/sp14" />
 

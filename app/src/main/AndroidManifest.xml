@@ -298,7 +298,10 @@
         <activity android:name=".activity.ApprovalCostActivity" />
         <activity android:name=".activity.SelectEmpolyeeActivity" />
         <activity android:name=".activity.ApprovalCostDetailActivity" />
-        <activity android:name=".activity.RateSelectActivity"></activity>
+        <activity android:name=".activity.RateSelectActivity" />
+        <activity android:name=".activity.ProjectDirectionActivity" />
+        <activity android:name=".activity.VisitRecodeDetailsActivity" />
+        <activity android:name=".activity.CreditUnscrambleActivity"></activity>
     </application>
 
 </manifest>

@@ -25,6 +25,7 @@ import com.meidp.crmim.activity.ModelMachineApplyActivity;
 import com.meidp.crmim.activity.MyTeamActivity;
 import com.meidp.crmim.activity.NewGroupActivity;
 import com.meidp.crmim.activity.PersonCentorActivity;
+import com.meidp.crmim.activity.SigninMainActivity;
 import com.meidp.crmim.activity.SubmitActivity;
 import com.meidp.crmim.activity.VisitingClientsActivity;
 import com.meidp.crmim.utils.ImageUtils;
@@ -71,6 +72,7 @@ public class MyFragment extends BaseFragment {
     @Override
     public void onInit() {
         title.setText("个人中心");
+        rightImg.setImageResource(R.mipmap.more_icon);
         backImg.setVisibility(View.INVISIBLE);
         initPopupWindow();
     }
@@ -96,7 +98,7 @@ public class MyFragment extends BaseFragment {
                             MainActivity.mainActivity = null;
                         }
                         SPUtils.remove(getActivity(), "CODE");
-                        SPUtils.clear(getActivity());
+//                        SPUtils.clear(getActivity());
                         startActivity(intent);
                     }
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -116,9 +118,17 @@ public class MyFragment extends BaseFragment {
                 startActivity(intent);
                 break;
             case R.id.reset_password:
-                ToastUtils.shows(getActivity(), "正在客户服务中心发送修改密码请求");
+//                ToastUtils.shows(getActivity(), "正在客户服务中心发送修改密码请求");
 //                intent.setClass(getActivity(), ConventionApplyForActivity.class);
 //                startActivity(intent);
+                final View dialogView = LayoutInflater.from(getActivity()).inflate(R.layout.text_layout, null);
+                new AlertDialog.Builder(getActivity()).setView(
+                        dialogView).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
                 break;
             case R.id.header_img:
                 intent.setClass(getActivity(), PersonCentorActivity.class);
@@ -130,7 +140,7 @@ public class MyFragment extends BaseFragment {
                 break;
 
             case R.id.visit_client://客户拜访
-                intent = new Intent(getActivity(), VisitingClientsActivity.class);
+                intent = new Intent(getActivity(), SigninMainActivity.class);
                 startActivity(intent);
                 mPopupWindow.dismiss();
                 break;

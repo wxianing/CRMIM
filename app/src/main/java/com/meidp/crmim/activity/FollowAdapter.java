@@ -70,7 +70,7 @@ public class FollowAdapter extends BaseAdapter {
         overTime = overTime.substring(0, 11);
         vh.startDate.setText(startTime + "~" + overTime);
         vh.remark.setText("备注：" + mDatas.get(position).getProjectMemo());
-        vh.rate.setText("成功率:" + mDatas.get(position).getRate());
+        vh.rate.setText("成功率:" + mDatas.get(position).getRate() + "%");
         vh.schedule.setText("进度：" + "0.3");
         return convertView;
     }

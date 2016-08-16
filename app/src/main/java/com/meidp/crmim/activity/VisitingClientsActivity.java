@@ -56,6 +56,9 @@ public class VisitingClientsActivity extends BaseActivity {
     private String custContact;
     @ViewInject(R.id.hospital_name)
     private EditText hospitalName;
+    @ViewInject(R.id.department)
+    private EditText department;
+
 
     @Override
     public void onInit() {
@@ -81,11 +84,13 @@ public class VisitingClientsActivity extends BaseActivity {
             custName = data.getStringExtra("CustName");
             contactPhone = data.getStringExtra("ContactPhone");
             custContact = data.getStringExtra("CustContact");//客户名称
+            String departmentString = data.getStringExtra("Department");
             String custPhone = data.getStringExtra("CustPhone");
 //            Log.e("contact", contactPhone);
             phoneNumEt.setText(custPhone);
             customerName.setText(custContact);
             hospitalName.setText(custName);
+            department.setText(departmentString);
         } else if (resultCode == 1004) {
             projectId = data.getIntExtra("ProjectId", -1);
             String projectName = data.getStringExtra("ProjectName");
@@ -112,35 +117,33 @@ public class VisitingClientsActivity extends BaseActivity {
                 startActivityForResult(intent, 1001);
                 break;
             case R.id.title_right:
-                if (NullUtils.isNull(address)) {
-                    String content = contentTv.getText().toString().trim();
-                    ToastUtils.shows(this, "正在提交");
-                    HashMap params = new HashMap();
-                    params.put("Contents", content);//拜访内容
-                    params.put("CustID", custId);//客户Id
-                    params.put("Title", "拜访" + custName);
-                    params.put("Lat", latitude);//维度
-                    params.put("Lon", longitude);//经度
-                    params.put("LocationAddress", address);//地址
-                    HttpRequestUtils.getmInstance().send(VisitingClientsActivity.this, Constant.SAVE_VISIT_CUSTOMER, params, new HttpRequestCallBack<String>() {
-                        @Override
-                        public void onSuccess(String result) {
-                            Log.e("visit", result);
-                            AppMsg appMsg = JSONObject.parseObject(result, new TypeReference<AppMsg>() {
-                            });
-                            if (appMsg != null && appMsg.getEnumcode() == 0) {
-                                Intent intent = new Intent(VisitingClientsActivity.this, VisitRecordActivity.class);
-                                ToastUtils.shows(VisitingClientsActivity.this, "拜访成功");
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                ToastUtils.shows(VisitingClientsActivity.this, "拜访失败");
-                            }
+                String content = contentTv.getText().toString().trim();
+                String departmentString = department.getText().toString().trim();
+                ToastUtils.shows(this, "正在提交");
+                HashMap params = new HashMap();
+                params.put("Contents", content);//拜访内容
+                params.put("CustID", custId);//客户Id
+                params.put("Title", "拜访" + custName);
+                params.put("Lat", latitude);//维度
+                params.put("Lon", longitude);//经度
+                params.put("LocationAddress", address);//地址
+                params.put("Department", departmentString);
+                HttpRequestUtils.getmInstance().send(VisitingClientsActivity.this, Constant.SAVE_VISIT_CUSTOMER, params, new HttpRequestCallBack<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Log.e("visit", result);
+                        AppMsg appMsg = JSONObject.parseObject(result, new TypeReference<AppMsg>() {
+                        });
+                        if (appMsg != null && appMsg.getEnumcode() == 0) {
+                            Intent intent = new Intent(VisitingClientsActivity.this, VisitRecordActivity.class);
+                            ToastUtils.shows(VisitingClientsActivity.this, "拜访成功");
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            ToastUtils.shows(VisitingClientsActivity.this, "拜访失败");
                         }
-                    });
-                } else {
-                    ToastUtils.shows(this, "定位失败");
-                }
+                    }
+                });
                 break;
             case R.id.add_project:
                 intent = new Intent(this, ProjectManagerActivity.class);

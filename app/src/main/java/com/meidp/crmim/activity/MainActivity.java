@@ -3,6 +3,7 @@ package com.meidp.crmim.activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -31,14 +32,15 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     private FragmentManager manager;
     private long exitTime = 0;
     public static MainActivity mainActivity;
-//    @ViewInject(R.id.btn_msg)
+    //    @ViewInject(R.id.btn_msg)
 //    private Button message;
+    public static String userCode;
 
     @Override
     public void onInit() {
         mainActivity = this;
         mFragments = new ArrayList<>();
-        mFragments.add( ConversationListStaticFragment.newInstance("PUBLIC"));
+        mFragments.add(ConversationListStaticFragment.newInstance("PUBLIC"));
         mFragments.add(new CompanyFragment());
         mFragments.add(new HomeFragment());
         mFragments.add(new ContactsFragment());
@@ -57,7 +59,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 //        BadgeView badgeView = new BadgeView(this);
 //        badgeView.setTargetView(message);
 //        badgeView.setBadgeCount(3);
-
+        userCode = (String) SPUtils.get(this, "CODE", "");
+        Log.e("MainActicity", userCode);
     }
 
     @Override

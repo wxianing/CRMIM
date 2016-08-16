@@ -99,17 +99,22 @@ public class SecretaryActivity extends BaseActivity implements AdapterView.OnIte
         int billTypeFlag = mDatas.get(position - 1).getBillTypeFlag();
         int billTypeCode = mDatas.get(position - 1).getBillTypeCode();
         if (billTypeFlag == 1 && billTypeCode == 4) {//费用
-            Intent intent = new Intent(SecretaryActivity.this, CostDetailsActivity.class);
+            Intent intent = new Intent(SecretaryActivity.this, ApprovalCostDetailActivity.class);
             intent.putExtra("OID", mDatas.get(position - 1).getBillId());
             startActivity(intent);
         }
         if (billTypeFlag == 4 && billTypeCode == 4) {//客户拜访
-            Intent intent = new Intent(SecretaryActivity.this, CostDetailsActivity.class);
+            Intent intent = new Intent(SecretaryActivity.this, VisitRecordActivity.class);
+            intent.putExtra("OID", mDatas.get(position - 1).getBillId());
+            startActivity(intent);
+        }
+        if (billTypeFlag == 4 && billTypeCode == 3) {//客户拜访
+            Intent intent = new Intent(SecretaryActivity.this, VisitRecordActivity.class);
             intent.putExtra("OID", mDatas.get(position - 1).getBillId());
             startActivity(intent);
         }
         if (billTypeFlag == 4 && billTypeCode == 7) {//客户联系人
-            Intent intent = new Intent(SecretaryActivity.this, CostDetailsActivity.class);
+            Intent intent = new Intent(SecretaryActivity.this, CustomerListActivity.class);
             intent.putExtra("OID", mDatas.get(position - 1).getBillId());
             startActivity(intent);
         }

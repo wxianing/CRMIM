@@ -13,6 +13,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
 import com.baidu.mapapi.SDKInitializer;
 import com.meidp.crmim.http.OkHttpStack;
+import com.meidp.crmim.utils.SPUtils;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -44,6 +45,7 @@ public class MyApplication extends Application {
     private List<Activity> activitys = new LinkedList<Activity>();
     public static final String TAG = "VolleyPatterns";
     private RequestQueue mRequestQueue;
+    public static String userCode;
 
     @Override
     public void onCreate() {
@@ -65,6 +67,7 @@ public class MyApplication extends Application {
             RongIM.init(this);
 
         }
+        userCode = (String) SPUtils.get(this, "CODE", "");
     }
 
     public static void initImageLoader(Context context) {

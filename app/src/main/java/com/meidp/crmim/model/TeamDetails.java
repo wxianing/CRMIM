@@ -149,185 +149,69 @@ public class TeamDetails implements Serializable {
     }
 
     public static class UsersBean implements Serializable{
-        private String CompanyCD;
-        private int UserID;
-        private String LoginName;
-        private String password;
-        private int EmployeeID;
-        private String UsedStatus;
-        private String LockFlag;
-        private String OpenDate;
-        private String CloseDate;
-        private String IsRoot;
-        private Object LastLoginTime;
-        private String EmployeeName;
-        private Object NameEn;
-        private String PhotoURL;
-        private int DeptID;
-        private String QuarterName;
-        private String Mobile;
-        private Object Telephone;
-        private String DeptName;
-        private String rongcloudToken;
 
-        public String getCompanyCD() {
-            return CompanyCD;
+        /**
+         * Id : 6
+         * TeamId : 14
+         * EmployeeId : 1884
+         * PersonName : president
+         * CreateDate : 2016-08-15 19:00:06
+         * CreateUserID : 12
+         */
+
+        private int Id;
+        private int TeamId;
+        private int EmployeeId;
+        private String PersonName;
+        private String CreateDate;
+        private int CreateUserID;
+
+        public int getId() {
+            return Id;
         }
 
-        public void setCompanyCD(String CompanyCD) {
-            this.CompanyCD = CompanyCD;
+        public void setId(int Id) {
+            this.Id = Id;
         }
 
-        public int getUserID() {
-            return UserID;
+        public int getTeamId() {
+            return TeamId;
         }
 
-        public void setUserID(int UserID) {
-            this.UserID = UserID;
+        public void setTeamId(int TeamId) {
+            this.TeamId = TeamId;
         }
 
-        public String getLoginName() {
-            return LoginName;
+        public int getEmployeeId() {
+            return EmployeeId;
         }
 
-        public void setLoginName(String LoginName) {
-            this.LoginName = LoginName;
+        public void setEmployeeId(int EmployeeId) {
+            this.EmployeeId = EmployeeId;
         }
 
-        public String getPassword() {
-            return password;
+        public String getPersonName() {
+            return PersonName;
         }
 
-        public void setPassword(String password) {
-            this.password = password;
+        public void setPersonName(String PersonName) {
+            this.PersonName = PersonName;
         }
 
-        public int getEmployeeID() {
-            return EmployeeID;
+        public String getCreateDate() {
+            return CreateDate;
         }
 
-        public void setEmployeeID(int EmployeeID) {
-            this.EmployeeID = EmployeeID;
+        public void setCreateDate(String CreateDate) {
+            this.CreateDate = CreateDate;
         }
 
-        public String getUsedStatus() {
-            return UsedStatus;
+        public int getCreateUserID() {
+            return CreateUserID;
         }
 
-        public void setUsedStatus(String UsedStatus) {
-            this.UsedStatus = UsedStatus;
-        }
-
-        public String getLockFlag() {
-            return LockFlag;
-        }
-
-        public void setLockFlag(String LockFlag) {
-            this.LockFlag = LockFlag;
-        }
-
-        public String getOpenDate() {
-            return OpenDate;
-        }
-
-        public void setOpenDate(String OpenDate) {
-            this.OpenDate = OpenDate;
-        }
-
-        public String getCloseDate() {
-            return CloseDate;
-        }
-
-        public void setCloseDate(String CloseDate) {
-            this.CloseDate = CloseDate;
-        }
-
-        public String getIsRoot() {
-            return IsRoot;
-        }
-
-        public void setIsRoot(String IsRoot) {
-            this.IsRoot = IsRoot;
-        }
-
-        public Object getLastLoginTime() {
-            return LastLoginTime;
-        }
-
-        public void setLastLoginTime(Object LastLoginTime) {
-            this.LastLoginTime = LastLoginTime;
-        }
-
-        public String getEmployeeName() {
-            return EmployeeName;
-        }
-
-        public void setEmployeeName(String EmployeeName) {
-            this.EmployeeName = EmployeeName;
-        }
-
-        public Object getNameEn() {
-            return NameEn;
-        }
-
-        public void setNameEn(Object NameEn) {
-            this.NameEn = NameEn;
-        }
-
-        public String getPhotoURL() {
-            return PhotoURL;
-        }
-
-        public void setPhotoURL(String PhotoURL) {
-            this.PhotoURL = PhotoURL;
-        }
-
-        public int getDeptID() {
-            return DeptID;
-        }
-
-        public void setDeptID(int DeptID) {
-            this.DeptID = DeptID;
-        }
-
-        public String getQuarterName() {
-            return QuarterName;
-        }
-
-        public void setQuarterName(String QuarterName) {
-            this.QuarterName = QuarterName;
-        }
-
-        public String getMobile() {
-            return Mobile;
-        }
-
-        public void setMobile(String Mobile) {
-            this.Mobile = Mobile;
-        }
-
-        public Object getTelephone() {
-            return Telephone;
-        }
-
-        public void setTelephone(Object Telephone) {
-            this.Telephone = Telephone;
-        }
-
-        public String getDeptName() {
-            return DeptName;
-        }
-
-        public void setDeptName(String DeptName) {
-            this.DeptName = DeptName;
-        }
-
-        public String getRongcloudToken() {
-            return rongcloudToken;
-        }
-
-        public void setRongcloudToken(String rongcloudToken) {
-            this.rongcloudToken = rongcloudToken;
+        public void setCreateUserID(int CreateUserID) {
+            this.CreateUserID = CreateUserID;
         }
     }
 }

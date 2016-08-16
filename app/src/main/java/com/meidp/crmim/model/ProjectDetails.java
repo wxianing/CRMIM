@@ -84,6 +84,13 @@ public class ProjectDetails implements Serializable {
      */
 
     private List<ConstructionDetailsBean> ConstructionDetails;
+    /**
+     * Status : 2
+     * StatusName : 备货中
+     */
+
+    private int Status;
+    private String StatusName;
 
     public int getID() {
         return ID;
@@ -291,6 +298,22 @@ public class ProjectDetails implements Serializable {
 
     public void setConstructionDetails(List<ConstructionDetailsBean> ConstructionDetails) {
         this.ConstructionDetails = ConstructionDetails;
+    }
+
+    public int getStatus() {
+        return Status;
+    }
+
+    public void setStatus(int Status) {
+        this.Status = Status;
+    }
+
+    public String getStatusName() {
+        return StatusName;
+    }
+
+    public void setStatusName(String StatusName) {
+        this.StatusName = StatusName;
     }
 
     public static class ConstructionDetailsBean implements Serializable{

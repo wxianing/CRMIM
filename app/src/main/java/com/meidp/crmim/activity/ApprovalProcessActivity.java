@@ -105,7 +105,7 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
         Bundle bundle = new Bundle();
         bundle.putSerializable("CheckforApply", apply);
         intent.putExtras(bundle);
-        startActivity(intent);
+        startActivityForResult(intent, 1018);
     }
 
     @Override
@@ -119,5 +119,14 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
         pageIndex++;
         loadData(pageIndex, keyword);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1018) {
+            mDatas.clear();
+            loadData(pageIndex, keyword);
+        }
     }
 }

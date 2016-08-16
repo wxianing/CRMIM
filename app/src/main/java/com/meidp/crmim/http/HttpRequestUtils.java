@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.meidp.crmim.MyApplication;
+import com.meidp.crmim.activity.MainActivity;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.CustomDialogUtils;
 import com.meidp.crmim.utils.NullUtils;
@@ -59,17 +60,10 @@ public class HttpRequestUtils {
      */
     public void post(final Context mContext, String url, HashMap<String, Object> map, final HttpRequestCallBack mCallBack) {
 //        CustomDialogUtils.showProgressDialog(mContext);
-        String code = "";
-        if (!NullUtils.isNull(getUserCode())) {
-            code = (String) SPUtils.get(mContext, "CODE", "");
-        } else {
-            code = userCode;
-            Log.e("userCode", userCode);
-        }
-        Log.e("code", code);
+
         RequestParams params = new RequestParams(url);
         params.addHeader("_appId", Constant.APPID);
-        params.addHeader("_code", code);
+        params.addHeader("_code", MainActivity.userCode);
         params.addBodyParameter("content-type", "application/json");
         if (null != map) {
             for (Map.Entry<String, Object> entry : map.entrySet()) {
@@ -256,6 +250,7 @@ public class HttpRequestUtils {
     public void send(Context mContext, String url, HashMap params, final HttpRequestCallBack mCallBack) {
         CustomDialogUtils.showProgressDialog(mContext);
         Log.e("addParams:", JSON.toJSONString(params));
+
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, JSON.toJSONString(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -272,7 +267,7 @@ public class HttpRequestUtils {
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("_appId", Constant.APPID);
-                headers.put("_code", Constant.CODE);
+                headers.put("_code", MainActivity.userCode);
                 return headers;
             }
         };

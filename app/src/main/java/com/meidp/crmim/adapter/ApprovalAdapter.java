@@ -39,6 +39,8 @@ public class ApprovalAdapter extends BasicAdapter<CheckforApply> {
         vh.cusName.setText(data.getCustName());
         vh.dutyPerson.setText("负责人：" + data.getCreatorName());
         vh.currTime.setText(data.getCreateDate());
+        int checkStatu = data.getCheckStatus();
+
         vh.currStatus.setText(data.getCheckStatusName());
         return convertView;
     }

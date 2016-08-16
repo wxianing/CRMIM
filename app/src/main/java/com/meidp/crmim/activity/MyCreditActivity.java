@@ -1,5 +1,6 @@
 package com.meidp.crmim.activity;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -45,11 +46,15 @@ public class MyCreditActivity extends BaseActivity {
         }, 1000);
     }
 
-    @Event(value = {R.id.back_arrows})
+    @Event(value = {R.id.back_arrows, R.id.unscramble})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
+                break;
+            case R.id.unscramble:
+                Intent intent = new Intent(this, CreditUnscrambleActivity.class);
+                startActivity(intent);
                 break;
         }
     }

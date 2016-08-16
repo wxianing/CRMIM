@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.meidp.crmim.R;
 import com.meidp.crmim.model.ModelApply;
+import com.meidp.crmim.utils.NullUtils;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -36,13 +37,31 @@ public class ModelApplyAdapter extends BasicAdapter<ModelApply> {
             vh = (ViewHolder) convertView.getTag();
         }
         vh.titleName.setText(mDatas.get(position).getTitle());
-        vh.produceName.setText("产品名：" + mDatas.get(position).getProductName());
-        vh.customerName.setText("客户：" + mDatas.get(position).getCustName());
+        if (NullUtils.isNull(mDatas.get(position).getProductName())) {
+            vh.produceName.setText("产品名：" + mDatas.get(position).getProductName());
+        } else {
+            vh.produceName.setText("产品名：");
+        }
+        if (NullUtils.isNull(mDatas.get(position).getCustName())) {
+            vh.customerName.setText("客户：" + mDatas.get(position).getCustName());
+        } else {
+            vh.customerName.setText("客户：");
+        }
         vh.totalMoney.setText("￥" + Integer.toString(mDatas.get(position).getTotalFee()));
-        vh.principal.setText("负责人：" + mDatas.get(position).getCreatorName());
+        if (NullUtils.isNull(mDatas.get(position).getCreatorName())) {
+            vh.principal.setText("负责人：" + mDatas.get(position).getCreatorName());
+        } else {
+            vh.principal.setText("负责人：");
+        }
+
         vh.createTime.setText(mDatas.get(position).getCreateDate());
         vh.applyCount.setText("申请数量：" + Integer.toString(mDatas.get(position).getProductCount()));
-        vh.checkStatus.setText(mDatas.get(position).getCheckStatusName());
+        int checkFlag = mDatas.get(position).getCheckStatus();
+        if (checkFlag == 0) {
+            vh.checkStatus.setText("完成");
+        } else {
+            vh.checkStatus.setText("待审核");
+        }
         return convertView;
     }
 
