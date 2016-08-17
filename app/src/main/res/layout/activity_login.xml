@@ -2,22 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/login_bg"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:scaleType="fitXY"
-        android:src="@mipmap/logo_text" />
+        android:background="@mipmap/bttom_css">
+
+        <ImageView
+            android:src="@mipmap/login_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="270dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/linear_shape"
+        android:layout_marginTop="30dp"
         android:orientation="vertical">
 
         <EditText
@@ -35,9 +38,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp0.5"
-            android:layout_marginLeft="@dimen/dp10"
-            android:layout_marginRight="@dimen/dp10"
-            android:background="#F0F0F0" />
+            android:background="#64C0FF" />
 
         <EditText
             android:id="@+id/password_edittext"
@@ -50,10 +51,14 @@
             android:textColor="@color/textcolor_gray"
             android:textColorHint="@color/textcolor_gray"
             android:textSize="@dimen/sp14" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp0.5"
+            android:background="#64C0FF" />
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="invisible"
         android:id="@+id/pwdlinear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -63,6 +68,7 @@
 
         <CheckBox
             android:id="@+id/checked_img"
+            style="@style/MyCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -78,10 +84,10 @@
 
     <Button
         android:id="@+id/login_btn"
-        android:layout_width="240dp"
-        android:layout_height="35dp"
+        android:layout_width="320dp"
+        android:layout_height="40dp"
         android:layout_marginTop="13dp"
-        android:background="@drawable/login_btn_shape"
+        android:background="@mipmap/login_btn_bg"
         android:text="登      录"
         android:textColor="@color/white"
         android:textSize="@dimen/sp18" />

@@ -52,7 +52,7 @@ import io.rong.imkit.RongIM;
  * A simple {@link Fragment} subclass.
  */
 @ContentView(R.layout.fragment_friend_list)
-public class ContactsFragment extends BaseFragment implements AdapterView.OnItemClickListener, ExpandableListView.OnChildClickListener {
+public class ContactsFragment extends BaseFragment implements AdapterView.OnItemClickListener, ExpandableListView.OnChildClickListener, ExpandableListView.OnGroupClickListener {
 
     @ViewInject(R.id.title_tv)
     private TextView title;
@@ -96,6 +96,7 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
         contactList = new ArrayList<>();
         expandableAdapter = new ExpandableAdapter(contactList, getActivity());
         expListView.setOnChildClickListener(this);
+        expListView.setOnGroupClickListener(this);
         expListView.setAdapter(expandableAdapter);
         expListView.setGroupIndicator(null);
     }
@@ -208,4 +209,8 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
     }
 
+    @Override
+    public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+        return true;
+    }
 }

@@ -158,7 +158,6 @@ public class HttpRequestUtils {
         params.setMultipart(true);
         x.http().get(params, new Callback.ProgressCallback<File>() {
 
-
             @Override
             public void onSuccess(File file) {
                 mCallBack.onSuccess(file);
@@ -247,11 +246,10 @@ public class HttpRequestUtils {
         });
     }
 
-    public void send(Context mContext, String url, HashMap params, final HttpRequestCallBack mCallBack) {
+    public void send(final Context mContext, String url, HashMap params, final HttpRequestCallBack mCallBack) {
         CustomDialogUtils.showProgressDialog(mContext);
         Log.e("addParams:", JSON.toJSONString(params));
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, JSON.toJSONString(params), new Response.Listener<JSONObject>() {
+        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, JSON.toJSONString(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.e("response", response.toString());
@@ -267,7 +265,11 @@ public class HttpRequestUtils {
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("_appId", Constant.APPID);
-                headers.put("_code", MainActivity.userCode);
+                if (NullUtils.isNull(MainActivity.userCode)) {
+                    headers.put("_code", MainActivity.userCode);
+                } else {
+                    headers.put("_code", (String) SPUtils.get(mContext, "CODE", ""));
+                }
                 return headers;
             }
         };

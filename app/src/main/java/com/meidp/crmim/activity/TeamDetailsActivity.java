@@ -1,5 +1,6 @@
 package com.meidp.crmim.activity;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -43,13 +44,12 @@ public class TeamDetailsActivity extends BaseActivity implements AdapterView.OnI
         title.setText(teamName);
         teamId = getIntent().getIntExtra("teamId", 0);
         mDatas = new ArrayList<>();
-        mAdapter = new TeamDetailsAdapter(mDatas,this);
+        mAdapter = new TeamDetailsAdapter(mDatas, this);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
     }
 
-    @Override
-    public void onInitData() {
+    private void loadData() {
         HashMap params = new HashMap();
         params.put("Id", teamId);
         HttpRequestUtils.getmInstance().send(TeamDetailsActivity.this, Constant.TEAM_DETAILS_URL, params, new HttpRequestCallBack() {
@@ -65,11 +65,24 @@ public class TeamDetailsActivity extends BaseActivity implements AdapterView.OnI
         });
     }
 
-    @Event({R.id.back_arrows})
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mDatas.clear();
+        loadData();
+    }
+
+    @Event({R.id.back_arrows, R.id.right_img})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
+                break;
+            case R.id.right_img:
+                Intent intent = new Intent(this, AddTeamActivity.class);
+                intent.putExtra("teamId", teamId);
+                intent.putExtra("TeamName", teamName);
+                startActivity(intent);
                 break;
         }
     }

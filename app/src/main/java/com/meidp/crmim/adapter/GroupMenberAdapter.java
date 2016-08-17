@@ -36,8 +36,8 @@ import io.rong.imlib.model.UserInfo;
  * 作  用：
  * 时  间： 2016/8/8
  */
-public class GroupMenberAdapter extends BasicAdapter<Menber> {
-    public GroupMenberAdapter(List<Menber> mDatas, Context context) {
+public class GroupMenberAdapter extends BasicAdapter<Menber.UsersBean> {
+    public GroupMenberAdapter(List<Menber.UsersBean> mDatas, Context context) {
         super(mDatas, context);
     }
 
@@ -53,11 +53,10 @@ public class GroupMenberAdapter extends BasicAdapter<Menber> {
             resetView(vh);
         }
         vh.headerImg.setImageResource(R.mipmap.headerphoto);
-        vh.userName.setText(" ");
-        vh.userName.setText(mDatas.get(position).getName());
-        ImageLoader.getInstance().displayImage(mDatas.get(position).getPhoto(), vh.headerImg, MyApplication.optionsRounds);
+        vh.userName.setText(mDatas.get(position).getEmployeeName() + "(" + mDatas.get(position).getQuarterName() + ")");
+        ImageLoader.getInstance().displayImage(mDatas.get(position).getPhotoURL(), vh.headerImg, MyApplication.optionsRounds);
 //        findUserById(mDatas.get(position), vh.userName, vh.headerImg);
-
+        vh.department.setText(mDatas.get(position).getDeptName());
         return convertView;
     }
 
@@ -68,6 +67,8 @@ public class GroupMenberAdapter extends BasicAdapter<Menber> {
         public ImageView headerImg;
         @ViewInject(R.id.layout)
         public LinearLayout layout;
+        @ViewInject(R.id.department_tv)
+        private TextView department;
 
         public ViewHolder(View view) {
             x.view().inject(this, view);

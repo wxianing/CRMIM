@@ -1,11 +1,11 @@
 package com.meidp.crmim.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
@@ -32,8 +32,6 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import io.rong.imkit.RongIM;
 
 @ContentView(R.layout.activity_add_team)
 public class AddTeamActivity extends BaseActivity implements AdapterView.OnItemClickListener {
@@ -62,12 +60,18 @@ public class AddTeamActivity extends BaseActivity implements AdapterView.OnItemC
     private EditText otherPersonEt;
 
     private SelectFriendAdapter.ViewHolder holder;
+    private int teamId;
+    private String teamName;
+    private String teamNames;
 
     @Override
     public void onInit() {
         titleRight.setText("保存");
         titleRight.setVisibility(View.VISIBLE);
         title.setText("添加团队成员");
+        teamId = getIntent().getIntExtra("teamId", 0);
+        teamNames = getIntent().getStringExtra("TeamName");
+
         mDatas = new ArrayList<>();
         empolyees = new ArrayList<>();
         checkedLists = new ArrayList<>();
@@ -76,7 +80,6 @@ public class AddTeamActivity extends BaseActivity implements AdapterView.OnItemC
         checkedAdapter = new CheckedAdapter(checkedLists, this);
         gridView.setAdapter(checkedAdapter);
         mListVIew.setOnItemClickListener(this);
-
     }
 
     @Override
@@ -115,9 +118,7 @@ public class AddTeamActivity extends BaseActivity implements AdapterView.OnItemC
         } else {
             if (checkNum > 0) {
                 checkNum--;
-
                 empolyees.remove(checkNum);
-
                 for (int i = 0; i < checkedLists.size(); i++) {
                     int checkId = checkedLists.get(i).getEmployeeID();
                     if (mDatas.get(position).getEmployeeID() == checkId) {
@@ -131,7 +132,6 @@ public class AddTeamActivity extends BaseActivity implements AdapterView.OnItemC
             Log.e("userId", empolyees.get(i));
             System.out.println(empolyees.get(i));
         }
-
     }
 
     @Event({R.id.back_arrows, R.id.title_right})
@@ -141,38 +141,57 @@ public class AddTeamActivity extends BaseActivity implements AdapterView.OnItemC
                 finish();
                 break;
             case R.id.title_right:
-
-                final View dialogView = LayoutInflater.from(this).inflate(R.layout.edittext_layout, null);
-                TextView titleName = (TextView) dialogView.findViewById(R.id.title_name);
-                titleName.setText("请输入团队名称");
-                new AlertDialog.Builder(this).setView(
-                        dialogView).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        EditText editText = (EditText) dialogView.findViewById(R.id.edit_text);
-
-                        String teamName = editText.getText().toString().trim();
-                        sendMsg(teamName);
-                    }
-                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                }).show();
+                if (NullUtils.isNull(teamNames) && teamId != 0) {
+                    sendMsg(teamNames, teamId);
+                } else {
+                    showDialog();
+                }
                 break;
         }
     }
 
-    private void sendMsg(String teamName) {
+    private void showDialog() {
+        final Dialog dialog = new Dialog(this, R.style.Dialog);
+        View contentView = LayoutInflater.from(this).inflate(R.layout.edittext_dialog, null);
+        TextView titleName = (TextView) contentView.findViewById(R.id.title);
+        final EditText editText = (EditText) contentView.findViewById(R.id.message);
+        titleName.setText("请输入团队名称");
+        dialog.setContentView(contentView);
+        dialog.setCanceledOnTouchOutside(true);
+        Button negativeButton = (Button) contentView.findViewById(R.id.negativeButton);
+        negativeButton.setClickable(true);
+        negativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        Button positiveButton = (Button) contentView.findViewById(R.id.positiveButton);
+        positiveButton.setClickable(true);
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String teamName = editText.getText().toString().trim();
+                sendMsg(teamName, 0);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+    }
+
+
+    private void sendMsg(String teamName, int teamId) {
         String otherPersons = otherPersonEt.getText().toString().trim();
         String empolyeeStr = "";
         for (int i = 0; i < empolyees.size(); i++) {
             empolyeeStr += empolyees.get(i) + ",";
         }
-        empolyeeStr = empolyeeStr.substring(0, empolyeeStr.length() - 1);
-
+        if (NullUtils.isNull(empolyeeStr)) {
+            empolyeeStr = empolyeeStr.substring(0, empolyeeStr.length() - 1);
+        }
         HashMap params = new HashMap();
+        params.put("ID", teamId);
         params.put("Employees", empolyeeStr);
         params.put("TeamName", teamName);
         params.put("OtherPerson", otherPersons);

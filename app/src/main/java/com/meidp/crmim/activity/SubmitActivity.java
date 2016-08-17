@@ -60,18 +60,22 @@ public class SubmitActivity extends BaseActivity {
     @ViewInject(R.id.direction)
     private TextView directionEt;
 
+    @ViewInject(R.id.company_name)
+    private EditText companyNameEt;
+
     private int projectDirectionId;
     private double successRate;
-    private double rate=10;
+    private double rate = 10;
+    @ViewInject(R.id.zhiwu)
+    private EditText zhiwuEt;
 
     @Override
     public void onInit() {
-        titleRight.setVisibility(View.VISIBLE);
         titleRight.setText("保存");
-        title.setText("项目申报");
+        title.setText("申报项目");
     }
 
-    @Event(value = {R.id.edittext_success_rate, R.id.back_arrows, R.id.title_right, R.id.edittext_customer_name, R.id.project_area, R.id.related_personnel,R.id.direction})
+    @Event(value = {R.id.edittext_success_rate, R.id.back_arrows, R.id.save_btn, R.id.edittext_customer_name, R.id.project_area, R.id.related_personnel, R.id.direction})
     private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -91,7 +95,7 @@ public class SubmitActivity extends BaseActivity {
                 intent = new Intent(this, SelectEmpolyeeActivity.class);
                 startActivityForResult(intent, 1013);
                 break;
-            case R.id.title_right:
+            case R.id.save_btn:
 
                 String projectName = projectNameEt.getText().toString().trim();
                 String projectAddress = projectAddressEt.getText().toString().trim();
@@ -172,8 +176,14 @@ public class SubmitActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 1001) {
-            String customName = data.getStringExtra("CustContact");
-            String ContactPhone = data.getStringExtra("CustPhone");
+            String customName = data.getStringExtra("CustContact");//联系人
+            String ContactPhone = data.getStringExtra("CustPhone");//联系电话
+            String companyName = data.getStringExtra("CustName");
+            String zhiwu = data.getStringExtra("Position");
+
+
+            zhiwuEt.setText(data.getStringExtra(zhiwu));
+            companyNameEt.setText(companyName);
 
             CustomerNameEt.setText(data.getStringExtra("CustContact"));
             CustomerPhoneEt.setText(data.getStringExtra("CustPhone"));
@@ -197,8 +207,8 @@ public class SubmitActivity extends BaseActivity {
             successRate = Double.valueOf(rate) / 100;
             Log.e("successRate", ">>>>>>>>" + successRate);
         }
-        if (resultCode==1016){
-            projectDirectionId = data.getIntExtra("ProjectDirectionId",0);
+        if (resultCode == 1016) {
+            projectDirectionId = data.getIntExtra("ProjectDirectionId", 0);
             String directionName = data.getStringExtra("ProjectDirectionName");
             directionEt.setText(directionName);
         }

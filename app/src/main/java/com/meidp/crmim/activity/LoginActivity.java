@@ -74,7 +74,7 @@ public class LoginActivity extends BaseActivity {
         }
         //记住密码
         isRmb = (boolean) SPUtils.get(LoginActivity.this, "isRmb", false);
-        if (true) {
+        if (isRmb) {
             user = (String) SPUtils.get(this, "USERNAME", "");
             pwd = (String) SPUtils.get(this, "PASSWORD", "");
             checkBox.setChecked(true);

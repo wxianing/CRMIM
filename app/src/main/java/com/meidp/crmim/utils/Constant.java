@@ -10,6 +10,7 @@ public class Constant {
     public static final String BASE_URL = "http://115.28.180.26:98/";
 
     public static final String APPID = "102";
+
     //    public static final String CODE = SharedPreferencesUtils.getUser(MyApplication.getmInstance()).getCode();
     public static final String CODE = (String) SPUtils.get(MyApplication.getmInstance(), "CODE", "");
 
@@ -169,4 +170,6 @@ public class Constant {
     public static final String STOCK_UP_URL = BASE_URL + "order/sellordersave";
     //版本升级
     public static final String VERSION_UPDATE = "http://meistapi.meidp.com/" + "systemset/getlatestversoin";
+    //获取群成员
+    public static final String GROUP_MEMBER_URL = BASE_URL + "common/rongcloud/getdiscussion";
 }

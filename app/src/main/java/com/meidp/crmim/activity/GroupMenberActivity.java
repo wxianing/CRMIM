@@ -1,7 +1,6 @@
 package com.meidp.crmim.activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,7 +15,6 @@ import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppBean;
 import com.meidp.crmim.model.Menber;
-import com.meidp.crmim.model.User;
 import com.meidp.crmim.utils.Constant;
 
 import org.xutils.view.annotation.ContentView;
@@ -28,25 +26,23 @@ import java.util.HashMap;
 import java.util.List;
 
 import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Discussion;
-import io.rong.imlib.model.UserInfo;
 
 @ContentView(R.layout.activity_group_menber)
 public class GroupMenberActivity extends BaseActivity implements AdapterView.OnItemClickListener {
     @ViewInject(R.id.title_tv)
     private TextView title;
     private String mTargetId;
-    private List<String> mDatas;
 
     @ViewInject(R.id.listview)
     private ListView mListView;
 
+    private List<Menber.UsersBean> mDatas;
+
     private GroupMenberAdapter mAdapter;
     private String mTargetName;
 
-    private UserInfo users = null;
     private List<Menber> menbers;
+
     private String groupName;
 
     @Override
@@ -55,53 +51,30 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
         mTargetId = getIntent().getStringExtra("mTargetId");
         Log.e("mTargetId", mTargetId);
         mDatas = new ArrayList<>();
-        RongIM.getInstance().getDiscussion(mTargetId, new RongIMgetDiscussionName());
         menbers = new ArrayList<>();
         mListView.setOnItemClickListener(this);
-        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-            @Override
-            public UserInfo getUserInfo(String userId) {
-                return findUserById(userId);//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
-            }
-        }, true);
-
-        mAdapter = new GroupMenberAdapter(menbers, GroupMenberActivity.this);
-        RongIM.getInstance().getDiscussion(mTargetId, new RongIMClient.ResultCallback<Discussion>() {
-            @Override
-            public void onSuccess(Discussion discussion) {
-                groupName = discussion.getName();
-                List<String> members = discussion.getMemberIdList();
-                for (int i = 0; i < members.size(); i++) {
-                    Log.e("members", members.get(i));
-                }
-            }
-
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-
-            }
-        });
+        mAdapter = new GroupMenberAdapter(mDatas, GroupMenberActivity.this);
+        mListView.setAdapter(mAdapter);
     }
 
-    private UserInfo findUserById(final String userId) {
-        HashMap params = new HashMap();
-        params.put("Id", Integer.valueOf(userId));
-        HttpRequestUtils.getmInstance().post(GroupMenberActivity.this, Constant.GET_PERSON_INFORMATION, params, new HttpRequestCallBack() {
+    @Override
+    public void onInitData() {
+        final HashMap params = new HashMap();
+        params.put("Id", mTargetId);
+        HttpRequestUtils.getmInstance().send(GroupMenberActivity.this, Constant.GROUP_MEMBER_URL, params, new HttpRequestCallBack() {
             @Override
             public void onSuccess(String result) {
-                AppBean<User> appBean = JSONObject.parseObject(result, new TypeReference<AppBean<User>>() {
+                AppBean<Menber> appBean = JSONObject.parseObject(result, new TypeReference<AppBean<Menber>>() {
                 });
                 if (appBean != null && appBean.getEnumcode() == 0) {
-                    String avatar = appBean.getData().getPhotoURL();
-                    String name = appBean.getData().getEmployeeName();
-
-                    users = new UserInfo(userId, name, Uri.parse(avatar));
-//                    RongIM.getInstance().refreshUserInfoCache(users);//刷新用户数据
+                    mDatas.addAll(appBean.getData().getUsers());
+                    groupName = appBean.getData().getDiscussionName();
+                    mAdapter.notifyDataSetChanged();
                 }
             }
         });
-        return users;
     }
+
 
     @Event({R.id.back_arrows, R.id.right_img})
     private void onClick(View v) {
@@ -125,47 +98,6 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
         if (holder != null) {
             mTargetName = holder.userName.getText().toString();
         }
-        RongIM.getInstance().startPrivateChat(this, mDatas.get(position), mTargetName);
-    }
-
-    private class RongIMgetDiscussionName extends RongIMClient.ResultCallback<Discussion> {
-        @Override
-        public void onSuccess(Discussion discussion) {
-            mDatas.addAll(discussion.getMemberIdList());
-            for (int i = 0; i < mDatas.size(); i++) {
-                findUserById2(mDatas.get(i));
-            }
-//            mAdapter = new GroupMenberAdapter(menbers, GroupMenberActivity.this);
-//            mListView.setAdapter(mAdapter);
-        }
-
-        @Override
-        public void onError(RongIMClient.ErrorCode errorCode) {
-
-        }
-    }
-
-
-    private void findUserById2(String userId) {
-        Log.e("userId", userId);
-        HashMap params = new HashMap();
-        params.put("Id", Integer.valueOf(userId));
-        HttpRequestUtils.getmInstance().post(GroupMenberActivity.this, Constant.GET_PERSON_INFORMATION, params, new HttpRequestCallBack() {
-            @Override
-            public void onSuccess(String result) {
-                AppBean<User> appBean = JSONObject.parseObject(result, new TypeReference<AppBean<User>>() {
-                });
-                if (appBean != null && appBean.getEnumcode() == 0) {
-                    String avatar = appBean.getData().getPhotoURL();
-                    String name = appBean.getData().getEmployeeName();
-                    Menber menber = new Menber();
-                    menber.setName(name);
-                    menber.setPhoto(avatar);
-                    menbers.add(menber);
-                    mListView.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();
-                }
-            }
-        });
+        RongIM.getInstance().startPrivateChat(this, Integer.toString(mDatas.get(position).getUserID()), mTargetName);
     }
 }

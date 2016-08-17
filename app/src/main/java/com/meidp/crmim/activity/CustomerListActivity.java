@@ -114,13 +114,14 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
         ClientContacts contacts = mDatas.get(position - 1);
         if (NullUtils.isNull(flag) && "Apply".equals(flag)) {//直接返回客户
             Intent intent = new Intent();
-            intent.putExtra("CustId", mDatas.get(position).getCustID());
-            intent.putExtra("CustName", mDatas.get(position - 1).getCustName());
-            intent.putExtra("CustContact", mDatas.get(position - 1).getLinkManName());
-            intent.putExtra("CustPhone", mDatas.get(position - 1).getWorkTel());
-            intent.putExtra("CustContactId", mDatas.get(position - 1).getID());
-            intent.putExtra("OID", mDatas.get(position - 1).getID());
-            intent.putExtra("Department", mDatas.get(position - 1).getDepartment());
+            intent.putExtra("CustId", mDatas.get(position).getCustID());//单位Id
+            intent.putExtra("CustName", mDatas.get(position - 1).getCustName());//单位名称
+            intent.putExtra("CustContact", mDatas.get(position - 1).getLinkManName());//客户联系人
+            intent.putExtra("CustPhone", mDatas.get(position - 1).getWorkTel());//联系电话
+            intent.putExtra("CustContactId", mDatas.get(position - 1).getID());//联系人Id
+            intent.putExtra("OID", mDatas.get(position - 1).getID());//联系人Id
+            intent.putExtra("Department", mDatas.get(position - 1).getDepartment());//部门
+            intent.putExtra("Position", mDatas.get(position - 1).getPosition());//职位
             setResult(1001, intent);
             finish();
         } else {

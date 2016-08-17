@@ -14,24 +14,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/title_bar"
-        android:background="@color/white"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10"
+                android:text="项目相关"
+                android:textSize="@dimen/sp13" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp10"
-                android:layout_marginTop="@dimen/submit_item_top"
+                android:background="@color/white"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
 
                 <TextView
                     style="@style/textview_submit_setting"
@@ -50,85 +55,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp10"
-                android:layout_marginTop="@dimen/submit_item_top"
+                android:background="@color/white"
                 android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/textview_submit_setting"
-                    android:text="客户地址:" />
-
-                <EditText
-                    android:id="@+id/edittext_project_address"
-                    style="@style/sub_editext"
-                    android:gravity="end"
-                    android:hint="点击输入" />
-
-            </LinearLayout>
-
-            <include layout="@layout/horizontal_line" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp10"
-                android:layout_marginTop="@dimen/dp5"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/textview_submit_setting"
-                    android:text="联系人:" />
-
-                <EditText
-                    android:id="@+id/edittext_customer_name"
-                    style="@style/sub_editext"
-                    android:layout_weight="1"
-                    android:focusable="false"
-                    android:gravity="end"
-                    android:hint="点击选择" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/arrow_right"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-
-            <include layout="@layout/horizontal_line" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp10"
-                android:layout_marginTop="@dimen/dp5"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/textview_submit_setting"
-                    android:text="客户号码:" />
-
-                <EditText
-                    android:id="@+id/edittext_customer_phone"
-                    style="@style/sub_editext"
-                    android:gravity="end"
-                    android:hint="点击输入" />
-
-            </LinearLayout>
-
-
-            <include layout="@layout/horizontal_line" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp10"
-                android:layout_marginTop="@dimen/submit_item_top"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
 
                 <TextView
                     style="@style/textview_submit_setting"
@@ -144,40 +74,18 @@
 
             <include layout="@layout/horizontal_line" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp10"
-                android:layout_marginTop="@dimen/submit_item_top"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/textview_submit_setting"
-                    android:text="成功率(%):" />
-
-                <EditText
-                    android:id="@+id/edittext_success_rate"
-                    style="@style/sub_editext"
-                    android:focusable="false"
-                    android:gravity="end"
-                    android:hint="点击输入" />
-
-            </LinearLayout>
-
-            <include layout="@layout/horizontal_line" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp10"
-                android:layout_marginTop="@dimen/dp5"
+                android:background="@color/white"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
 
                 <TextView
                     style="@style/textview_submit_setting"
-                    android:text="项目方向:" />
+                    android:text="项目领域:" />
 
                 <TextView
                     android:id="@+id/direction"
@@ -202,10 +110,168 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp10"
-                android:layout_marginTop="@dimen/dp5"
+                android:background="@color/white"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="成功率(%):" />
+
+                <EditText
+                    android:id="@+id/edittext_success_rate"
+                    style="@style/sub_editext"
+                    android:focusable="false"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10"
+                android:text="客户相关"
+                android:textSize="@dimen/sp13" />
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="客户姓名:" />
+
+                <EditText
+                    android:id="@+id/edittext_customer_name"
+                    style="@style/sub_editext"
+                    android:layout_weight="1"
+                    android:focusable="false"
+                    android:gravity="end"
+                    android:hint="点击选择" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/arrow_right"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="客户号码:" />
+
+                <EditText
+                    android:id="@+id/edittext_customer_phone"
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="工作单位:" />
+
+                <EditText
+                    android:id="@+id/company_name"
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="客户职务:" />
+
+                <EditText
+                    android:id="@+id/zhiwu"
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="详细地址:" />
+
+                <EditText
+                    android:id="@+id/edittext_project_address"
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10"
+                android:text="其他"
+                android:textSize="@dimen/sp13" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
 
                 <TextView
                     style="@style/textview_submit_setting"
@@ -232,10 +298,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp10"
-                android:layout_marginTop="@dimen/dp5"
+                android:background="@color/white"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
 
                 <TextView
                     style="@style/textview_submit_setting"
@@ -265,10 +331,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp10"
-                android:layout_marginTop="@dimen/submit_item_top"
+                android:background="@color/white"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
 
                 <TextView
                     style="@style/textview_submit_setting"
@@ -283,24 +349,27 @@
             </LinearLayout>
 
             <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dp20"
+                android:layout_marginTop="10dp"
+                android:background="@color/default_background_color"
+                android:padding="@dimen/dp5">
+
+                <Button
+                    android:id="@+id/save_btn"
+                    style="@style/oange_button"
+                    android:text="保    存" />
+
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="20dp"
-        android:background="@color/default_background_color"
-        android:padding="@dimen/dp5"
-        android:visibility="gone">
 
-        <Button
-            android:id="@+id/save_btn"
-            style="@style/sub_button"
-            android:text="保    存" />
-
-    </LinearLayout>
 </RelativeLayout>
 
 

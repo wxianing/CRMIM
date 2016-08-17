@@ -1,12 +1,13 @@
 package com.meidp.crmim.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,15 +16,20 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.meidp.crmim.R;
 import com.meidp.crmim.adapter.CheckedAdapter;
+import com.meidp.crmim.adapter.ExpanListAdapter;
+import com.meidp.crmim.adapter.ExpandableAdapter;
 import com.meidp.crmim.adapter.SelectFriendAdapter;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
+import com.meidp.crmim.model.AppBeans;
 import com.meidp.crmim.model.AppDatas;
 import com.meidp.crmim.model.AppMsg;
+import com.meidp.crmim.model.Contact;
 import com.meidp.crmim.model.Friends;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.ToastUtils;
+import com.meidp.crmim.view.ExpListView;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -37,7 +43,7 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 
 @ContentView(R.layout.activity_new_group)
-public class NewGroupActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public class NewGroupActivity extends BaseActivity implements AdapterView.OnItemClickListener, ExpandableListView.OnChildClickListener, ExpandableListView.OnGroupClickListener {
 
     @ViewInject(R.id.title_tv)
     private TextView title;
@@ -68,6 +74,11 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
     private List<Integer> positions = new ArrayList<>();
     private String discussionId;
     private String newGroupNames;
+
+    @ViewInject(R.id.expListView)
+    protected ExpListView expListView;
+    private List<Contact> contactList;
+    private ExpanListAdapter expandableAdapter;
 
     @Override
     public void onInit() {
@@ -106,6 +117,15 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
 //                }
             }
         });
+
+        contactList = new ArrayList<>();
+        expandableAdapter = new ExpanListAdapter(contactList, this);
+        expListView.setOnChildClickListener(this);
+        expListView.setOnGroupClickListener(this);
+        expListView.setAdapter(expandableAdapter);
+        expListView.setGroupIndicator(null);
+
+
     }
 
     /**
@@ -153,6 +173,22 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
     @Override
     public void onInitData() {
         loadData(keyWord);
+
+        HttpRequestUtils.getmInstance().send(this, Constant.GET_CONTACTS_URL, null, new HttpRequestCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                AppBeans<Contact> appBean = JSONObject.parseObject(result, new TypeReference<AppBeans<Contact>>() {
+                });
+                if (appBean != null && appBean.getEnumcode() == 0) {
+                    contactList.clear();
+                    contactList.addAll(appBean.getData());
+                    expandableAdapter.notifyDataSetChanged();
+                    for (int i = 0; i < contactList.size(); i++) {
+                        expListView.expandGroup(i);//默认展开选项
+                    }
+                }
+            }
+        });
     }
 
     private void loadData(String keyWord) {
@@ -215,23 +251,7 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
                     });
 
                 } else {
-                    final View dialogView = LayoutInflater.from(this).inflate(R.layout.edittext_layout, null);
-                    new AlertDialog.Builder(this).setView(
-                            dialogView).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            EditText editText = (EditText) dialogView.findViewById(R.id.edit_text);
-                            groupName = editText.getText().toString().trim();
-                            if (NullUtils.isNull(groupName)) {
-                                RongIM.getInstance().createDiscussionChat(NewGroupActivity.this, userIds, groupName, mCallBack);
-                            }
-                        }
-                    }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    }).show();
+                    showDialog();
                 }
 
                 break;
@@ -239,10 +259,83 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
                 keyWord = searchEditText.getText().toString().trim();
                 mDatas.clear();
                 loadData(keyWord);
+                showDialog();
                 break;
         }
     }
 
+    private void showDialog() {
+        final Dialog dialog = new Dialog(this, R.style.Dialog);
+        View contentView = LayoutInflater.from(this).inflate(R.layout.edittext_dialog, null);
+        TextView titleName = (TextView) contentView.findViewById(R.id.title);
+        final EditText editText = (EditText) contentView.findViewById(R.id.message);
+        titleName.setText("请输入群名称");
+        dialog.setContentView(contentView);
+        dialog.setCanceledOnTouchOutside(true);
+        Button negativeButton = (Button) contentView.findViewById(R.id.negativeButton);
+        negativeButton.setClickable(true);
+        negativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        Button positiveButton = (Button) contentView.findViewById(R.id.positiveButton);
+        positiveButton.setClickable(true);
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                groupName = editText.getText().toString().trim();
+                if (NullUtils.isNull(groupName)) {
+                    RongIM.getInstance().createDiscussionChat(NewGroupActivity.this, userIds, groupName, mCallBack);
+                }
+                Log.e("positiveButton", keyWord);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+    }
+
+    @Override
+    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+        count = childPosition;
+       ExpanListAdapter.ChildViewHolder holder = (ExpanListAdapter.ChildViewHolder) v.getTag();
+        holder.mCheckBox.toggle();
+        SelectFriendAdapter.getIsSelected().put(childPosition, holder.mCheckBox.isChecked());
+        if (holder.mCheckBox.isChecked() == true) {
+            checkNum++;
+            userIds.add(Integer.toString(mDatas.get(childPosition).getUserID()));
+            checkedLists.add(mDatas.get(childPosition));
+            checkedAdapter.notifyDataSetChanged();
+            positions.add(childPosition);
+        } else {
+            if (checkNum > 0) {
+                checkNum--;
+                userIds.remove(checkNum);
+
+                for (int i = 0; i < checkedLists.size(); i++) {
+                    int checkId = checkedLists.get(i).getUserID();
+                    if (mDatas.get(childPosition).getUserID() == checkId) {
+                        checkedLists.remove(i);
+                    }
+                }
+
+                checkedAdapter.notifyDataSetChanged();
+                positions.remove(checkNum);
+            }
+        }
+        for (int i = 0; i < userIds.size(); i++) {
+            Log.e("userId", userIds.get(i));
+            System.out.println(userIds.get(i));
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+        return true;
+    }
 
     private class RongCreateGroupCallBack extends RongIMClient.CreateDiscussionCallback {
 

@@ -1,7 +1,6 @@
 package com.meidp.crmim.fragment;
 
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 import com.meidp.crmim.MyApplication;
 import com.meidp.crmim.R;
 import com.meidp.crmim.activity.AboutActivity;
-import com.meidp.crmim.activity.ConventionApplyForActivity;
 import com.meidp.crmim.activity.FeedbackActivity;
 import com.meidp.crmim.activity.LoginActivity;
 import com.meidp.crmim.activity.MainActivity;
@@ -30,7 +28,6 @@ import com.meidp.crmim.activity.SubmitActivity;
 import com.meidp.crmim.utils.ImageUtils;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.SPUtils;
-import com.meidp.crmim.utils.ToastUtils;
 import com.meidp.crmim.view.CustomDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -44,6 +41,7 @@ import org.xutils.x;
  */
 @ContentView(R.layout.fragment_my)
 public class MyFragment extends BaseFragment {
+
     @ViewInject(R.id.title_tv)
     private TextView title;
     @ViewInject(R.id.back_arrows)
@@ -84,27 +82,7 @@ public class MyFragment extends BaseFragment {
                 startActivity(intent);
                 break;
             case R.id.logout://退出登录
-
-                new AlertDialog.Builder(getActivity()).setTitle("是否确定退出登录？").setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SPUtils.setLoginTag(getActivity(), false);
-                        Intent intent = new Intent();
-                        intent.setClass(getActivity(), LoginActivity.class);
-                        if (MainActivity.mainActivity != null) {
-                            MainActivity.mainActivity.finish();
-                            MainActivity.mainActivity = null;
-                        }
-                        SPUtils.remove(getActivity(), "CODE");
-//                        SPUtils.clear(getActivity());
-                        startActivity(intent);
-                    }
-                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                }).show();
+                logoutAlertDialog();
                 break;
             case R.id.my_group:
 //                ToastUtils.shows(getActivity(), "正在开发");
@@ -116,18 +94,7 @@ public class MyFragment extends BaseFragment {
                 startActivity(intent);
                 break;
             case R.id.reset_password:
-                ToastUtils.shows(getActivity(), "正在客户服务中心发送修改密码请求");
-                intent.setClass(getActivity(), ConventionApplyForActivity.class);
-                startActivity(intent);
-                final View dialogView = LayoutInflater.from(getActivity()).inflate(R.layout.text_layout, null);
-                new AlertDialog.Builder(getActivity()).setView(
-                        dialogView).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                }).show();
-//                showAlertDialog();
+                showAlertDialog();
 
                 break;
             case R.id.header_img:
@@ -138,7 +105,6 @@ public class MyFragment extends BaseFragment {
                 intent.setClass(getActivity(), FeedbackActivity.class);
                 startActivity(intent);
                 break;
-
             case R.id.visit_client://客户拜访
                 intent = new Intent(getActivity(), SigninMainActivity.class);
                 startActivity(intent);
@@ -186,11 +152,37 @@ public class MyFragment extends BaseFragment {
                         dialog.dismiss();
                     }
                 });
-
         builder.create().show();
-
     }
 
+    public void logoutAlertDialog() {
+
+        CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
+        builder.setMessage("是否退出当前登录账号？");
+        builder.setTitle("温馨提示");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), LoginActivity.class);
+                if (MainActivity.mainActivity != null) {
+                    MainActivity.mainActivity.finish();
+                    MainActivity.mainActivity = null;
+                }
+                SPUtils.remove(getActivity(), "CODE");
+//                        SPUtils.clear(getActivity());
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("取消",
+                new android.content.DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.create().show();
+    }
 
     @Override
     public void onResume() {
