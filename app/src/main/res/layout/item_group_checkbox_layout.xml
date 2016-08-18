@@ -13,6 +13,7 @@
         android:paddingBottom="@dimen/dp5"
         android:paddingLeft="10dp"
         android:paddingTop="@dimen/dp5"
+        android:text="组名"
         android:textColor="@color/black"
         android:textSize="14sp" />
 
@@ -25,6 +26,20 @@
         android:layout_marginRight="15dp"
         android:text="0"
         android:visibility="gone" />
+
+    <CheckBox
+        android:id="@+id/check_box"
+        style="@style/MyCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="@dimen/dp10"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:gravity="center_vertical" />
 
     <!--    <LinearLayout
             android:layout_width="match_parent"

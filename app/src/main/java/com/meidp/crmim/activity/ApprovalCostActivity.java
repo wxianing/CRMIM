@@ -93,7 +93,7 @@ public class ApprovalCostActivity extends BaseActivity implements AdapterView.On
         bundle.putSerializable("ApprovalCosts", apply);
         intent.putExtras(bundle);
         intent.putExtra("OID", apply.getID());
-        startActivity(intent);
+        startActivityForResult(intent, 1019);
     }
 
     @Override
@@ -107,5 +107,14 @@ public class ApprovalCostActivity extends BaseActivity implements AdapterView.On
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
         pageIndex++;
         loadData(pageIndex, keyword);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 1019) {
+            mDatas.clear();
+            loadData(pageIndex, keyword);
+        }
     }
 }

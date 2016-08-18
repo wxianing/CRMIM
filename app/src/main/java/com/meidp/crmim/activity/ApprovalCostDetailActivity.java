@@ -1,5 +1,6 @@
 package com.meidp.crmim.activity;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -124,6 +125,9 @@ public class ApprovalCostDetailActivity extends BaseActivity {
                 });
                 if (appMsg != null && appMsg.getEnumcode() == 0) {
                     ToastUtils.shows(ApprovalCostDetailActivity.this, "审批成功");
+                    Intent intent = new Intent();
+                    setResult(1019);
+                    finish();
                 } else {
                     ToastUtils.shows(ApprovalCostDetailActivity.this, appMsg.getMsg());
                 }

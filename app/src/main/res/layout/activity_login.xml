@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/default_background_color"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -12,9 +13,9 @@
         android:background="@mipmap/bttom_css">
 
         <ImageView
-            android:src="@mipmap/login_logo"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:src="@mipmap/login_logo" />
     </LinearLayout>
 
     <LinearLayout
@@ -29,10 +30,10 @@
             android:layout_height="45dp"
             android:background="@drawable/edittext_transing"
             android:drawableLeft="@mipmap/user_img"
-            android:hint="手机/邮箱"
+            android:hint="请输入您的账号"
             android:paddingLeft="@dimen/dp5"
             android:textColor="@color/textcolor_gray"
-            android:textColorHint="@color/textcolor_gray"
+            android:textColorHint="@color/tc_gray"
             android:textSize="@dimen/sp14" />
 
         <View
@@ -46,10 +47,10 @@
             android:layout_height="45dp"
             android:background="@drawable/edittext_transing"
             android:drawableLeft="@mipmap/mm_normal"
-            android:hint="密码"
+            android:hint="请输入您的密码"
             android:inputType="textPassword"
             android:textColor="@color/textcolor_gray"
-            android:textColorHint="@color/textcolor_gray"
+            android:textColorHint="@color/tc_gray"
             android:textSize="@dimen/sp14" />
 
         <View

@@ -49,7 +49,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         userCode = (String) SPUtils.get(this, "CODE", "");
 
 
-        HttpTask.detectionNewAppVersion(this, true, false);//检查版本更新
+        HttpTask.detectionNewAppVersion(this, true, true);//检查版本更新
 
         ((RadioButton) mRadioGroup.getChildAt(0)).setChecked(true);
         manager = getSupportFragmentManager();

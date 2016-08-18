@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.meidp.crmim.R;
 import com.meidp.crmim.model.VisitRecords;
+import com.meidp.crmim.view.DActionSheetDialog;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -37,24 +38,27 @@ public class VisitRecordAdapter extends BasicAdapter<VisitRecords> {
             vh = (ViewHolder) convertView.getTag();
         }
 
-        vh.customerName.setText(data.getTitle());
-        vh.address_tv.setText(data.getLocationAddress());
+        vh.titleName.setText(data.getTitle());
+        vh.address_tv.setText("地址：" + data.getLocationAddress());
         vh.visitTime.setText(data.getModifiedDate());
+        vh.linkman.setText("联系人：" + data.getCustLinkManName());
+        vh.phoneNum.setText("电      话：" + data.getLinkTel());
 
         return convertView;
     }
 
     private static class ViewHolder {
-        @ViewInject(R.id.img)
-        private ImageView img;
-        @ViewInject(R.id.customer_name)
-        private TextView customerName;
+        @ViewInject(R.id.title_name)
+        private TextView titleName;
         @ViewInject(R.id.address_tv)
         private TextView address_tv;
-        @ViewInject(R.id.visitor)
-        private TextView visitor;
         @ViewInject(R.id.visit_time)
         private TextView visitTime;
+
+        @ViewInject(R.id.linkman)
+        private TextView linkman;
+        @ViewInject(R.id.phone_num)
+        private TextView phoneNum;
 
         public ViewHolder(View view) {
             x.view().inject(this, view);

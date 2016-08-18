@@ -11,6 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
+import com.jauker.widget.BadgeView;
 import com.meidp.crmim.R;
 import com.meidp.crmim.activity.AnnouncementActivity;
 import com.meidp.crmim.activity.ApprovalProcessActivity;
@@ -35,11 +38,19 @@ import com.meidp.crmim.activity.SigninMainActivity;
 import com.meidp.crmim.activity.SubmitActivity;
 import com.meidp.crmim.activity.VisitingClientsActivity;
 import com.meidp.crmim.activity.WorkPlanActivity;
+import com.meidp.crmim.http.HttpRequestCallBack;
+import com.meidp.crmim.http.HttpRequestUtils;
+import com.meidp.crmim.model.AppBean;
+import com.meidp.crmim.model.JPushNoReader;
+import com.meidp.crmim.model.NoReaders;
+import com.meidp.crmim.utils.Constant;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
+
+import java.util.HashMap;
 
 @ContentView(R.layout.fragment_home)
 public class HomeFragment extends BaseFragment implements AdapterView.OnItemClickListener {
@@ -55,6 +66,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @ViewInject(R.id.linear_layout)
     private LinearLayout linearLayout;
+    @ViewInject(R.id.unreader)
+    private TextView uNreader;
 
     public HomeFragment() {
     }
@@ -71,9 +84,23 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         initPopupWindow();
     }
 
-    @Override
-    public void onInitData() {
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        HashMap params = new HashMap();
+        HttpRequestUtils.getmInstance().send(getActivity(), Constant.GETNOCHECKTOTAL_URL, params, new HttpRequestCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                AppBean<NoReaders> appBean = JSONObject.parseObject(result, new TypeReference<AppBean<NoReaders>>() {
+                });
+                if (appBean != null && appBean.getEnumcode() == 0) {
+                    BadgeView badgeView = new BadgeView(getActivity());
+                    badgeView.setBadgeCount(appBean.getData().getNoCheckTotalCount());
+                    badgeView.setTargetView(uNreader);
+                }
+            }
+        });
     }
 
     @Event({R.id.open_sea, R.id.exhibition_manager, R.id.approval_manager, R.id.apply_model, R.id.submit_project, R.id.new_group, R.id.visiting_customer, R.id.project_manager, R.id.cost_manager, R.id.prototype_manager, R.id.my_performance, R.id.my_values, R.id.my_integrity, R.id.life_navigation, R.id.improtment_thing, R.id.knowledge, R.id.right_img, R.id.visit_client})

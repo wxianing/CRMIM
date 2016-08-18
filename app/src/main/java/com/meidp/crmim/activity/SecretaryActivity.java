@@ -114,12 +114,12 @@ public class SecretaryActivity extends BaseActivity implements AdapterView.OnIte
             startActivity(intent);
         }
         if (billTypeFlag == 4 && billTypeCode == 7) {//客户联系人
-            Intent intent = new Intent(SecretaryActivity.this, CustomerListActivity.class);
+            Intent intent = new Intent(SecretaryActivity.this, ClientDetailsActivity.class);
             intent.putExtra("OID", mDatas.get(position - 1).getBillId());
             startActivity(intent);
         }
         if (billTypeFlag == 5 && billTypeCode == 11) {//样机申请
-            Intent intent = new Intent(SecretaryActivity.this, PrototypeDetailsActivity.class);
+            Intent intent = new Intent(SecretaryActivity.this, ApprovalDetailsActivity.class);
             intent.putExtra("OID", mDatas.get(position - 1).getBillId());
             startActivity(intent);
         }

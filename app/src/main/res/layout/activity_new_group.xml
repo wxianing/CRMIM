@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/default_background_color"
     android:orientation="vertical"
     tools:context="com.meidp.crmim.activity.NewGroupActivity">
 
@@ -33,7 +34,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/search_edittext"
-                    android:drawableLeft="@mipmap/search_icon"
                     android:hint="请输入关键字搜索"
                     android:textSize="@dimen/sp14" />
 
@@ -59,6 +59,8 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp10"
                 android:text="请选择添加好友" />
+
+            <include layout="@layout/horizontal_line" />
 
             <ListView
                 android:id="@+id/listview"

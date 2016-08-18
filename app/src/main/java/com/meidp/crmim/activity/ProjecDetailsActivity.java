@@ -3,6 +3,7 @@ package com.meidp.crmim.activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -57,7 +58,12 @@ public class ProjecDetailsActivity extends BaseActivity {
     private TextView remarkTv;
     @ViewInject(R.id.success_rate)
     private TextView successRate;
+    @ViewInject(R.id.curr_status)
+    private TextView currStatus;
 
+    @ViewInject(R.id.listview)
+    private ListView mListView;
+    private FollowAdapter mAdapter;
 
     private ArrayList<ProjectDetails.ConstructionDetailsBean> mDatas;
 
@@ -85,6 +91,8 @@ public class ProjecDetailsActivity extends BaseActivity {
             titleRight.setVisibility(View.GONE);
         }
         mDatas = new ArrayList<>();
+        mAdapter = new FollowAdapter(mDatas, this);
+        mListView.setAdapter(mAdapter);
     }
 
     @Override
@@ -110,6 +118,8 @@ public class ProjecDetailsActivity extends BaseActivity {
                     } else {
                         remarkTv.setText("备注:（无）");
                     }
+                    currStatus.setText(appBean.getData().getStatusName());
+                    mDatas.addAll(appBean.getData().getConstructionDetails());
                 }
             }
         });
@@ -151,13 +161,13 @@ public class ProjecDetailsActivity extends BaseActivity {
                 intent.putExtra("OID", oid);
                 startActivity(intent);
                 break;
-            case R.id.follow_layout:
-                if (mDatas != null && !mDatas.isEmpty()) {
-                    intent = new Intent(this, FollowListActivity.class);
-                    intent.putExtra("mDatas", (Serializable) mDatas);
-                    startActivity(intent);
-                }
-                break;
+//            case R.id.follow_layout:
+//                if (mDatas != null && !mDatas.isEmpty()) {
+//                    intent = new Intent(this, FollowListActivity.class);
+//                    intent.putExtra("mDatas", (Serializable) mDatas);
+//                    startActivity(intent);
+//                }
+//                break;
             case R.id.title_right:
                 intent = new Intent(ProjecDetailsActivity.this, ModelMachineApplyActivity.class);
                 startActivity(intent);

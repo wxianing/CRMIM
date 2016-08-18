@@ -2,26 +2,41 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:padding="@dimen/dp5">
 
-    <ImageView
-        android:id="@+id/img"
-        android:layout_width="@dimen/dp100"
-        android:layout_height="@dimen/dp70"
-        android:scaleType="fitXY"
-        android:src="@mipmap/default_icon" />
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp70"
-        android:layout_marginLeft="@dimen/dp10">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/customer_name"
+            android:id="@+id/title_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="客户名：王进喜"
-            android:textSize="@dimen/sp16" />
+            android:text="标题"
+            android:textColor="@color/textcolor_black" />
+
+        <TextView
+            android:id="@+id/visit_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2015.10.10 15:45"
+            android:textSize="@dimen/sp12" />
+
+        <TextView
+            android:id="@+id/linkman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="联系人:"
+            android:textSize="@dimen/sp14" />
+
+        <TextView
+            android:id="@+id/phone_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="电话:"
+            android:textSize="@dimen/sp14" />
 
         <TextView
             android:id="@+id/address_tv"
@@ -36,8 +51,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/visitor"
@@ -46,13 +60,7 @@
                 android:text="拜访人：纪晓岚"
                 android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/visit_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2015.10.10 15:45"
-                android:textSize="@dimen/sp12" />
         </RelativeLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

@@ -3,28 +3,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/default_background_color"
     android:orientation="vertical"
     tools:context="com.meidp.crmim.activity.ApprovalTypeActivity">
 
     <include layout="@layout/titlebar" />
 
-    <TextView
-        android:id="@+id/cost"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp30"
-        android:background="@color/white"
-        android:padding="@dimen/dp10"
-        android:text="费用" />
+        android:layout_marginTop="@dimen/dp30">
+
+        <TextView
+            android:id="@+id/cost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="@dimen/dp10"
+            android:text="费用" />
+
+        <TextView
+            android:id="@+id/fee_unreader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp15"
+            android:text="1"
+            android:visibility="invisible" />
+    </RelativeLayout>
 
     <include layout="@layout/horizontal_line" />
 
-    <TextView
-        android:id="@+id/prototype"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:padding="@dimen/dp10"
-        android:text="样机" />
+        android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/prototype"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="@dimen/dp10"
+            android:text="样机" />
+
+        <TextView
+            android:id="@+id/model_unreader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp15"
+            android:text="1"
+            android:visibility="invisible" />
+
+    </RelativeLayout>
 </LinearLayout>

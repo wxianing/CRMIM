@@ -104,8 +104,9 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
         Intent intent = new Intent(this, ApprovalDetailsActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("CheckforApply", apply);
+        intent.putExtra("OID", mDatas.get(position - 1).getID());
         intent.putExtras(bundle);
-        startActivityForResult(intent, 1018);
+        startActivityForResult(intent, 1019);
     }
 
     @Override
@@ -124,7 +125,7 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1018) {
+        if (resultCode == 1019) {
             mDatas.clear();
             loadData(pageIndex, keyword);
         }

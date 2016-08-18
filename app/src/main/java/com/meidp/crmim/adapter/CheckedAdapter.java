@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.meidp.crmim.MyApplication;
 import com.meidp.crmim.R;
 import com.meidp.crmim.model.Friends;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -35,7 +36,7 @@ public class CheckedAdapter extends BasicAdapter<Friends> {
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-        ImageLoader.getInstance().displayImage(mDatas.get(position).getPhotoURL(), vh.img);
+        ImageLoader.getInstance().displayImage(mDatas.get(position).getPhotoURL(), vh.img, MyApplication.optionsRounds);
         return convertView;
     }
 

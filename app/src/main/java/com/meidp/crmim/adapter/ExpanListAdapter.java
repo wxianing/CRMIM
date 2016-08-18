@@ -1,8 +1,7 @@
 package com.meidp.crmim.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import com.meidp.crmim.MyApplication;
 import com.meidp.crmim.R;
 import com.meidp.crmim.model.Contact;
 import com.meidp.crmim.utils.NullUtils;
-import com.meidp.crmim.view.DActionSheetDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.HashMap;
@@ -36,8 +34,8 @@ public class ExpanListAdapter extends BaseExpandableListAdapter {
         this.list = list;
         this.context = context;
         inflater = LayoutInflater.from(context);
-        isSelected = new HashMap<Integer, Boolean>();
-        initDate();
+        isSelected = new HashMap<>();
+        initDate(list);
     }
 
     public static HashMap<Integer, Boolean> getIsSelected() {
@@ -49,10 +47,10 @@ public class ExpanListAdapter extends BaseExpandableListAdapter {
     }
 
     // 初始化isSelected的数据
-    private void initDate() {
+    private void initDate(List<Contact> list) {
         for (int i = 0; i < list.size(); i++) {
             for (int j = 0; j < list.get(i).getUsers().size(); j++) {
-                getIsSelected().put(i, false);
+                getIsSelected().put(j, false);
             }
         }
     }
@@ -108,6 +106,10 @@ public class ExpanListAdapter extends BaseExpandableListAdapter {
             cvh.phoneNum.setText(phone);
         }
 
+        Boolean nowStatus = getIsSelected().get(childPosition);// 当前状态
+        Log.e("nowStatus>>>>>>>>>", "nowStatus +: " + nowStatus);
+        cvh.mCheckBox.setChecked(nowStatus);
+
         return convertView;
     }
 
@@ -131,9 +133,12 @@ public class ExpanListAdapter extends BaseExpandableListAdapter {
         private TextView title;
         private TextView count;
 
+        public CheckBox gCheckBox;
+
         public GroupVieHolder(View convertView) {
             title = (TextView) convertView.findViewById(R.id.item_group_title);
             count = (TextView) convertView.findViewById(R.id.count);
+            gCheckBox = (CheckBox) convertView.findViewById(R.id.check_box);
         }
     }
 

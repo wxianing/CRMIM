@@ -1,13 +1,18 @@
 package com.meidp.crmim.activity;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.meidp.crmim.R;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
+import com.meidp.crmim.model.AppBean;
 import com.meidp.crmim.model.ClientContacts;
 import com.meidp.crmim.utils.Constant;
+import com.meidp.crmim.utils.NullUtils;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -39,14 +44,49 @@ public class ClientDetailsActivity extends BaseActivity {
         title.setText("客户详情");
         oid = getIntent().getIntExtra("OID", 0);
         ClientContacts contacts = (ClientContacts) getIntent().getSerializableExtra("ClientContacts");
-        if (contacts != null) {
-            name.setText("姓     名：" + contacts.getLinkManName());
-            phone_num.setText("工作电话：" + contacts.getWorkTel());
-            sex_tv.setText("性       别：" + contacts.getSex());
-            company_name.setText("医院/公司：" + contacts.getCustName());
-            keshi.setText("科        室：" + contacts.getDepartment());
-            positions.setText("职        位：" + contacts.getPosition());
-        }
+//        if (contacts != null) {
+//            name.setText("姓     名：" + contacts.getLinkManName());
+//            phone_num.setText("工作电话：" + contacts.getWorkTel());
+//            sex_tv.setText("性       别：" + contacts.getSex());
+//            company_name.setText("医院/公司：" + contacts.getCustName());
+//            keshi.setText("科        室：" + contacts.getDepartment());
+//            positions.setText("职        位：" + contacts.getPosition());
+//        }
+    }
+
+    @Override
+    public void onInitData() {
+        HashMap params = new HashMap();
+        params.put("Id", oid);
+        HttpRequestUtils.getmInstance().send(this, Constant.LINKMAN_DETAILS_URL, params, new HttpRequestCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("客户详情", result);
+                AppBean<ClientContacts> appBean = JSONObject.parseObject(result, new TypeReference<AppBean<ClientContacts>>() {
+                });
+                if (appBean != null && appBean.getEnumcode() == 0) {
+                    name.setText("姓         名：" + appBean.getData().getLinkManName());
+                    phone_num.setText("工作电话：" + appBean.getData().getWorkTel());
+
+                    if (appBean.getData().getSex().equals("1")) {
+                        sex_tv.setText("性       别：" + "男");
+                    } else if (appBean.getData().getSex().equals("2")) {
+                        sex_tv.setText("性       别：" + "女");
+                    } else {
+                        sex_tv.setText("性       别：" + "未填");
+                    }
+                    if (NullUtils.isNull(appBean.getData().getCustName())) {
+                        company_name.setText("医院/公司：" + appBean.getData().getCustName());
+                    }
+                    if (NullUtils.isNull(appBean.getData().getDepartment())) {
+                        keshi.setText("科        室：" + appBean.getData().getDepartment());
+                    }
+                    if (NullUtils.isNull(appBean.getData().getPosition())) {
+                        positions.setText("职        位：" + appBean.getData().getPosition());
+                    }
+                }
+            }
+        });
     }
 
     @Event({R.id.back_arrows})
@@ -57,4 +97,5 @@ public class ClientDetailsActivity extends BaseActivity {
                 break;
         }
     }
+
 }

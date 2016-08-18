@@ -33,7 +33,7 @@ public class WelcomeActivity extends Activity {
 
                 finish();
             }
-        }.sendEmptyMessageDelayed(0, 1000);
+        }.sendEmptyMessageDelayed(0, 500);
     }
 
 

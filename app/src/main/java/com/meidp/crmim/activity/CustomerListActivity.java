@@ -135,6 +135,7 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
             Intent intent = new Intent(this, ClientDetailsActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("ClientContacts", contacts);
+            intent.putExtra("OID", mDatas.get(position-1).getID());
             intent.putExtras(bundle);
             startActivity(intent);
 

@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
     android:padding="@dimen/dp10">
 
-    <TextView
-        android:id="@+id/title_name"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="标题"
-        android:textColor="@color/textcolor_black"
-        android:textSize="@dimen/sp16" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/title_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp15"
+            android:text="标题"
+            android:textColor="@color/textcolor_black"
+            android:textSize="@dimen/sp16" />
+
+        <ImageView
+            android:id="@+id/red_dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/red_round_icon"
+            android:visibility="gone" />
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/cust_name"

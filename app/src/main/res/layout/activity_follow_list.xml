@@ -3,15 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/default_background_color"
     android:orientation="vertical"
     tools:context="com.meidp.crmim.activity.FollowListActivity">
 
     <include layout="@layout/titlebar" />
 
     <ListView
-        android:layout_marginTop="@dimen/dp20"
         android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp20" />
 
 </LinearLayout>

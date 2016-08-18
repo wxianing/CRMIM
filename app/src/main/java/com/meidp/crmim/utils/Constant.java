@@ -162,7 +162,7 @@ public class Constant {
     public static final String GET_COST_CHECK = BASE_URL + "office/office/getfeeapplypagelistforcheck";
     //业绩统计报表
     public static final String PERFORMANCE_URL = BASE_URL + "common/mpublic/getachievementtotal";
-    //项目方向
+    //项目领域
     public static final String PROJECT_DIRECTION_URL = BASE_URL + "office/office/getcodepublictypelist";
     //保存客户联系人
     public static final String SAVE_CUSTOMER_CONTACT_URL = BASE_URL + "crm/custlinkmansave";
@@ -172,4 +172,10 @@ public class Constant {
     public static final String VERSION_UPDATE = "http://meistapi.meidp.com/" + "systemset/getlatestversoin";
     //获取群成员
     public static final String GROUP_MEMBER_URL = BASE_URL + "common/rongcloud/getdiscussion";
+    //客户详情
+    public static final String LINKMAN_DETAILS_URL = BASE_URL + "crm/getlinkman";
+    //审批未读数
+    public static final String GETNOCHECKTOTAL_URL = BASE_URL + "common/mpublic/getnochecktotal";
+    //极光推送未读消息
+    public static final String JPUSH_NORESDER_URL = BASE_URL + "common/mpublic/getnoreadtotal";
 }

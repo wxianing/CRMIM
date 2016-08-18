@@ -13,6 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
+import com.jauker.widget.BadgeView;
 import com.meidp.crmim.R;
 import com.meidp.crmim.activity.DimensionCodeActivity;
 import com.meidp.crmim.activity.ModelMachineApplyActivity;
@@ -21,8 +24,11 @@ import com.meidp.crmim.activity.SearchMsgActivity;
 import com.meidp.crmim.activity.SecretaryActivity;
 import com.meidp.crmim.activity.SigninMainActivity;
 import com.meidp.crmim.activity.SubmitActivity;
-import com.meidp.crmim.activity.VisitingClientsActivity;
 import com.meidp.crmim.fragment.BaseFragment;
+import com.meidp.crmim.http.HttpRequestCallBack;
+import com.meidp.crmim.http.HttpRequestUtils;
+import com.meidp.crmim.model.JPushNoReader;
+import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.DataUtils;
 import com.meidp.crmim.utils.NullUtils;
 
@@ -30,6 +36,8 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
+
+import java.util.HashMap;
 
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.model.Conversation;
@@ -58,6 +66,8 @@ public class ConversationListStaticFragment extends BaseFragment {
     @ViewInject(R.id.curr_time)
     private TextView currTime;
     private PopupWindow mPopupWindow;
+    @ViewInject(R.id.unreader)
+    private TextView unreader;
 
     public static ConversationListStaticFragment newInstance(String params) {
         ConversationListStaticFragment fragment = new ConversationListStaticFragment();
@@ -107,6 +117,40 @@ public class ConversationListStaticFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onInitData() {
+        HashMap params = new HashMap();
+        HttpRequestUtils.getmInstance().send(getActivity(), Constant.JPUSH_NORESDER_URL, params, new HttpRequestCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                JPushNoReader appBean = JSONObject.parseObject(result, new TypeReference<JPushNoReader>() {
+                });
+                if (appBean != null && appBean.getEnumcode() == 0) {
+                    BadgeView badgeView = new BadgeView(getActivity());
+                    badgeView.setBadgeCount(appBean.getData());
+                    badgeView.setTargetView(unreader);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        HashMap params = new HashMap();
+        HttpRequestUtils.getmInstance().send(getActivity(), Constant.JPUSH_NORESDER_URL, params, new HttpRequestCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                JPushNoReader appBean = JSONObject.parseObject(result, new TypeReference<JPushNoReader>() {
+                });
+                if (appBean != null && appBean.getEnumcode() == 0) {
+                    BadgeView badgeView = new BadgeView(getActivity());
+                    badgeView.setBadgeCount(appBean.getData());
+                    badgeView.setTargetView(unreader);
+                }
+            }
+        });
+    }
 
     @Event({R.id.search_edittext, R.id.right_add, R.id.right_scan, R.id.secretary_layout, R.id.visit_client, R.id.new_group, R.id.submit_project, R.id.apply_model})
     private void onClick(View v) {

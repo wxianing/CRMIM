@@ -79,6 +79,31 @@
             <include layout="@layout/horizontal_line" />
 
             <LinearLayout
+                android:id="@+id/prototype_manager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/dp5"
+                android:paddingTop="@dimen/dp5">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:src="@mipmap/prototype_manager_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:text="样机管理" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
                 android:id="@+id/cost_manager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -103,32 +128,6 @@
 
             <include layout="@layout/horizontal_line" />
 
-            <LinearLayout
-                android:id="@+id/prototype_manager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingBottom="@dimen/dp5"
-                android:paddingTop="@dimen/dp5">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:src="@mipmap/prototype_manager_icon" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:text="样机管理" />
-
-            </LinearLayout>
-
-
-            <include layout="@layout/horizontal_line" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -136,7 +135,7 @@
                 android:padding="@dimen/dp8"
                 android:text="我的成果" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/approval_manager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -145,6 +144,7 @@
                 android:paddingTop="@dimen/dp5">
 
                 <ImageView
+                    android:id="@+id/chenk_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp10"
@@ -153,11 +153,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dp10"
+                    android:layout_toRightOf="@+id/chenk_img"
                     android:text="审批管理" />
 
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/unreader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp15"
+                    android:text="1"
+                    android:visibility="invisible" />
+
+            </RelativeLayout>
 
             <include layout="@layout/horizontal_line" />
 

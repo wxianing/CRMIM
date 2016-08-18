@@ -33,7 +33,7 @@ public class VisitRecodeDetailsActivity extends BaseActivity {
         if (records != null) {
             titleName.setText(records.getTitle());
             if (NullUtils.isNull(records.getCustName())) {
-                custName.setText("客户名称：" + records.getCustName());
+                custName.setText("客户名称：" + records.getCustLinkManName());
             } else {
                 custName.setText("客户名称：");
             }

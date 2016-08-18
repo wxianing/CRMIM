@@ -1,8 +1,8 @@
 package com.meidp.crmim.activity;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -16,6 +16,7 @@ import com.meidp.crmim.model.AppMsg;
 import com.meidp.crmim.model.CheckforApply;
 import com.meidp.crmim.model.PrototypeDetails;
 import com.meidp.crmim.utils.Constant;
+import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.ToastUtils;
 import com.meidp.crmim.view.ListViewForScrollView;
 
@@ -89,18 +90,31 @@ public class ApprovalDetailsActivity extends BaseActivity {
     }
 
     private void bindView(AppBean<PrototypeDetails> appBean) {
-        titleName.setText("标题：" + appBean.getData().getTitle());
-        currStatus.setText("状态：" + appBean.getData().getFlowStatusName());
-        projectName.setText("项目名：" + checkforApply.getProjectName());
-        custName.setText("客户名：" + checkforApply.getCustName());
-        dutyName.setText("负责人：" + checkforApply.getCreatorName());
-        billNo = checkforApply.getApplyNo();
-        mDatas = new ArrayList<>();
-        mDatas.addAll(checkforApply.getFlowSteps());
-        mAdapter = new CheckAdapter(mDatas, this);
-        mListView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
+        if (NullUtils.isNull(appBean.getData().getTitle())) {
+            titleName.setText("标题：" + appBean.getData().getTitle());
+        }
+        if (NullUtils.isNull(appBean.getData().getFlowStatusName())) {
+            currStatus.setText("状态：" + appBean.getData().getFlowStatusName());
+        }
+        String produceNames = "";
+        if (!appBean.getData().getDetails().isEmpty()) {
+            for (int i = 0; i < appBean.getData().getDetails().size(); i++) {
+                produceNames += appBean.getData().getDetails().get(i).getProductName();
+            }
+            projectName.setText("样机名：" + produceNames);
+        }
 
+        if (NullUtils.isNull(appBean.getData().getCreatorName())) {
+            dutyName.setText("负责人：" + appBean.getData().getCreatorName());
+        }
+        billNo = appBean.getData().getApplyNo();
+        mDatas = new ArrayList<>();
+        if (checkforApply != null) {
+            mDatas.addAll(checkforApply.getFlowSteps());
+            mAdapter = new CheckAdapter(mDatas, this);
+            mListView.setAdapter(mAdapter);
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     @Event({R.id.back_arrows, R.id.agree_btn, R.id.refuse_btn})
@@ -132,6 +146,8 @@ public class ApprovalDetailsActivity extends BaseActivity {
                 });
                 if (appMsg != null && appMsg.getEnumcode() == 0) {
                     ToastUtils.shows(ApprovalDetailsActivity.this, "审批成功");
+                    Intent intent = new Intent();
+                    setResult(1019, intent);
                     finish();
                 } else {
                     ToastUtils.shows(ApprovalDetailsActivity.this, appMsg.getMsg());

@@ -92,7 +92,7 @@ public class PrototypeDetailsActivity extends BaseActivity {
         prototypeName.setText("样机名称：" + prototypeNameString);
         count.setText("数量：" + countString);
         applyTime.setText("申请时间：" + appBean.getData().getCreateDate());
-        applyPerson.setText("申请人：" + appBean.getData().getApplyer());
+        applyPerson.setText("申请人：" + appBean.getData().getCreatorName());
         phoneNum.setText("联系电话：" + appBean.getData().getCustTel());
     }
 
