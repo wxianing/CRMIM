@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:padding="@dimen/dp10"
-            android:text="费用" />
+            android:text="费用审核" />
 
         <TextView
             android:id="@+id/fee_unreader"
@@ -45,10 +45,37 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:padding="@dimen/dp10"
-            android:text="样机" />
+            android:text="样机审核" />
 
         <TextView
             android:id="@+id/model_unreader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp15"
+            android:text="1"
+            android:visibility="invisible" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/horizontal_line" />
+
+    <RelativeLayout
+        android:id="@+id/stockup_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/stock_up"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="@dimen/dp10"
+            android:text="备货审核" />
+
+        <TextView
+            android:id="@+id/stockup_unreader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

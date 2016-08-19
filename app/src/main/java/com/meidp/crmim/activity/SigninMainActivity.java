@@ -29,6 +29,7 @@ import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.utils.ToastUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 public class SigninMainActivity extends BaseActivity implements BDLocationListener, View.OnClickListener {
@@ -51,8 +52,6 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
 
     private ImageView signIn;//签到按钮
 
-    private TextView titleRight;
-
     private TextView customerName;
     private String customName;
     private int cusId;
@@ -64,6 +63,10 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
     private double latitude;
     private double longitude;
     private String addressStr;
+    @ViewInject(R.id.right_scan)
+    private ImageView rightScan;//历史拜访
+    @ViewInject(R.id.right_add)
+    private ImageView custImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +78,14 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
     }
 
     private void initView() {
+        rightScan.setVisibility(View.VISIBLE);
+        rightScan.setImageResource(R.mipmap.cus_history);
+        custImg.setImageResource(R.mipmap.cus_info);
         title = (TextView) findViewById(R.id.title_tv);
         title.setText("拜访客户");
         address = (TextView) findViewById(R.id.address_tv);
-
+        custImg.setOnClickListener(this);
+        rightScan.setOnClickListener(this);
         mBaiduMap = mMapView.getMap();
         mMapView.showZoomControls(false);
 
@@ -112,13 +119,13 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
         currTime.setText("当前时间：" + DataUtils.getTime());
         signIn.setOnClickListener(this);
         backImg = (ImageView) findViewById(R.id.back_arrows);
-        titleRight = (TextView) findViewById(R.id.title_right);
+//        titleRight = (TextView) findViewById(R.id.title_right);
         customerName = (TextView) findViewById(R.id.customer_name);
         contentTv = (EditText) findViewById(R.id.content_tv);
 
-        titleRight.setText("拜访记录");
-        titleRight.setVisibility(View.VISIBLE);
-        titleRight.setOnClickListener(this);
+//        titleRight.setText("拜访记录");
+//        titleRight.setVisibility(View.VISIBLE);
+//        titleRight.setOnClickListener(this);
 
         backImg.setOnClickListener(this);
 
@@ -178,7 +185,7 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
         SPUtils.save(this, "Address", bdLocation.getAddrStr());
         latitude = bdLocation.getLatitude();
         longitude = bdLocation.getLongitude();
-        addressStr =  bdLocation.getAddrStr();
+        addressStr = bdLocation.getAddrStr();
 
         if (NullUtils.isNull(bdLocation.getAddrStr())) {
             mLocalClient.stop();
@@ -222,7 +229,7 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
                 intent = new Intent(this, VisitingClientsActivity.class);
                 intent.putExtra("LONGITUDE", longitude);
                 intent.putExtra("LATITUDE", latitude);
-                intent.putExtra("Address",addressStr);
+                intent.putExtra("Address", addressStr);
                 startActivity(intent);
                 break;
             case R.id.back_arrows:
@@ -233,7 +240,7 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
                 startActivity(intent);
                 break;
             case R.id.customer_name:
-                ToastUtils.shows(this, "点击了客户");
+//                ToastUtils.shows(this, "点击了客户");
                 intent = new Intent();
                 intent.setClass(this, CustomerListActivity.class);
                 startActivity(intent);

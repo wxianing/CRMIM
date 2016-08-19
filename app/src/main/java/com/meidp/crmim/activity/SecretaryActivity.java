@@ -1,6 +1,7 @@
 package com.meidp.crmim.activity;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -58,6 +59,13 @@ public class SecretaryActivity extends BaseActivity implements AdapterView.OnIte
         loadData(pageIndex, keyWord);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mDatas.clear();
+        loadData(pageIndex, keyWord);
+    }
+
     @Event({R.id.back_arrows, R.id.search_btn})
     private void onClcik(View v) {
         switch (v.getId()) {
@@ -96,6 +104,8 @@ public class SecretaryActivity extends BaseActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         int billId = mDatas.get(position - 1).getBillId();
+        int oid = mDatas.get(position - 1).getId();
+        sendMsg(oid);
         int billTypeFlag = mDatas.get(position - 1).getBillTypeFlag();
         int billTypeCode = mDatas.get(position - 1).getBillTypeCode();
         if (billTypeFlag == 1 && billTypeCode == 4) {//费用
@@ -132,7 +142,29 @@ public class SecretaryActivity extends BaseActivity implements AdapterView.OnIte
             Intent intent = new Intent(SecretaryActivity.this, CustomerListActivity.class);
             startActivity(intent);
         }
+        if (billTypeFlag == 5 && billTypeCode == 3) {
+            Intent intent = new Intent(SecretaryActivity.this, StockUpDetailsActivity.class);
+            intent.putExtra("OID", mDatas.get(position - 1).getBillId());
+            startActivity(intent);
+        }
     }
+
+    /**
+     * 发送标志已读消息
+     *
+     * @param billId
+     */
+    private void sendMsg(int billId) {
+        HashMap params = new HashMap();
+        params.put("Id", billId);
+        HttpRequestUtils.getmInstance().send(SecretaryActivity.this, Constant.JPUSH_HASREADER_SAVE, params, new HttpRequestCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("标记成功", result);
+            }
+        });
+    }
+
 
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {

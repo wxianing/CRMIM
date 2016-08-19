@@ -136,11 +136,13 @@ public class ConversationListStaticFragment extends BaseFragment {
 
     @Override
     public void onResume() {
-        super.onResume();
+        Log.e(">>>>>>>>", "测试而已");
         HashMap params = new HashMap();
+        params.put("Id",1);
         HttpRequestUtils.getmInstance().send(getActivity(), Constant.JPUSH_NORESDER_URL, params, new HttpRequestCallBack() {
             @Override
             public void onSuccess(String result) {
+                Log.e("极光未读消息：", result);
                 JPushNoReader appBean = JSONObject.parseObject(result, new TypeReference<JPushNoReader>() {
                 });
                 if (appBean != null && appBean.getEnumcode() == 0) {
@@ -150,6 +152,7 @@ public class ConversationListStaticFragment extends BaseFragment {
                 }
             }
         });
+        super.onResume();
     }
 
     @Event({R.id.search_edittext, R.id.right_add, R.id.right_scan, R.id.secretary_layout, R.id.visit_client, R.id.new_group, R.id.submit_project, R.id.apply_model})

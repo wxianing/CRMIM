@@ -75,6 +75,7 @@
                 android:layout_height="match_parent"
                 android:divider="#00000000"
                 android:dividerHeight="0dp"
+                android:scrollbars="none"
                 android:groupIndicator="@drawable/lt_expandablelistviewselector" />
         </LinearLayout>
     </ScrollView>

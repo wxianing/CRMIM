@@ -30,13 +30,15 @@ public class ApprovalTypeActivity extends BaseActivity {
 
     @ViewInject(R.id.model_unreader)
     private TextView modelUnReader;
+    @ViewInject(R.id.stockup_unreader)
+    private TextView stockupUnreader;
 
     @Override
     public void onInit() {
         title.setText("审批管理");
     }
 
-    @Event({R.id.back_arrows, R.id.cost, R.id.prototype})
+    @Event({R.id.back_arrows, R.id.cost, R.id.prototype, R.id.stockup_layout})
     private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -49,6 +51,10 @@ public class ApprovalTypeActivity extends BaseActivity {
                 break;
             case R.id.prototype:
                 intent = new Intent(this, ApprovalProcessActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.stockup_layout:
+                intent = new Intent(this, StockUpActivity.class);
                 startActivity(intent);
                 break;
 
@@ -72,6 +78,10 @@ public class ApprovalTypeActivity extends BaseActivity {
                     BadgeView modelBadgeView = new BadgeView(ApprovalTypeActivity.this);
                     modelBadgeView.setBadgeCount(appBean.getData().getNoCheckCount_Sample());
                     modelBadgeView.setTargetView(modelUnReader);
+
+                    BadgeView stockUpView = new BadgeView(ApprovalTypeActivity.this);
+                    stockUpView.setBadgeCount(appBean.getData().getNoCheckCount_Order());
+                    stockUpView.setTargetView(stockupUnreader);
                 }
             }
         });

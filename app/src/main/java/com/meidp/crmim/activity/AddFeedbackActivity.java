@@ -46,8 +46,10 @@ public class AddFeedbackActivity extends BaseActivity {
                 String titleName = titleNameEt.getText().toString().trim();
                 if (NullUtils.isNull(content)) {
                     HashMap params = new HashMap();
+
                     params.put("Title", titleName);
                     params.put("Content", content);
+
                     HttpRequestUtils.getmInstance().send(this, Constant.SAVE_FEEDBACK_URL, params, new HttpRequestCallBack() {
                         @Override
                         public void onSuccess(String result) {

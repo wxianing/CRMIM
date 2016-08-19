@@ -169,7 +169,7 @@ public class Constant {
     //申请备货
     public static final String STOCK_UP_URL = BASE_URL + "order/sellordersave";
     //版本升级
-    public static final String VERSION_UPDATE = "http://meistapi.meidp.com/" + "systemset/getlatestversoin";
+    public static final String VERSION_UPDATE = BASE_URL + "systemset/getlatestversoin";
     //获取群成员
     public static final String GROUP_MEMBER_URL = BASE_URL + "common/rongcloud/getdiscussion";
     //客户详情
@@ -178,4 +178,10 @@ public class Constant {
     public static final String GETNOCHECKTOTAL_URL = BASE_URL + "common/mpublic/getnochecktotal";
     //极光推送未读消息
     public static final String JPUSH_NORESDER_URL = BASE_URL + "common/mpublic/getnoreadtotal";
+    //备货列表
+    public static final String STOCK_LIST_URL = BASE_URL + "order/getsellorderpagelistforcheck";
+    //备货详情
+    public static final String GET_STOCKUP_DETAILS = BASE_URL + "order/getsellorder";
+    //标记极光推送未已读消息
+    public static final String JPUSH_HASREADER_SAVE = BASE_URL + "common/mpublic/jpushreadsave";
 }

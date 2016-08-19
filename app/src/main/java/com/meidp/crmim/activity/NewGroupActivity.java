@@ -358,17 +358,32 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
         ExpanListAdapter.GroupVieHolder holder = (ExpanListAdapter.GroupVieHolder) v.getTag();
         holder.gCheckBox.toggle();
         SelectFriendAdapter.getIsSelected().put(groupPosition, holder.gCheckBox.isChecked());
-        if (holder.gCheckBox.isChecked() == true){
+        if (holder.gCheckBox.isChecked() == true) {
             for (int i = 0; i < contactList.get(groupPosition).getUsers().size(); i++) {
-                ExpanListAdapter.getIsSelected().put(i, true);
+                ExpanListAdapter.getIsSelected().put(contactList.get(groupPosition).getUsers().get(i).getUserID(), true);
+
+                userIds.add(Integer.toString(contactList.get(groupPosition).getUsers().get(i).getUserID()));
+                Friends friends = new Friends();
+                friends.setEmployeeName(contactList.get(groupPosition).getUsers().get(i).getEmployeeName());
+                friends.setPhotoURL(contactList.get(groupPosition).getUsers().get(i).getPhotoURL());
+                friends.setUserID(contactList.get(groupPosition).getUsers().get(i).getUserID());
+                checkedLists.add(friends);
+                checkedAdapter.notifyDataSetChanged();
             }
-        }else {
+        } else {
             for (int i = 0; i < contactList.get(groupPosition).getUsers().size(); i++) {
-                ExpanListAdapter.getIsSelected().put(i, false);
+                ExpanListAdapter.getIsSelected().put(contactList.get(groupPosition).getUsers().get(i).getUserID(), false);
+                for (int k = 0; k < checkedLists.size(); k++) {
+                    int checkId = checkedLists.get(k).getUserID();
+                    Log.e("checkId", "<<<<>>>>" + checkId);
+                    if (contactList.get(groupPosition).getUsers().get(i).getUserID() == checkId) {
+                        checkedLists.remove(k);
+                        userIds.remove(k);
+                    }
+                    checkedAdapter.notifyDataSetChanged();
+                }
             }
         }
-
-
 
         expandableAdapter.notifyDataSetChanged();
         return true;

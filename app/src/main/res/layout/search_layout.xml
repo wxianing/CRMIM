@@ -16,6 +16,7 @@
         android:layout_weight="1"
         android:background="@drawable/edit_white_bg"
         android:hint="请输入关键字搜索"
+        android:textColorHint="@color/tc_gray"
         android:textSize="@dimen/sp14" />
 
     <Button

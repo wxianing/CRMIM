@@ -302,7 +302,9 @@
         <activity android:name=".activity.RateSelectActivity" />
         <activity android:name=".activity.ProjectDirectionActivity" />
         <activity android:name=".activity.VisitRecodeDetailsActivity" />
-        <activity android:name=".activity.CreditUnscrambleActivity"></activity>
+        <activity android:name=".activity.CreditUnscrambleActivity" />
+        <activity android:name=".activity.StockUpActivity" />
+        <activity android:name=".activity.StockUpDetailsActivity"></activity>
     </application>
 
 </manifest>

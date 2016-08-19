@@ -1,6 +1,9 @@
 package com.meidp.crmim.adapter;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -21,12 +24,14 @@ import java.util.List;
  * 时  间： 2016/8/9
  */
 public class SecretaryAdapter extends BasicAdapter<Secretary> {
+
     public SecretaryAdapter(List<Secretary> mDatas, Context context) {
         super(mDatas, context);
     }
 
     @Override
     public View createView(int position, View convertView, ViewGroup parent) {
+        Secretary data = mDatas.get(position);
         ViewHolder vh = null;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.item_secretary_list, parent, false);
@@ -36,13 +41,23 @@ public class SecretaryAdapter extends BasicAdapter<Secretary> {
             vh = (ViewHolder) convertView.getTag();
         }
 
-        vh.title.setText(mDatas.get(position).getTitle());
-        vh.content.setText(mDatas.get(position).getMsg());
-        String timeStr = mDatas.get(position).getCreateTime();
-//        if (NullUtils.isNull(timeStr)) {
-//            timeStr = timeStr.substring(0, timeStr.length() - 3);
-//        }
-        vh.time.setText(mDatas.get(position).getCreateTime());
+        if (NullUtils.isNull(data.getTitle())) {
+            vh.title.setText(mDatas.get(position).getTitle());
+        }
+        if (NullUtils.isNull(mDatas.get(position).getMsg())) {
+            vh.content.setText(mDatas.get(position).getMsg());
+        }
+        String timeStr = mDatas.get(position).getCreateTimeStr();
+        if (NullUtils.isNull(timeStr)) {
+            vh.time.setText(timeStr);
+        }
+
+        String statusName = mDatas.get(position).getStatusName();
+        if (!statusName.equals("未读")) {
+            vh.title.setTextColor(Color.rgb(189, 189, 189));
+            vh.content.setTextColor(Color.rgb(189, 189, 189));
+        }
+
         return convertView;
     }
 

@@ -26,6 +26,7 @@
             android:textSize="@dimen/sp16" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/teams_member"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

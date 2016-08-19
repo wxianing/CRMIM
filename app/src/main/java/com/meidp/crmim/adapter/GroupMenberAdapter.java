@@ -1,34 +1,22 @@
 package com.meidp.crmim.adapter;
 
 import android.content.Context;
-import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
 import com.meidp.crmim.MyApplication;
 import com.meidp.crmim.R;
-import com.meidp.crmim.http.HttpRequestCallBack;
-import com.meidp.crmim.http.HttpRequestUtils;
-import com.meidp.crmim.model.AppBean;
 import com.meidp.crmim.model.Menber;
-import com.meidp.crmim.model.User;
-import com.meidp.crmim.utils.Constant;
+import com.meidp.crmim.utils.NullUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import java.util.HashMap;
 import java.util.List;
-
-import io.rong.imkit.RongIM;
-import io.rong.imlib.model.UserInfo;
 
 /**
  * Package： com.meidp.crmim.adapter
@@ -53,10 +41,16 @@ public class GroupMenberAdapter extends BasicAdapter<Menber.UsersBean> {
             resetView(vh);
         }
         vh.headerImg.setImageResource(R.mipmap.headerphoto);
-        vh.userName.setText(mDatas.get(position).getEmployeeName() + "(" + mDatas.get(position).getQuarterName() + ")");
+
+        if (NullUtils.isNull(mDatas.get(position).getQuarterName())) {
+            vh.userName.setText(mDatas.get(position).getEmployeeName() + "(" + mDatas.get(position).getQuarterName() + ")");
+        } else {
+            vh.userName.setText(mDatas.get(position).getEmployeeName());
+        }
         ImageLoader.getInstance().displayImage(mDatas.get(position).getPhotoURL(), vh.headerImg, MyApplication.optionsRounds);
-//        findUserById(mDatas.get(position), vh.userName, vh.headerImg);
-        vh.department.setText(mDatas.get(position).getDeptName());
+        if (NullUtils.isNull(mDatas.get(position).getDeptName())) {
+            vh.department.setText(mDatas.get(position).getDeptName());
+        }
         return convertView;
     }
 
@@ -78,24 +72,5 @@ public class GroupMenberAdapter extends BasicAdapter<Menber.UsersBean> {
     private void resetView(ViewHolder vh) {
         vh.userName.setText(null);
         vh.headerImg.setImageBitmap(null);
-
-    }
-
-    private void findUserById(final String userId, final TextView menberName, final ImageView img) {
-        HashMap params = new HashMap();
-        params.put("Id", Integer.valueOf(userId));
-        HttpRequestUtils.getmInstance().post(context, Constant.GET_PERSON_INFORMATION, params, new HttpRequestCallBack() {
-            @Override
-            public void onSuccess(String result) {
-                AppBean<User> appBean = JSONObject.parseObject(result, new TypeReference<AppBean<User>>() {
-                });
-                if (appBean != null && appBean.getEnumcode() == 0) {
-                    String avatar = appBean.getData().getPhotoURL();
-                    String name = appBean.getData().getEmployeeName();
-                    menberName.setText(name);
-                    ImageLoader.getInstance().displayImage(avatar, img, MyApplication.optionsRounds);
-                }
-            }
-        });
     }
 }

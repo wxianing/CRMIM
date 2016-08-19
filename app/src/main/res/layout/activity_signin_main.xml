@@ -8,7 +8,7 @@
     android:background="@color/default_background_color"
     tools:context=".activity.CustomerVisitActivity">
 
-    <include layout="@layout/titlebar" />
+    <include layout="@layout/titlebar_right_image" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -153,7 +153,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/dp5"
                     android:layout_marginTop="@dimen/dp5"
-                    android:text="地点微调"
+                    android:text="查看历史拜访记录"
                     android:textColor="@color/textcolor_blue" />
             </LinearLayout>
         </LinearLayout>

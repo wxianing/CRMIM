@@ -4,12 +4,10 @@ import android.app.Dialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -45,9 +43,6 @@ public class AddTeamActivity extends BaseActivity implements ExpandableListView.
     @ViewInject(R.id.title_right)
     private TextView titleRight;
 
-    @ViewInject(R.id.listview)
-    private ListView mListVIew;
-
     private List<Friends> mDatas;
     private SelectFriendAdapter mAdapter;
 
@@ -74,7 +69,6 @@ public class AddTeamActivity extends BaseActivity implements ExpandableListView.
     private List<Contact> contactList;
     private ExpanListAdapter expandableAdapter;
     private String empolyeesIds = "";
-
 
     @Override
     public void onInit() {
@@ -104,6 +98,7 @@ public class AddTeamActivity extends BaseActivity implements ExpandableListView.
     @Override
     public void onInitData() {
 //        loadData(keyWord);
+
         HttpRequestUtils.getmInstance().send(this, Constant.GET_CONTACTS_URL, null, new HttpRequestCallBack() {
             @Override
             public void onSuccess(String result) {
@@ -112,6 +107,9 @@ public class AddTeamActivity extends BaseActivity implements ExpandableListView.
                 if (appBean != null && appBean.getEnumcode() == 0) {
                     contactList.clear();
                     contactList.addAll(appBean.getData());
+                    expandableAdapter = new ExpanListAdapter(contactList, AddTeamActivity.this);
+                    expListView.setAdapter(expandableAdapter);
+
                     expandableAdapter.notifyDataSetChanged();
                     for (int i = 0; i < contactList.size(); i++) {
                         expListView.expandGroup(i);//默认展开选项
@@ -211,9 +209,7 @@ public class AddTeamActivity extends BaseActivity implements ExpandableListView.
             }
         });
         dialog.show();
-
     }
-
 
     private void sendMsg(String teamName, int teamId) {
         String otherPersons = otherPersonEt.getText().toString().trim();
@@ -262,12 +258,13 @@ public class AddTeamActivity extends BaseActivity implements ExpandableListView.
             checkedAdapter.notifyDataSetChanged();
         } else {
             checkNum--;
-            empolyees.remove(checkNum);
+
             for (int i = 0; i < checkedLists.size(); i++) {
                 int checkId = checkedLists.get(i).getEmployeeID();
                 Log.e("checkId", "<<<<>>>>" + checkId);
                 if (employeeID == checkId) {
                     checkedLists.remove(i);
+                    empolyees.remove(i);
                 }
             }
             checkedAdapter.notifyDataSetChanged();
@@ -282,6 +279,37 @@ public class AddTeamActivity extends BaseActivity implements ExpandableListView.
 
     @Override
     public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+        ExpanListAdapter.GroupVieHolder holder = (ExpanListAdapter.GroupVieHolder) v.getTag();
+        holder.gCheckBox.toggle();
+        SelectFriendAdapter.getIsSelected().put(groupPosition, holder.gCheckBox.isChecked());
+        if (holder.gCheckBox.isChecked() == true) {
+            for (int i = 0; i < contactList.get(groupPosition).getUsers().size(); i++) {
+                ExpanListAdapter.getIsSelected().put(contactList.get(groupPosition).getUsers().get(i).getUserID(), true);
+
+                empolyees.add(Integer.toString(contactList.get(groupPosition).getUsers().get(i).getUserID()));
+                Friends friends = new Friends();
+                friends.setEmployeeName(contactList.get(groupPosition).getUsers().get(i).getEmployeeName());
+                friends.setPhotoURL(contactList.get(groupPosition).getUsers().get(i).getPhotoURL());
+                friends.setUserID(contactList.get(groupPosition).getUsers().get(i).getUserID());
+                checkedLists.add(friends);
+                checkedAdapter.notifyDataSetChanged();
+            }
+        } else {
+            for (int i = 0; i < contactList.get(groupPosition).getUsers().size(); i++) {
+                ExpanListAdapter.getIsSelected().put(contactList.get(groupPosition).getUsers().get(i).getUserID(), false);
+                for (int k = 0; k < checkedLists.size(); k++) {
+                    int checkId = checkedLists.get(k).getUserID();
+                    Log.e("checkId", "<<<<>>>>" + checkId);
+                    if (contactList.get(groupPosition).getUsers().get(i).getUserID() == checkId) {
+                        checkedLists.remove(k);
+                        empolyees.remove(k);
+                    }
+                    checkedAdapter.notifyDataSetChanged();
+                }
+            }
+        }
+
+        expandableAdapter.notifyDataSetChanged();
         return true;
     }
 }

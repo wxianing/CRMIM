@@ -50,7 +50,7 @@ public class ExpanListAdapter extends BaseExpandableListAdapter {
     private void initDate(List<Contact> list) {
         for (int i = 0; i < list.size(); i++) {
             for (int j = 0; j < list.get(i).getUsers().size(); j++) {
-                getIsSelected().put(j, false);
+                getIsSelected().put(list.get(i).getUsers().get(j).getUserID(), false);
             }
         }
     }
@@ -106,7 +106,7 @@ public class ExpanListAdapter extends BaseExpandableListAdapter {
             cvh.phoneNum.setText(phone);
         }
 
-        Boolean nowStatus = getIsSelected().get(childPosition);// 当前状态
+        Boolean nowStatus = getIsSelected().get(list.get(groupPosition).getUsers().get(childPosition).getUserID());// 当前状态
         Log.e("nowStatus>>>>>>>>>", "nowStatus +: " + nowStatus);
         cvh.mCheckBox.setChecked(nowStatus);
 

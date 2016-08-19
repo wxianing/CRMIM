@@ -20,6 +20,8 @@
             android:layout_height="1200dp"
             android:orientation="vertical">
 
+
+
             <GridView
                 android:id="@+id/gridview"
                 android:layout_width="match_parent"
@@ -56,7 +58,8 @@
                 android:layout_height="match_parent"
                 android:divider="#00000000"
                 android:dividerHeight="0dp"
-                android:groupIndicator="@drawable/lt_expandablelistviewselector" />
+                android:groupIndicator="@drawable/lt_expandablelistviewselector"
+                android:scrollbars="none" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
