@@ -39,9 +39,11 @@ public class CustomerListAdapter extends BasicAdapter<ClientContacts> {
             vh = (ViewHolder) convertView.getTag();
         }
 
-        vh.name.setText("姓名：" + mDatas.get(position).getLinkManName());
-        vh.number.setText(mDatas.get(position).getWorkTel());
-        vh.custName.setText(mDatas.get(position).getCustName());
+        vh.name.setText("姓名：" + mDatas.get(position).getLinkManName());//联系人
+        vh.number.setText(mDatas.get(position).getWorkTel());//电话号码
+        if (NullUtils.isNull(mDatas.get(position).getCustName())) {
+            vh.custName.setText(mDatas.get(position).getCustName());//公司、医院名称
+        }
         if (NullUtils.isNull(mDatas.get(position).getDepartment())) {
             vh.administrative.setText("科室：" + mDatas.get(position).getDepartment());
         }

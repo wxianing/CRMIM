@@ -13,6 +13,7 @@ import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppMsg;
 import com.meidp.crmim.utils.Constant;
+import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.utils.ToastUtils;
 
@@ -28,8 +29,7 @@ public class NewClientActivity extends BaseActivity {
 
     @ViewInject(R.id.title_tv)
     private TextView title;
-    @ViewInject(R.id.title_right)
-    private TextView titleRight;
+
     @ViewInject(R.id.customer_name)
     private EditText customerNameEt;
 
@@ -58,18 +58,16 @@ public class NewClientActivity extends BaseActivity {
 
     @Override
     public void onInit() {
-        titleRight.setVisibility(View.VISIBLE);
-        titleRight.setText("保存");
         title.setText("新建客户档案");
     }
 
-    @Event(value = {R.id.back_arrows, R.id.title_right, R.id.sex_et, R.id.company_et})
+    @Event(value = {R.id.back_arrows, R.id.save_btn, R.id.sex_et, R.id.company_et})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
                 break;
-            case R.id.title_right:
+            case R.id.save_btn:
                 String customeerName = customerNameEt.getText().toString().trim();
 
                 String linkmanPhone = linkmanPhoneEt.getText().toString().trim();
@@ -80,32 +78,41 @@ public class NewClientActivity extends BaseActivity {
                 String age = ageEt.getText().toString().trim();
                 String position = positionEt.getText().toString().trim();
 
-                HashMap params = new HashMap();
-                params.put("LinkManName", customeerName);
-                params.put("WorkTel", linkmanPhone);
-                params.put("email", email);
-                params.put("Remark", remark);
-                params.put("Sex", sexFlag);
-                params.put("Department", department);
-                params.put("QQ", qq);
-                params.put("Age", age);
-                params.put("CustNo", custNo);
-                params.put("Position", position);
+                if (NullUtils.isNull(customeerName)) {
+                    if (NullUtils.isNull(linkmanPhone)) {
 
-                HttpRequestUtils.getmInstance().send(NewClientActivity.this, Constant.SAVE_CUSTOMER_CONTACT_URL, params, new HttpRequestCallBack<String>() {
-                    @Override
-                    public void onSuccess(String result) {
-                        Log.e("New Customer", result);
-                        AppMsg appMsg = JSONObject.parseObject(result, new TypeReference<AppMsg>() {
+                        HashMap params = new HashMap();
+                        params.put("LinkManName", customeerName);
+                        params.put("WorkTel", linkmanPhone);
+                        params.put("email", email);
+                        params.put("Remark", remark);
+                        params.put("Sex", sexFlag);
+                        params.put("Department", department);
+                        params.put("QQ", qq);
+                        params.put("Age", age);
+                        params.put("CustNo", custNo);
+                        params.put("Position", position);
+
+                        HttpRequestUtils.getmInstance().send(NewClientActivity.this, Constant.SAVE_CUSTOMER_CONTACT_URL, params, new HttpRequestCallBack<String>() {
+                            @Override
+                            public void onSuccess(String result) {
+                                Log.e("New Customer", result);
+                                AppMsg appMsg = JSONObject.parseObject(result, new TypeReference<AppMsg>() {
+                                });
+                                if (appMsg != null && appMsg.getEnumcode() == 0) {
+                                    ToastUtils.shows(NewClientActivity.this, "保存成功");
+                                    finish();
+                                } else {
+                                    ToastUtils.shows(NewClientActivity.this, appMsg.getMsg());
+                                }
+                            }
                         });
-                        if (appMsg != null && appMsg.getEnumcode() == 0) {
-                            ToastUtils.shows(NewClientActivity.this, "保存成功");
-                            finish();
-                        } else {
-                            ToastUtils.shows(NewClientActivity.this, appMsg.getMsg());
-                        }
+                    } else {
+                        ToastUtils.shows(NewClientActivity.this, "请填写手机号码");
                     }
-                });
+                } else {
+                    ToastUtils.shows(NewClientActivity.this, "请填写客户名称");
+                }
 
                 break;
 //            case R.id.province:

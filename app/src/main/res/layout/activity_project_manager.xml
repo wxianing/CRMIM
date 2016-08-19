@@ -32,7 +32,8 @@
                 android:id="@+id/time_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/arrow_down" />
+                android:src="@mipmap/arrow_down"
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
@@ -59,7 +60,8 @@
                 android:id="@+id/type_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/arrow_down" />
+                android:src="@mipmap/arrow_down"
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 

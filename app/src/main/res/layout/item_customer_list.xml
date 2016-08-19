@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/name_tv"
             android:paddingLeft="@dimen/dp10"
-            android:text="电话:"
+            android:text=""
             android:textColor="@color/textcolor_gray"
             android:textSize="@dimen/sp13" />
     </LinearLayout>
@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="主任"
+            android:text=""
             android:textColor="@color/textcolor_orange"
             android:textSize="@dimen/sp13" />
     </LinearLayout>
@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp5"
         android:paddingLeft="@dimen/dp10"
-        android:text="客户:"
+        android:text=""
         android:textSize="@dimen/sp13" />
 
     <TextView

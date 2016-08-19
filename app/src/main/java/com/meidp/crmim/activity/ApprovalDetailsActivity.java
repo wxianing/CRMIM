@@ -56,20 +56,6 @@ public class ApprovalDetailsActivity extends BaseActivity {
         title.setText("详情");
         id = getIntent().getIntExtra("OID", 0);
         checkforApply = (CheckforApply) getIntent().getSerializableExtra("CheckforApply");
-//        if (checkforApply != null) {
-//            titleName.setText("标题：" + checkforApply.getTitle());
-//            currStatus.setText("状态：" + checkforApply.getCheckStatusName());
-//            projectName.setText("项目名：" + checkforApply.getProjectName());
-//            custName.setText("客户名：" + checkforApply.getCustName());
-//            dutyName.setText("负责人：" + checkforApply.getCreatorName());
-//            billNo = checkforApply.getApplyNo();
-//            mDatas = new ArrayList<>();
-//            mDatas.addAll(checkforApply.getFlowSteps());
-//            mAdapter = new CheckAdapter(mDatas, this);
-//            mListView.setAdapter(mAdapter);
-//            mAdapter.notifyDataSetChanged();
-//        }
-
     }
 
     @Override

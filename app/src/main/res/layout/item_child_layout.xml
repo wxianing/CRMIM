@@ -36,7 +36,6 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dp5"
-                    android:layout_marginTop="@dimen/dp5"
                     android:layout_toRightOf="@+id/item_child_icon"
                     android:gravity="center_vertical"
                     android:text="小王" />
@@ -48,7 +47,6 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dp5"
-                    android:layout_marginTop="@dimen/dp5"
                     android:layout_toRightOf="@+id/item_child_icon"
                     android:gravity="center_vertical"
                     android:text=""
@@ -62,12 +60,12 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp5"
-                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp5"
                 android:layout_toRightOf="@+id/item_child_icon"
                 android:gravity="center_vertical"
                 android:text="总监"
                 android:textColor="@color/tc_gray"
-                android:textSize="@dimen/sp13" />
+                android:textSize="@dimen/sp12" />
         </LinearLayout>
 
         <ImageView

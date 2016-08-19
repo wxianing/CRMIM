@@ -1,11 +1,10 @@
 package com.meidp.crmim.adapter;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.meidp.crmim.R;
@@ -58,6 +57,33 @@ public class SecretaryAdapter extends BasicAdapter<Secretary> {
             vh.content.setTextColor(Color.rgb(189, 189, 189));
         }
 
+        int billTypeFlag = mDatas.get(position).getBillTypeFlag();
+        int billTypeCode = mDatas.get(position).getBillTypeCode();
+        if (billTypeFlag == 1 && billTypeCode == 4) {//费用
+            vh.img.setImageResource(R.mipmap.assistant_fee_icon);
+        }
+        if (billTypeFlag == 4 && billTypeCode == 4) {//客户拜访
+            vh.img.setImageResource(R.mipmap.assistant_customer_icon);
+        }
+        if (billTypeFlag == 4 && billTypeCode == 3) {//客户拜访
+            vh.img.setImageResource(R.mipmap.assistant_customer_icon);
+        }
+        if (billTypeFlag == 4 && billTypeCode == 7) {//客户联系人
+            vh.img.setImageResource(R.mipmap.assistant_customer_icon);
+        }
+        if (billTypeFlag == 5 && billTypeCode == 11) {//样机申请
+            vh.img.setImageResource(R.mipmap.assistant_prototype_icon);
+        }
+        if (billTypeFlag == 13 && billTypeCode == 1) {//项目
+            vh.img.setImageResource(R.mipmap.assistant_project_icon);
+        }
+        if (billTypeFlag == 0 && billTypeCode == 1) {
+
+        }
+        if (billTypeFlag == 5 && billTypeCode == 3) {//备货
+            vh.img.setImageResource(R.mipmap.assistant_prototype_icon);
+        }
+
         return convertView;
     }
 
@@ -70,6 +96,8 @@ public class SecretaryAdapter extends BasicAdapter<Secretary> {
         private TextView content;
         @ViewInject(R.id.time_tv)
         private TextView time;
+        @ViewInject(R.id.img)
+        private ImageView img;
 
         public ViewHolder(View v) {
             x.view().inject(this, v);

@@ -54,10 +54,9 @@ public class MyApplication extends Application {
         x.Ext.init(this);
         x.Ext.setDebug(BuildConfig.DEBUG);
         initImageLoader(getApplicationContext());//初始化百度地图
-        SDKInitializer.initialize(getApplicationContext());
-        JPushInterface.setDebugMode(true);
-        JPushInterface.init(this);
-
+        SDKInitializer.initialize(getApplicationContext());//百度
+        JPushInterface.setDebugMode(true);//极光
+        JPushInterface.init(this);//极光
         /**
          * 初始化融云
          * io.rong.push 为融云 push 进程名称，不可修改。

@@ -48,8 +48,6 @@ public class SecretaryActivity extends BaseActivity implements AdapterView.OnIte
         title.setText("巨烽小助手");
         mDatas = new ArrayList<>();
         mListView.setMode(PullToRefreshBase.Mode.BOTH);
-        mAdapter = new SecretaryAdapter(mDatas, this);
-        mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
         mListView.setOnRefreshListener(this);
     }
@@ -94,6 +92,8 @@ public class SecretaryActivity extends BaseActivity implements AdapterView.OnIte
                 });
                 if (appDatas != null && appDatas.getEnumcode() == 0) {
                     mDatas.addAll(appDatas.getData().getDataList());
+                    mAdapter = new SecretaryAdapter(mDatas, SecretaryActivity.this);
+                    mListView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                     mListView.onRefreshComplete();
                 }

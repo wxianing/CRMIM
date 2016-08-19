@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/default_background_color"
     android:orientation="vertical">
 
     <LinearLayout
@@ -38,6 +39,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/announcement"
                 android:layout_marginTop="@dimen/dp5"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="显示最新动态"
                 android:textColor="#BDBDBD" />
 
@@ -46,7 +49,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/dp10"
                 android:padding="@dimen/dp5"
                 android:src="@mipmap/arrow_right"

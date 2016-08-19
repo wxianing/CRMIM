@@ -61,6 +61,8 @@ public class MyFragment extends BaseFragment {
     @ViewInject(R.id.right_img)
     private ImageView rightImg;
     private PopupWindow mPopupWindow;
+    @ViewInject(R.id.department)
+    private TextView department;
 
     public MyFragment() {
     }
@@ -194,9 +196,10 @@ public class MyFragment extends BaseFragment {
         }
         String niceName = (String) SPUtils.get(getActivity(), "EmployeeName", "");
         String zhiwu = (String) SPUtils.get(getActivity(), "ZHIWU", "");
-        userName.setText(niceName + "(" + zhiwu + ")");
+        userName.setText(niceName);
         String deptName = (String) SPUtils.get(getActivity(), "DeptName", "");
-        jobTitle.setText("部门：" + deptName);
+//        jobTitle.setText("部门：" + deptName);
+        department.setText("部门：" + deptName);
         String headerPhoto = (String) SPUtils.get(getActivity(), "PhotoURL", "");
         ImageLoader.getInstance().displayImage(headerPhoto, headerImg, MyApplication.optionsRounds);
         String phone = (String) SPUtils.get(getActivity(), "PHONE", "");

@@ -41,7 +41,6 @@ import com.meidp.crmim.activity.WorkPlanActivity;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppBean;
-import com.meidp.crmim.model.JPushNoReader;
 import com.meidp.crmim.model.NoReaders;
 import com.meidp.crmim.utils.Constant;
 

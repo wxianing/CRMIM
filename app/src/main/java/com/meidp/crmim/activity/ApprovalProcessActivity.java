@@ -101,7 +101,7 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         CheckforApply apply = mDatas.get(position - 1);
-        Intent intent = new Intent(this, ApprovalDetailsActivity.class);
+        Intent intent = new Intent(this, ApprovalDetailsActivity.class);//审核详情
         Bundle bundle = new Bundle();
         bundle.putSerializable("CheckforApply", apply);
         intent.putExtra("OID", mDatas.get(position - 1).getID());

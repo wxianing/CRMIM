@@ -38,8 +38,8 @@
         <ImageView
             android:padding="@dimen/dp5"
             android:id="@+id/right_img"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dp5"

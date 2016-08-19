@@ -352,9 +352,10 @@
             <include layout="@layout/horizontal_line" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="270dp"
                 android:layout_height="45dp"
                 android:layout_alignParentBottom="true"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/dp20"
                 android:layout_marginTop="10dp"
                 android:background="@color/default_background_color"
@@ -363,7 +364,7 @@
                 <Button
                     android:id="@+id/save_btn"
                     style="@style/oange_button"
-                    android:text="保    存" />
+                    android:text="申     报" />
 
             </LinearLayout>
 
