@@ -166,6 +166,7 @@
         <activity android:name=".activity.WorkPlanActivity" />
         <activity android:name=".activity.NewWorkPlanActivity" />
         <activity android:name=".activity.CycleActivity" />
+        <activity android:name=".activity.TeamAddMemberActivity" />
 
         <service
             android:name="cn.jpush.android.service.PushService"
@@ -285,7 +286,7 @@
         <activity android:name=".activity.AddTeamActivity" />
         <activity android:name=".activity.FeedbackDetailsActivity" />
         <activity android:name=".activity.SigninMainActivity" />
-        <activity android:name=".activity.TeamDetailsActivity" />
+        <activity android:name=".activity.TeamMemberActivity" />
         <activity android:name=".activity.ExhibitionManagerActivity" />
         <activity android:name=".activity.ProduceCenterActivity" />
         <activity android:name=".activity.ExhibitionDetailsActivity" />
@@ -304,7 +305,11 @@
         <activity android:name=".activity.VisitRecodeDetailsActivity" />
         <activity android:name=".activity.CreditUnscrambleActivity" />
         <activity android:name=".activity.StockUpActivity" />
-        <activity android:name=".activity.StockUpDetailsActivity"></activity>
+        <activity android:name=".activity.StockUpDetailsActivity" />
+        <activity android:name=".activity.AddLinkManActivity" />
+        <activity android:name=".activity.LinkManListActivity" />
+        <activity android:name=".activity.TeamMemberDetsilsActivity" />
+        <activity android:name=".activity.ResetPwdActivity"></activity>
     </application>
 
 </manifest>

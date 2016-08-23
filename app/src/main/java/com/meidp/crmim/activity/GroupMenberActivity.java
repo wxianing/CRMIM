@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.meidp.crmim.R;
 import com.meidp.crmim.adapter.GroupMenberAdapter;
 import com.meidp.crmim.http.HttpRequestCallBack;
@@ -28,13 +30,13 @@ import java.util.List;
 import io.rong.imkit.RongIM;
 
 @ContentView(R.layout.activity_group_menber)
-public class GroupMenberActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public class GroupMenberActivity extends BaseActivity implements AdapterView.OnItemClickListener,PullToRefreshBase.OnRefreshListener2<ListView> {
     @ViewInject(R.id.title_tv)
     private TextView title;
     private String mTargetId;
 
     @ViewInject(R.id.listview)
-    private ListView mListView;
+    private PullToRefreshListView mListView;
 
     private List<Menber.UsersBean> mDatas;
 
@@ -48,6 +50,8 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
     @Override
     public void onInit() {
         title.setText("群成员");
+        mListView.setMode(PullToRefreshBase.Mode.BOTH);
+
         mTargetId = getIntent().getStringExtra("mTargetId");
         Log.e("mTargetId", mTargetId);
         mDatas = new ArrayList<>();
@@ -55,10 +59,15 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
         mListView.setOnItemClickListener(this);
         mAdapter = new GroupMenberAdapter(mDatas, GroupMenberActivity.this);
         mListView.setAdapter(mAdapter);
+        mListView.setOnRefreshListener( this);
     }
 
     @Override
     public void onInitData() {
+        loadData();
+    }
+
+    private void loadData() {
         final HashMap params = new HashMap();
         params.put("Id", mTargetId);
         HttpRequestUtils.getmInstance().send(GroupMenberActivity.this, Constant.GROUP_MEMBER_URL, params, new HttpRequestCallBack() {
@@ -70,6 +79,7 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
                     mDatas.addAll(appBean.getData().getUsers());
                     groupName = appBean.getData().getDiscussionName();
                     mAdapter.notifyDataSetChanged();
+                    mListView.onRefreshComplete();
                 }
             }
         });
@@ -87,7 +97,7 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
                 Intent intent = new Intent(this, NewGroupActivity.class);
                 intent.putExtra("discussionId", mTargetId);
                 intent.putExtra("GroupName", groupName);
-                startActivity(intent);
+                startActivityForResult(intent,1023);
                 break;
         }
     }
@@ -98,6 +108,27 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
         if (holder != null) {
             mTargetName = holder.userName.getText().toString();
         }
-        RongIM.getInstance().startPrivateChat(this, Integer.toString(mDatas.get(position).getUserID()), mTargetName);
+        RongIM.getInstance().startPrivateChat(this, Integer.toString(mDatas.get(position-1).getUserID()), mTargetName);
+    }
+
+    @Override
+    public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+        mDatas.clear();
+        loadData();
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+        mDatas.clear();
+        loadData();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==1023){
+            mDatas.clear();
+            loadData();
+        }
     }
 }

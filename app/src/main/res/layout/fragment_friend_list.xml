@@ -39,7 +39,6 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/search_edittext2"
-                        android:drawableLeft="@mipmap/search_icon"
                         android:focusable="false"
                         android:hint="请输入关键字搜索"
                         android:textSize="@dimen/sp14" />

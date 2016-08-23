@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.meidp.crmim.R;
 import com.meidp.crmim.utils.Constant;
+import com.meidp.crmim.utils.CustomDialogUtils;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -27,6 +28,7 @@ public class LifeNavigationActivity extends BaseActivity {
 
     @Override
     public void onInit() {
+        CustomDialogUtils.showProgressDialog(LifeNavigationActivity.this);
         title.setText("人生导航");
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -54,6 +56,12 @@ public class LifeNavigationActivity extends BaseActivity {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
             return true;
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            CustomDialogUtils.cannelProgressDialog();
         }
     }
 

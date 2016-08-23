@@ -51,6 +51,7 @@ public class OpenSeaPoolActivity extends BaseActivity implements PullToRefreshBa
     @ViewInject(R.id.line)
     private LinearLayout layout;
     private int sType2 = 0;
+    private int sType3 = 0;
 
     @Override
     public void onInit() {
@@ -72,6 +73,7 @@ public class OpenSeaPoolActivity extends BaseActivity implements PullToRefreshBa
         HashMap params = new HashMap();
         params.put("sType", sType);//2公海池
         params.put("sType2", sType2);//2公海池
+        params.put("sType3", sType3);//2公海池
         params.put("PageIndex", pageIndex);
         params.put("PageSize", pageSize);
         HttpRequestUtils.getmInstance().send(OpenSeaPoolActivity.this, Constant.OPEN_SEAR_PROJECT, params, new HttpRequestCallBack<String>() {
@@ -145,12 +147,18 @@ public class OpenSeaPoolActivity extends BaseActivity implements PullToRefreshBa
         mTypePopWindow.setContentView(contentView);
         mTypePopWindow.setBackgroundDrawable(new BitmapDrawable());
         //设置各个控件的点击响应
-        TextView tv11 = (TextView) contentView.findViewById(R.id.ordinary_tv);
-        TextView tv22 = (TextView) contentView.findViewById(R.id.importance_tv);
-        TextView all_type = (TextView) contentView.findViewById(R.id.all_type_tv);
-        all_type.setOnClickListener(this);
-        tv11.setOnClickListener(this);
-        tv22.setOnClickListener(this);
+        //设置各个控件的点击响应
+        contentView.findViewById(R.id.wait_follow_up).setOnClickListener(this);//待跟进
+        contentView.findViewById(R.id.in_the_paper).setOnClickListener(this);//报备中
+        contentView.findViewById(R.id.all_type_tv).setOnClickListener(this);
+        contentView.findViewById(R.id.stock_up).setOnClickListener(this);//备货中
+        contentView.findViewById(R.id.shipment).setOnClickListener(this);//出货中
+        contentView.findViewById(R.id.returned_money).setOnClickListener(this);//回款中
+        contentView.findViewById(R.id.be_over).setOnClickListener(this);//完结
+        contentView.findViewById(R.id.termination).setOnClickListener(this);//终止
+//        all_type.setOnClickListener(this);
+//        tv11.setOnClickListener(this);
+//        tv22.setOnClickListener(this);
 
         //设置contentView
         View contentView1 = LayoutInflater.from(OpenSeaPoolActivity.this).inflate(R.layout.popup_time_layout, null);
@@ -242,6 +250,37 @@ public class OpenSeaPoolActivity extends BaseActivity implements PullToRefreshBa
                 sType2 = 0;
                 mTypePopWindow.dismiss();
                 break;
+            case R.id.wait_follow_up://待跟进
+                sType2 = 1;
+                sType3 = 0;
+                mTypePopWindow.dismiss();
+                break;
+            case R.id.in_the_paper://报备中
+                sType2 = 2;
+                sType3 = 1;
+                mTypePopWindow.dismiss();
+                break;
+            case R.id.stock_up://备货中
+                sType3 = 2;
+                mTypePopWindow.dismiss();
+                break;
+            case R.id.shipment://出货中
+                sType3 = 3;
+                mTypePopWindow.dismiss();
+                break;
+            case R.id.returned_money://回款中
+                sType3 = 4;
+                mTypePopWindow.dismiss();
+                break;
+            case R.id.be_over://回款中
+                sType3 = 5;
+                mTypePopWindow.dismiss();
+                break;
+            case R.id.termination://回款中
+                sType3 = 9;
+                mTypePopWindow.dismiss();
+                break;
+
         }
         mDatas.clear();
         loadData(pageIndex);

@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.meidp.crmim.R;
 import com.meidp.crmim.model.CostLists;
+import com.meidp.crmim.utils.NullUtils;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -36,14 +37,40 @@ public class MyCostAdapter extends BasicAdapter<CostLists> {
             vh = (ViewHolder) convertView.getTag();
         }
 
-        vh.title.setText(data.getTitle());
-        vh.ariseDate.setText("申请时间：" + data.getAriseDate());
+        if (NullUtils.isNull(data.getTitle())) {
+            vh.title.setText(data.getTitle());
+        } else {
+            vh.title.setText("");
+        }
+
+        if (NullUtils.isNull(data.getAriseDate())) {
+            vh.ariseDate.setText("申请时间：" + data.getAriseDate());
+        } else {
+            vh.ariseDate.setText("");
+        }
 //        vh.needTime.setText("需要时间：" + data.getNeedDate());
-        vh.reason.setText("申请原因：" + data.getReason());
-        vh.projectName.setText("关联项目：" + data.getProjectName());
-        vh.applyPerson.setText("申请人：" + data.getCreatorName());
+
+        if (NullUtils.isNull(data.getReason())) {
+            vh.reason.setText("申请原因：" + data.getReason());
+        } else {
+            vh.reason.setText("申请原因：");
+        }
+        if (NullUtils.isNull(data.getProjectName())) {
+            vh.projectName.setText("关联项目：" + data.getProjectName());
+        } else {
+            vh.projectName.setText("关联项目：");
+        }
+        if (NullUtils.isNull(data.getCreatorName())) {
+            vh.applyPerson.setText("申请人：" + data.getCreatorName());
+        } else {
+            vh.applyPerson.setText("申请人：");
+        }
         vh.totalMoney.setText("￥" + data.getTotalAmount());
-        vh.financialDepartment.setText(data.getFlowStatusName());
+        if (NullUtils.isNull(data.getFlowStatusName())) {
+            vh.financialDepartment.setText(data.getFlowStatusName());
+        } else {
+            vh.financialDepartment.setText("");
+        }
 
         return convertView;
     }

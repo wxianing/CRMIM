@@ -10,9 +10,11 @@
     <include layout="@layout/titlebar" />
 
     <ImageView
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/dp50"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="center"
-        android:src="@mipmap/structure_br" />
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@mipmap/structure_bg" />
 
 </LinearLayout>

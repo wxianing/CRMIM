@@ -51,7 +51,6 @@
         android:layout_marginBottom="@dimen/dp10"
         android:layout_marginLeft="@dimen/dp10"
         android:layout_marginRight="@dimen/dp10"
-        android:layout_marginTop="@dimen/dp10"
         android:divider="@color/transparent"
         android:dividerHeight="8dp"
         android:scrollbars="none" />

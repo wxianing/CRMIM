@@ -37,9 +37,23 @@ public class VisitRecodeDetailsActivity extends BaseActivity {
             } else {
                 custName.setText("客户名称：");
             }
-            vist_time.setText("拜访时间：" + records.getModifiedDate());
-            address.setText("地址：" + records.getLocationAddress());
-            content.setText("内容：" + records.getContents());
+            String timeStr = records.getModifiedDate();
+            if (NullUtils.isNull(timeStr)) {
+                timeStr = timeStr.substring(0, timeStr.length() - 3);
+                vist_time.setText("拜访时间：" + timeStr);
+            } else {
+                vist_time.setText("拜访时间：");
+            }
+            if (NullUtils.isNull(records.getLocationAddress())) {
+                address.setText("地址：" + records.getLocationAddress());
+            } else {
+                address.setText("地址：");
+            }
+            if (NullUtils.isNull(records.getContents())) {
+                content.setText("内容：" + records.getContents());
+            } else {
+                content.setText("内容：");
+            }
         }
     }
 

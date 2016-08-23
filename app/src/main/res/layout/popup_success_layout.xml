@@ -6,20 +6,65 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/ordinary_tv"
+        android:id="@+id/wait_follow_up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp10"
-        android:text="重要" />
+        android:text="待跟进" />
 
     <include layout="@layout/horizontal_line" />
 
     <TextView
-        android:id="@+id/importance_tv"
+        android:id="@+id/in_the_paper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp10"
-        android:text="一般" />
+        android:text="报备中" />
+
+    <include layout="@layout/horizontal_line" />
+
+    <TextView
+        android:id="@+id/stock_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="备货中" />
+
+    <include layout="@layout/horizontal_line" />
+
+    <TextView
+        android:id="@+id/shipment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="出货中" />
+
+    <include layout="@layout/horizontal_line" />
+
+    <TextView
+        android:id="@+id/returned_money"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="回款中" />
+
+    <include layout="@layout/horizontal_line" />
+
+    <TextView
+        android:id="@+id/be_over"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="已完结" />
+
+    <include layout="@layout/horizontal_line" />
+
+    <TextView
+        android:id="@+id/termination"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="终止" />
 
     <include layout="@layout/horizontal_line" />
 

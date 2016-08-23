@@ -4,17 +4,159 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/default_background_color"
+    android:divider="@color/transparent"
     android:orientation="vertical"
     tools:context="com.meidp.crmim.activity.ApprovalProcessActivity">
 
     <include layout="@layout/titlebar" />
 
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:id="@+id/checked_type"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+
+                android:id="@+id/type_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="时间" />
+
+            <ImageView
+                android:id="@+id/time_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/arrow_down"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dp8"
+            android:layout_marginTop="@dimen/dp8"
+            android:background="#DBDBDB" />
+
+        <LinearLayout
+            android:id="@+id/checked_status"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/status_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="未审核" />
+
+            <ImageView
+                android:id="@+id/type_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10"
+                android:src="@mipmap/arrow_down"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+
     <include layout="@layout/search_layout" />
 
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
-        android:id="@+id/listview"
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none" />
+        android:scrollbars="none">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1200dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/prototype_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/star_icon"
+                android:padding="@dimen/dp10"
+                android:text="样机审核" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="@dimen/dp10"
+                android:text="暂无数据"
+                android:visibility="gone" />
+
+            <com.meidp.crmim.view.ListViewForScrollView
+                android:id="@+id/prototype_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+                android:scrollbars="none" />
+
+            <TextView
+                android:id="@+id/fee_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/star_icon"
+                android:padding="@dimen/dp10"
+                android:text="费用审核" />
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="@dimen/dp10"
+                android:text="暂无数据"
+                android:visibility="gone" />
+
+            <com.meidp.crmim.view.ListViewForScrollView
+                android:id="@+id/fee_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scrollbars="none" />
+
+            <TextView
+                android:id="@+id/stockup_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/star_icon"
+                android:padding="@dimen/dp10"
+                android:text="备货审核" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="@dimen/dp10"
+                android:text="暂无数据"
+                android:visibility="gone" />
+
+            <com.meidp.crmim.view.ListViewForScrollView
+                android:id="@+id/stockup_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:divider="@color/transparent"
+                android:scrollbars="none" />
+        </LinearLayout>
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 </LinearLayout>

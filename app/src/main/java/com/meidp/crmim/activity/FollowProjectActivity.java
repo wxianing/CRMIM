@@ -1,9 +1,13 @@
 package com.meidp.crmim.activity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -19,11 +23,14 @@ import com.meidp.crmim.model.AppMsg;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.DataUtils;
 import com.meidp.crmim.utils.ToastUtils;
+import com.meidp.crmim.view.WheelView;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 
 /**
@@ -31,6 +38,8 @@ import java.util.HashMap;
  */
 @ContentView(R.layout.activity_follow_project)
 public class FollowProjectActivity extends BaseActivity {
+
+    private static final String[] PLANETS = new String[]{"10", "20", "30", "40", "50", "60", "70", "80", "90", "100"};
 
     private static final int SHOW_DATAPICK = 0;
     private static final int DATE_DIALOG_ID = 1;
@@ -62,6 +71,10 @@ public class FollowProjectActivity extends BaseActivity {
     private int mDay;
     public int flag = 0;
     private int projectId;
+    private double rates;
+    String dateSet;
+    Calendar calendar;
+
 
     @Override
     public void onInit() {
@@ -71,15 +84,44 @@ public class FollowProjectActivity extends BaseActivity {
         projectId = getIntent().getIntExtra("OID", -1);
         startDate.setText(DataUtils.getDate2());
         overDate.setText(DataUtils.getDate2());
+        calendar = Calendar.getInstance();
+        //初始化Calendar日历对象
+        Calendar mycalendar = Calendar.getInstance();
+
+        mYear = mycalendar.get(Calendar.YEAR); //获取Calendar对象中的年
+        mMonth = mycalendar.get(Calendar.MONTH);//获取Calendar对象中的月
+        mDay = mycalendar.get(Calendar.DAY_OF_MONTH);//获取这个月的第几天
+
     }
 
-    @Event(value = {R.id.back_arrows, R.id.start_date, R.id.over_date, R.id.title_right})
+    DatePickerDialog.OnDateSetListener DateSet = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            // 每次保存设置的日期
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+            String str = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+            System.out.println("set is " + str);
+        }
+    };
+
+    @Event(value = {R.id.back_arrows, R.id.start_date, R.id.over_date, R.id.title_right, R.id.rate})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
                 break;
             case R.id.start_date:
+//                DatePickerDialog datePickerDialog = new DatePickerDialog(
+//                        FollowProjectActivity.this, DateSet, calendar
+//                        .get(Calendar.YEAR), calendar
+//                        .get(Calendar.MONTH), calendar
+//                        .get(Calendar.DAY_OF_MONTH));
+//                datePickerDialog.show();
                 flag = 1;
                 Message msg = new Message();
                 if (pickDate.equals((EditText) v)) {
@@ -98,6 +140,32 @@ public class FollowProjectActivity extends BaseActivity {
             case R.id.title_right:
                 sendMsg();
                 break;
+            case R.id.rate:
+                View outerView = LayoutInflater.from(this).inflate(R.layout.wheel_view, null);
+                WheelView wv = (WheelView) outerView.findViewById(R.id.wheel_view_wv);
+                wv.setOffset(1);
+                wv.setItems(Arrays.asList(PLANETS));
+                wv.setSeletion(0);
+                wv.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+                    @Override
+                    public void onSelected(int selectedIndex, String item) {
+
+                        rates = Double.valueOf(item) / 100;
+                        Log.e(">>>>>>>>", "[Dialog]selectedIndex: " + rate + ", item: " + item);
+                        rate.setText(rates * 100 + "%");
+                    }
+                });
+                new AlertDialog.Builder(this)
+                        .setTitle("请选择成功率(%)")
+                        .setView(outerView)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+//                                Toast.makeText(SubmitActivity.this, ">>>>>>>>", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .show();
+                break;
         }
     }
 
@@ -107,7 +175,7 @@ public class FollowProjectActivity extends BaseActivity {
         String overDates = overDate.getText().toString().trim();
         String budgetCost = budgetcost.getText().toString().trim();
         String personCounts = personCount.getText().toString().trim();
-        String rates = rate.getText().toString().trim();
+//        String rates = rate.getText().toString().trim();
         String remarks = remark.getText().toString().trim();
         String abstractMessages = abstractMessage.getText().toString();
         HashMap params = new HashMap();
@@ -156,9 +224,14 @@ public class FollowProjectActivity extends BaseActivity {
     /**
      * 日期控件的事件
      */
-
     private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+            // 每次保存设置的日期
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
             mYear = year;
             mMonth = monthOfYear;
             mDay = dayOfMonth;
@@ -205,4 +278,5 @@ public class FollowProjectActivity extends BaseActivity {
                 break;
         }
     }
+
 }

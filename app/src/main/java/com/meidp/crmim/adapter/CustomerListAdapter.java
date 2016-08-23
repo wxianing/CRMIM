@@ -39,16 +39,30 @@ public class CustomerListAdapter extends BasicAdapter<ClientContacts> {
             vh = (ViewHolder) convertView.getTag();
         }
 
-        vh.name.setText("姓名：" + mDatas.get(position).getLinkManName());//联系人
-        vh.number.setText(mDatas.get(position).getWorkTel());//电话号码
+        if (NullUtils.isNull(mDatas.get(position).getLinkManName())) {
+            vh.name.setText("姓名：" + mDatas.get(position).getLinkManName());//联系人
+        } else {
+            vh.name.setText("姓名：");
+        }
+        if (NullUtils.isNull(mDatas.get(position).getWorkTel())) {
+            vh.number.setText(mDatas.get(position).getWorkTel());//电话号码
+        }
         if (NullUtils.isNull(mDatas.get(position).getCustName())) {
-            vh.custName.setText(mDatas.get(position).getCustName());//公司、医院名称
+            if (mDatas.get(position).getCustName().equals("待定")) {
+                vh.custName.setText("公司：" + "未填写");//公司、医院名称
+            } else {
+                vh.custName.setText("公司：" + mDatas.get(position).getCustName());
+            }
         }
         if (NullUtils.isNull(mDatas.get(position).getDepartment())) {
             vh.administrative.setText("科室：" + mDatas.get(position).getDepartment());
+        } else {
+            vh.administrative.setText("科室：");
         }
         if (NullUtils.isNull(mDatas.get(position).getPosition())) {
-            vh.dutyName.setText(mDatas.get(position).getPosition());
+            vh.dutyName.setText(mDatas.get(position).getPosition());//职务
+        } else {
+            vh.dutyName.setText("");
         }
         String timeStr = mDatas.get(position).getCreatedDate();
         if (NullUtils.isNull(timeStr)) {

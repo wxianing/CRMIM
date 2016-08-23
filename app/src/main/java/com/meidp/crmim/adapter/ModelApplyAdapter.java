@@ -53,11 +53,15 @@ public class ModelApplyAdapter extends BasicAdapter<ModelApply> {
         } else {
             vh.principal.setText("负责人：");
         }
-
-        vh.createTime.setText(mDatas.get(position).getCreateDate());
+        if (NullUtils.isNull(mDatas.get(position).getCreateDate())) {
+            vh.createTime.setText(mDatas.get(position).getCreateDate());
+        }else {
+            vh.createTime.setText("");
+        }
         vh.applyCount.setText("申请数量：" + Integer.toString(mDatas.get(position).getProductCount()));
-
-        vh.checkStatus.setText(mDatas.get(position).getFlowStatusName());
+        if (NullUtils.isNull(mDatas.get(position).getFlowStatusName())) {
+            vh.checkStatus.setText(mDatas.get(position).getFlowStatusName());
+        }
         return convertView;
     }
 

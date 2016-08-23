@@ -6,6 +6,7 @@
     android:paddingBottom="2dp">
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/day_plan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp10"
-        android:text="一周内" />
+        android:text="最近一周" />
 
     <include layout="@layout/horizontal_line" />
 
@@ -28,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp10"
-        android:text="一个月内" />
+        android:text="最近一个月" />
 
     <include layout="@layout/horizontal_line" />
 
@@ -37,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp10"
-        android:text="一个季度" />
+        android:text="最近一个季度" />
 
     <include layout="@layout/horizontal_line" />
 
@@ -46,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp10"
-        android:text="一年内" />
+        android:text="最近一年" />
 
     <include layout="@layout/horizontal_line" />
 

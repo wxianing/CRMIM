@@ -39,7 +39,8 @@
         android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:gravity="center_vertical" />
+        android:gravity="center_vertical"
+        android:visibility="gone" />
 
     <!--    <LinearLayout
             android:layout_width="match_parent"

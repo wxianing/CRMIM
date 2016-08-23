@@ -2,6 +2,7 @@ package com.meidp.crmim.activity;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -16,6 +17,7 @@ import com.meidp.crmim.model.AppMsg;
 import com.meidp.crmim.model.ApprovalCosts;
 import com.meidp.crmim.model.CostDetails;
 import com.meidp.crmim.utils.Constant;
+import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.ToastUtils;
 import com.meidp.crmim.view.ListViewForScrollView;
 
@@ -52,6 +54,8 @@ public class ApprovalCostDetailActivity extends BaseActivity {
     @ViewInject(R.id.apply_time)
     private TextView applyTime;
     private int id;
+    @ViewInject(R.id.checked_opinion)
+    private EditText checkedOpinion;
 
     @Override
     public void onInit() {
@@ -98,15 +102,20 @@ public class ApprovalCostDetailActivity extends BaseActivity {
 
     @Event({R.id.back_arrows, R.id.agree_btn, R.id.refuse_btn})
     private void onClick(View v) {
+        String note = checkedOpinion.getText().toString().trim();
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
                 break;
             case R.id.agree_btn:
-                sendMsg(0, "同意");
+                sendMsg(0, note);
                 break;
             case R.id.refuse_btn:
-                sendMsg(2, "拒绝");
+                if (NullUtils.isNull(note)) {
+                    sendMsg(2, note);
+                } else {
+                    ToastUtils.shows(this, "请填写审批意见");
+                }
                 break;
         }
     }

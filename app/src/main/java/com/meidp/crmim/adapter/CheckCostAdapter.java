@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.meidp.crmim.R;
-import com.meidp.crmim.model.CheckforApply;
 import com.meidp.crmim.model.CostDetails;
 import com.meidp.crmim.utils.NullUtils;
 
@@ -43,8 +42,18 @@ public class CheckCostAdapter extends BasicAdapter<CostDetails.FlowStepsBean> {
         } else {
             vh.regulatoryIdea.setText("审批意见：");
         }
-        vh.regulatoryTime.setText(data.getModifiedDate());
+        String timeStr = data.getModifiedDate();
+        if (NullUtils.isNull(timeStr)) {
+            timeStr = timeStr.substring(0, timeStr.length() - 3);
+            vh.regulatoryTime.setText(timeStr);
+        } else {
+            vh.regulatoryTime.setText("");
+        }
+
         String status = data.getCheckStatusName();
+        if (!NullUtils.isNull(status)) {
+            status = "";
+        }
         vh.currStatus.setText("状态：" + status);
         vh.step.setText("StepNo" + data.getStepNo());
         return convertView;

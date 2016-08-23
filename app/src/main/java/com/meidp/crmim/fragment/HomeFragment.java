@@ -123,7 +123,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 startActivity(intent);
                 break;
             case R.id.approval_manager://审批管理
-                intent = new Intent(getActivity(), ApprovalTypeActivity.class);
+                intent = new Intent(getActivity(), ApprovalProcessActivity.class);
                 startActivity(intent);
                 break;
             case R.id.my_performance://业绩表现

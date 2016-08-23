@@ -9,6 +9,67 @@
 
     <include layout="@layout/titlebar" />
 
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:id="@+id/prototype_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="类型" />
+
+            <ImageView
+                android:id="@+id/time_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/arrow_down"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dp8"
+            android:layout_marginTop="@dimen/dp8"
+            android:background="#DBDBDB" />
+
+        <LinearLayout
+            android:id="@+id/type_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="审核" />
+
+            <ImageView
+                android:id="@+id/type_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/arrow_down"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/line"
+        layout="@layout/horizontal_full_line" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

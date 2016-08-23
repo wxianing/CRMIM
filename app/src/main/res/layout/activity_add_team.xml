@@ -20,8 +20,6 @@
             android:layout_height="1200dp"
             android:orientation="vertical">
 
-
-
             <GridView
                 android:id="@+id/gridview"
                 android:layout_width="match_parent"
@@ -36,7 +34,8 @@
                 android:layout_marginLeft="@dimen/dp10"
                 android:layout_marginRight="@dimen/dp10"
                 android:background="@drawable/edit_white_bg"
-                android:textSize="@dimen/sp13" />
+                android:textSize="@dimen/sp13"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="match_parent"

@@ -127,6 +127,7 @@
             <EditText
                 android:id="@+id/rate"
                 style="@style/sub_editext"
+                android:focusable="false"
                 android:gravity="end"
                 android:hint="点击填写" />
 

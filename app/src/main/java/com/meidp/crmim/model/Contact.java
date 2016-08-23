@@ -268,7 +268,7 @@ public class Contact implements Serializable {
         this.Users = Users;
     }
 
-    public static class UsersBean {
+    public static class UsersBean implements Serializable{
         private String CompanyCD;
         private int UserID;
         private String LoginName;
@@ -286,7 +286,7 @@ public class Contact implements Serializable {
         private int DeptID;
         private String QuarterName;
         private String Mobile;
-        private Object Telephone;
+        private String Telephone;
         private String DeptName;
         private String rongcloudToken;
 
@@ -426,11 +426,11 @@ public class Contact implements Serializable {
             this.Mobile = Mobile;
         }
 
-        public Object getTelephone() {
+        public String getTelephone() {
             return Telephone;
         }
 
-        public void setTelephone(Object Telephone) {
+        public void setTelephone(String Telephone) {
             this.Telephone = Telephone;
         }
 

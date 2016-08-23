@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.meidp.crmim.R;
 import com.meidp.crmim.model.ApprovalCosts;
 import com.meidp.crmim.model.CheckforApply;
+import com.meidp.crmim.utils.NullUtils;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -37,11 +38,25 @@ public class ApprovalCostAdapter extends BasicAdapter<ApprovalCosts> {
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-        vh.titleName.setText(data.getTitle());
+        if (NullUtils.isNull(data.getTitle())) {
+            vh.titleName.setText(data.getTitle());
+        } else {
+            vh.titleName.setText("");
+        }
+
         vh.reimbursement.setText("保险金额：￥" + mDatas.get(position).getTotalAmount());
-        vh.dutyPerson.setText("申请人：" + data.getCreatorName());
+        if (NullUtils.isNull(data.getCreatorName())) {
+            vh.dutyPerson.setText("申请人：" + data.getCreatorName());
+        } else {
+            vh.dutyPerson.setText("申请人：");
+        }
+
         vh.currTime.setText(data.getCreateDate());
-        vh.reason.setText("申请原因：" + data.getReason());
+        if (NullUtils.isNull(data.getReason())) {
+            vh.reason.setText("申请原因：" + data.getReason());
+        } else {
+            vh.reason.setText("申请原因：");
+        }
         int status = Integer.valueOf(data.getStatus());
         switch (status) {
             case 0:

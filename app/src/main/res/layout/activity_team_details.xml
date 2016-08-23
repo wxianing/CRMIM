@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/default_background_color"
     android:orientation="vertical"
-    tools:context="com.meidp.crmim.activity.TeamDetailsActivity">
+    tools:context=".activity.TeamMemberActivity">
 
     <include layout="@layout/titlebar_layout" />
 

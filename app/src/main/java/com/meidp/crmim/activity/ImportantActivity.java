@@ -57,7 +57,6 @@ public class ImportantActivity extends BaseActivity implements AdapterView.OnIte
 
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -107,7 +106,7 @@ public class ImportantActivity extends BaseActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this, ImportantDetailsActivity.class);
-        intent.putExtra("OID", mDatas.get(position).getID());
+        intent.putExtra("OID", mDatas.get(position - 1).getID());
         startActivity(intent);
     }
 

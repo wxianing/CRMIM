@@ -4,27 +4,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/default_background_color"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     tools:context="com.meidp.crmim.activity.AddTeamActivity">
 
     <include layout="@layout/titlebar" />
 
-    <GridView
-        android:id="@+id/gridview"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:numColumns="6" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dp10"
-        android:text="请选择添加成员" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1200dp"
+            android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/listview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+            <GridView
+                android:id="@+id/gridview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:numColumns="6" />
 
+            <EditText
+                android:id="@+id/otherPerson"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginRight="@dimen/dp10"
+                android:background="@drawable/edit_white_bg"
+                android:textSize="@dimen/sp13"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10"
+                android:text="公司内部成员" />
+
+            <include layout="@layout/horizontal_full_line" />
+
+            <ListView
+                android:id="@+id/listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+
+            <com.meidp.crmim.view.ExpListView
+                android:id="@+id/expListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="#00000000"
+                android:dividerHeight="0dp"
+                android:groupIndicator="@drawable/lt_expandablelistviewselector"
+                android:scrollbars="none" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

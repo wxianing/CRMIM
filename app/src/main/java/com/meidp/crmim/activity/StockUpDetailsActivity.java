@@ -3,6 +3,7 @@ package com.meidp.crmim.activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import com.meidp.crmim.model.StockUpDetails;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.ToastUtils;
+import com.meidp.crmim.view.ListViewForScrollView;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -47,7 +49,9 @@ public class StockUpDetailsActivity extends BaseActivity {
     @ViewInject(R.id.create_time)
     private TextView createTime;
     @ViewInject(R.id.listview)
-    private ListView mListView;
+    private ListViewForScrollView mListView;
+    @ViewInject(R.id.checked_opinion)
+    private EditText checkedOpinion;
 
     private List<StockUpDetails.FlowStepsBean> mDatas;
 
@@ -81,15 +85,27 @@ public class StockUpDetailsActivity extends BaseActivity {
     }
 
     private void bindView(AppBean<StockUpDetails> appBean) {
-        titleName.setText("标题：" + appBean.getData().getTitle());
-        produceName.setText("货物名：" + appBean.getData().getTitle());
+        if (NullUtils.isNull(appBean.getData().getTitle())) {
+            titleName.setText("标题：" + appBean.getData().getTitle());
+        } else {
+            titleName.setText("标题：");
+        }
+        if (NullUtils.isNull(appBean.getData().getTitle())) {
+            produceName.setText("货物名：" + appBean.getData().getTitle());
+        } else {
+            produceName.setText("");
+        }
         count_tv.setText("数量：" + appBean.getData().getCountTotal());
         totalMoney.setText("总额（￥）：" + appBean.getData().getTotalFee());
         if (NullUtils.isNull(appBean.getData().getCustName())) {
             companyName.setText("单位名：" + appBean.getData().getCustName());
         }
         applyer.setText("申请人：" + appBean.getData().getCreatorName());
-        createTime.setText("申请时间：" + appBean.getData().getCreateDate());
+        String timeString = appBean.getData().getCreateDate();
+        if (NullUtils.isNull(timeString)) {
+            timeString = timeString.substring(0, timeString.length() - 3);
+        }
+        createTime.setText("申请时间：" + timeString);
         mDatas.addAll(appBean.getData().getFlowSteps());
         mAdapter.notifyDataSetChanged();
         billNo = appBean.getData().getOrderNo();
@@ -97,26 +113,31 @@ public class StockUpDetailsActivity extends BaseActivity {
 
     @Event({R.id.back_arrows, R.id.agree_btn, R.id.refuse_btn})
     private void onClick(View v) {
+        String note = checkedOpinion.getText().toString().trim();
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
                 break;
             case R.id.agree_btn:
-                sendMsg(0);
+                sendMsg(0, note);
                 break;
             case R.id.refuse_btn:
-                sendMsg(2);
+                if (NullUtils.isNull(note)) {
+                    sendMsg(2, note);
+                } else {
+                    ToastUtils.shows(this, "请填写审批意见");
+                }
                 break;
         }
     }
 
-    private void sendMsg(int state) {
+    private void sendMsg(int state, String note) {
         HashMap params = new HashMap();
         params.put("BillNo", billNo);
         params.put("BillTypeFlag", 5);
         params.put("BillTypeCode", 3);
         params.put("State", state);
-        params.put("Note", "");
+        params.put("Note", note);
         HttpRequestUtils.getmInstance().send(StockUpDetailsActivity.this, Constant.CHECKFOR_SAVE_URL, params, new HttpRequestCallBack() {
             @Override
             public void onSuccess(String result) {

@@ -68,10 +68,12 @@ public class FollowAdapter extends BaseAdapter {
         String overTime = mDatas.get(position).getEndDate();
         startTime = startTime.substring(0, 11);
         overTime = overTime.substring(0, 11);
+
         vh.startDate.setText(startTime + "~" + overTime);
+
         vh.remark.setText("备注：" + mDatas.get(position).getProjectMemo());
-        vh.rate.setText("成功率:" + mDatas.get(position).getRate() + "%");
-        vh.schedule.setText("进度：" + "0.3");
+        vh.rate.setText("进度：:" + mDatas.get(position).getRate() + "%");
+        vh.schedule.setText("进度：" + mDatas.get(position).getRate() + "%");
         return convertView;
     }
 

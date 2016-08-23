@@ -2,16 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/default_background_color"
     android:layout_height="match_parent"
+    android:background="@color/default_background_color"
     android:orientation="vertical"
     tools:context="com.meidp.crmim.activity.HospitalListActivity">
 
     <include layout="@layout/titlebar" />
 
+    <include layout="@layout/search_layout" />
+
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp5" />
 
 </LinearLayout>

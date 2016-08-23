@@ -3,6 +3,7 @@ package com.meidp.crmim.activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -60,6 +61,11 @@ public class ProjecDetailsActivity extends BaseActivity {
     private TextView successRate;
     @ViewInject(R.id.curr_status)
     private TextView currStatus;
+    @ViewInject(R.id.related_personnel)
+    private TextView relatedPersonnel;
+    @ViewInject(R.id.follow_layout)
+    private LinearLayout follow_layout;
+
 
     @ViewInject(R.id.listview)
     private ListView mListView;
@@ -105,21 +111,53 @@ public class ProjecDetailsActivity extends BaseActivity {
                 AppBean<ProjectDetails> appBean = JSONObject.parseObject(result, new TypeReference<AppBean<ProjectDetails>>() {
                 });
                 if (appBean != null && appBean.getEnumcode() == 0) {
-                    projectName.setText("项目名称：" + appBean.getData().getProjectName());
-                    projectNum.setText("项目编号：" + appBean.getData().getProjectNo());
-                    projectLinkname.setText("联系人：" + appBean.getData().getCustLinkMan());
-                    linkmanPhone.setText("电话号码：" + appBean.getData().getLinkTel());
-                    totalMoney.setText("" + appBean.getData().getInvestment());
-                    registerDate.setText("项目登记时间: " + appBean.getData().getCreateDate());
+                    if (NullUtils.isNull(appBean.getData().getProjectName())) {
+                        projectName.setText("项目名称：" + appBean.getData().getProjectName());
+                    } else {
+                        projectName.setText("项目名称：");
+                    }
+                    if (NullUtils.isNull(appBean.getData().getProjectNo())) {
+                        projectNum.setText("项目编号：" + appBean.getData().getProjectNo());
+                    } else {
+                        projectNum.setText("项目编号：");
+                    }
+                    if (NullUtils.isNull(appBean.getData().getCustLinkMan())) {
+                        projectLinkname.setText("联系人：" + appBean.getData().getCustLinkMan());
+                    } else {
+                        projectLinkname.setText("联系人：");
+                    }
+                    if (NullUtils.isNull(appBean.getData().getLinkTel())) {
+                        linkmanPhone.setText("电话号码：" + appBean.getData().getLinkTel());
+                    } else {
+                        linkmanPhone.setText("电话号码：");
+                    }
+                    totalMoney.setText("￥" + appBean.getData().getInvestment());
+
+                    String timeStr = appBean.getData().getCreateDate();
+                    if (NullUtils.isNull(timeStr)) {
+                        timeStr = timeStr.substring(0, timeStr.length() - 3);
+                        registerDate.setText("项目登记时间: " + timeStr);
+                    } else {
+                        registerDate.setText("项目登记时间: ");
+                    }
+
                     double rate = appBean.getData().getSuccessRate() * 100;//成功率
                     successRate.setText(rate + "%");
+                    if (NullUtils.isNull(appBean.getData().getCanViewUser())) {
+                        relatedPersonnel.setText(appBean.getData().getCanViewUser());
+                    }
                     if (NullUtils.isNull(appBean.getData().getRemark())) {
                         remarkTv.setText("备注:" + appBean.getData().getRemark());
                     } else {
                         remarkTv.setText("备注:（无）");
                     }
+
                     currStatus.setText(appBean.getData().getStatusName());
                     mDatas.addAll(appBean.getData().getConstructionDetails());
+                    if (mDatas != null && !mDatas.isEmpty()) {
+                        follow_layout.setVisibility(View.GONE);
+                        mAdapter.notifyDataSetChanged();
+                    }
                 }
             }
         });

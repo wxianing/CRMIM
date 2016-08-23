@@ -58,7 +58,7 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
         }
         mListView.setMode(PullToRefreshBase.Mode.BOTH);
         mDatas = new ArrayList<>();
-        mAdapter = new CustomerListAdapter(mDatas, this);
+        mAdapter = new CustomerListAdapter(mDatas, CustomerListActivity.this);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
         flag = getIntent().getStringExtra("FLAG");
@@ -102,6 +102,7 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
                 });
                 if (appDatas != null && appDatas.getEnumcode() == 0) {
                     mDatas.addAll(appDatas.getData().getDataList());
+
                     mAdapter.notifyDataSetChanged();
                     mListView.onRefreshComplete();
                 }
@@ -135,7 +136,7 @@ public class CustomerListActivity extends BaseActivity implements AdapterView.On
             Intent intent = new Intent(this, ClientDetailsActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("ClientContacts", contacts);
-            intent.putExtra("OID", mDatas.get(position-1).getID());
+            intent.putExtra("OID", mDatas.get(position - 1).getID());
             intent.putExtras(bundle);
             startActivity(intent);
 

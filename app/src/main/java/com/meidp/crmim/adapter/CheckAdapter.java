@@ -37,13 +37,25 @@ public class CheckAdapter extends BasicAdapter<CheckforApply.FlowStepsBean> {
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-        vh.regulatoryAgency.setText("审批部门：" + data.getStepName());
+
+        if (NullUtils.isNull(data.getStepName())) {
+            vh.regulatoryAgency.setText("审批部门：" + data.getStepName());
+        } else {
+            vh.regulatoryAgency.setText("审批部门：");
+        }
         if (NullUtils.isNull(data.getNote())) {
             vh.regulatoryIdea.setText("审批意见：" + data.getNote());
         } else {
             vh.regulatoryIdea.setText("审批意见：");
         }
-        vh.regulatoryTime.setText(data.getModifiedDate());
+
+        String timeStr = data.getModifiedDate();
+        if (NullUtils.isNull(timeStr)) {
+            timeStr = timeStr.substring(0, timeStr.length() - 3);
+            vh.regulatoryTime.setText(timeStr);
+        } else {
+            vh.regulatoryTime.setText("");
+        }
         String status = data.getCheckStatusName();
         vh.currStatus.setText("状态：" + status);
         vh.step.setText("StepNo" + data.getStepNo());

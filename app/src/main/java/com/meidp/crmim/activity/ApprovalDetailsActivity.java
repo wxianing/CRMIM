@@ -3,6 +3,8 @@ package com.meidp.crmim.activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -50,6 +52,12 @@ public class ApprovalDetailsActivity extends BaseActivity {
     private CheckAdapter mAdapter;
     private String billNo;
     private int id;
+    @ViewInject(R.id.checked_opinion)
+    private EditText checkedOpinion;
+    @ViewInject(R.id.agree_btn)
+    private Button agree_btn;
+    @ViewInject(R.id.refuse_btn)
+    private Button refuseBtn;
 
     @Override
     public void onInit() {
@@ -105,26 +113,31 @@ public class ApprovalDetailsActivity extends BaseActivity {
 
     @Event({R.id.back_arrows, R.id.agree_btn, R.id.refuse_btn})
     private void onClick(View v) {
+        String note = checkedOpinion.getText().toString().trim();
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
                 break;
             case R.id.agree_btn:
-                sendMsg(0);
+                sendMsg(0, note);
                 break;
             case R.id.refuse_btn:
-                sendMsg(2);
+                if (NullUtils.isNull(note)) {
+                    sendMsg(2, note);
+                } else {
+                    ToastUtils.shows(ApprovalDetailsActivity.this, "请填写审批内容");
+                }
                 break;
         }
     }
 
-    private void sendMsg(int state) {
+    private void sendMsg(final int state, String note) {
         HashMap params = new HashMap();
         params.put("BillNo", billNo);
         params.put("BillTypeFlag", 5);
         params.put("BillTypeCode", 11);
         params.put("State", state);
-        params.put("Note", "");
+        params.put("Note", note);
         HttpRequestUtils.getmInstance().send(ApprovalDetailsActivity.this, Constant.CHECKFOR_SAVE_URL, params, new HttpRequestCallBack() {
             @Override
             public void onSuccess(String result) {
@@ -132,6 +145,13 @@ public class ApprovalDetailsActivity extends BaseActivity {
                 });
                 if (appMsg != null && appMsg.getEnumcode() == 0) {
                     ToastUtils.shows(ApprovalDetailsActivity.this, "审批成功");
+                    if (state == 0) {
+                        agree_btn.setText("已同意");
+                    }
+                    if (state == 2) {
+                        refuseBtn.setText("已拒绝");
+                    }
+
                     Intent intent = new Intent();
                     setResult(1019, intent);
                     finish();

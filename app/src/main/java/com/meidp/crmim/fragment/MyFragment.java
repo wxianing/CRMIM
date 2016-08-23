@@ -23,6 +23,7 @@ import com.meidp.crmim.activity.ModelMachineApplyActivity;
 import com.meidp.crmim.activity.MyTeamActivity;
 import com.meidp.crmim.activity.NewGroupActivity;
 import com.meidp.crmim.activity.PersonCentorActivity;
+import com.meidp.crmim.activity.ResetPwdActivity;
 import com.meidp.crmim.activity.SigninMainActivity;
 import com.meidp.crmim.activity.SubmitActivity;
 import com.meidp.crmim.utils.ImageUtils;
@@ -54,15 +55,17 @@ public class MyFragment extends BaseFragment {
     @ViewInject(R.id.job_title)
     private TextView jobTitle;
     @ViewInject(R.id.phone_num)
-    private TextView phoneNum;
+    private TextView phoneNum;//手机号码
     @ViewInject(R.id.header_img)
-    private ImageView headerImg;
+    private ImageView headerImg;//头像
 
     @ViewInject(R.id.right_img)
     private ImageView rightImg;
     private PopupWindow mPopupWindow;
     @ViewInject(R.id.department)
-    private TextView department;
+    private TextView department;//部门
+    @ViewInject(R.id.zhiwu)
+    private TextView zhiwu;//职务
 
     public MyFragment() {
     }
@@ -96,8 +99,9 @@ public class MyFragment extends BaseFragment {
                 startActivity(intent);
                 break;
             case R.id.reset_password:
-                showAlertDialog();
-
+//                showAlertDialog();
+                intent.setClass(getActivity(), ResetPwdActivity.class);
+                startActivity(intent);
                 break;
             case R.id.header_img:
                 intent.setClass(getActivity(), PersonCentorActivity.class);
@@ -195,14 +199,17 @@ public class MyFragment extends BaseFragment {
             header.setImageBitmap(headerBitmap);
         }
         String niceName = (String) SPUtils.get(getActivity(), "EmployeeName", "");
-        String zhiwu = (String) SPUtils.get(getActivity(), "ZHIWU", "");
+        String zhiwuString = (String) SPUtils.get(getActivity(), "ZHIWU", "");
+        if (NullUtils.isNull(zhiwuString)) {
+            zhiwu.setText("(" + zhiwuString + ")");
+        }
         userName.setText(niceName);
         String deptName = (String) SPUtils.get(getActivity(), "DeptName", "");
 //        jobTitle.setText("部门：" + deptName);
         department.setText("部门：" + deptName);
         String headerPhoto = (String) SPUtils.get(getActivity(), "PhotoURL", "");
         ImageLoader.getInstance().displayImage(headerPhoto, headerImg, MyApplication.optionsRounds);
-        String phone = (String) SPUtils.get(getActivity(), "PHONE", "");
+        String phone = (String) SPUtils.get(getActivity(), "Mobile", "");
         phoneNum.setText("电话：" + phone);
     }
 

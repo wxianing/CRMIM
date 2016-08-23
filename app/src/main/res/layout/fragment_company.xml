@@ -8,12 +8,12 @@
 
     <include layout="@layout/titlebar_layout" />
 
-    <include
-        layout="@layout/auto_viewpager" />
-
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp15"
+        android:divider="@color/tc_gray"
+        android:dividerHeight="0dp" />
 
 </LinearLayout>

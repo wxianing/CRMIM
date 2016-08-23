@@ -360,7 +360,7 @@ public class PrototypeDetails implements Serializable {
         private String CompanyCD;
         private int ID;
         private String ModifiedUserID;
-        private Object Note;
+        private String Note;
         private Object ActorName;
 
         public Object getDeptID() {
@@ -451,11 +451,11 @@ public class PrototypeDetails implements Serializable {
             this.ModifiedUserID = ModifiedUserID;
         }
 
-        public Object getNote() {
+        public String getNote() {
             return Note;
         }
 
-        public void setNote(Object Note) {
+        public void setNote(String Note) {
             this.Note = Note;
         }
 

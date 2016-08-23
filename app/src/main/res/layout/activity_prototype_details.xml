@@ -7,93 +7,120 @@
     android:orientation="vertical"
     tools:context="com.meidp.crmim.activity.PrototypeDetailsActivity">
 
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/titlebar" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <include layout="@layout/titlebar" />
-
-        <TextView
-            android:id="@+id/title_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp20"
-            android:background="@color/white"
-            android:padding="@dimen/dp10"
-            android:text="标题" />
-
-        <TextView
-            android:id="@+id/prototype_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp20"
-            android:background="@color/white"
-            android:padding="@dimen/dp10"
-            android:text="样机名称" />
+        android:layout_height="1200dp"
+        android:layout_below="@+id/title_bar"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="10dp"
-            android:background="#F5F5F5" />
-
-        <TextView
-            android:id="@+id/count_tv"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="@dimen/dp10"
-            android:text="数量：" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/apply_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp20"
-            android:background="@color/white"
-            android:padding="@dimen/dp10"
-            android:text="申请时间：" />
+            <TextView
+                android:id="@+id/title_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp20"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="标题" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="10dp"
-            android:background="#F5F5F5" />
+            <TextView
+                android:id="@+id/prototype_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp20"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="样机名称" />
 
-        <TextView
-            android:id="@+id/apply_person"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="@dimen/dp10"
-            android:text="申请人：" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:background="#F5F5F5" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="10dp"
-            android:background="#F5F5F5" />
+            <TextView
+                android:id="@+id/count_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="数量：" />
 
-        <TextView
-            android:id="@+id/phone_num"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="@dimen/dp10"
-            android:text="联系电话：：" />
+            <TextView
+                android:id="@+id/apply_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp20"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="申请时间：" />
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:background="#F5F5F5" />
+
+            <TextView
+                android:id="@+id/apply_person"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="申请人：" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:background="#F5F5F5" />
+
+            <TextView
+                android:id="@+id/phone_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="联系电话：" />
+
+            <TextView
+                android:id="@+id/relevant_project"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/dp10"
+                android:text="相关项目：" />
+
+            <com.meidp.crmim.view.ListViewForScrollView
+                android:id="@+id/listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp20"
+                android:layout_marginLeft="@dimen/dp80"
+                android:layout_marginRight="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10" />
+
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
+        android:id="@+id/save_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/follow_layout"
         android:layout_marginBottom="@dimen/dp10"
         android:layout_marginTop="30dp"
-        android:paddingBottom="@dimen/dp5">
+        android:paddingBottom="@dimen/dp5"
+        android:visibility="gone">
 
         <Button
             android:id="@+id/button"

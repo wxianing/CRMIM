@@ -42,9 +42,6 @@ public class CostReimbursementActivity extends BaseActivity {
     private static final int DATE_DIALOG_ID = 1;
     public int flag = 0;
 
-    @ViewInject(R.id.title_right)
-    private TextView titleRight;
-
     @ViewInject(R.id.title_tv)
     private TextView title;
     @ViewInject(R.id.customer_et)
@@ -82,13 +79,11 @@ public class CostReimbursementActivity extends BaseActivity {
     @Override
     public void onInit() {
         title.setText("费用报销");
-        titleRight.setText("保存");
-        titleRight.setVisibility(View.VISIBLE);
         applyTimeEt.setText(DataUtils.getDate2());
         needTime.setText(DataUtils.getDate2());
     }
 
-    @Event(value = {R.id.customer_et, R.id.cost_type, R.id.apply_time, R.id.need_time, R.id.title_right, R.id.back_arrows, R.id.project_et})
+    @Event(value = {R.id.customer_et, R.id.cost_type, R.id.apply_time, R.id.need_time, R.id.save_btn, R.id.back_arrows, R.id.project_et})
     private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -120,7 +115,7 @@ public class CostReimbursementActivity extends BaseActivity {
                 }
                 CostReimbursementActivity.this.saleHandler.sendMessage(msg2);
                 break;
-            case R.id.title_right:
+            case R.id.save_btn:
                 sendMsg();
                 break;
             case R.id.back_arrows:
@@ -133,7 +128,6 @@ public class CostReimbursementActivity extends BaseActivity {
                 break;
         }
     }
-
 
     @Override
     public void onInitData() {
@@ -153,6 +147,8 @@ public class CostReimbursementActivity extends BaseActivity {
         entrity.setExpRemark(remark);
         if (NullUtils.isNull(count)) {
             entrity.setAmount(Double.valueOf(count));
+        } else {
+            ToastUtils.shows(this, "请填写金额");
         }
         List<CostEntrity> entrityList = new ArrayList<>();
         entrityList.add(entrity);
@@ -169,6 +165,7 @@ public class CostReimbursementActivity extends BaseActivity {
         params.put("details", entrityList);//原因
         params.put("ProjectID", projectId);//项目
 
+
         HttpRequestUtils.getmInstance().send(CostReimbursementActivity.this, Constant.COST_SAVE_URL, params, new HttpRequestCallBack() {
             @Override
             public void onSuccess(String result) {
@@ -177,9 +174,11 @@ public class CostReimbursementActivity extends BaseActivity {
                 });
                 if (appMsg != null && appMsg.getEnumcode() == 0) {
                     ToastUtils.shows(CostReimbursementActivity.this, "保存成功");
+                    Intent intent = new Intent();
+                    setResult(1021, intent);
                     finish();
                 } else {
-                    ToastUtils.shows(CostReimbursementActivity.this, "保存失败");
+                    ToastUtils.shows(CostReimbursementActivity.this, appMsg.getMsg());
                 }
             }
         });

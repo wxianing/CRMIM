@@ -43,15 +43,32 @@
                     android:layout_marginLeft="@dimen/dp10"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/username"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/header_img"
-                        android:layout_centerHorizontal="true"
-                        android:text=""
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp14" />
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/username"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/header_img"
+                            android:layout_centerHorizontal="true"
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp14" />
+
+                        <TextView
+                            android:id="@+id/zhiwu"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/header_img"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginLeft="@dimen/dp10"
+                            android:text=""
+                            android:textColor="@color/tc_gray"
+                            android:textSize="@dimen/sp14" />
+
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/phone_num"

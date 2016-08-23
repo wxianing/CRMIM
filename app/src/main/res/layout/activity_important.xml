@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:divider="@color/transparent"
     android:layout_height="match_parent"
     android:background="@color/default_background_color"
     android:orientation="vertical"
@@ -15,6 +16,11 @@
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/dp10"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:divider="@color/transparent"
+        android:dividerHeight="8dp"
         android:scrollbars="none" />
 
 </LinearLayout>

@@ -37,6 +37,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="vertical"
+        android:paddingBottom="@dimen/dp10"
         android:paddingLeft="@dimen/dp10">
 
         <TextView

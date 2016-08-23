@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.meidp.crmim.R;
 import com.meidp.crmim.model.VisitRecords;
+import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.view.DActionSheetDialog;
 
 import org.xutils.view.annotation.ViewInject;
@@ -37,13 +38,33 @@ public class VisitRecordAdapter extends BasicAdapter<VisitRecords> {
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-
-        vh.titleName.setText(data.getTitle());
-        vh.address_tv.setText("地址：" + data.getLocationAddress());
-        vh.visitTime.setText(data.getModifiedDate());
-        vh.linkman.setText("联系人：" + data.getCustLinkManName());
-        vh.phoneNum.setText("电      话：" + data.getLinkTel());
-
+        if (NullUtils.isNull(data.getTitle())) {
+            vh.titleName.setText(data.getTitle());
+        } else {
+            vh.titleName.setText(data.getTitle());
+        }
+        if (NullUtils.isNull(data.getLocationAddress())) {
+            vh.address_tv.setText("地址：" + data.getLocationAddress());
+        } else {
+            vh.address_tv.setText("地址：");
+        }
+        String timeStr = data.getModifiedDate();
+        if (NullUtils.isNull(timeStr)) {
+            timeStr = timeStr.substring(0, timeStr.length() - 3);
+            vh.visitTime.setText(timeStr);
+        } else {
+            vh.visitTime.setText("");
+        }
+        if (NullUtils.isNull(data.getCustLinkManName())) {
+            vh.linkman.setText("联系人：" + data.getCustLinkManName());
+        } else {
+            vh.linkman.setText("联系人：");
+        }
+        if (NullUtils.isNull(data.getLinkTel())) {
+            vh.phoneNum.setText("电      话：" + data.getLinkTel());
+        } else {
+            vh.phoneNum.setText("电话：");
+        }
         return convertView;
     }
 

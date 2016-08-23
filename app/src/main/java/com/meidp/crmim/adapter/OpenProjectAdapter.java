@@ -37,10 +37,23 @@ public class OpenProjectAdapter extends BasicAdapter<Projects> {
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-        vh.projectName.setText(data.getProjectName());
-        vh.linkName.setText("项目联系人：" + data.getCustLinkMan());
-        String timeStr = data.getCreateDate().substring(0, 10);
-        vh.ceateTime.setText("登记时间：" + timeStr);
+        if (NullUtils.isNull(data.getProjectName())) {
+            vh.projectName.setText(data.getProjectName());
+        } else {
+            vh.projectName.setText("");
+        }
+        if (NullUtils.isNull(data.getCustLinkMan())) {
+            vh.linkName.setText("项目联系人：" + data.getCustLinkMan());
+        } else {
+            vh.linkName.setText("项目联系人：");
+        }
+        String timeStr = data.getCreateDate();
+        if (NullUtils.isNull(timeStr)) {
+            timeStr = timeStr.substring(0, timeStr.length() - 3);
+            vh.ceateTime.setText("登记时间：" + timeStr);
+        } else {
+            vh.ceateTime.setText("登记时间：");
+        }
         if (NullUtils.isNull(data.getStatusName())) {
             vh.statusName.setText(data.getStatusName());
         } else {
@@ -54,9 +67,12 @@ public class OpenProjectAdapter extends BasicAdapter<Projects> {
         } else {
             vh.successRate.setTextColor(Color.BLUE);
         }
-
         vh.successRate.setText(success + "%");
-        vh.dutyPerson.setText("负责人：" + data.getCreatorName());
+        if (NullUtils.isNull(data.getCreatorName())) {
+            vh.dutyPerson.setText("负责人：" + data.getCreatorName());
+        } else {
+            vh.dutyPerson.setText("负责人：");
+        }
 
         return convertView;
     }

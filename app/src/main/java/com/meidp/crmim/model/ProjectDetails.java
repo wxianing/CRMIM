@@ -66,6 +66,16 @@ public class ProjectDetails implements Serializable {
     private Object DepartmentName;
     private Object ZhiWu;
     private Object IsAppoint;
+    private String CanViewUser;
+
+    public String getCanViewUser() {
+        return CanViewUser;
+    }
+
+    public void setCanViewUser(String canViewUser) {
+        CanViewUser = canViewUser;
+    }
+
     /**
      * ID : 106
      * SummaryName : 测试

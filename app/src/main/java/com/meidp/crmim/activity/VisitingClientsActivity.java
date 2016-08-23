@@ -107,7 +107,7 @@ public class VisitingClientsActivity extends BaseActivity {
                 break;
             case R.id.address_trim:
                 intent = new Intent();
-                intent.setClass(VisitingClientsActivity.this, LocalTrimmingActivity.class);
+                intent.setClass(VisitingClientsActivity.this, VisitRecordActivity.class);
                 startActivityForResult(intent, Constant.RESULTCODE);
                 break;
             case R.id.customer_name:

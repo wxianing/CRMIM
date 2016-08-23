@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/horizontal_line" />
+
+    <TextView
+        android:id="@+id/checked_prototype"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="最近一个星期" />
+
+    <include layout="@layout/horizontal_line" />
+
+    <TextView
+        android:id="@+id/checked_fee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="最近一个月" />
+
+    <include layout="@layout/horizontal_line" />
+
+    <TextView
+        android:id="@+id/checked_stockup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="最近一年" />
+
+    <include layout="@layout/horizontal_line" />
+
+    <TextView
+        android:id="@+id/unlimited"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="不限" />
+
+    <include layout="@layout/horizontal_line" />
+
+</LinearLayout>

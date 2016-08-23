@@ -1,6 +1,8 @@
 package com.meidp.crmim.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +16,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.meidp.crmim.R;
 import com.meidp.crmim.adapter.CheckedAdapter;
-import com.meidp.crmim.adapter.ExpanListAdapter;
 import com.meidp.crmim.adapter.SelectFriendAdapter;
+import com.meidp.crmim.adapter.TeamExpanAdapter;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppBeans;
@@ -23,6 +25,7 @@ import com.meidp.crmim.model.AppDatas;
 import com.meidp.crmim.model.AppMsg;
 import com.meidp.crmim.model.Contact;
 import com.meidp.crmim.model.Friends;
+import com.meidp.crmim.model.TeamDetails;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.ToastUtils;
@@ -32,6 +35,7 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -67,8 +71,11 @@ public class AddTeamActivity extends BaseActivity implements ExpandableListView.
     @ViewInject(R.id.expListView)
     protected ExpListView expListView;
     private List<Contact> contactList;
-    private ExpanListAdapter expandableAdapter;
+    private TeamExpanAdapter expandableAdapter;
     private String empolyeesIds = "";
+
+    private List<TeamDetails.UsersBean> userLists;
+    private List<TeamDetails.UsersBean> usersBeanList;
 
     @Override
     public void onInit() {
@@ -76,7 +83,10 @@ public class AddTeamActivity extends BaseActivity implements ExpandableListView.
         titleRight.setVisibility(View.VISIBLE);
         title.setText("添加团队成员");
         teamId = getIntent().getIntExtra("teamId", 0);
-        teamNames = getIntent().getStringExtra("TeamName");
+        teamNames = getIntent().getStringExtra("TeamName");//接收过来的团队名称
+        usersBeanList = new ArrayList<>();
+        userLists = (List<TeamDetails.UsersBean>) getIntent().getSerializableExtra("UsersBean");//接收传过来的对象
+//        usersBeanList.addAll(userLists);
 
         mDatas = new ArrayList<>();
         empolyees = new ArrayList<>();
@@ -92,7 +102,6 @@ public class AddTeamActivity extends BaseActivity implements ExpandableListView.
         expListView.setOnGroupClickListener(this);
         expListView.setAdapter(expandableAdapter);
         expListView.setGroupIndicator(null);
-
     }
 
     @Override
@@ -107,9 +116,14 @@ public class AddTeamActivity extends BaseActivity implements ExpandableListView.
                 if (appBean != null && appBean.getEnumcode() == 0) {
                     contactList.clear();
                     contactList.addAll(appBean.getData());
-                    expandableAdapter = new ExpanListAdapter(contactList, AddTeamActivity.this);
+                    expandableAdapter = new TeamExpanAdapter(contactList, AddTeamActivity.this);
                     expListView.setAdapter(expandableAdapter);
-
+                    if (userLists != null && !userLists.isEmpty()) {
+                        for (int i = 0; i < userLists.size(); i++) {
+                            TeamExpanAdapter.getIsSelected().put(userLists.get(i).getEmployeeId(), true);//默认吧原理已经有的成员选中
+                            empolyees.add(Integer.toString(userLists.get(i).getEmployeeId()));
+                        }
+                    }
                     expandableAdapter.notifyDataSetChanged();
                     for (int i = 0; i < contactList.size(); i++) {
                         expListView.expandGroup(i);//默认展开选项
@@ -137,35 +151,6 @@ public class AddTeamActivity extends BaseActivity implements ExpandableListView.
         });
     }
 
-//    @Override
-//    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        holder = (SelectFriendAdapter.ViewHolder) view.getTag();
-//        holder.checkBox.toggle();
-//        SelectFriendAdapter.getIsSelected().put(position, holder.checkBox.isChecked());
-//        if (holder.checkBox.isChecked() == true) {
-//            checkNum++;
-//            empolyees.add(Integer.toString(mDatas.get(position).getEmployeeID()));
-//            checkedLists.add(mDatas.get(position));
-//            checkedAdapter.notifyDataSetChanged();
-//        } else {
-//            if (checkNum > 0) {
-//                checkNum--;
-//                empolyees.remove(checkNum);
-//                for (int i = 0; i < checkedLists.size(); i++) {
-//                    int checkId = checkedLists.get(i).getEmployeeID();
-//                    if (mDatas.get(position).getEmployeeID() == checkId) {
-//                        checkedLists.remove(i);
-//                    }
-//                }
-//                checkedAdapter.notifyDataSetChanged();
-//            }
-//        }
-//        for (int i = 0; i < empolyees.size(); i++) {
-//            Log.e("userId", empolyees.get(i));
-//            System.out.println(empolyees.get(i));
-//        }
-//    }
-
     @Event({R.id.back_arrows, R.id.title_right})
     private void onClick(View v) {
         switch (v.getId()) {
@@ -188,6 +173,7 @@ public class AddTeamActivity extends BaseActivity implements ExpandableListView.
         TextView titleName = (TextView) contentView.findViewById(R.id.title);
         final EditText editText = (EditText) contentView.findViewById(R.id.message);
         titleName.setText("请输入团队名称");
+        editText.setHint("请输入团队名称");
         dialog.setContentView(contentView);
         dialog.setCanceledOnTouchOutside(true);
         Button negativeButton = (Button) contentView.findViewById(R.id.negativeButton);
@@ -242,51 +228,60 @@ public class AddTeamActivity extends BaseActivity implements ExpandableListView.
 
     @Override
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-        Log.e("select employeeID", ">>>>>>>>>>>>>>" + contactList.get(groupPosition).getUsers().get(childPosition).getEmployeeID());
-        int employeeID = contactList.get(groupPosition).getUsers().get(childPosition).getEmployeeID();
-        ExpanListAdapter.ChildViewHolder holder = (ExpanListAdapter.ChildViewHolder) v.getTag();
-        holder.mCheckBox.toggle();
-        SelectFriendAdapter.getIsSelected().put(childPosition, holder.mCheckBox.isChecked());
-        if (holder.mCheckBox.isChecked() == true) {
-            checkNum++;
-            empolyees.add(Integer.toString(contactList.get(groupPosition).getUsers().get(childPosition).getEmployeeID()));
-            Friends friends = new Friends();
-            friends.setEmployeeName(contactList.get(groupPosition).getUsers().get(childPosition).getEmployeeName());
-            friends.setPhotoURL(contactList.get(groupPosition).getUsers().get(childPosition).getPhotoURL());
-            friends.setEmployeeID(contactList.get(groupPosition).getUsers().get(childPosition).getEmployeeID());
-            checkedLists.add(friends);
-            checkedAdapter.notifyDataSetChanged();
-        } else {
-            checkNum--;
+        Contact.UsersBean users = contactList.get(groupPosition).getUsers().get(childPosition);
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("USERS", (Serializable) users);
+        intent.putExtras(bundle);
+        setResult(1022, intent);
+        finish();
 
-            for (int i = 0; i < checkedLists.size(); i++) {
-                int checkId = checkedLists.get(i).getEmployeeID();
-                Log.e("checkId", "<<<<>>>>" + checkId);
-                if (employeeID == checkId) {
-                    checkedLists.remove(i);
-                    empolyees.remove(i);
-                }
-            }
-            checkedAdapter.notifyDataSetChanged();
-//                positions.remove(checkNum);
-        }
-        for (int k = 0; k < empolyees.size(); k++) {
-            empolyeesIds += empolyees.get(k) + ",";
-        }
-        Log.e("userIdLists", empolyeesIds);
+
+//        Log.e("select employeeID", ">>>>>>>>>>>>>>" + contactList.get(groupPosition).getUsers().get(childPosition).getEmployeeID());
+//        int employeeID = contactList.get(groupPosition).getUsers().get(childPosition).getEmployeeID();//
+//        TeamExpanAdapter.ChildViewHolder holder = (TeamExpanAdapter.ChildViewHolder) v.getTag();
+//        holder.mCheckBox.toggle();
+//        SelectFriendAdapter.getIsSelected().put(childPosition, holder.mCheckBox.isChecked());
+//        if (holder.mCheckBox.isChecked() == true) {
+//            checkNum++;
+//            empolyees.add(Integer.toString(contactList.get(groupPosition).getUsers().get(childPosition).getEmployeeID()));
+//            Friends friends = new Friends();
+//            friends.setEmployeeName(contactList.get(groupPosition).getUsers().get(childPosition).getEmployeeName());
+//            friends.setPhotoURL(contactList.get(groupPosition).getUsers().get(childPosition).getPhotoURL());
+//            friends.setEmployeeID(contactList.get(groupPosition).getUsers().get(childPosition).getEmployeeID());
+//            checkedLists.add(friends);
+//            checkedAdapter.notifyDataSetChanged();
+//        } else {
+//            checkNum--;
+//
+//            for (int i = 0; i < checkedLists.size(); i++) {
+//                int checkId = checkedLists.get(i).getEmployeeID();
+//                Log.e("checkId", "<<<<>>>>" + checkId);
+//                if (employeeID == checkId) {
+//                    checkedLists.remove(i);
+//                    empolyees.remove(i);
+//                }
+//            }
+//            checkedAdapter.notifyDataSetChanged();
+////                positions.remove(checkNum);
+//        }
+//        for (int k = 0; k < empolyees.size(); k++) {
+//            empolyeesIds += empolyees.get(k) + ",";
+//        }
+//        Log.e("userIdLists", empolyeesIds);
         return true;
     }
 
     @Override
     public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-        ExpanListAdapter.GroupVieHolder holder = (ExpanListAdapter.GroupVieHolder) v.getTag();
+        TeamExpanAdapter.GroupVieHolder holder = (TeamExpanAdapter.GroupVieHolder) v.getTag();
         holder.gCheckBox.toggle();
         SelectFriendAdapter.getIsSelected().put(groupPosition, holder.gCheckBox.isChecked());
         if (holder.gCheckBox.isChecked() == true) {
             for (int i = 0; i < contactList.get(groupPosition).getUsers().size(); i++) {
-                ExpanListAdapter.getIsSelected().put(contactList.get(groupPosition).getUsers().get(i).getUserID(), true);
+                TeamExpanAdapter.getIsSelected().put(contactList.get(groupPosition).getUsers().get(i).getEmployeeID(), true);
 
-                empolyees.add(Integer.toString(contactList.get(groupPosition).getUsers().get(i).getUserID()));
+                empolyees.add(Integer.toString(contactList.get(groupPosition).getUsers().get(i).getEmployeeID()));
                 Friends friends = new Friends();
                 friends.setEmployeeName(contactList.get(groupPosition).getUsers().get(i).getEmployeeName());
                 friends.setPhotoURL(contactList.get(groupPosition).getUsers().get(i).getPhotoURL());
@@ -296,7 +291,7 @@ public class AddTeamActivity extends BaseActivity implements ExpandableListView.
             }
         } else {
             for (int i = 0; i < contactList.get(groupPosition).getUsers().size(); i++) {
-                ExpanListAdapter.getIsSelected().put(contactList.get(groupPosition).getUsers().get(i).getUserID(), false);
+                TeamExpanAdapter.getIsSelected().put(contactList.get(groupPosition).getUsers().get(i).getEmployeeID(), false);
                 for (int k = 0; k < checkedLists.size(); k++) {
                     int checkId = checkedLists.get(k).getUserID();
                     Log.e("checkId", "<<<<>>>>" + checkId);
@@ -308,7 +303,6 @@ public class AddTeamActivity extends BaseActivity implements ExpandableListView.
                 }
             }
         }
-
         expandableAdapter.notifyDataSetChanged();
         return true;
     }

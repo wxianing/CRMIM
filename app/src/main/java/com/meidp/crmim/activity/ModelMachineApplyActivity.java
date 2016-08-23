@@ -135,9 +135,11 @@ public class ModelMachineApplyActivity extends BaseActivity {
                 });
                 if (appMag != null && appMag.getEnumcode() == 0) {
                     ToastUtils.shows(ModelMachineApplyActivity.this, "保存成功");
+                    Intent intent = new Intent();
+                    setResult(1019, intent);
                     finish();
                 } else {
-                    ToastUtils.shows(ModelMachineApplyActivity.this, "保存失败");
+                    ToastUtils.shows(ModelMachineApplyActivity.this, appMag.getMsg());
                 }
             }
         });

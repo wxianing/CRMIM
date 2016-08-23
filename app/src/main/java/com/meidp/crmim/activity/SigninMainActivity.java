@@ -78,6 +78,8 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
     }
 
     private void initView() {
+        custImg.setOnClickListener(this);
+        rightScan.setOnClickListener(this);
         rightScan.setVisibility(View.VISIBLE);
         rightScan.setImageResource(R.mipmap.cus_history);
         custImg.setImageResource(R.mipmap.cus_info);
@@ -107,7 +109,7 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(SigninMainActivity.this, LocalTrimmingActivity.class);
+                intent.setClass(SigninMainActivity.this, VisitRecordActivity.class);
                 startActivityForResult(intent, Constant.RESULTCODE);
             }
         });
@@ -141,6 +143,7 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
         headerImg = (ImageView) findViewById(R.id.header_img);
         String photoURL = (String) SPUtils.get(this, "PhotoURL", "");
         ImageLoader.getInstance().displayImage(photoURL, headerImg);
+
     }
 
     @Override
@@ -243,6 +246,20 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
 //                ToastUtils.shows(this, "点击了客户");
                 intent = new Intent();
                 intent.setClass(this, CustomerListActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.address_trim:
+                intent = new Intent();
+                intent.setClass(this, VisitRecordActivity.class);
+                startActivityForResult(intent, Constant.RESULTCODE);
+                break;
+            case R.id.right_scan:
+                intent = new Intent();
+                intent.setClass(this, VisitRecordActivity.class);
+                startActivityForResult(intent, Constant.RESULTCODE);
+                break;
+            case R.id.right_add:
+                intent = new Intent(this, CustomerListActivity.class);
                 startActivity(intent);
                 break;
         }

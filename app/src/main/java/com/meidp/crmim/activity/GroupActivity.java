@@ -41,7 +41,7 @@ public class GroupActivity extends BaseActivity implements AdapterView.OnItemCli
 
     @Override
     public void onInit() {
-        titleRight.setText("新建");
+        titleRight.setText("创建");
         titleRight.setVisibility(View.VISIBLE);
         title.setText("群聊");
         mDatas = new ArrayList<>();
@@ -52,6 +52,10 @@ public class GroupActivity extends BaseActivity implements AdapterView.OnItemCli
 
     @Override
     public void onInitData() {
+        loadData();
+    }
+
+    private void loadData() {
         HashMap params = new HashMap();
         HttpRequestUtils.getmInstance().send(GroupActivity.this, Constant.GROUP_LIST_URL, params, new HttpRequestCallBack<String>() {
             @Override
@@ -75,7 +79,7 @@ public class GroupActivity extends BaseActivity implements AdapterView.OnItemCli
                 break;
             case R.id.title_right:
                 Intent intent = new Intent(this, NewGroupActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1023);
                 break;
         }
     }
@@ -83,5 +87,14 @@ public class GroupActivity extends BaseActivity implements AdapterView.OnItemCli
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         RongIM.getInstance().startDiscussionChat(this, mDatas.get(position).getDiscussionId(), mDatas.get(position).getDiscussionName());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 1023) {
+            mDatas.clear();
+            loadData();
+        }
     }
 }

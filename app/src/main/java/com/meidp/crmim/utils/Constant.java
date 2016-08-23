@@ -184,4 +184,10 @@ public class Constant {
     public static final String GET_STOCKUP_DETAILS = BASE_URL + "order/getsellorder";
     //标记极光推送未已读消息
     public static final String JPUSH_HASREADER_SAVE = BASE_URL + "common/mpublic/jpushreadsave";
+    //添加团队联系人
+    public static final String SAVE_TEAMLINKMAN_URL = BASE_URL + "office/employee/personallinkmansave";
+    //团队联系人列表
+    public static final String TEAM_LINKMAN_URL = BASE_URL + "office/employee/getpersonallinkmanpagelist";
+    //修改密码
+    public static final String RESET_PWD_URL = BASE_URL + "systemset/account/updatepassword";
 }

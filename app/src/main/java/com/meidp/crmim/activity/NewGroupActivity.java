@@ -1,6 +1,7 @@
 package com.meidp.crmim.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -153,14 +154,12 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
             if (checkNum > 0) {
                 checkNum--;
                 userIds.remove(checkNum);
-
                 for (int i = 0; i < checkedLists.size(); i++) {
                     int checkId = checkedLists.get(i).getUserID();
                     if (mDatas.get(position).getUserID() == checkId) {
                         checkedLists.remove(i);
                     }
                 }
-
                 checkedAdapter.notifyDataSetChanged();
                 positions.remove(checkNum);
             }
@@ -228,7 +227,6 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
                 break;
             case R.id.title_right:
                 if (NullUtils.isNull(discussionId)) {
-
                     RongIM.getInstance().addMemberToDiscussion(discussionId, userIds, new RongIMClient.OperationCallback() {
                         @Override
                         public void onSuccess() {
@@ -248,12 +246,16 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
                                     AppMsg appMsg = JSONObject.parseObject(result, new TypeReference<AppMsg>() {
                                     });
                                     if (appMsg != null && appMsg.getEnumcode() == 0) {
-                                        ToastUtils.shows(NewGroupActivity.this, "创建成功");
+//                                        ToastUtils.shows(NewGroupActivity.this, "创建成功");
+                                        Intent intent = new Intent();
+                                        setResult(1023, intent);
                                         finish();
+                                    } else {
+                                        ToastUtils.shows(NewGroupActivity.this, appMsg.getMsg());
                                     }
                                 }
                             });
-                            ToastUtils.shows(NewGroupActivity.this, "添加成功");
+//                            ToastUtils.shows(NewGroupActivity.this, "添加成功");
                         }
 
                         @Override
@@ -268,10 +270,10 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
 
                 break;
             case R.id.search_btn:
-                keyWord = searchEditText.getText().toString().trim();
-                mDatas.clear();
-                loadData(keyWord);
-                showDialog();
+//                keyWord = searchEditText.getText().toString().trim();
+//                mDatas.clear();
+//                loadData(keyWord);
+//                showDialog();
                 break;
         }
     }
@@ -300,6 +302,8 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
                 groupName = editText.getText().toString().trim();
                 if (NullUtils.isNull(groupName)) {
                     RongIM.getInstance().createDiscussionChat(NewGroupActivity.this, userIds, groupName, mCallBack);
+                } else {
+                    ToastUtils.shows(NewGroupActivity.this, "请输入群名称");
                 }
                 Log.e("positiveButton", keyWord);
                 dialog.dismiss();
@@ -421,6 +425,12 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
         @Override
         public void onError(RongIMClient.ErrorCode errorCode) {
             Log.e("讨论组：", "创建失败");
+            ToastUtils.shows(NewGroupActivity.this, errorCode.getMessage());
+        }
+
+        @Override
+        public void onFail(RongIMClient.ErrorCode errorCode) {
+            super.onFail(errorCode);
         }
     }
 }

@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.meidp.crmim.R;
 import com.meidp.crmim.model.CheckforApply;
+import com.meidp.crmim.utils.NullUtils;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -35,13 +36,29 @@ public class ApprovalAdapter extends BasicAdapter<CheckforApply> {
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-        vh.titleName.setText(data.getTitle());
-        vh.cusName.setText(data.getCustName());
-        vh.dutyPerson.setText("负责人：" + data.getCreatorName());
+
+        if (NullUtils.isNull(data.getTitle())) {
+            vh.titleName.setText(data.getTitle());
+        } else {
+            vh.titleName.setText("");
+        }
+        if (NullUtils.isNull(data.getCustName())) {
+            vh.cusName.setText(data.getCustName());
+        } else {
+            vh.cusName.setText("");
+        }
+        if (NullUtils.isNull(data.getCreatorName())) {
+            vh.dutyPerson.setText("负责人：" + data.getCreatorName());
+        } else {
+            vh.dutyPerson.setText("负责人：");
+        }
         vh.currTime.setText(data.getCreateDate());
         int checkStatu = data.getCheckStatus();
-
-        vh.currStatus.setText(data.getCheckStatusName());
+        if (NullUtils.isNull(data.getCheckStatusName())) {
+            vh.currStatus.setText(data.getCheckStatusName());
+        } else {
+            vh.currStatus.setText("");
+        }
         return convertView;
     }
 

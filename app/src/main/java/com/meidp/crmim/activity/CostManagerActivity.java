@@ -88,7 +88,7 @@ public class CostManagerActivity extends BaseActivity implements PullToRefreshBa
             case R.id.right_img:
                 intent = new Intent();
                 intent.setClass(this, CostReimbursementActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1021);
                 break;
             case R.id.search_btn:
                 keyword = search.getText().toString().trim();
@@ -115,8 +115,17 @@ public class CostManagerActivity extends BaseActivity implements PullToRefreshBa
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this, CostDetailsActivity.class);
-        intent.putExtra("OID",mDatas.get(position-1).getID());
+        intent.putExtra("OID", mDatas.get(position - 1).getID());
 
         startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 1021) {
+            mDatas.clear();
+            loadData(pageIndex, keyword);
+        }
     }
 }

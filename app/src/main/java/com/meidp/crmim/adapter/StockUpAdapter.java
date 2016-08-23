@@ -45,7 +45,9 @@ public class StockUpAdapter extends BasicAdapter<StockUps> {
             vh.custName.setText(mDatas.get(position).getCustName());
         }
         vh.count.setText(Integer.toString(mDatas.get(position).getCountTotal()));
-        vh.statusName.setText(mDatas.get(position).getFlowStatusName());
+        if (NullUtils.isNull(mDatas.get(position).getFlowStatusName())) {
+            vh.statusName.setText(mDatas.get(position).getFlowStatusName());
+        }
         String timeStr = mDatas.get(position).getCreateDate();
         if (NullUtils.isNull(timeStr)) {
             timeStr = timeStr.substring(0, timeStr.length() - 3);

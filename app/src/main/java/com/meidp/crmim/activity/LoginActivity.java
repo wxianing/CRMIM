@@ -26,7 +26,6 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -184,6 +183,8 @@ public class LoginActivity extends BaseActivity {
         SPUtils.save(this, "NICENAME", userName);
         SPUtils.save(this, "PASSWORD", passWord);
         SPUtils.save(this, "TOKEN", appBean.getData().getRongcloudToken());
+
+        SPUtils.save(this, "Mobile", appBean.getData().getMobile());
 
         SPUtils.save(this, "EmployeeName", appBean.getData().getEmployeeName());
         SPUtils.save(this, "DeptName", appBean.getData().getDeptName());

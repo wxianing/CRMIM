@@ -91,12 +91,36 @@ public class CostDetailsActivity extends BaseActivity {
     }
 
     private void bindView(AppBean<CostDetails> appBean) {
-        titleName.setText("标题：" + appBean.getData().getTitle());
-        applyPerson.setText("申请人：" + appBean.getData().getCreatorName());
-        reason.setText("申请原因：" + appBean.getData().getReason());
-        relevanceProject.setText("项目名：" + appBean.getData().getProjectName());
+        if (NullUtils.isNull(appBean.getData().getTitle())) {
+            titleName.setText("标题：" + appBean.getData().getTitle());
+        } else {
+            titleName.setText("标题：");
+        }
+
+        if (NullUtils.isNull(appBean.getData().getCreatorName())) {
+            applyPerson.setText("申请人：" + appBean.getData().getCreatorName());
+        } else {
+            applyPerson.setText("申请人：");
+        }
+
+        if (NullUtils.isNull(appBean.getData().getReason())) {
+            reason.setText("申请原因：" + appBean.getData().getReason());
+        } else {
+            reason.setText("申请原因：");
+        }
+
+        if (NullUtils.isNull(appBean.getData().getProjectName())) {
+            relevanceProject.setText("项目名：" + appBean.getData().getProjectName());
+        } else {
+            relevanceProject.setText("项目名：");
+        }
+
         count.setText("金额：" + appBean.getData().getTotalAmount());
-        checkTime.setText("申请时间：" + appBean.getData().getCreateDate());
+        if (NullUtils.isNull(appBean.getData().getCreateDate())) {
+            checkTime.setText("申请时间：" + appBean.getData().getCreateDate());
+        } else {
+            checkTime.setText("申请时间：");
+        }
         billNo = appBean.getData().getApplyor();
         List<CostDetails.FlowStepsBean> mDatas = new ArrayList<>();
         Log.e("TAG", appBean.getData().getFlowSteps().toString());

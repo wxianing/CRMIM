@@ -20,14 +20,13 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import io.rong.imkit.RongIM;
-
 @ContentView(R.layout.activity_team_details)
-public class TeamDetailsActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public class TeamMemberActivity extends BaseActivity implements AdapterView.OnItemClickListener {
     @ViewInject(R.id.title_tv)
     private TextView title;
     private String teamName;
@@ -52,7 +51,7 @@ public class TeamDetailsActivity extends BaseActivity implements AdapterView.OnI
     private void loadData() {
         HashMap params = new HashMap();
         params.put("Id", teamId);
-        HttpRequestUtils.getmInstance().send(TeamDetailsActivity.this, Constant.TEAM_DETAILS_URL, params, new HttpRequestCallBack() {
+        HttpRequestUtils.getmInstance().send(TeamMemberActivity.this, Constant.TEAM_DETAILS_URL, params, new HttpRequestCallBack() {
             @Override
             public void onSuccess(String result) {
                 AppBean<TeamDetails> appbean = JSONObject.parseObject(result, new TypeReference<AppBean<TeamDetails>>() {
@@ -79,7 +78,8 @@ public class TeamDetailsActivity extends BaseActivity implements AdapterView.OnI
                 finish();
                 break;
             case R.id.right_img:
-                Intent intent = new Intent(this, AddTeamActivity.class);
+                Intent intent = new Intent(this, TeamAddMemberActivity.class);
+                intent.putExtra("UsersBean", (Serializable) mDatas);
                 intent.putExtra("teamId", teamId);
                 intent.putExtra("TeamName", teamName);
                 startActivity(intent);

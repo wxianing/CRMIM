@@ -62,6 +62,7 @@ public class PersonCentorActivity extends BaseActivity {
     @ViewInject(R.id.duty_tv)
     private TextView duty;
     private UserInfo userInfo;
+    private String photoString = "";
 
 
     @Override
@@ -99,6 +100,7 @@ public class PersonCentorActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.title_right:
+
                 final String nickName = nickNameEt.getText().toString().trim();
                 final String phoneNum = phoneNumEt.getText().toString().trim();
                 HashMap params = new HashMap();
@@ -112,7 +114,7 @@ public class PersonCentorActivity extends BaseActivity {
                         if (appMsg != null && appMsg.getEnumcode() == 0) {
                             ToastUtils.shows(PersonCentorActivity.this, "修改成功");
                             SPUtils.save(PersonCentorActivity.this, "NICENAME", nickName);
-                            SPUtils.save(PersonCentorActivity.this, "PHONE", phoneNum);
+                            SPUtils.save(PersonCentorActivity.this, "Mobile", phoneNum);
                         } else {
                             ToastUtils.shows(PersonCentorActivity.this, "修改失败");
                         }
@@ -234,10 +236,10 @@ public class PersonCentorActivity extends BaseActivity {
                 if (tempFile != null) {
                     boolean delete = tempFile.delete();
                 }
-                String photoString = ImageUtils.bitmaptoString(bitmap);
+                photoString = ImageUtils.bitmaptoString(bitmap);
                 SPUtils.save(this, "headPortrait", photoString);
                 Log.e("phoneString", photoString);
-                upload(photoString);
+                upload(photoString);//保存头像
 
             } catch (Exception e) {
                 e.printStackTrace();

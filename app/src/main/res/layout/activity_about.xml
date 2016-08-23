@@ -14,7 +14,7 @@
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dp60"
-        android:src="@mipmap/logo_icon" />
+        android:src="@mipmap/logo" />
 
     <TextView
         android:id="@+id/version_name"

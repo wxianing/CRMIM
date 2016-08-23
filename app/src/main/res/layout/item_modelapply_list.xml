@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/linear_bg_white"
-    android:orientation="vertical">
+    android:background="@drawable/linear_shape_bg"
+    android:orientation="vertical"
+    android:padding="@dimen/dp10">
 
     <TextView
         android:id="@+id/title_name"
@@ -17,26 +18,31 @@
         android:id="@+id/produce_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp5"
         android:background="@color/white"
         android:paddingRight="@dimen/dp10"
-        android:text="产品名称" />
+        android:text="产品名称"
+        android:textSize="@dimen/sp13" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp5">
 
         <TextView
             android:id="@+id/customer_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:text="客户名称" />
+            android:text="客户名称"
+            android:textSize="@dimen/sp13" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/checked_status"
-            android:text="状态:" />
+            android:text="状态:"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/checked_status"
@@ -44,12 +50,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="待审核"
-            android:textColor="@color/textcolor_orange" />
+            android:textColor="@color/textcolor_orange"
+            android:textSize="@dimen/sp13" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp5"
         android:background="@color/white">
 
         <TextView
@@ -57,7 +65,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:text="总费用:" />
+            android:text="总费用:"
+            android:textSize="@dimen/sp13" />
 
         <TextView
             android:id="@+id/total_money"
@@ -65,7 +74,8 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/total_fee"
             android:text="￥1000000"
-            android:textColor="@color/textcolor_orange" />
+            android:textColor="@color/textcolor_orange"
+            android:textSize="@dimen/sp13" />
 
         <TextView
             android:id="@+id/apply_count"
@@ -73,7 +83,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="申请数量:10"
-            android:textColor="@color/textcolor_orange" />
+            android:textColor="@color/textcolor_orange"
+            android:textSize="@dimen/sp13" />
 
     </RelativeLayout>
 
@@ -88,7 +99,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="负责人：小刘"
-            android:textColor="@color/blue" />
+            android:textColor="@color/blue"
+            android:textSize="@dimen/sp13" />
 
         <TextView
             android:id="@+id/create_time"

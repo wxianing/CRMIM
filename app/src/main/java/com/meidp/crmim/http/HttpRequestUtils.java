@@ -276,5 +276,35 @@ public class HttpRequestUtils {
 
         request.setRetryPolicy(new DefaultRetryPolicy(5000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         MyApplication.getmInstance().addToRequestQueue(request);
+    } public void sendResetPwd(final Context mContext, String url, HashMap params, final HttpRequestCallBack mCallBack) {
+        CustomDialogUtils.showProgressDialog(mContext);
+//        Log.e("addParams:", JSON.toJSONString(params));
+        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("response", response.toString());
+                mCallBack.onSuccess(response.toString());
+                CustomDialogUtils.cannelProgressDialog();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                CustomDialogUtils.cannelProgressDialog();
+            }
+        }) {
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("_appId", Constant.APPID);
+                if (NullUtils.isNull(MainActivity.userCode)) {
+                    headers.put("_code", MainActivity.userCode);
+                } else {
+                    headers.put("_code", (String) SPUtils.get(mContext, "CODE", ""));
+                }
+                return headers;
+            }
+        };
+
+        request.setRetryPolicy(new DefaultRetryPolicy(5000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MyApplication.getmInstance().addToRequestQueue(request);
     }
 }

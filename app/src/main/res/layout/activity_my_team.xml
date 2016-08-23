@@ -9,7 +9,8 @@
 
     <include layout="@layout/titlebar_layout" />
 
-    <ListView
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:scrollbars="none"
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

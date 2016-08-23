@@ -66,11 +66,12 @@ public class CompanyFragment extends BaseFragment implements AdapterView.OnItemC
     /**
      * 头部广告
      */
-    @ViewInject(R.id.home_banner_viewpager)
-    protected AutoScrollViewPager mViewPager;
-    @ViewInject(R.id.home_dot_ll)
-    protected LinearLayout dotLL;
-    private List<Banner> imageUrls;
+//    @ViewInject(R.id.home_banner_viewpager)
+//    protected AutoScrollViewPager mViewPager;
+//    @ViewInject(R.id.home_dot_ll)
+//    protected LinearLayout dotLL;
+//    private List<Banner> imageUrls;
+
     private ImagePagerAdapter pagerAdapter;
 
     @ViewInject(R.id.right_img)
@@ -82,7 +83,7 @@ public class CompanyFragment extends BaseFragment implements AdapterView.OnItemC
         rightImg.setImageResource(R.mipmap.more_icon);
         backImg.setVisibility(View.INVISIBLE);
         title.setText(R.string.title_name);
-        imageUrls = new ArrayList<>();
+//        imageUrls = new ArrayList<>();
         initPopupWindow();
         View headerView = LayoutInflater.from(getActivity()).inflate(R.layout.auto_viewpager, null);
         View footerView = LayoutInflater.from(getActivity()).inflate(R.layout.company_list_footer, null);
@@ -138,22 +139,22 @@ public class CompanyFragment extends BaseFragment implements AdapterView.OnItemC
 
     @Override
     public void onInitData() {
-        HashMap params = new HashMap();
-        HttpRequestUtils.getmInstance().send(getActivity(), Constant.BANNER_URL, params, new HttpRequestCallBack<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.e("HomeFragment", result);
-                AppBeans<Banner> appBean = JSONObject.parseObject(result, new TypeReference<AppBeans<Banner>>() {
-                });
-                if (appBean != null && appBean.getEnumcode() == 0) {
-                    imageUrls.addAll(appBean.getData());
-                    pagerAdapter = new ImagePagerAdapter(getActivity(), imageUrls, dotLL);
-                    mViewPager.setAdapter(pagerAdapter);
-                    mViewPager.setOnPageChangeListener(pagerAdapter);
-                    pagerAdapter.refreshData(true);
-                }
-            }
-        });
+//        HashMap params = new HashMap();
+//        HttpRequestUtils.getmInstance().send(getActivity(), Constant.BANNER_URL, params, new HttpRequestCallBack<String>() {
+//            @Override
+//            public void onSuccess(String result) {
+//                Log.e("HomeFragment", result);
+//                AppBeans<Banner> appBean = JSONObject.parseObject(result, new TypeReference<AppBeans<Banner>>() {
+//                });
+//                if (appBean != null && appBean.getEnumcode() == 0) {
+//                    imageUrls.addAll(appBean.getData());
+//                    pagerAdapter = new ImagePagerAdapter(getActivity(), imageUrls, dotLL);
+//                    mViewPager.setAdapter(pagerAdapter);
+//                    mViewPager.setOnPageChangeListener(pagerAdapter);
+//                    pagerAdapter.refreshData(true);
+//                }
+//            }
+//        });
     }
 
     private void loadData() {
@@ -177,13 +178,13 @@ public class CompanyFragment extends BaseFragment implements AdapterView.OnItemC
         super.onResume();
         mDatas.clear();
         loadData();
-        mViewPager.startAutoScroll();
+//        mViewPager.startAutoScroll();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mViewPager.stopAutoScroll();
+//        mViewPager.stopAutoScroll();
     }
 
     /**

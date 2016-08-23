@@ -39,6 +39,7 @@ public class ApprovalCostActivity extends BaseActivity implements AdapterView.On
 
     private String keyword = "";
     private int pageIndex = 1;
+    private int sType = 1;
 
     @Override
     public void onInit() {
@@ -59,7 +60,7 @@ public class ApprovalCostActivity extends BaseActivity implements AdapterView.On
     private void loadData(int pageIndex, String keyword) {
         HashMap params = new HashMap();
         params.put("Keyword", keyword);
-        params.put("sType", 1);
+        params.put("sType", sType);
         params.put("PageIndex", pageIndex);
         params.put("PageSize", 8);
         HttpRequestUtils.getmInstance().send(ApprovalCostActivity.this, Constant.GET_COST_CHECK, params, new HttpRequestCallBack() {

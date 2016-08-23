@@ -16,6 +16,7 @@ import com.meidp.crmim.model.CostType;
 import com.meidp.crmim.utils.Constant;
 
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
@@ -38,6 +39,15 @@ public class CostTypeActivity extends BaseActivity implements AdapterView.OnItem
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
         childId = getIntent().getIntExtra("ChildId", -1);
+    }
+
+    @Event({R.id.back_arrows})
+    private void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.back_arrows:
+                finish();
+                break;
+        }
     }
 
     @Override
@@ -65,12 +75,12 @@ public class CostTypeActivity extends BaseActivity implements AdapterView.OnItem
         if (childId == 4) {
             Intent intent = new Intent(this, CostTypeDetailsActivity.class);
             intent.putExtra("OID", mDatas.get(position).getID());
-            intent.putExtra("TypeName",mDatas.get(position).getTypeName());
+            intent.putExtra("TypeName", mDatas.get(position).getTypeName());
             startActivityForResult(intent, 1002);
         } else {
             Intent intent = new Intent();
             intent.putExtra("ChildId", childId);
-            intent.putExtra("TypeName",mDatas.get(position).getTypeName());
+            intent.putExtra("TypeName", mDatas.get(position).getTypeName());
             intent.putExtra("OID", mDatas.get(position).getID());
             setResult(1002, intent);
             finish();

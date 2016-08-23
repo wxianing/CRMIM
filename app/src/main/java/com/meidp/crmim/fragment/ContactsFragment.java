@@ -76,7 +76,6 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
     private ImageView rightImg;
     private PopupWindow mPopupWindow;
 
-
     public ContactsFragment() {
 
     }

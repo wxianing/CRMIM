@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -40,6 +41,8 @@ public class HospitalListActivity extends BaseActivity implements AdapterView.On
     private HospitalAadapter mAdapter;
     private int pageIndex = 1;
     private String keyword = "";
+    @ViewInject(R.id.search_edittext)
+    private EditText search;
 
 
     @Override
@@ -51,11 +54,17 @@ public class HospitalListActivity extends BaseActivity implements AdapterView.On
         mListView.setOnItemClickListener(this);
     }
 
-    @Event(R.id.back_arrows)
+    @Event({R.id.back_arrows, R.id.search_btn})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
+                break;
+            case R.id.search_btn:
+                keyword = search.getText().toString().trim();
+                mDatas.clear();
+                loadData(pageIndex, keyword);
+                keyword = "";
                 break;
         }
     }
