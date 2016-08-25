@@ -90,12 +90,12 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
 
     private int type = 0;
     private int sType = 1;
-    private int sType2 = 2;
+    private int sType2 = -1;
 
     @Override
     public void onInit() {
         scrollView.setMode(PullToRefreshBase.Mode.BOTH);
-        title.setText("审批管理");
+        title.setText("我的审批");
         mDatasPrototype = new ArrayList<>();
         mDatasCosts = new ArrayList<>();
         mDatasStockups = new ArrayList<>();
@@ -209,13 +209,12 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
     }
 
     private void getPrototypeData(int pageIndex, String keyword) {
-
         HashMap params = new HashMap();
         params.put("Keyword", keyword);
         params.put("sType", sType);
         params.put("sType2", sType2);
         params.put("PageIndex", pageIndex);
-        params.put("PageSize", 8);
+        params.put("PageSize", 5);
         HttpRequestUtils.getmInstance().send(ApprovalProcessActivity.this, Constant.FORCHECK_LIST, params, new HttpRequestCallBack() {
             @Override
             public void onSuccess(String result) {
@@ -223,11 +222,16 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
                 AppDatas<CheckforApply> appDatas = JSONObject.parseObject(result, new TypeReference<AppDatas<CheckforApply>>() {
                 });
                 if (appDatas != null && appDatas.getEnumcode() == 0) {
+                    if (appDatas.getData().getDataList().size() > 0) {
+                        prototype_tv.setVisibility(View.VISIBLE);
+                    } else {
+                        prototype_tv.setVisibility(View.GONE);
+                    }
                     mDatasPrototype.addAll(appDatas.getData().getDataList());
                     if (mDatasPrototype != null && !mDatasPrototype.isEmpty()) {
                         ApprovalAdapter.notifyDataSetChanged();
                     } else {
-                        prototype_tv.setVisibility(View.GONE);
+
                     }
 //                    prototypeListView.onRefreshComplete();
                     scrollView.onRefreshComplete();
@@ -238,13 +242,12 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
     }
 
     private void getFeeData(int pageIndex, String keyword) {
-
         HashMap params = new HashMap();
         params.put("Keyword", keyword);
         params.put("sType", sType);
         params.put("sType2", sType2);
         params.put("PageIndex", pageIndex);
-        params.put("PageSize", 8);
+        params.put("PageSize", 5);
         HttpRequestUtils.getmInstance().send(ApprovalProcessActivity.this, Constant.GET_COST_CHECK, params, new HttpRequestCallBack() {
             @Override
             public void onSuccess(String result) {
@@ -252,12 +255,17 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
                 AppDatas<ApprovalCosts> appData = JSONObject.parseObject(result, new TypeReference<AppDatas<ApprovalCosts>>() {
                 });
                 if (appData != null && appData.getEnumcode() == 0) {
-                    mDatasCosts.addAll(appData.getData().getDataList());
-                    if (mDatasCosts != null && !mDatasCosts.isEmpty()) {
-                        costAdapter.notifyDataSetChanged();
-
+                    if (appData.getData().getDataList().size() > 0) {
+                        fee_tv.setVisibility(View.VISIBLE);
                     } else {
                         fee_tv.setVisibility(View.GONE);
+                    }
+                    mDatasCosts.addAll(appData.getData().getDataList());
+                    if (mDatasCosts != null && !mDatasCosts.isEmpty()) {
+
+                        costAdapter.notifyDataSetChanged();
+                    } else {
+
                     }
 //                    feeListView.onRefreshComplete();
 
@@ -275,20 +283,24 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
         params.put("sType", sType);
         params.put("sType2", sType2);
         params.put("PageIndex", pageIndex);
-        params.put("PageSize", 8);
+        params.put("PageSize", 5);
         HttpRequestUtils.getmInstance().send(ApprovalProcessActivity.this, Constant.STOCK_LIST_URL, params, new HttpRequestCallBack() {
                     @Override
                     public void onSuccess(String result) {
-
                         AppDatas<StockUps> stockUps = JSONObject.parseObject(result, new TypeReference<AppDatas<StockUps>>() {
                         });
                         if (stockUps != null && stockUps.getEnumcode() == 0) {
+                            if (stockUps.getData().getDataList().size() > 0) {
+                                stockup_tv.setVisibility(View.VISIBLE);
+                            } else {
+                                stockup_tv.setVisibility(View.GONE);
+                            }
                             mDatasStockups.addAll(stockUps.getData().getDataList());
                             if (mDatasStockups != null && !mDatasStockups.isEmpty()) {
                                 stockUpAdapter.notifyDataSetChanged();
 //                            stockupListview.onRefreshComplete();
                             } else {
-                                stockup_tv.setVisibility(View.GONE);
+//                                stockup_tv.setVisibility(View.GONE);
                             }
                             scrollView.onRefreshComplete();
                         }
@@ -300,6 +312,14 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
     }
 
     @Override
+    protected void onResume() {
+        ApprovalAdapter.notifyDataSetChanged();
+        stockUpAdapter.notifyDataSetChanged();
+        costAdapter.notifyDataSetChanged();
+        super.onResume();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.checked_prototype://样机审核
@@ -308,6 +328,9 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
                 mDatasPrototype.clear();
                 mDatasCosts.clear();
                 mDatasStockups.clear();
+                ApprovalAdapter.notifyDataSetChanged();
+                stockUpAdapter.notifyDataSetChanged();
+                costAdapter.notifyDataSetChanged();
                 getPrototypeData(pageIndex, keyword);
                 getFeeData(pageIndex, keyword);
                 getStockupData(pageIndex, keyword);
@@ -320,6 +343,9 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
                 mDatasPrototype.clear();
                 mDatasCosts.clear();
                 mDatasStockups.clear();
+                ApprovalAdapter.notifyDataSetChanged();
+                stockUpAdapter.notifyDataSetChanged();
+                costAdapter.notifyDataSetChanged();
                 getPrototypeData(pageIndex, keyword);
                 getFeeData(pageIndex, keyword);
                 getStockupData(pageIndex, keyword);
@@ -332,6 +358,9 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
                 mDatasPrototype.clear();
                 mDatasCosts.clear();
                 mDatasStockups.clear();
+                ApprovalAdapter.notifyDataSetChanged();
+                stockUpAdapter.notifyDataSetChanged();
+                costAdapter.notifyDataSetChanged();
                 getPrototypeData(pageIndex, keyword);
                 getFeeData(pageIndex, keyword);
                 getStockupData(pageIndex, keyword);
@@ -343,6 +372,9 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
                 mDatasPrototype.clear();
                 mDatasCosts.clear();
                 mDatasStockups.clear();
+                ApprovalAdapter.notifyDataSetChanged();
+                stockUpAdapter.notifyDataSetChanged();
+                costAdapter.notifyDataSetChanged();
                 getPrototypeData(pageIndex, keyword);
                 getFeeData(pageIndex, keyword);
                 getStockupData(pageIndex, keyword);
@@ -354,6 +386,9 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
                 mDatasPrototype.clear();
                 mDatasCosts.clear();
                 mDatasStockups.clear();
+                ApprovalAdapter.notifyDataSetChanged();
+                stockUpAdapter.notifyDataSetChanged();
+                costAdapter.notifyDataSetChanged();
                 getPrototypeData(pageIndex, keyword);
                 getFeeData(pageIndex, keyword);
                 getStockupData(pageIndex, keyword);
@@ -366,6 +401,9 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
                 mDatasPrototype.clear();
                 mDatasCosts.clear();
                 mDatasStockups.clear();
+                ApprovalAdapter.notifyDataSetChanged();
+                stockUpAdapter.notifyDataSetChanged();
+                costAdapter.notifyDataSetChanged();
                 getPrototypeData(pageIndex, keyword);
                 getFeeData(pageIndex, keyword);
                 getStockupData(pageIndex, keyword);
@@ -378,11 +416,14 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
                 mDatasPrototype.clear();
                 mDatasCosts.clear();
                 mDatasStockups.clear();
+                ApprovalAdapter.notifyDataSetChanged();
+                stockUpAdapter.notifyDataSetChanged();
+                costAdapter.notifyDataSetChanged();
                 getPrototypeData(pageIndex, keyword);
                 getFeeData(pageIndex, keyword);
                 getStockupData(pageIndex, keyword);
 //                loadData(pageIndex, keyword);
-                statusName.setText("未通过");
+                statusName.setText("已拒绝");
                 dismissCheckStatusPopupWindow();
                 break;
         }

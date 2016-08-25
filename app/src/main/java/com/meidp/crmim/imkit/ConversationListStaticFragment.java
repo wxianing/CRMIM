@@ -30,7 +30,9 @@ import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.JPushNoReader;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.DataUtils;
+import com.meidp.crmim.utils.IMkitConnectUtils;
 import com.meidp.crmim.utils.NullUtils;
+import com.meidp.crmim.utils.SPUtils;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -39,7 +41,9 @@ import org.xutils.x;
 
 import java.util.HashMap;
 
+import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 
 /**
@@ -115,6 +119,36 @@ public class ConversationListStaticFragment extends BaseFragment {
                     .build();
             fragment.setUri(uri);
         }
+
+
+    }
+
+
+
+    private class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
+
+        @Override
+        public void onChanged(ConnectionStatus connectionStatus) {
+            switch (connectionStatus) {
+
+                case CONNECTED://连接成功。
+
+                    break;
+                case DISCONNECTED://断开连接。
+                    String token = (String) SPUtils.get(getActivity(), "TOKEN", "");
+                    IMkitConnectUtils.connect(token, getActivity());
+                    break;
+                case CONNECTING://连接中。
+
+                    break;
+                case NETWORK_UNAVAILABLE://网络不可用。
+
+                    break;
+                case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
+
+                    break;
+            }
+        }
     }
 
     @Override
@@ -138,7 +172,7 @@ public class ConversationListStaticFragment extends BaseFragment {
     public void onResume() {
         Log.e(">>>>>>>>", "测试而已");
         HashMap params = new HashMap();
-        params.put("Id",1);
+        params.put("Id", 1);
         HttpRequestUtils.getmInstance().send(getActivity(), Constant.JPUSH_NORESDER_URL, params, new HttpRequestCallBack() {
             @Override
             public void onSuccess(String result) {
@@ -152,6 +186,12 @@ public class ConversationListStaticFragment extends BaseFragment {
                 }
             }
         });
+        if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
+            /**
+             * 设置连接状态变化的监听器.
+             */
+            RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
+        }
         super.onResume();
     }
 

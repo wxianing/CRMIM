@@ -70,11 +70,12 @@ public class CityListActivity extends BaseActivity implements TextWatcher {
                         : contactList;
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra("cityName", searchList.get(position).getDisplayInfo());
-                setResult(Constant.RESULT_OK, resultIntent);
-                finish();
-                Toast.makeText(context_,
-                        searchList.get(position).getDisplayInfo(),
-                        Toast.LENGTH_SHORT).show();
+                setResult(1024, resultIntent);
+                finish();//点击选择项目
+                Log.e("city", searchList.get(position).getDisplayInfo());
+//                Toast.makeText(context_,
+//                        searchList.get(position).getDisplayInfo(),
+//                        Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -47,7 +47,8 @@ public class MyPrototypeActivity extends BaseActivity implements PullToRefreshBa
 
     @Override
     public void onInit() {
-        title.setText("样机管理");
+        title.setText("我的样机");
+        title.setText("我的样机");
         mListView.setMode(PullToRefreshBase.Mode.BOTH);
         mDatas = new ArrayList<>();
         mAdapter = new ModelApplyAdapter(mDatas, this);
@@ -94,7 +95,7 @@ public class MyPrototypeActivity extends BaseActivity implements PullToRefreshBa
                 break;
             case R.id.right_img:
                 Intent intent = new Intent(this, ModelMachineApplyActivity.class);
-                startActivityForResult(intent,1019);
+                startActivityForResult(intent, 1019);
                 break;
             case R.id.search_btn:
                 keyword = search.getText().toString().trim();
@@ -128,7 +129,7 @@ public class MyPrototypeActivity extends BaseActivity implements PullToRefreshBa
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==1019){
+        if (requestCode == 1019) {
             mDatas.clear();
             loadData(pageIndex, keyword);
         }

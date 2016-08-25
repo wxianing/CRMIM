@@ -24,11 +24,11 @@
             android:orientation="vertical">
 
             <TextView
-                android:textSize="@dimen/sp13"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp10"
-                android:text="项目相关" />
+                android:text="项目信息"
+                android:textSize="@dimen/sp13" />
 
             <TextView
                 android:id="@+id/project_name"
@@ -98,12 +98,85 @@
 
             <include layout="@layout/horizontal_line" />
 
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp10"
-                android:text="客户"
+                android:text="客户信息"
                 android:textSize="@dimen/sp13" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    android:id="@+id/company_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="医院：" />
+
+                <TextView
+                    android:id="@+id/company_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/company_tv"
+                    android:text="" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="拜访记录"
+                    android:textColor="#FF953E" />
+
+            </RelativeLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="科室：" />
+
+                <TextView
+                    android:id="@+id/department_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="职务：" />
+
+                <TextView
+                    android:id="@+id/positions_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
 
             <TextView
                 android:id="@+id/project_linkname"
@@ -217,7 +290,8 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:padding="@dimen/dp10"
-                android:text="备注: 无" />
+                android:text="备注: 无"
+                android:visibility="gone" />
 
 
             <LinearLayout

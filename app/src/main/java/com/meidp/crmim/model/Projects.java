@@ -59,7 +59,7 @@ public class Projects implements Serializable {
     private String CreatorName;
     private int CompanyId;
     private String CompanyName;
-    private Object DepartmentName;
+    private String  DepartmentName;
     private Object ZhiWu;
     /**
      * IsAppoint : null
@@ -247,11 +247,11 @@ public class Projects implements Serializable {
         this.CompanyName = CompanyName;
     }
 
-    public Object getDepartmentName() {
+    public String  getDepartmentName() {
         return DepartmentName;
     }
 
-    public void setDepartmentName(Object DepartmentName) {
+    public void setDepartmentName(String DepartmentName) {
         this.DepartmentName = DepartmentName;
     }
 

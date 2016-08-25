@@ -155,7 +155,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp10"
                     android:layout_weight="1"
-                    android:text="我的团队"
+                    android:text="我发展的团队"
                     android:textSize="@dimen/sp14" />
 
                 <ImageView

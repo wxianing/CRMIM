@@ -20,6 +20,8 @@
         android:name="com.meidp.crmim.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
 
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="com.meidp.crmim.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -309,7 +311,9 @@
         <activity android:name=".activity.AddLinkManActivity" />
         <activity android:name=".activity.LinkManListActivity" />
         <activity android:name=".activity.TeamMemberDetsilsActivity" />
-        <activity android:name=".activity.ResetPwdActivity"></activity>
+        <activity android:name=".activity.ResetPwdActivity" />
+        <activity android:name=".activity.MyMakeBargainActivity" />
+        <activity android:name=".activity.MyCostingActivity"></activity>
     </application>
 
 </manifest>

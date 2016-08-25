@@ -26,6 +26,7 @@ import com.meidp.crmim.activity.PersonCentorActivity;
 import com.meidp.crmim.activity.ResetPwdActivity;
 import com.meidp.crmim.activity.SigninMainActivity;
 import com.meidp.crmim.activity.SubmitActivity;
+import com.meidp.crmim.utils.IMkitConnectUtils;
 import com.meidp.crmim.utils.ImageUtils;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.SPUtils;
@@ -36,6 +37,9 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -211,6 +215,41 @@ public class MyFragment extends BaseFragment {
         ImageLoader.getInstance().displayImage(headerPhoto, headerImg, MyApplication.optionsRounds);
         String phone = (String) SPUtils.get(getActivity(), "Mobile", "");
         phoneNum.setText("电话：" + phone);
+
+        /**
+         * 设置连接状态变化的监听器.
+         */
+        if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
+            RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
+        }
+    }
+
+    /**
+     * 监测融云连接状态回调接口
+     */
+    private class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
+        @Override
+        public void onChanged(ConnectionStatus connectionStatus) {
+            switch (connectionStatus) {
+
+                case CONNECTED://连接成功。
+
+                    break;
+                case DISCONNECTED://断开连接。
+                    String token = (String) SPUtils.get(getActivity(), "TOKEN", "");
+                    IMkitConnectUtils.connect(token, getActivity());//如果连接断开重新连接
+                    break;
+                case CONNECTING://连接中。
+
+                    break;
+                case NETWORK_UNAVAILABLE://网络不可用。
+
+                    break;
+                case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
+
+                    break;
+            }
+        }
     }
 
     private void showPopupWindow() {

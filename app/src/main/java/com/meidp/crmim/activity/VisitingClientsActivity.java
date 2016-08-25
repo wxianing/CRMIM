@@ -58,6 +58,7 @@ public class VisitingClientsActivity extends BaseActivity {
     private EditText hospitalName;
     @ViewInject(R.id.department)
     private EditText department;
+    private int custContactId;
 
     @Override
     public void onInit() {
@@ -81,11 +82,13 @@ public class VisitingClientsActivity extends BaseActivity {
             customerName.setText(custName);
         } else if (requestCode == 1001 && data != null) {
             custId = data.getIntExtra("OID", -1);
+            custContactId = data.getIntExtra("CustContactId", -1);
             custName = data.getStringExtra("CustName");
             contactPhone = data.getStringExtra("ContactPhone");
-            custContact = data.getStringExtra("CustContact");//客户名称
+            custContact = data.getStringExtra("CustContact");//联系人
             String departmentString = data.getStringExtra("Department");
             String custPhone = data.getStringExtra("CustPhone");
+
 //            Log.e("contact", contactPhone);
             phoneNumEt.setText(custPhone);
             customerName.setText(custContact);
@@ -117,33 +120,7 @@ public class VisitingClientsActivity extends BaseActivity {
                 startActivityForResult(intent, 1001);
                 break;
             case R.id.title_right:
-                String content = contentTv.getText().toString().trim();
-                String departmentString = department.getText().toString().trim();
-                ToastUtils.shows(this, "正在提交");
-                HashMap params = new HashMap();
-                params.put("Contents", content);//拜访内容
-                params.put("CustID", custId);//客户Id
-                params.put("Title", "拜访" + custName);
-                params.put("Lat", latitude);//维度
-                params.put("Lon", longitude);//经度
-                params.put("LocationAddress", address);//地址
-                params.put("Department", departmentString);
-                HttpRequestUtils.getmInstance().send(VisitingClientsActivity.this, Constant.SAVE_VISIT_CUSTOMER, params, new HttpRequestCallBack<String>() {
-                    @Override
-                    public void onSuccess(String result) {
-                        Log.e("visit", result);
-                        AppMsg appMsg = JSONObject.parseObject(result, new TypeReference<AppMsg>() {
-                        });
-                        if (appMsg != null && appMsg.getEnumcode() == 0) {
-                            Intent intent = new Intent(VisitingClientsActivity.this, VisitRecordActivity.class);
-                            ToastUtils.shows(VisitingClientsActivity.this, "拜访成功");
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            ToastUtils.shows(VisitingClientsActivity.this, "拜访失败");
-                        }
-                    }
-                });
+                sendVisitMsg();
                 break;
             case R.id.add_project:
                 intent = new Intent(this, ProjectManagerActivity.class);
@@ -151,5 +128,47 @@ public class VisitingClientsActivity extends BaseActivity {
                 startActivityForResult(intent, 1004);
                 break;
         }
+    }
+
+    private void sendVisitMsg() {
+        String content = contentTv.getText().toString().trim();
+        String departmentString = department.getText().toString().trim();
+//                ToastUtils.shows(this, "正在提交");
+        if (custId == -1) {
+            ToastUtils.shows(this, "请选择客户您要拜访的客户");
+            return;
+        }
+        if (!NullUtils.isNull(custName)) {
+            ToastUtils.shows(this, "请选择客户您要拜访的客户");
+            return;
+        }
+
+        HashMap params = new HashMap();
+        params.put("Contents", content);//拜访内容
+        params.put("CustID", custId);//客户Id
+        params.put("Title", "拜访" + custName);
+        params.put("Lat", latitude);//维度
+        params.put("Lon", longitude);//经度
+        params.put("LocationAddress", address);//地址
+        params.put("Department", departmentString);
+        params.put("CustLinkMan", custContactId);//联系人
+        params.put("LinkTel", contactPhone);//联系人电话
+
+        HttpRequestUtils.getmInstance().send(VisitingClientsActivity.this, Constant.SAVE_VISIT_CUSTOMER, params, new HttpRequestCallBack<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("visit", result);
+                AppMsg appMsg = JSONObject.parseObject(result, new TypeReference<AppMsg>() {
+                });
+                if (appMsg != null && appMsg.getEnumcode() == 0) {
+                    Intent intent = new Intent(VisitingClientsActivity.this, VisitRecordActivity.class);
+                    ToastUtils.shows(VisitingClientsActivity.this, "拜访成功");
+                    startActivity(intent);
+                    finish();
+                } else {
+                    ToastUtils.shows(VisitingClientsActivity.this, "拜访失败");
+                }
+            }
+        });
     }
 }

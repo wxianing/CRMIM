@@ -2,6 +2,7 @@ package com.meidp.crmim.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -215,9 +216,14 @@ public class ProjectManagerActivity extends BaseActivity implements PullToRefres
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (NullUtils.isNull(mark) && mark.equals("Apply")) {
+            Projects projects = mDatas.get(position - 1);
             Intent intent = new Intent();
             intent.putExtra("ProjectId", mDatas.get(position - 1).getID());
             intent.putExtra("ProjectName", mDatas.get(position - 1).getProjectName());
+
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("Projects", projects);
+            intent.putExtras(bundle);
             setResult(1004, intent);
             finish();
         } else {

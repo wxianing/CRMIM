@@ -43,9 +43,9 @@ public class OpenProjectAdapter extends BasicAdapter<Projects> {
             vh.projectName.setText("");
         }
         if (NullUtils.isNull(data.getCustLinkMan())) {
-            vh.linkName.setText("项目联系人：" + data.getCustLinkMan());
+            vh.linkName.setText(data.getCustLinkMan());
         } else {
-            vh.linkName.setText("项目联系人：");
+            vh.linkName.setText("");
         }
         String timeStr = data.getCreateDate();
         if (NullUtils.isNull(timeStr)) {
@@ -69,9 +69,20 @@ public class OpenProjectAdapter extends BasicAdapter<Projects> {
         }
         vh.successRate.setText(success + "%");
         if (NullUtils.isNull(data.getCreatorName())) {
-            vh.dutyPerson.setText("负责人：" + data.getCreatorName());
+            vh.dutyPerson.setText("" + data.getCreatorName());
         } else {
-            vh.dutyPerson.setText("负责人：");
+            vh.dutyPerson.setText("");
+        }
+
+        if (NullUtils.isNull(data.getCompanyName())) {
+            vh.company.setText(data.getCompanyName());
+        } else {
+            vh.company.setText("");
+        }
+        if (NullUtils.isNull(data.getDepartmentName())) {
+            vh.department.setText(data.getDepartmentName());
+        } else {
+            vh.department.setText("");
         }
 
         return convertView;
@@ -91,6 +102,10 @@ public class OpenProjectAdapter extends BasicAdapter<Projects> {
         private TextView dutyPerson;
         @ViewInject(R.id.status_name)
         private TextView statusName;
+        @ViewInject(R.id.company_name)
+        private TextView company;
+        @ViewInject(R.id.department_tv)
+        private TextView department;
 
         public ViewHolder(View view) {
             x.view().inject(this, view);

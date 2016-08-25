@@ -35,6 +35,8 @@ import com.meidp.crmim.model.AppBeans;
 import com.meidp.crmim.model.Contact;
 import com.meidp.crmim.model.Friends;
 import com.meidp.crmim.utils.Constant;
+import com.meidp.crmim.utils.IMkitConnectUtils;
+import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.view.ExpListView;
 import com.meidp.crmim.view.ListViewForScrollView;
 
@@ -47,6 +49,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -128,7 +131,42 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
         super.onResume();
         mDatas.clear();
         loadData();
+        /**
+         * 设置连接状态变化的监听器.
+         */
+        if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
+            RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
+        }
     }
+
+    /**
+     * 监测融云连接状态回调接口
+     */
+    private class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
+        @Override
+        public void onChanged(ConnectionStatus connectionStatus) {
+            switch (connectionStatus) {
+
+                case CONNECTED://连接成功。
+
+                    break;
+                case DISCONNECTED://断开连接。
+                    String token = (String) SPUtils.get(getActivity(), "TOKEN", "");
+                    IMkitConnectUtils.connect(token, getActivity());//如果连接断开重新连接
+                    break;
+                case CONNECTING://连接中。
+
+                    break;
+                case NETWORK_UNAVAILABLE://网络不可用。
+
+                    break;
+                case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
+
+                    break;
+            }
+        }
+    }
+
 
     @Event(value = {R.id.search_edittext, R.id.group_layout, R.id.recent_contacts, R.id.visit_client, R.id.new_group, R.id.submit_project, R.id.apply_model, R.id.right_img})
     private void onClick(View v) {

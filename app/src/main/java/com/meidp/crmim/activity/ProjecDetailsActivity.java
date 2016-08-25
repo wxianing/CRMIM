@@ -65,6 +65,12 @@ public class ProjecDetailsActivity extends BaseActivity {
     private TextView relatedPersonnel;
     @ViewInject(R.id.follow_layout)
     private LinearLayout follow_layout;
+    @ViewInject(R.id.company_name)
+    private TextView companyName;
+    @ViewInject(R.id.department_name)
+    private TextView departmentName;
+    @ViewInject(R.id.positions_name)
+    private TextView positionsName;
 
 
     @ViewInject(R.id.listview)
@@ -157,6 +163,18 @@ public class ProjecDetailsActivity extends BaseActivity {
                     if (mDatas != null && !mDatas.isEmpty()) {
                         follow_layout.setVisibility(View.GONE);
                         mAdapter.notifyDataSetChanged();
+                    }
+                    //医院
+                    if (NullUtils.isNull(appBean.getData().getCompanyName())) {
+                        companyName.setText(appBean.getData().getCompanyName());
+                    }
+                    //部门
+                    if (NullUtils.isNull(appBean.getData().getDepartmentName())) {
+                        departmentName.setText(appBean.getData().getDepartmentName());
+                    }
+                    //职位
+                    if (NullUtils.isNull(appBean.getData().getZhiWu())) {
+                        positionsName.setText(appBean.getData().getZhiWu());
                     }
                 }
             }

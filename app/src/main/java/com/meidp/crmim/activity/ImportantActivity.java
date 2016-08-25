@@ -43,7 +43,7 @@ public class ImportantActivity extends BaseActivity implements AdapterView.OnIte
 
     @Override
     public void onInit() {
-        title.setText("重要事项");
+        title.setText("部门重要事项");
         mDatas = new ArrayList<>();
         mListView.setMode(PullToRefreshBase.Mode.BOTH);
         mAdapter = new ImportantAadapter(mDatas, this);

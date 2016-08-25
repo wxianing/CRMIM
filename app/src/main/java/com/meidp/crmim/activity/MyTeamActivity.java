@@ -45,7 +45,7 @@ public class MyTeamActivity extends BaseActivity implements AdapterView.OnItemCl
 
     @Override
     public void onInit() {
-        title.setText("我的团队");
+        title.setText("我发展的团队");
         mListView.setMode(PullToRefreshBase.Mode.BOTH);
         mDatas = new ArrayList<>();
         mAdapter = new TeamMemberAdapter(mDatas, this);

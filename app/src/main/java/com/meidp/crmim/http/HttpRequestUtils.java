@@ -13,6 +13,7 @@ import com.meidp.crmim.MyApplication;
 import com.meidp.crmim.activity.MainActivity;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.CustomDialogUtils;
+import com.meidp.crmim.utils.NetUtils;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.utils.ToastUtils;
@@ -247,64 +248,38 @@ public class HttpRequestUtils {
     }
 
     public void send(final Context mContext, String url, HashMap params, final HttpRequestCallBack mCallBack) {
-        CustomDialogUtils.showProgressDialog(mContext);
-        Log.e("addParams:", JSON.toJSONString(params));
-        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, JSON.toJSONString(params), new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.e("response", response.toString());
-                mCallBack.onSuccess(response.toString());
-                CustomDialogUtils.cannelProgressDialog();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                CustomDialogUtils.cannelProgressDialog();
-            }
-        }) {
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<String, String>();
-                headers.put("_appId", Constant.APPID);
-                if (NullUtils.isNull(MainActivity.userCode)) {
-                    headers.put("_code", MainActivity.userCode);
-                } else {
-                    headers.put("_code", (String) SPUtils.get(mContext, "CODE", ""));
+        if (NetUtils.isConnected(mContext)) {
+            CustomDialogUtils.showProgressDialog(mContext);
+            Log.e("addParams:", JSON.toJSONString(params));
+            final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, JSON.toJSONString(params), new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.e("response", response.toString());
+                    mCallBack.onSuccess(response.toString());
+                    CustomDialogUtils.cannelProgressDialog();
                 }
-                return headers;
-            }
-        };
-
-        request.setRetryPolicy(new DefaultRetryPolicy(5000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        MyApplication.getmInstance().addToRequestQueue(request);
-    } public void sendResetPwd(final Context mContext, String url, HashMap params, final HttpRequestCallBack mCallBack) {
-        CustomDialogUtils.showProgressDialog(mContext);
-//        Log.e("addParams:", JSON.toJSONString(params));
-        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.e("response", response.toString());
-                mCallBack.onSuccess(response.toString());
-                CustomDialogUtils.cannelProgressDialog();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                CustomDialogUtils.cannelProgressDialog();
-            }
-        }) {
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<String, String>();
-                headers.put("_appId", Constant.APPID);
-                if (NullUtils.isNull(MainActivity.userCode)) {
-                    headers.put("_code", MainActivity.userCode);
-                } else {
-                    headers.put("_code", (String) SPUtils.get(mContext, "CODE", ""));
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    CustomDialogUtils.cannelProgressDialog();
                 }
-                return headers;
-            }
-        };
+            }) {
+                public Map<String, String> getHeaders() {
+                    Map<String, String> headers = new HashMap<String, String>();
+                    headers.put("_appId", Constant.APPID);
+                    if (NullUtils.isNull(MainActivity.userCode)) {
+                        headers.put("_code", MainActivity.userCode);
+                    } else {
+                        headers.put("_code", (String) SPUtils.get(mContext, "CODE", ""));
+                    }
+                    return headers;
+                }
+            };
 
-        request.setRetryPolicy(new DefaultRetryPolicy(5000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        MyApplication.getmInstance().addToRequestQueue(request);
+            request.setRetryPolicy(new DefaultRetryPolicy(5000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            MyApplication.getmInstance().addToRequestQueue(request);
+        } else {
+            ToastUtils.shows(mContext, "网络连接不可用");
+        }
     }
 }

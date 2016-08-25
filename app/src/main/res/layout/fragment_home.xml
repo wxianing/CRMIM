@@ -19,6 +19,36 @@
             android:layout_height="1200dp"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/star_icon"
+                android:padding="@dimen/dp8"
+                android:text="我的人生导航" />
+
+            <LinearLayout
+                android:id="@+id/life_navigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/dp5"
+                android:paddingTop="@dimen/dp5">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:src="@mipmap/life_navigation" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:text="我的人生导航" />
+
+            </LinearLayout>
+
             <include layout="@layout/horizontal_full_line" />
 
             <TextView
@@ -28,33 +58,10 @@
                 android:padding="@dimen/dp8"
                 android:text="我的工作记录" />
 
-            <LinearLayout
-                android:id="@+id/visiting_customer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingBottom="@dimen/dp5"
-                android:paddingTop="@dimen/dp5">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:src="@mipmap/visiting_customer_icon" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:text="客户管理" />
-
-            </LinearLayout>
-
             <include layout="@layout/horizontal_line" />
 
             <LinearLayout
-                android:id="@+id/project_manager"
+                android:id="@+id/my_visiting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -65,14 +72,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:src="@mipmap/project_manager_icon" />
+                    android:src="@mipmap/my_visiting" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:text="项目管理" />
+                    android:text="我的拜访" />
 
             </LinearLayout>
 
@@ -97,43 +104,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:text="样机管理" />
+                    android:text="我的样机" />
 
             </LinearLayout>
 
             <include layout="@layout/horizontal_line" />
-
-            <LinearLayout
-                android:id="@+id/cost_manager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingBottom="@dimen/dp5"
-                android:paddingTop="@dimen/dp5">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:src="@mipmap/cost_manager_icon" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:text="费用管理" />
-
-            </LinearLayout>
-
-            <include layout="@layout/horizontal_line" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@mipmap/star_icon"
-                android:padding="@dimen/dp8"
-                android:text="我的成果" />
 
             <RelativeLayout
                 android:id="@+id/approval_manager"
@@ -157,7 +132,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dp10"
                     android:layout_toRightOf="@+id/chenk_img"
-                    android:text="审批管理" />
+                    android:text="我的审批" />
 
                 <TextView
                     android:id="@+id/unreader"
@@ -171,10 +146,19 @@
 
             </RelativeLayout>
 
+            <include layout="@layout/horizontal_full_line" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/star_icon"
+                android:padding="@dimen/dp8"
+                android:text="我的价值" />
+
             <include layout="@layout/horizontal_line" />
 
             <LinearLayout
-                android:id="@+id/my_performance"
+                android:id="@+id/project_manager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -185,21 +169,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:src="@mipmap/performance_icon" />
+                    android:src="@mipmap/project_manager_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:text="业绩表现" />
+                    android:text="我的项目" />
 
             </LinearLayout>
 
             <include layout="@layout/horizontal_line" />
 
             <LinearLayout
-                android:id="@+id/my_values"
+                android:id="@+id/my_make_bargain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -210,16 +194,50 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:src="@mipmap/my_values_icon" />
+                    android:src="@mipmap/my_deal" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:text="我的价值" />
+                    android:text="我的成交" />
 
             </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:id="@+id/my_costing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/dp5"
+                android:paddingTop="@dimen/dp5">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:src="@mipmap/my_costing" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:text="我的成本" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/star_icon"
+                android:padding="@dimen/dp8"
+                android:text="我的行为表现" />
 
             <include layout="@layout/horizontal_line" />
 
@@ -242,7 +260,279 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:text="诚信度" />
+                    android:text="我的诚信度" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:id="@+id/my_hardworking_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/dp5"
+                android:paddingTop="@dimen/dp5">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:src="@mipmap/my_hardworking" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:text="我的勤奋度" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/dp5"
+                android:paddingTop="@dimen/dp5">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:src="@mipmap/my_love_company" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:text="我对公司的热爱" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/dp5"
+                android:paddingTop="@dimen/dp5">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:src="@mipmap/my_level_expertise" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:text="我的专业水平" />
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/star_icon"
+                android:padding="@dimen/dp8"
+                android:text="部门事项" />
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/dp5"
+                android:paddingTop="@dimen/dp5">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:src="@mipmap/department_important_system" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:text="部门重要制度" />
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:id="@+id/improtment_thing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/dp5"
+                android:paddingTop="@dimen/dp5">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:src="@mipmap/department_important_thing" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:text="部门重要事项" />
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/dp5"
+                android:paddingTop="@dimen/dp5">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:src="@mipmap/department_duty" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:text="部门职责" />
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/dp5"
+                android:paddingTop="@dimen/dp5">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:src="@mipmap/department_functions_indicators" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:text="部门指标" />
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/dp5"
+                android:paddingTop="@dimen/dp5">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:src="@mipmap/department_flow" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:text="部门流程" />
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:id="@+id/knowledge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/dp5"
+                android:paddingTop="@dimen/dp5">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:src="@mipmap/knowledge" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:text="专业知识" />
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:id="@+id/visiting_customer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/dp5"
+                android:paddingTop="@dimen/dp5"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:src="@mipmap/visiting_customer_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:text="客户管理" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cost_manager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/dp5"
+                android:paddingTop="@dimen/dp5"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:src="@mipmap/cost_manager_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:text="费用管理" />
 
             </LinearLayout>
 
@@ -254,56 +544,6 @@
                 android:drawableLeft="@mipmap/star_icon"
                 android:padding="@dimen/dp8"
                 android:text="其他" />
-
-
-            <LinearLayout
-                android:id="@+id/life_navigation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingBottom="@dimen/dp5"
-                android:paddingTop="@dimen/dp5">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:src="@mipmap/life_navigation" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:text="人生导航" />
-
-
-            </LinearLayout>
-
-            <include layout="@layout/horizontal_line" />
-
-            <LinearLayout
-                android:id="@+id/exhibition_manager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingBottom="@dimen/dp5"
-                android:paddingTop="@dimen/dp5">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:src="@mipmap/conver_icon" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:text="展会管理" />
-
-            </LinearLayout>
 
             <include layout="@layout/horizontal_line" />
 
@@ -332,15 +572,8 @@
 
             <include layout="@layout/horizontal_line" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@mipmap/star_icon"
-                android:padding="@dimen/dp8"
-                android:text="部门重要事项" />
-
             <LinearLayout
-                android:id="@+id/improtment_thing"
+                android:id="@+id/exhibition_manager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -351,45 +584,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:src="@mipmap/important_things_icon" />
+                    android:src="@mipmap/conver_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:text="重要事项" />
+                    android:text="展会管理" />
 
             </LinearLayout>
+
 
             <include layout="@layout/horizontal_line" />
 
-            <LinearLayout
-                android:id="@+id/knowledge"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
-                android:background="@color/white"
-                android:paddingBottom="@dimen/dp5"
-                android:paddingTop="@dimen/dp5">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:src="@mipmap/knowledge_icon" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:text="专业知识" />
-
-            </LinearLayout>
-
-
-            <include layout="@layout/horizontal_full_line" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -82,7 +82,7 @@ public class SelectEmpolyeeActivity extends BaseActivity implements ExpandableLi
 
     @Override
     public void onInit() {
-        titleRight.setText("保存");
+        titleRight.setText("确定");
         titleRight.setVisibility(View.VISIBLE);
         title.setText("添加团队成员");
         teamId = getIntent().getIntExtra("teamId", 0);

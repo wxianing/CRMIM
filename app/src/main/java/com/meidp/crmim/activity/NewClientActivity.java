@@ -80,6 +80,10 @@ public class NewClientActivity extends BaseActivity {
 
                 if (NullUtils.isNull(customeerName)) {
                     if (NullUtils.isNull(linkmanPhone)) {
+                        if (NullUtils.isNull(custNo)) {
+                            ToastUtils.shows(NewClientActivity.this, "请先选择客户");
+                            return;
+                        }
 
                         HashMap params = new HashMap();
                         params.put("LinkManName", customeerName);
@@ -144,7 +148,7 @@ public class NewClientActivity extends BaseActivity {
             sexEt.setText(sexString);
         }
         if (resultCode == 1012) {
-            custNo = getIntent().getStringExtra("CustNo");
+            custNo = data.getStringExtra("CustNo");
             String custName = data.getStringExtra("CustName");
             Log.e("cus", "cust" + custName + ">>>>>>>>>>" + custNo);
             custName = (String) SPUtils.get(this, "CustName", "");

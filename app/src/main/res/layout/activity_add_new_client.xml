@@ -238,7 +238,7 @@
                     style="@style/sub_editext"
                     android:focusable="false"
                     android:gravity="right"
-                    android:hint="选填" />
+                    android:hint="必填" />
 
             </LinearLayout>
 

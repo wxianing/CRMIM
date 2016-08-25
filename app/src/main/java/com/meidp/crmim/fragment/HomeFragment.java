@@ -26,7 +26,9 @@ import com.meidp.crmim.activity.ExhibitionManagerActivity;
 import com.meidp.crmim.activity.ImportantActivity;
 import com.meidp.crmim.activity.LifeNavigationActivity;
 import com.meidp.crmim.activity.ModelMachineApplyActivity;
+import com.meidp.crmim.activity.MyCostingActivity;
 import com.meidp.crmim.activity.MyCreditActivity;
+import com.meidp.crmim.activity.MyMakeBargainActivity;
 import com.meidp.crmim.activity.MyPerformanceActivity;
 import com.meidp.crmim.activity.MyPrototypeActivity;
 import com.meidp.crmim.activity.MyValuesActivity;
@@ -43,6 +45,8 @@ import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppBean;
 import com.meidp.crmim.model.NoReaders;
 import com.meidp.crmim.utils.Constant;
+import com.meidp.crmim.utils.IMkitConnectUtils;
+import com.meidp.crmim.utils.SPUtils;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -50,6 +54,9 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.util.HashMap;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 @ContentView(R.layout.fragment_home)
 public class HomeFragment extends BaseFragment implements AdapterView.OnItemClickListener {
@@ -81,6 +88,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         linearLayout.setFocusableInTouchMode(true);
         linearLayout.requestFocus();
         initPopupWindow();
+
     }
 
 
@@ -100,12 +108,60 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 }
             }
         });
+        if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
+            /**
+             * 设置连接状态变化的监听器.
+             */
+            RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
+        }
+
     }
 
-    @Event({R.id.open_sea, R.id.exhibition_manager, R.id.approval_manager, R.id.apply_model, R.id.submit_project, R.id.new_group, R.id.visiting_customer, R.id.project_manager, R.id.cost_manager, R.id.prototype_manager, R.id.my_performance, R.id.my_values, R.id.my_integrity, R.id.life_navigation, R.id.improtment_thing, R.id.knowledge, R.id.right_img, R.id.visit_client})
+    /**
+     * 监测融云连接状态回调接口
+     */
+    private class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
+        @Override
+        public void onChanged(ConnectionStatus connectionStatus) {
+            switch (connectionStatus) {
+
+                case CONNECTED://连接成功。
+
+                    break;
+                case DISCONNECTED://断开连接。
+                    String token = (String) SPUtils.get(getActivity(), "TOKEN", "");
+                    IMkitConnectUtils.connect(token, getActivity());
+                    break;
+                case CONNECTING://连接中。
+
+                    break;
+                case NETWORK_UNAVAILABLE://网络不可用。
+
+                    break;
+                case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
+
+                    break;
+            }
+        }
+    }
+
+
+    @Event({R.id.my_hardworking_layout, R.id.my_costing, R.id.my_make_bargain, R.id.my_visiting, R.id.open_sea, R.id.exhibition_manager, R.id.approval_manager, R.id.apply_model, R.id.submit_project, R.id.new_group, R.id.visiting_customer, R.id.project_manager, R.id.cost_manager, R.id.prototype_manager, R.id.my_integrity, R.id.life_navigation, R.id.improtment_thing, R.id.knowledge, R.id.right_img, R.id.visit_client})
     private void onclick(View v) {
         Intent intent = null;
         switch (v.getId()) {
+            case R.id.my_costing://我的成本
+                intent = new Intent(getActivity(), MyCostingActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.my_make_bargain:
+                intent = new Intent(getActivity(), MyMakeBargainActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.my_visiting:
+                intent = new Intent(getActivity(), SigninMainActivity.class);
+                startActivity(intent);
+                break;
             case R.id.visiting_customer://客户拜访
                 intent = new Intent(getActivity(), CustomerListActivity.class);
                 startActivity(intent);
@@ -126,14 +182,14 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 intent = new Intent(getActivity(), ApprovalProcessActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.my_performance://业绩表现
-                intent = new Intent(getActivity(), MyPerformanceActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.my_values://我的价值
-                intent = new Intent(getActivity(), MyValuesActivity.class);
-                startActivity(intent);
-                break;
+//            case R.id.my_performance://业绩表现
+//                intent = new Intent(getActivity(), MyPerformanceActivity.class);
+//                startActivity(intent);
+//                break;
+//            case R.id.my_values://我的价值
+//                intent = new Intent(getActivity(), MyValuesActivity.class);
+//                startActivity(intent);
+//                break;
             case R.id.my_integrity://我的诚信度
                 intent = new Intent(getActivity(), MyCreditActivity.class);
                 startActivity(intent);

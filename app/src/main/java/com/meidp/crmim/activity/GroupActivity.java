@@ -66,6 +66,10 @@ public class GroupActivity extends BaseActivity implements AdapterView.OnItemCli
                 if (appDatas != null && appDatas.getEnumcode() == 0) {
                     mDatas.addAll(appDatas.getData());
                     mAdapter.notifyDataSetChanged();
+
+                    for (int i = 0;i < mDatas.size();i++){
+//                        GroupEntity
+                    }
                 }
             }
         });

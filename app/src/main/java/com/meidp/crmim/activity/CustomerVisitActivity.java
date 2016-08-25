@@ -87,10 +87,10 @@ public class CustomerVisitActivity extends BaseActivity implements BDLocationLis
         });
         currDate = (TextView) findViewById(R.id.date_tv);
         currTime = (TextView) findViewById(R.id.curr_time);
-        signIn = (ImageView) findViewById(R.id.sign_in);
+//        signIn = (ImageView) findViewById(R.id.sign_in);
         currDate.setText(DataUtils.getWeek() + ":" + DataUtils.getDate());
         currTime.setText("当前时间：" + DataUtils.getTime());
-        signIn.setOnClickListener(this);
+//        signIn.setOnClickListener(this);
         backImg = (ImageView) findViewById(R.id.back_arrows);
         titleRight = (TextView) findViewById(R.id.title_right);
         titleRight.setText("拜访记录");
@@ -177,16 +177,16 @@ public class CustomerVisitActivity extends BaseActivity implements BDLocationLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.sign_in:
-                String addr = address.getText().toString().trim();
-                if (NullUtils.isNull(addr)) {
-                    Intent intent = new Intent(this, SigninTextActivity.class);
-                    intent.putExtra("ADDRESS", addr);
-                    startActivity(intent);
-                } else {
-                    ToastUtils.shows(this, "定位失败");
-                }
-                break;
+//            case R.id.sign_in:
+//                String addr = address.getText().toString().trim();
+//                if (NullUtils.isNull(addr)) {
+//                    Intent intent = new Intent(this, SigninTextActivity.class);
+//                    intent.putExtra("ADDRESS", addr);
+//                    startActivity(intent);
+//                } else {
+//                    ToastUtils.shows(this, "定位失败");
+//                }
+//                break;
             case R.id.back_arrows:
                 finish();
                 break;

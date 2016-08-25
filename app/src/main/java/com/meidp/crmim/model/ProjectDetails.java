@@ -63,8 +63,8 @@ public class ProjectDetails implements Serializable {
     private Object CreatorName;
     private int CompanyId;
     private String CompanyName;
-    private Object DepartmentName;
-    private Object ZhiWu;
+    private String DepartmentName;
+    private String ZhiWu;
     private Object IsAppoint;
     private String CanViewUser;
 
@@ -278,19 +278,19 @@ public class ProjectDetails implements Serializable {
         this.CompanyName = CompanyName;
     }
 
-    public Object getDepartmentName() {
+    public String getDepartmentName() {
         return DepartmentName;
     }
 
-    public void setDepartmentName(Object DepartmentName) {
+    public void setDepartmentName(String DepartmentName) {
         this.DepartmentName = DepartmentName;
     }
 
-    public Object getZhiWu() {
+    public String getZhiWu() {
         return ZhiWu;
     }
 
-    public void setZhiWu(Object ZhiWu) {
+    public void setZhiWu(String ZhiWu) {
         this.ZhiWu = ZhiWu;
     }
 

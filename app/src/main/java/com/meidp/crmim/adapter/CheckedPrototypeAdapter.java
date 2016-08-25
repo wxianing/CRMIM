@@ -3,6 +3,7 @@ package com.meidp.crmim.adapter;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.meidp.crmim.R;
@@ -50,8 +51,13 @@ public class CheckedPrototypeAdapter extends BasicAdapter<PrototypeDetails.FlowS
         } else {
             vh.regulatoryTime.setText("");
         }
-
+        vh.img.setVisibility(View.VISIBLE);
         String status = data.getCheckStatusName();
+        if (NullUtils.isNull(status) &&status.equals("通过")) {
+            vh.img.setImageResource(R.mipmap.pass);
+        } else {
+            vh.img.setImageResource(R.mipmap.pass_not);
+        }
         if (!NullUtils.isNull(status)) {
             status = "";
         }
@@ -71,6 +77,8 @@ public class CheckedPrototypeAdapter extends BasicAdapter<PrototypeDetails.FlowS
         private TextView currStatus;//当前状态
         @ViewInject(R.id.step)
         private TextView step;
+        @ViewInject(R.id.status_img)
+        private ImageView img;
 
         public ViewHolder(View view) {
             x.view().inject(this, view);

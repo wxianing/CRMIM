@@ -59,7 +59,7 @@ public class VisitRecordActivity extends BaseActivity implements PullToRefreshBa
     private void loadData(int pageIndex) {
         HashMap params = new HashMap();
         params.put("PageIndex", pageIndex);
-        params.put("PageSize", 4);
+        params.put("PageSize", 8);
         HttpRequestUtils.getmInstance().send(VisitRecordActivity.this, Constant.VISIT_RECORD_URL, params, new HttpRequestCallBack<String>() {
             @Override
             public void onSuccess(String result) {

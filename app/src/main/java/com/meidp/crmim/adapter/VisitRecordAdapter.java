@@ -38,8 +38,10 @@ public class VisitRecordAdapter extends BasicAdapter<VisitRecords> {
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-        if (NullUtils.isNull(data.getTitle())) {
-            vh.titleName.setText(data.getTitle());
+        String title = data.getTitle();
+        title = title.substring(2, title.length());
+        if (title.equals("null")) {
+            vh.titleName.setText("");
         } else {
             vh.titleName.setText(data.getTitle());
         }

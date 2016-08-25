@@ -44,7 +44,7 @@ public class ApprovalCostAdapter extends BasicAdapter<ApprovalCosts> {
             vh.titleName.setText("");
         }
 
-        vh.reimbursement.setText("保险金额：￥" + mDatas.get(position).getTotalAmount());
+        vh.reimbursement.setText("报销金额：￥" + mDatas.get(position).getTotalAmount());
         if (NullUtils.isNull(data.getCreatorName())) {
             vh.dutyPerson.setText("申请人：" + data.getCreatorName());
         } else {

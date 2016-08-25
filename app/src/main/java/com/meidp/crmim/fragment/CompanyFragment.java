@@ -33,6 +33,8 @@ import com.meidp.crmim.model.AppBeans;
 import com.meidp.crmim.model.Banner;
 import com.meidp.crmim.model.InformationClassify;
 import com.meidp.crmim.utils.Constant;
+import com.meidp.crmim.utils.IMkitConnectUtils;
+import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.widget.AutoScrollViewPager;
 
 import org.xutils.view.annotation.ContentView;
@@ -43,6 +45,9 @@ import org.xutils.x;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 /**
  * Package： com.meidp.crmim.fragment
@@ -100,7 +105,7 @@ public class CompanyFragment extends BaseFragment implements AdapterView.OnItemC
         mDatas = new ArrayList<>();
         mListView.setOnItemClickListener(this);
 //        mListView.setOnRefreshListener(this);
-
+        mAdapter = new InformationAdapter(mDatas, getActivity());
     }
 
     @Event({R.id.visit_client, R.id.new_group, R.id.submit_project, R.id.apply_model, R.id.right_img})
@@ -139,6 +144,7 @@ public class CompanyFragment extends BaseFragment implements AdapterView.OnItemC
 
     @Override
     public void onInitData() {
+        //轮播广告图片
 //        HashMap params = new HashMap();
 //        HttpRequestUtils.getmInstance().send(getActivity(), Constant.BANNER_URL, params, new HttpRequestCallBack<String>() {
 //            @Override
@@ -178,7 +184,35 @@ public class CompanyFragment extends BaseFragment implements AdapterView.OnItemC
         super.onResume();
         mDatas.clear();
         loadData();
+        mAdapter.notifyDataSetChanged();
 //        mViewPager.startAutoScroll();
+        if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
+            /**
+             * 设置连接状态变化的监听器.
+             */
+            RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
+        }
+    }
+
+    private class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
+
+        @Override
+        public void onChanged(ConnectionStatus connectionStatus) {
+            switch (connectionStatus) {
+                case CONNECTED://连接成功。
+                    break;
+                case DISCONNECTED://断开连接。
+                    String token = (String) SPUtils.get(getActivity(), "TOKEN", "");
+                    IMkitConnectUtils.connect(token, getActivity());
+                    break;
+                case CONNECTING://连接中。
+                    break;
+                case NETWORK_UNAVAILABLE://网络不可用。
+                    break;
+                case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
+                    break;
+            }
+        }
     }
 
     @Override
