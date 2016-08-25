@@ -80,6 +80,7 @@ public class ProjecDetailsActivity extends BaseActivity {
     private ArrayList<ProjectDetails.ConstructionDetailsBean> mDatas;
 
     private String url;
+    private String projectNames;
 
     @Override
     public void onInit() {
@@ -119,6 +120,7 @@ public class ProjecDetailsActivity extends BaseActivity {
                 if (appBean != null && appBean.getEnumcode() == 0) {
                     if (NullUtils.isNull(appBean.getData().getProjectName())) {
                         projectName.setText("项目名称：" + appBean.getData().getProjectName());
+                        projectNames = appBean.getData().getProjectName();
                     } else {
                         projectName.setText("项目名称：");
                     }
@@ -181,7 +183,7 @@ public class ProjecDetailsActivity extends BaseActivity {
         });
     }
 
-    @Event(value = {R.id.back_arrows, R.id.button, R.id.follow_btn, R.id.follow_layout, R.id.title_right, R.id.button})
+    @Event(value = {R.id.recode_visit, R.id.back_arrows, R.id.button, R.id.follow_btn, R.id.follow_layout, R.id.title_right, R.id.button})
     private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -226,6 +228,11 @@ public class ProjecDetailsActivity extends BaseActivity {
 //                break;
             case R.id.title_right:
                 intent = new Intent(ProjecDetailsActivity.this, ModelMachineApplyActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.recode_visit:
+                intent = new Intent(ProjecDetailsActivity.this, VisitRecordActivity.class);
+                intent.putExtra("KeyWord",projectNames);
                 startActivity(intent);
                 break;
         }

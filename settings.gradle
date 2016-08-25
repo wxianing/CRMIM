@@ -1,1 +1,1 @@
-include ':app',':ptr', ':IMKit'
+include ':app', ':ptr', ':IMKit', ':RongKit'

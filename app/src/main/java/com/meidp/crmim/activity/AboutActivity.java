@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.meidp.crmim.R;
+import com.meidp.crmim.http.HttpTask;
 import com.meidp.crmim.utils.AppUtils;
 
 import org.xutils.view.annotation.ContentView;
@@ -23,11 +24,14 @@ public class AboutActivity extends BaseActivity {
         versionName.setText("当前Android版本：" + AppUtils.getVersionName(AboutActivity.this));
     }
 
-    @Event({R.id.back_arrows})
+    @Event({R.id.back_arrows, R.id.version_name})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
+                break;
+            case R.id.version_name:
+                HttpTask.detectionNewAppVersion(this, true, true);//检查版本更新
                 break;
         }
     }

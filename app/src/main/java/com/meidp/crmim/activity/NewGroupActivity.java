@@ -310,7 +310,6 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
             }
         });
         dialog.show();
-
     }
 
     String userIdStr = "";
@@ -405,21 +404,7 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
             }
             userStr = userStr.substring(0, userStr.length() - 1);//删除最后的，号
             Log.e("userStr", userStr);
-            HashMap params = new HashMap();
-            params.put("discussionId", s);
-            params.put("discussionName", groupName);
-            params.put("userstrs", userStr);
-            HttpRequestUtils.getmInstance().send(NewGroupActivity.this, Constant.CREATE_GROUP_URL, params, new HttpRequestCallBack<String>() {
-                @Override
-                public void onSuccess(String result) {
-                    AppMsg appMsg = JSONObject.parseObject(result, new TypeReference<AppMsg>() {
-                    });
-                    if (appMsg != null && appMsg.getEnumcode() == 0) {
-                        ToastUtils.shows(NewGroupActivity.this, "创建成功");
-                        finish();
-                    }
-                }
-            });
+            sendMsg(s, userStr);
         }
 
         @Override
@@ -432,5 +417,23 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
         public void onFail(RongIMClient.ErrorCode errorCode) {
             super.onFail(errorCode);
         }
+    }
+
+    private void sendMsg(String s, String userStr) {
+        HashMap params = new HashMap();
+        params.put("discussionId", s);
+        params.put("discussionName", groupName);
+        params.put("userstrs", userStr);
+        HttpRequestUtils.getmInstance().send(NewGroupActivity.this, Constant.CREATE_GROUP_URL, params, new HttpRequestCallBack<String>() {
+            @Override
+            public void onSuccess(String result) {
+                AppMsg appMsg = JSONObject.parseObject(result, new TypeReference<AppMsg>() {
+                });
+                if (appMsg != null && appMsg.getEnumcode() == 0) {
+                    ToastUtils.shows(NewGroupActivity.this, "创建成功");
+                    finish();
+                }
+            }
+        });
     }
 }

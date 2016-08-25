@@ -39,8 +39,7 @@ public class VisitRecordAdapter extends BasicAdapter<VisitRecords> {
             vh = (ViewHolder) convertView.getTag();
         }
         String title = data.getTitle();
-        title = title.substring(2, title.length());
-        if (title.equals("null")) {
+        if (!NullUtils.isNull(title)) {
             vh.titleName.setText("");
         } else {
             vh.titleName.setText(data.getTitle());
@@ -63,7 +62,7 @@ public class VisitRecordAdapter extends BasicAdapter<VisitRecords> {
             vh.linkman.setText("联系人：");
         }
         if (NullUtils.isNull(data.getLinkTel())) {
-            vh.phoneNum.setText("电      话：" + data.getLinkTel());
+            vh.phoneNum.setText("电话：" + data.getLinkTel());
         } else {
             vh.phoneNum.setText("电话：");
         }

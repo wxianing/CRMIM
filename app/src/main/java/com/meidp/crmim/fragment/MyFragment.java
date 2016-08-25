@@ -178,6 +178,7 @@ public class MyFragment extends BaseFragment {
                     MainActivity.mainActivity.finish();
                     MainActivity.mainActivity = null;
                 }
+                SPUtils.setLoginTag(getActivity(), false);
                 SPUtils.remove(getActivity(), "CODE");
 //                        SPUtils.clear(getActivity());
                 startActivity(intent);

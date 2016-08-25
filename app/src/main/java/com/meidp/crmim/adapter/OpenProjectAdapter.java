@@ -43,7 +43,11 @@ public class OpenProjectAdapter extends BasicAdapter<Projects> {
             vh.projectName.setText("");
         }
         if (NullUtils.isNull(data.getCustLinkMan())) {
-            vh.linkName.setText(data.getCustLinkMan());
+            if (NullUtils.isNull(data.getDepartmentName())) {
+                vh.linkName.setText("-" + data.getCustLinkMan());
+            } else {
+                vh.linkName.setText("" + data.getCustLinkMan());
+            }
         } else {
             vh.linkName.setText("");
         }
@@ -80,7 +84,11 @@ public class OpenProjectAdapter extends BasicAdapter<Projects> {
             vh.company.setText("");
         }
         if (NullUtils.isNull(data.getDepartmentName())) {
-            vh.department.setText(data.getDepartmentName());
+            if (NullUtils.isNull(data.getCompanyName())) {
+                vh.department.setText("-" + data.getDepartmentName());
+            } else {
+                vh.department.setText("" + data.getDepartmentName());
+            }
         } else {
             vh.department.setText("");
         }

@@ -1,6 +1,5 @@
 package com.meidp.crmim.http;
 
-import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -19,6 +18,7 @@ import com.meidp.crmim.model.AppBean;
 import com.meidp.crmim.model.Versions;
 import com.meidp.crmim.utils.AppUtils;
 import com.meidp.crmim.utils.Constant;
+import com.meidp.crmim.view.CustomDialog;
 
 import java.io.File;
 import java.util.HashMap;
@@ -49,18 +49,35 @@ public class HttpTask {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
                         if (versionCode > AppUtils.getAppVersionCode(context)) {
                             if (isUpdate) {
-                                new AlertDialog.Builder(context).setTitle("版本升级")
-                                        .setMessage("检测到有新版本，是否升级？")
-                                        .setPositiveButton("是", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog,
-                                                                int which) {
-                                                updateApp(context, v.getData());
+//                                new AlertDialog.Builder(context).setTitle("版本升级")
+//                                        .setMessage("检测到有新版本，是否升级？")
+//                                        .setPositiveButton("是", new DialogInterface.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(DialogInterface dialog,
+//                                                                int which) {
+//                                                updateApp(context, v.getData());
+//                                            }
+//                                        }).setNegativeButton("否", null).create().show();
+
+                                CustomDialog.Builder builder = new CustomDialog.Builder(context);
+                                builder.setTitle("版本升级");
+                                builder.setMessage("检测到有新版本，是否升级？");
+                                builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        updateApp(context, v.getData());
+                                        dialog.dismiss();
+                                    }
+                                });
+
+                                builder.setNegativeButton("否",
+                                        new android.content.DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
                                             }
-                                        }).setNegativeButton("否", null).create().show();
+                                        });
+                                builder.create().show();
                             } else {
                                 //发送广播刷新设置界面的新版本显示
                                 Intent intent = new Intent(Constant.ACTION_NEW_VERSION);
@@ -88,6 +105,8 @@ public class HttpTask {
                 + appName
                 + app.getVersionName() + ".apk";
 
+//        Log.e("")
+
         HttpRequestUtils.getmInstance().downLoadFile(app.getFilePath(), savePath, new HttpRequestCallBack<File>() {
             private NotificationManager updateNotificationManager;
             private Notification updateNotification;
@@ -95,11 +114,24 @@ public class HttpTask {
 
             @Override
             public void onSuccess(String result) {
+
+            }
+
+            @Override
+            public void onSuccess(File result) {
                 updateNotificationManager.cancel(101);
                 Uri uri = Uri.fromFile(new File(savePath));
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setDataAndType(uri, "application/vnd.android.package-archive");
-                context.startActivity(intent);
+                File file = new File(savePath);
+                /**
+                 * 下载完成后安装
+                 */
+                if (file.getName().endsWith(".apk")) {
+                    Intent intent = new Intent();
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setAction(android.content.Intent.ACTION_VIEW);
+                    intent.setDataAndType(uri, "application/vnd.android.package-archive");
+                    context.startActivity(intent);
+                }
             }
 
             @Override

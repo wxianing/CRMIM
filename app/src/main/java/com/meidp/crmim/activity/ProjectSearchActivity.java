@@ -125,6 +125,7 @@ public class ProjectSearchActivity extends BaseActivity implements PullToRefresh
             case R.id.right_tv:
                 keyWord = search.getText().toString().trim();
                 mDatas.clear();
+                pageIndex = 1;
                 loadData(pageIndex, keyWord);
                 break;
         }
@@ -152,12 +153,14 @@ public class ProjectSearchActivity extends BaseActivity implements PullToRefresh
         mTypePopWindow.setContentView(contentView);
         mTypePopWindow.setBackgroundDrawable(new BitmapDrawable());
         //设置各个控件的点击响应
-        TextView tv11 = (TextView) contentView.findViewById(R.id.ordinary_tv);
-        TextView tv22 = (TextView) contentView.findViewById(R.id.importance_tv);
-        TextView all_type = (TextView) contentView.findViewById(R.id.all_type_tv);
-        all_type.setOnClickListener(this);
-        tv11.setOnClickListener(this);
-        tv22.setOnClickListener(this);
+        contentView.findViewById(R.id.wait_follow_up).setOnClickListener(this);//待跟进
+        contentView.findViewById(R.id.in_the_paper).setOnClickListener(this);//报备中
+        contentView.findViewById(R.id.all_type_tv).setOnClickListener(this);
+        contentView.findViewById(R.id.stock_up).setOnClickListener(this);//备货中
+        contentView.findViewById(R.id.shipment).setOnClickListener(this);//出货中
+        contentView.findViewById(R.id.returned_money).setOnClickListener(this);//回款中
+        contentView.findViewById(R.id.be_over).setOnClickListener(this);//完结
+        contentView.findViewById(R.id.termination).setOnClickListener(this);//终止
 
         //设置contentView
         View contentView1 = LayoutInflater.from(ProjectSearchActivity.this).inflate(R.layout.popup_time_layout, null);
@@ -166,18 +169,13 @@ public class ProjectSearchActivity extends BaseActivity implements PullToRefresh
         mDatePopWindow.setContentView(contentView1);
         mDatePopWindow.setBackgroundDrawable(new BitmapDrawable());
         //设置各个控件的点击响应
-        TextView tv1 = (TextView) contentView1.findViewById(R.id.day_plan);
-        TextView tv2 = (TextView) contentView1.findViewById(R.id.week_plan);
-        TextView tv3 = (TextView) contentView1.findViewById(R.id.month_plan);
-        TextView tv4 = (TextView) contentView1.findViewById(R.id.quarter_plan);
-        TextView tv5 = (TextView) contentView1.findViewById(R.id.year_plan);
-        TextView all_date = (TextView) contentView1.findViewById(R.id.all_date_tv);
-        tv1.setOnClickListener(this);
-        tv2.setOnClickListener(this);
-        tv3.setOnClickListener(this);
-        tv4.setOnClickListener(this);
-        tv5.setOnClickListener(this);
-        all_date.setOnClickListener(this);
+        contentView1.findViewById(R.id.day_plan).setOnClickListener(this);
+        contentView1.findViewById(R.id.week_plan).setOnClickListener(this);
+        contentView1.findViewById(R.id.month_plan).setOnClickListener(this);
+        contentView1.findViewById(R.id.quarter_plan).setOnClickListener(this);
+        contentView1.findViewById(R.id.year_plan).setOnClickListener(this);
+        contentView1.findViewById(R.id.all_date_tv).setOnClickListener(this);
+        //显示PopupWindow
         //显示PopupWindow
     }
 
@@ -237,20 +235,44 @@ public class ProjectSearchActivity extends BaseActivity implements PullToRefresh
                 sType = 0;
                 mDatePopWindow.dismiss();
                 break;
-            case R.id.ordinary_tv:
+            case R.id.wait_follow_up://待跟进
                 sType2 = 1;
+                sType3 = 0;
                 mTypePopWindow.dismiss();
                 break;
-            case R.id.importance_tv:
+            case R.id.in_the_paper://报备中
                 sType2 = 2;
+                sType3 = 1;
+                mTypePopWindow.dismiss();
+                break;
+            case R.id.stock_up://备货中
+                sType3 = 2;
+                mTypePopWindow.dismiss();
+                break;
+            case R.id.shipment://出货中
+                sType3 = 3;
+                mTypePopWindow.dismiss();
+                break;
+            case R.id.returned_money://回款中
+                sType3 = 4;
+                mTypePopWindow.dismiss();
+                break;
+            case R.id.be_over://回款中
+                sType3 = 5;
+                mTypePopWindow.dismiss();
+                break;
+            case R.id.termination://回款中
+                sType3 = 9;
                 mTypePopWindow.dismiss();
                 break;
             case R.id.all_type_tv:
-                criticalType = 0;
+                sType2 = 0;
                 mTypePopWindow.dismiss();
                 break;
         }
         mDatas.clear();
         loadData(pageIndex, keyWord);
     }
+
+    private int sType3 = -1;
 }

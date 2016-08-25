@@ -318,7 +318,6 @@ public class ProjectManagerActivity extends BaseActivity implements PullToRefres
                 typeImg.setImageResource(R.mipmap.arrow_down);
                 mTypePopWindow.dismiss();
                 break;
-
         }
         mDatas.clear();
         loadData(pageIndex);

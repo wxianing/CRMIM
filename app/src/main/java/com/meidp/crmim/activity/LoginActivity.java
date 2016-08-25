@@ -65,12 +65,7 @@ public class LoginActivity extends BaseActivity {
         usernameEt.setSelection(et.length());
         usernameEt.clearFocus();//默认不获取光标
         mDatas = new ArrayList<>();
-        //自动登录
-//        boolean isLogin = SPUtils.getLoginTag(this);
-        if (false) {
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-        }
+
         //记住密码
         isRmb = (boolean) SPUtils.get(LoginActivity.this, "isRmb", false);
         if (isRmb) {
@@ -98,25 +93,33 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
+        //自动登录
+        boolean isLogin = SPUtils.getLoginTag(this);
+        if (isLogin) {
+            login();
+        }
     }
 
     @Event(value = {R.id.login_btn})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_btn:
-                userName = usernameEt.getText().toString().trim();
-                passWord = passwordEt.getText().toString().trim();
-                HashMap params = new HashMap();
-                params.put("UserName", userName);
-                params.put("Password", passWord);
-
-                if (NullUtils.isNull(userName) && NullUtils.isNull(passWord)) {
-                    HttpRequestUtils.getmInstance().send(LoginActivity.this, Constant.LOGIN_URL, params, mCallBack);
-                } else {
-                    ToastUtils.shows(this, "用户名或密码不能为空!");
-                }
-
+                login();
                 break;
+        }
+    }
+
+    private void login() {
+        userName = usernameEt.getText().toString().trim();
+        passWord = passwordEt.getText().toString().trim();
+        HashMap params = new HashMap();
+        params.put("UserName", userName);
+        params.put("Password", passWord);
+
+        if (NullUtils.isNull(userName) && NullUtils.isNull(passWord)) {
+            HttpRequestUtils.getmInstance().send(LoginActivity.this, Constant.LOGIN_URL, params, mCallBack);
+        } else {
+            ToastUtils.shows(this, "用户名或密码不能为空!");
         }
     }
 

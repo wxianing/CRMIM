@@ -30,7 +30,7 @@ import java.util.List;
 import io.rong.imkit.RongIM;
 
 @ContentView(R.layout.activity_group_menber)
-public class GroupMenberActivity extends BaseActivity implements AdapterView.OnItemClickListener,PullToRefreshBase.OnRefreshListener2<ListView> {
+public class GroupMenberActivity extends BaseActivity implements AdapterView.OnItemClickListener, PullToRefreshBase.OnRefreshListener2<ListView> {
     @ViewInject(R.id.title_tv)
     private TextView title;
     private String mTargetId;
@@ -59,7 +59,7 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
         mListView.setOnItemClickListener(this);
         mAdapter = new GroupMenberAdapter(mDatas, GroupMenberActivity.this);
         mListView.setAdapter(mAdapter);
-        mListView.setOnRefreshListener( this);
+        mListView.setOnRefreshListener(this);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
     }
 
 
-    @Event({R.id.back_arrows, R.id.right_img})
+    @Event({R.id.back_arrows, R.id.right_img, R.id.reset_name})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
@@ -97,7 +97,10 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
                 Intent intent = new Intent(this, NewGroupActivity.class);
                 intent.putExtra("discussionId", mTargetId);
                 intent.putExtra("GroupName", groupName);
-                startActivityForResult(intent,1023);
+                startActivityForResult(intent, 1023);
+                break;
+            case R.id.reset_name:
+
                 break;
         }
     }
@@ -108,7 +111,7 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
         if (holder != null) {
             mTargetName = holder.userName.getText().toString();
         }
-        RongIM.getInstance().startPrivateChat(this, Integer.toString(mDatas.get(position-1).getUserID()), mTargetName);
+        RongIM.getInstance().startPrivateChat(this, Integer.toString(mDatas.get(position - 1).getUserID()), mTargetName);
     }
 
     @Override
@@ -126,7 +129,7 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==1023){
+        if (resultCode == 1023) {
             mDatas.clear();
             loadData();
         }

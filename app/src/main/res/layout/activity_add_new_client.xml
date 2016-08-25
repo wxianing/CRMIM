@@ -97,13 +97,36 @@
 
                 <TextView
                     style="@style/textview_submit_setting"
+                    android:text="所属公司/医院：" />
+
+                <EditText
+                    android:id="@+id/company_et"
+                    style="@style/sub_editext"
+                    android:focusable="false"
+                    android:gravity="right"
+                    android:hint="必填" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
                     android:text="部门：" />
 
                 <EditText
                     android:id="@+id/department"
                     style="@style/sub_editext"
                     android:gravity="right"
-                    android:hint="选填" />
+                    android:hint="必填" />
 
             </LinearLayout>
 
@@ -125,7 +148,7 @@
                     android:id="@+id/positions"
                     style="@style/sub_editext"
                     android:gravity="right"
-                    android:hint="选填" />
+                    android:hint="必填" />
 
             </LinearLayout>
 
@@ -216,29 +239,6 @@
                     style="@style/sub_editext"
                     android:gravity="right"
                     android:hint="选填" />
-
-            </LinearLayout>
-
-            <include layout="@layout/horizontal_line" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="@dimen/dp10">
-
-                <TextView
-                    style="@style/textview_submit_setting"
-                    android:text="所属公司/医院：" />
-
-                <EditText
-                    android:id="@+id/company_et"
-                    style="@style/sub_editext"
-                    android:focusable="false"
-                    android:gravity="right"
-                    android:hint="必填" />
 
             </LinearLayout>
 

@@ -364,6 +364,7 @@
                         android:hint="点击选择" />
 
                     <ImageView
+                        android:visibility="gone"
                         android:id="@+id/add_img"
                         android:layout_width="25dp"
                         android:layout_height="25dp"

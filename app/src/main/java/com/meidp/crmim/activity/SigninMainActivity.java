@@ -1,9 +1,16 @@
 package com.meidp.crmim.activity;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +43,7 @@ import com.meidp.crmim.model.Projects;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.DataUtils;
 import com.meidp.crmim.utils.NullUtils;
+import com.meidp.crmim.utils.PermissionUtils;
 import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.utils.ToastUtils;
 import com.meidp.crmim.view.WheelView;
@@ -99,6 +107,8 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
     @ViewInject(R.id.add_img)
     private ImageView addImg;
     private Projects projects;
+    private int REQUEST_CONTACTS = 100;
+    private String[] PERMISSIONS_CONTACT = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +116,80 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
         setContentView(R.layout.activity_signin_main);
         x.view().inject(this);
         mMapView = (MapView) findViewById(R.id.bmapView);
-        initView();
+        if (Build.VERSION.SDK_INT >= 23) {
+            showContacts(mMapView);
+        } else {
+            initView();
+        }
+    }
+
+    public void showContacts(View v) {
+        // Verify that all required contact permissions have been granted.
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Contacts permissions have not been granted.
+            requestContactsPermissions(v);
+        } else {
+            initView();
+        }
+    }
+
+    private void requestContactsPermissions(View v) {
+        // BEGIN_INCLUDE(contacts_permission_request)
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION)
+                || ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                || ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                || ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.READ_PHONE_STATE)
+                ) {
+            Snackbar.make(v, "permission_contacts_rationale",
+                    Snackbar.LENGTH_INDEFINITE)
+                    .setAction("ok", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ActivityCompat.requestPermissions(SigninMainActivity.this, PERMISSIONS_CONTACT, REQUEST_CONTACTS);
+                        }
+                    })
+                    .show();
+        } else {
+            ActivityCompat.requestPermissions(this, PERMISSIONS_CONTACT, REQUEST_CONTACTS);
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CONTACTS) {
+            if (PermissionUtils.verifyPermissions(grantResults)) {
+                initView();
+            } else {
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        switch (requestCode) {
+//            // requestCode即所声明的权限获取码，在checkSelfPermission时传入
+//            case BAIDU_READ_PHONE_STATE:
+//                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    // 获取到权限，作相应处理（调用定位SDK应当确保相关权限均被授权，否则可能引起定位失败）
+//                    mLocalClient.start();
+//                } else {
+//                    // 没有获取到权限，做特殊处理
+//                }
+//                break;
+//            default:
+//                break;
+//        }
     }
 
     private void initView() {
@@ -133,12 +216,15 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
         mLocalClient = new LocationClient(SigninMainActivity.this);
         mLocalClient.registerLocationListener(this);
         LocationClientOption option = new LocationClientOption();
-//        option.setOpenGps(true);
+        option.setPriority(LocationClientOption.NetWorkFirst);//设置网络定位优先
+        option.setOpenGps(true);
         option.setIsNeedAddress(true);
         option.setCoorType("bd09ll");
         option.setScanSpan(1000);
+
         mLocalClient.setLocOption(option);
         mLocalClient.start();
+
         addressTrim = (TextView) findViewById(R.id.address_trim);
         addressTrim.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,6 +268,7 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
         projectSuccessRateEt.setOnClickListener(this);
         projectArea.setOnClickListener(this);
         relatedPersonnel.setOnClickListener(this);
+        projectNameEt.setOnClickListener(this);
 
 
         String zhiwu = (String) SPUtils.get(this, "VZhiWu", "");
@@ -195,10 +282,12 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
         customerName.setText(custContact);
         hospitalName.setText(custName);
         department.setText(departmentString);
+
     }
 
-//    private TextView customerName;
 
+    private static final int BAIDU_READ_PHONE_STATE = 100;
+//    private TextView customerName;
 
     @Override
     protected void onDestroy() {
@@ -435,7 +524,7 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
         HashMap params = new HashMap();
         params.put("Contents", content);//拜访内容
         params.put("CustID", custId);//客户Id
-        params.put("Title", "拜访" + custName);
+        params.put("Title", custName);
         params.put("Lat", latitude);//维度
         params.put("Lon", longitude);//经度
         params.put("LocationAddress", addressStr);//地址
@@ -536,6 +625,11 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
                 }
                 break;
             case R.id.add_img:
+                intent = new Intent(this, ProjectManagerActivity.class);
+                intent.putExtra("FLAG", "Apply");
+                startActivityForResult(intent, 1004);
+                break;
+            case R.id.edittext_project_name:
                 intent = new Intent(this, ProjectManagerActivity.class);
                 intent.putExtra("FLAG", "Apply");
                 startActivityForResult(intent, 1004);

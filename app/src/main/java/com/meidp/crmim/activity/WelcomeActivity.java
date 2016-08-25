@@ -2,6 +2,7 @@ package com.meidp.crmim.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
@@ -14,6 +15,7 @@ import cn.jpush.android.api.JPushInterface;
 public class WelcomeActivity extends Activity {
 
     protected void onCreate(Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         // 定义全屏参数

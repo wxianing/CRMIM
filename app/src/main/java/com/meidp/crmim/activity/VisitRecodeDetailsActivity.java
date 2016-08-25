@@ -32,7 +32,7 @@ public class VisitRecodeDetailsActivity extends BaseActivity {
         VisitRecords records = (VisitRecords) getIntent().getSerializableExtra("VisitRecords");
         if (records != null) {
             titleName.setText(records.getTitle());
-            if (NullUtils.isNull(records.getCustName())) {
+            if (NullUtils.isNull(records.getCustLinkManName())) {
                 custName.setText("客户名称：" + records.getCustLinkManName());
             } else {
                 custName.setText("客户名称：");

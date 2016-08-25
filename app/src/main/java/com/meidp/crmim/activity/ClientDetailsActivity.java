@@ -65,15 +65,26 @@ public class ClientDetailsActivity extends BaseActivity {
                 AppBean<ClientContacts> appBean = JSONObject.parseObject(result, new TypeReference<AppBean<ClientContacts>>() {
                 });
                 if (appBean != null && appBean.getEnumcode() == 0) {
-                    name.setText("姓         名：" + appBean.getData().getLinkManName());
-                    phone_num.setText("工作电话：" + appBean.getData().getWorkTel());
-
-                    if (appBean.getData().getSex().equals("1")) {
-                        sex_tv.setText("性       别：" + "男");
-                    } else if (appBean.getData().getSex().equals("2")) {
-                        sex_tv.setText("性       别：" + "女");
+                    if (NullUtils.isNull(appBean.getData().getLinkManName())) {
+                        name.setText("姓         名：" + appBean.getData().getLinkManName());
                     } else {
-                        sex_tv.setText("性       别：" + "未填");
+                        name.setText("姓         名：");
+                    }
+                    if (NullUtils.isNull(appBean.getData().getWorkTel())) {
+                        phone_num.setText("工作电话：" + appBean.getData().getWorkTel());
+                    } else {
+                        phone_num.setText("工作电话：");
+                    }
+                    if (NullUtils.isNull(appBean.getData().getSex())) {
+                        if (appBean.getData().getSex().equals("1")) {
+                            sex_tv.setText("性       别：" + "男");
+                        } else if (appBean.getData().getSex().equals("2")) {
+                            sex_tv.setText("性       别：" + "女");
+                        } else {
+                            sex_tv.setText("性       别：" + "未填");
+                        }
+                    } else {
+                        sex_tv.setText("性       别：");
                     }
                     if (NullUtils.isNull(appBean.getData().getCustName())) {
                         company_name.setText("医院/公司：" + appBean.getData().getCustName());

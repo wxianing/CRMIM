@@ -100,7 +100,7 @@ public class MyPrototypeActivity extends BaseActivity implements PullToRefreshBa
             case R.id.search_btn:
                 keyword = search.getText().toString().trim();
                 mDatas.clear();
-                pageIndex = 0;
+                pageIndex = 1;
                 loadData(pageIndex, keyword);
                 break;
         }

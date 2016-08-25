@@ -79,6 +79,8 @@ public class SubmitActivity extends BaseActivity {
     private EditText zhiwuEt;
     private String groupName = "";
     private String projectName;
+    private String custContactId;
+    private String custId;
 
     @Override
     public void onInit() {
@@ -102,7 +104,7 @@ public class SubmitActivity extends BaseActivity {
                 break;
             case R.id.project_area:
                 intent = new Intent(this, CityListActivity.class);
-                startActivityForResult(intent, Constant.RESULT_OK);
+                startActivityForResult(intent, 1004);
                 break;
             case R.id.related_personnel:
                 intent = new Intent(this, SelectEmpolyeeActivity.class);
@@ -111,38 +113,38 @@ public class SubmitActivity extends BaseActivity {
             case R.id.save_btn://保存
                 sendMsg();
 //                    RongIM.getInstance().createDiscussionChat(SubmitActivity.this, userIds, projectName, mCallBack);
-                    RongIM.getInstance().getRongIMClient().createDiscussion(projectName, userIds, new RongIMClient.CreateDiscussionCallback() {
-                        @Override
-                        public void onSuccess(String s) {
-                            Log.e("讨论组：", "创建成功" + s);
-                            String userStr = "";
-                            for (int i = 0; i < userIds.size(); i++) {
-                                userStr += userIds.get(i) + ",";
-                            }
-                            userStr = userStr.substring(0, userStr.length() - 1);//删除最后的，号
-                            Log.e("userStr", userStr);
-                            HashMap params = new HashMap();
-                            params.put("discussionId", s);
-                            params.put("discussionName", projectName);
-                            params.put("userstrs", userStr);
-                            HttpRequestUtils.getmInstance().send(SubmitActivity.this, Constant.CREATE_GROUP_URL, params, new HttpRequestCallBack<String>() {
-                                @Override
-                                public void onSuccess(String result) {
-                                    AppMsg appMsg = JSONObject.parseObject(result, new TypeReference<AppMsg>() {
-                                    });
-                                    if (appMsg != null && appMsg.getEnumcode() == 0) {
-                                        ToastUtils.shows(SubmitActivity.this, "创建成功");
-                                        finish();
-                                    }
+                RongIM.getInstance().getRongIMClient().createDiscussion(projectName, userIds, new RongIMClient.CreateDiscussionCallback() {
+                    @Override
+                    public void onSuccess(String s) {
+                        Log.e("讨论组：", "创建成功" + s);
+                        String userStr = "";
+                        for (int i = 0; i < userIds.size(); i++) {
+                            userStr += userIds.get(i) + ",";
+                        }
+                        userStr = userStr.substring(0, userStr.length() - 1);//删除最后的，号
+                        Log.e("userStr", userStr);
+                        HashMap params = new HashMap();
+                        params.put("discussionId", s);
+                        params.put("discussionName", projectName);
+                        params.put("userstrs", userStr);
+                        HttpRequestUtils.getmInstance().send(SubmitActivity.this, Constant.CREATE_GROUP_URL, params, new HttpRequestCallBack<String>() {
+                            @Override
+                            public void onSuccess(String result) {
+                                AppMsg appMsg = JSONObject.parseObject(result, new TypeReference<AppMsg>() {
+                                });
+                                if (appMsg != null && appMsg.getEnumcode() == 0) {
+                                    ToastUtils.shows(SubmitActivity.this, "创建成功");
+                                    finish();
                                 }
-                            });
-                        }
+                            }
+                        });
+                    }
 
-                        @Override
-                        public void onError(RongIMClient.ErrorCode errorCode) {
+                    @Override
+                    public void onError(RongIMClient.ErrorCode errorCode) {
 
-                        }
-                    });
+                    }
+                });
 //                showDialog();
                 break;
             case R.id.edittext_success_rate:
@@ -203,7 +205,9 @@ public class SubmitActivity extends BaseActivity {
         params.put("SuccessRate", rate);//成功率
         params.put("Remark", remark);//备注
         params.put("CanViewUser", empolyeeId);//相关人员
-        params.put("ProjectDirectionId", projectDirectionId);
+        params.put("ProjectDirectionId", projectDirectionId);//项目领域
+        params.put("CustID", custId);//公司ID
+        params.put("CustLinkManId", custContactId);//联系人ID
 
         HttpRequestUtils.getmInstance().send(SubmitActivity.this, Constant.SAVE_PROJECT, params, new HttpRequestCallBack<String>() {
             @Override
@@ -214,7 +218,7 @@ public class SubmitActivity extends BaseActivity {
                     ToastUtils.shows(SubmitActivity.this, "保存成功");
                     finish();
                 } else {
-                    ToastUtils.shows(SubmitActivity.this, "保存失败");
+                    ToastUtils.shows(SubmitActivity.this, appMsg.getMsg());
                 }
             }
         });
@@ -254,9 +258,7 @@ public class SubmitActivity extends BaseActivity {
             }
         });
         dialog.show();
-
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -266,8 +268,8 @@ public class SubmitActivity extends BaseActivity {
             String ContactPhone = data.getStringExtra("CustPhone");//联系电话
             String companyName = data.getStringExtra("CustName");
             String zhiwu = data.getStringExtra("Position");
-
-
+            custId = data.getStringExtra("CustId");
+            custContactId = data.getStringExtra("CustContactId");
             zhiwuEt.setText(data.getStringExtra(zhiwu));
             companyNameEt.setText(companyName);
 
@@ -276,7 +278,7 @@ public class SubmitActivity extends BaseActivity {
 
             Log.e("TAG", customName + ">>>>>" + ContactPhone);
         }
-        if (resultCode == Constant.RESULT_OK) {
+        if (resultCode == 1004) {
             String cityName = data.getStringExtra("cityName");
             projectArea.setText(cityName);
         }

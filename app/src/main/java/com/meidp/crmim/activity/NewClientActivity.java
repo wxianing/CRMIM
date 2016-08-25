@@ -55,6 +55,7 @@ public class NewClientActivity extends BaseActivity {
     private String custNo;
     @ViewInject(R.id.positions)
     private EditText positionEt;
+    private String custName;
 
     @Override
     public void onInit() {
@@ -80,8 +81,26 @@ public class NewClientActivity extends BaseActivity {
 
                 if (NullUtils.isNull(customeerName)) {
                     if (NullUtils.isNull(linkmanPhone)) {
-                        if (NullUtils.isNull(custNo)) {
+                        if (!NullUtils.isNull(linkmanPhone)) {
+                            ToastUtils.shows(NewClientActivity.this, "请填写工作电话");
+                            return;
+                        }
+                        if (!NullUtils.isNull(custNo)) {
                             ToastUtils.shows(NewClientActivity.this, "请先选择客户");
+                            return;
+                        }
+
+                        if (sexFlag == 0) {
+                            ToastUtils.shows(NewClientActivity.this, "请先选择性别");
+                            return;
+                        }
+
+                        if (!NullUtils.isNull(department)) {
+                            ToastUtils.shows(NewClientActivity.this, "请填写部门");
+                            return;
+                        }
+                        if (!NullUtils.isNull(position)) {
+                            ToastUtils.shows(NewClientActivity.this, "请填写职位");
                             return;
                         }
 
@@ -149,7 +168,7 @@ public class NewClientActivity extends BaseActivity {
         }
         if (resultCode == 1012) {
             custNo = data.getStringExtra("CustNo");
-            String custName = data.getStringExtra("CustName");
+            custName = data.getStringExtra("CustName");
             Log.e("cus", "cust" + custName + ">>>>>>>>>>" + custNo);
             custName = (String) SPUtils.get(this, "CustName", "");
             custNo = (String) SPUtils.get(this, "CustNo", "");

@@ -48,7 +48,6 @@
             android:maxLines="1"
             android:text="地址：北京市朝阳区" />
 
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

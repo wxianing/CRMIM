@@ -154,7 +154,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 intent = new Intent(getActivity(), MyCostingActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.my_make_bargain:
+            case R.id.my_make_bargain://我的成交
                 intent = new Intent(getActivity(), MyMakeBargainActivity.class);
                 startActivity(intent);
                 break;

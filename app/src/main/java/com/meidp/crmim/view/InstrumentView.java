@@ -64,7 +64,7 @@ public class InstrumentView extends FrameLayout {
         init();
     }
 
-    
+
     @Override
     protected void onDraw(Canvas canvas) {
 

@@ -1,6 +1,5 @@
 package com.meidp.crmim.activity;
 
-import android.content.Intent;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -11,6 +10,8 @@ import android.widget.TextView;
 import com.meidp.crmim.R;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.CustomDialogUtils;
+import com.meidp.crmim.utils.NetUtils;
+import com.meidp.crmim.utils.ToastUtils;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -28,18 +29,22 @@ public class LifeNavigationActivity extends BaseActivity {
 
     @Override
     public void onInit() {
-        CustomDialogUtils.showProgressDialog(LifeNavigationActivity.this);
-        title.setText("人生导航");
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        //设置可以访问文件
-        webSettings.setAllowFileAccess(true);
-        //设置支持缩放
-        webSettings.setBuiltInZoomControls(true);
-        //加载需要显示的网页
-        mWebView.loadUrl(Constant.LIFE_NAV_URL);
-        //设置Web视图
-        mWebView.setWebViewClient(new MyWebViewClient());
+        if (NetUtils.isConnected(this)) {
+            CustomDialogUtils.showProgressDialog(LifeNavigationActivity.this);
+            title.setText("人生导航");
+            WebSettings webSettings = mWebView.getSettings();
+            webSettings.setJavaScriptEnabled(true);
+            //设置可以访问文件
+            webSettings.setAllowFileAccess(true);
+            //设置支持缩放
+            webSettings.setBuiltInZoomControls(true);
+            //加载需要显示的网页
+            mWebView.loadUrl(Constant.LIFE_NAV_URL);
+            //设置Web视图
+            mWebView.setWebViewClient(new MyWebViewClient());
+        } else {
+            ToastUtils.shows(this, "网络连接不可用");
+        }
     }
 
     @Event({R.id.back_arrows})
@@ -76,5 +81,4 @@ public class LifeNavigationActivity extends BaseActivity {
         finish();//结束退出程序
         return false;
     }
-
 }

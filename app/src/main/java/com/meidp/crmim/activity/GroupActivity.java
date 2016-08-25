@@ -27,6 +27,7 @@ import java.util.List;
 
 import io.rong.imkit.RongIM;
 
+
 @ContentView(R.layout.activity_group)
 public class GroupActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 

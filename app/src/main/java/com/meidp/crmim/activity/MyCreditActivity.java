@@ -4,13 +4,21 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.meidp.crmim.R;
+import com.meidp.crmim.http.HttpRequestCallBack;
+import com.meidp.crmim.http.HttpRequestUtils;
+import com.meidp.crmim.model.AppBean;
+import com.meidp.crmim.model.Performances;
+import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.view.InstrumentView;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -24,6 +32,22 @@ public class MyCreditActivity extends BaseActivity {
     private InstrumentView iView;
     @ViewInject(R.id.txtView)
     private TextView txtView;
+
+
+    @ViewInject(R.id.project_count)
+    private TextView projectCount;
+    @ViewInject(R.id.complete_project)
+    private TextView completeProjectCount;
+    @ViewInject(R.id.total_money)
+    private TextView totalMoney;
+    @ViewInject(R.id.projectGathering)
+    private TextView projectGathering;
+    @ViewInject(R.id.projectReimburse)
+    private TextView projectReimburse;
+    @ViewInject(R.id.start_end_date)
+    private TextView startEndDate;
+    @ViewInject(R.id.credit_rate)
+    private TextView creditRate;
 
     @Override
     public void onInit() {
@@ -44,6 +68,34 @@ public class MyCreditActivity extends BaseActivity {
                 });
             }
         }, 1000);
+    }
+
+    @Override
+    public void onInitData() {
+        HashMap params = new HashMap();
+
+        HttpRequestUtils.getmInstance().send(MyCreditActivity.this, Constant.PERFORMANCE_URL, params, new HttpRequestCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                AppBean<Performances> appBean = JSONObject.parseObject(result, new TypeReference<AppBean<Performances>>() {
+                });
+                if (appBean != null && appBean.getEnumcode() == 0) {
+                    bkndView(appBean);
+                }
+            }
+        });
+    }
+
+    private void bkndView(AppBean<Performances> appBean) {
+        projectCount.setText("申报项目数：" + appBean.getData().getPrjectTotalCount() + "个");
+        completeProjectCount.setText("已结项目数：" + appBean.getData().getFinishProejct() + "个");
+        totalMoney.setText("项目总费用：" + appBean.getData().getProjectTotalMoney());
+        projectGathering.setText("项目已收款：" + appBean.getData().getProjectGathering());
+        projectReimburse.setText("项目已报销：" + appBean.getData().getProjectReimburse());
+        startEndDate.setText("项目起止时间：" + appBean.getData().getStartDate() + "~" + appBean.getData().getEndDate());
+
+        double rate = (double) appBean.getData().getFinishProejct() / (double) appBean.getData().getPrjectTotalCount() * 100;
+        creditRate.setText("我的诚信度：" + rate + "%");
     }
 
     @Event(value = {R.id.back_arrows, R.id.unscramble})

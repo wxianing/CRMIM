@@ -7,7 +7,7 @@ import com.meidp.crmim.MyApplication;
  */
 public class Constant {
     public static final int RESULT_OK = 1;
-    public static final String BASE_URL = "http://115.28.180.26:98/";
+    public static final String BASE_URL = "http://beaconapi.meidp.com/";
 
     public static final String APPID = "102";
 
@@ -152,12 +152,12 @@ public class Constant {
     public static final String GET_LIFE_NAV = BASE_URL + "office/employee/getemployeenav";
     //保存客户联系人
     public static final String CUSTOMER_CONTACTS_URL = BASE_URL + "crm/getminelinkmanpagelist";
-
+    //客户联系人详情
     public static final String CUSTOMER_CONTACTS_DETAILS = BASE_URL + "crm/getcustinfo";
     //展会详情
     public static final String CONVERSATION_DETAILS_URL = BASE_URL + "order/getsellexhibition";
     //人生导航
-    public static final String LIFE_NAV_URL = "http://beacon.meidp.com:98/Mobi/Office/EmployeeNav?UserId=2";
+    public static final String LIFE_NAV_URL = BASE_URL + "Mobi/Office/EmployeeNav?UserId=2";
     //获取费用审批列表
     public static final String GET_COST_CHECK = BASE_URL + "office/office/getfeeapplypagelistforcheck";
     //业绩统计报表

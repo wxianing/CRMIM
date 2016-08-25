@@ -20,7 +20,7 @@ public class IMkitConnectUtils {
      *
      * @param token
      */
-    public static void connect(String token, final Context mContext) {
+    public static void connect(final String token, final Context mContext) {
 
         if (mContext.getApplicationInfo().packageName.equals(MyApplication.getCurProcessName(mContext.getApplicationContext()))) {
 
@@ -53,7 +53,7 @@ public class IMkitConnectUtils {
                  */
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {
-
+                    IMkitConnectUtils.connect(token, mContext);
                     Log.e("RondIMKit", "--融云服务器连接成功" + errorCode);
                 }
             });

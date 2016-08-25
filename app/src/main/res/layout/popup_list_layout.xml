@@ -59,6 +59,7 @@
 
 
         <LinearLayout
+            android:visibility="gone"
             android:paddingLeft="@dimen/dp10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">

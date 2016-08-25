@@ -21,7 +21,6 @@ import com.meidp.crmim.model.AppBean;
 import com.meidp.crmim.model.AppMsg;
 import com.meidp.crmim.model.LifeNavs;
 import com.meidp.crmim.utils.Constant;
-import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.ToastUtils;
 
 import org.xutils.view.annotation.ContentView;
@@ -29,8 +28,6 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.HashMap;
-
-import io.rong.imkit.RongIM;
 
 @ContentView(R.layout.activity_add_life_navigation)
 public class AddLifeNavigationActivity extends BaseActivity {
