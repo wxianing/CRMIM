@@ -73,8 +73,8 @@ public class SecretaryActivity extends BaseActivity implements AdapterView.OnIte
             case R.id.search_btn:
                 keyWord = search.getText().toString().trim();
                 mDatas.clear();
+                pageIndex = 1;
                 loadData(pageIndex, keyWord);
-                keyWord = "";
                 break;
         }
     }

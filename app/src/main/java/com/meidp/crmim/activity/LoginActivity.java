@@ -158,6 +158,12 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 根据Id到本地服务器查找个人信息
+     *
+     * @param userId
+     * @return
+     */
     private UserInfo findUserById(final String userId) {
         HashMap params = new HashMap();
         params.put("Id", Integer.valueOf(userId));
@@ -178,6 +184,10 @@ public class LoginActivity extends BaseActivity {
         return users;
     }
 
+    /**
+     *
+     * @param appBean
+     */
     private void saveData(AppBean<User> appBean) {
 
         HttpRequestUtils.setUserCode(appBean.getData().getUserCode());

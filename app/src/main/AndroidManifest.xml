@@ -313,7 +313,8 @@
         <activity android:name=".activity.TeamMemberDetsilsActivity" />
         <activity android:name=".activity.ResetPwdActivity" />
         <activity android:name=".activity.MyMakeBargainActivity" />
-        <activity android:name=".activity.MyCostingActivity"></activity>
+        <activity android:name=".activity.MyCostingActivity" />
+        <activity android:name=".activity.TranActivity"></activity>
     </application>
 
 </manifest>

@@ -1,34 +1,24 @@
-package com.meidp.crmim.imkit;
+package com.meidp.crmim.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 
 import com.meidp.crmim.R;
-import com.meidp.crmim.utils.CopyUtils;
+import com.meidp.crmim.imkit.ConversationListsFragment;
 
-/**
- * Package： com.meidp.crmim.imkit
- * Author： wxianing
- * 作  用：
- * 时  间： 2016/7/9
- */
-public class ConversationListActivity extends FragmentActivity {
+import org.xutils.view.annotation.ContentView;
 
-    public static ConversationListActivity activity;
-
+public class TranActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = this;
-        setContentView(R.layout.activity_conversationlist);
+        setContentView(R.layout.activity_tran);
 //        Log.e("copy--message", CopyUtils.paste(this));
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
         ft.replace(R.id.content, ConversationListsFragment.newInstance("转发"));
         ft.commit();
-//        finish();
+        finish();
     }
 }

@@ -98,7 +98,6 @@ public class ImportantActivity extends BaseActivity implements AdapterView.OnIte
                 keyword = search.getText().toString().trim();
                 mDatas.clear();
                 loadData(pageIndex, keyword);
-                keyword = "";
                 break;
         }
     }

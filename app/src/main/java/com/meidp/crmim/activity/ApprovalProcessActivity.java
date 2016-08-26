@@ -177,8 +177,6 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
                 mDatasStockups.clear();
                 getPrototypeData(pageIndex, keyword);
                 getFeeData(pageIndex, keyword);
-                getStockupData(pageIndex, keyword);
-                keyword = "";
                 break;
             case R.id.checked_type://审核类型
                 if (!mCheckTypePopWindow.isShowing()) {

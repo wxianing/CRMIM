@@ -119,8 +119,6 @@ public class ConversationListStaticFragment extends BaseFragment {
                     .build();
             fragment.setUri(uri);
         }
-
-
     }
 
 
@@ -170,7 +168,6 @@ public class ConversationListStaticFragment extends BaseFragment {
 
     @Override
     public void onResume() {
-        Log.e(">>>>>>>>", "测试而已");
         HashMap params = new HashMap();
         params.put("Id", 1);
         HttpRequestUtils.getmInstance().send(getActivity(), Constant.JPUSH_NORESDER_URL, params, new HttpRequestCallBack() {
@@ -256,5 +253,7 @@ public class ConversationListStaticFragment extends BaseFragment {
         mPopupWindow.setContentView(popupView);
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
     }
+
+
 
 }

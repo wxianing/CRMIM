@@ -102,10 +102,10 @@ public class SelectEmpolyeeActivity extends BaseActivity implements ExpandableLi
 //        mListVIew.setOnItemClickListener(this);
         contactList = new ArrayList<>();
 //        expandableAdapter = new ExpanListAdapter(contactList, this);
-        expListView.setOnChildClickListener(this);
-        expListView.setOnGroupClickListener(this);
-        expListView.setAdapter(expandableAdapter);
-        expListView.setGroupIndicator(null);
+        expListView.getRefreshableView().setOnChildClickListener(this);
+        expListView.getRefreshableView().setOnGroupClickListener(this);
+        expListView.getRefreshableView().setAdapter(expandableAdapter);
+        expListView.getRefreshableView().setGroupIndicator(null);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class SelectEmpolyeeActivity extends BaseActivity implements ExpandableLi
                     contactList.clear();
                     contactList.addAll(appBean.getData());
                     expandableAdapter = new TeamExpanAdapter(contactList, SelectEmpolyeeActivity.this);
-                    expListView.setAdapter(expandableAdapter);
+                    expListView.getRefreshableView().setAdapter(expandableAdapter);
                     if (userLists != null && !userLists.isEmpty()) {
                         for (int i = 0; i < userLists.size(); i++) {
                             TeamExpanAdapter.getIsSelected().put(userLists.get(i).getEmployeeId(), true);//默认吧原理已经有的成员选中
@@ -130,7 +130,7 @@ public class SelectEmpolyeeActivity extends BaseActivity implements ExpandableLi
                     }
                     expandableAdapter.notifyDataSetChanged();
                     for (int i = 0; i < contactList.size(); i++) {
-                        expListView.expandGroup(i);//默认展开选项
+                        expListView.getRefreshableView().expandGroup(i);//默认展开选项
                     }
                 }
             }

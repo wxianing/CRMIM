@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 import com.meidp.crmim.R;
 import com.meidp.crmim.activity.GroupActivity;
 import com.meidp.crmim.activity.ModelMachineApplyActivity;
@@ -36,6 +37,7 @@ import com.meidp.crmim.model.Contact;
 import com.meidp.crmim.model.Friends;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.IMkitConnectUtils;
+import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.view.ExpListView;
 import com.meidp.crmim.view.ListViewForScrollView;
@@ -97,21 +99,39 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
         mListVeiw.setOnItemClickListener(this);
         contactList = new ArrayList<>();
         expandableAdapter = new ExpandableAdapter(contactList, getActivity());
-        expListView.setOnChildClickListener(this);
-        expListView.setOnGroupClickListener(this);
-        expListView.setAdapter(expandableAdapter);
-        expListView.setGroupIndicator(null);
+        expListView.getRefreshableView().setOnChildClickListener(this);
+        expListView.getRefreshableView().setOnGroupClickListener(this);
+        expListView.getRefreshableView().setAdapter(expandableAdapter);
+        expListView.getRefreshableView().setGroupIndicator(null);
     }
 
     @Override
     public void onInitData() {
-
+        /**
+         * 保存通讯录
+         */
+        String contacts = (String) SPUtils.get(getActivity(), "Contacts", "");
+        if (NullUtils.isNull(contacts)) {
+            AppBeans<Contact> appBean = JSONObject.parseObject(contacts, new TypeReference<AppBeans<Contact>>() {
+            });
+            if (appBean != null && appBean.getEnumcode() == 0) {
+                contactList.clear();
+                contactList.addAll(appBean.getData());
+                expandableAdapter.notifyDataSetChanged();
+                for (int i = 0; i < contactList.size(); i++) {
+                    expListView.getRefreshableView().expandGroup(i);//默认展开选项
+                }
+            }
+        } else {
+            loadData();
+        }
     }
 
     private void loadData() {
         HttpRequestUtils.getmInstance().send(getActivity(), Constant.GET_CONTACTS_URL, null, new HttpRequestCallBack() {
             @Override
             public void onSuccess(String result) {
+                SPUtils.save(getActivity(), "Contacts", result);
                 AppBeans<Contact> appBean = JSONObject.parseObject(result, new TypeReference<AppBeans<Contact>>() {
                 });
                 if (appBean != null && appBean.getEnumcode() == 0) {
@@ -119,7 +139,7 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
                     contactList.addAll(appBean.getData());
                     expandableAdapter.notifyDataSetChanged();
                     for (int i = 0; i < contactList.size(); i++) {
-                        expListView.expandGroup(i);//默认展开选项
+                        expListView.getRefreshableView().expandGroup(i);//默认展开选项
                     }
                 }
             }
@@ -129,8 +149,7 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
     @Override
     public void onResume() {
         super.onResume();
-        mDatas.clear();
-        loadData();
+
         /**
          * 设置连接状态变化的监听器.
          */

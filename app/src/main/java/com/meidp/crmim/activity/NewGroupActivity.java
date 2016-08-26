@@ -122,10 +122,10 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
 
         contactList = new ArrayList<>();
 
-        expListView.setOnChildClickListener(this);
-        expListView.setOnGroupClickListener(this);
+        expListView.getRefreshableView().setOnChildClickListener(this);
+        expListView.getRefreshableView().setOnGroupClickListener(this);
 
-        expListView.setGroupIndicator(null);
+        expListView.getRefreshableView().setGroupIndicator(null);
 
 
     }
@@ -182,7 +182,7 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
                     contactList.clear();
                     contactList.addAll(appBean.getData());
                     expandableAdapter = new ExpanListAdapter(contactList, NewGroupActivity.this);
-                    expListView.setAdapter(expandableAdapter);
+                    expListView.getRefreshableView().setAdapter(expandableAdapter);
                     for (int i = 0; i < contactList.size(); i++) {
                         for (int k = 0; k < contactList.get(i).getUsers().size(); k++) {
                             isSelected.put(k, false);
@@ -193,7 +193,7 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
                     }
                     expandableAdapter.notifyDataSetChanged();
                     for (int i = 0; i < contactList.size(); i++) {
-                        expListView.expandGroup(i);//默认展开选项
+                        expListView.getRefreshableView().expandGroup(i);//默认展开选项
                     }
 
                 }
@@ -393,10 +393,8 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
     }
 
     private class RongCreateGroupCallBack extends RongIMClient.CreateDiscussionCallback {
-
         @Override
         public void onSuccess(String s) {
-
             Log.e("讨论组：", "创建成功" + s);
             String userStr = "";
             for (int i = 0; i < userIds.size(); i++) {

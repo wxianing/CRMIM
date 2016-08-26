@@ -4,13 +4,15 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ExpandableListView;
 
+import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
+
 /**
  * Package： com.meidp.crmim.view
  * Author： wxianing
  * 作  用：
  * 时  间： 2016/8/10
  */
-public class ExpListView extends ExpandableListView {
+public class ExpListView extends PullToRefreshExpandableListView {
     public ExpListView(Context context) {
         super(context);
     }
@@ -19,8 +21,8 @@ public class ExpListView extends ExpandableListView {
         super(context, attrs);
     }
 
-    public ExpListView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    public ExpListView(Context context, Mode mode) {
+        super(context, mode);
     }
 
     @Override

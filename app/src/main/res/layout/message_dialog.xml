@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:padding="20.0dip">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/message_dialog">
+
+        <TextView
+            android:id="@+id/copy"
+            style="@style/text_18_ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="40.0dip"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp10"
+            android:gravity="center"
+            android:text="复制"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#BDBDBD" />
+
+        <TextView
+            android:id="@+id/transpond"
+            style="@style/text_18_ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="40.0dip"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp10"
+            android:gravity="center"
+            android:text="转发"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#BDBDBD" />
+
+        <TextView
+            android:id="@+id/delete"
+            style="@style/text_18_ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="40.0dip"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp10"
+            android:gravity="center"
+            android:text="删除"
+            android:visibility="visible" />
+    </LinearLayout>
+
+</FrameLayout>
