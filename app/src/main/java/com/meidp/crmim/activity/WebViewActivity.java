@@ -48,11 +48,13 @@ public class WebViewActivity extends BaseActivity {
         mWebView.loadUrl(link);
         //设置Web视图
         mWebView.setWebViewClient(new MyWebViewClient());
+
         oid = getIntent().getIntExtra("OID", -1);
         sType = getIntent().getIntExtra("sType", -1);
         if (sType != -1) {
             sendMsg(sType);
         }
+
     }
 
     /**

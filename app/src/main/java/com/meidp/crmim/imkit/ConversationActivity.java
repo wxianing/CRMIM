@@ -38,11 +38,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.widget.provider.FileInputProvider;
+import io.rong.imkit.widget.provider.ImageInputProvider;
+import io.rong.imkit.widget.provider.InputProvider;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
+import io.rong.message.FileMessage;
 import io.rong.message.ImageMessage;
 import io.rong.message.RichContentMessage;
 import io.rong.message.StickerMessage;
@@ -108,8 +113,18 @@ public class ConversationActivity extends BaseActivity {
          * 设置会话界面操作的监听器。
          */
         RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
+//        RongIM.getInstance().registerMessageType(FileMessage.class);
+//        InputProvider.ExtendProvider[] singleProvider = {
+//                new ImageInputProvider(RongContext.getInstance()),
+//                new FileInputProvider(RongContext.getInstance())//文件消息
+//        };
+//        RongIM.resetInputExtensionProvider(Conversation.ConversationType.PRIVATE, singleProvider);
+//        RongIM.resetInputExtensionProvider(Conversation.ConversationType.DISCUSSION, singleProvider);
     }
 
+    /**
+     * 修改群名称
+     */
     private void showDialog() {
         final Dialog dialog = new Dialog(this, R.style.Dialog);
         View contentView = LayoutInflater.from(this).inflate(R.layout.edittext_dialog, null);
@@ -154,6 +169,12 @@ public class ConversationActivity extends BaseActivity {
         dialog.show();
     }
 
+    /**
+     * 修改群名
+     *
+     * @param s
+     * @param groupName
+     */
     private void sendMsg(String s, String groupName) {
         HashMap params = new HashMap();
         params.put("discussionId", s);

@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/default_background_color"
+    tools:context="com.meidp.crmim.activity.SubmissionActivity">
+
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/titlebar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_bar"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@color/white"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/customer_phone_icon"
+                    android:text="医院：" />
+
+                <EditText
+                    android:id="@+id/hospital"
+                    style="@style/sub_editext"
+                    android:layout_toLeftOf="@+id/arror_right_img"
+                    android:layout_weight="1"
+                    android:focusable="false"
+                    android:gravity="right"
+                    android:hint="点击选择" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/customer_phone_icon"
+                    android:text="科室：" />
+
+                <EditText
+                    android:id="@+id/department_name"
+                    style="@style/sub_editext"
+                    android:layout_toLeftOf="@+id/arror_right_img"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:hint="点击输入" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="项目名称：" />
+
+                <EditText
+                    android:id="@+id/edittext_project_name"
+                    style="@style/sub_editext"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:hint="点击选择" />
+
+                <ImageView
+                    android:id="@+id/add_img"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/dp5"
+                    android:src="@mipmap/add_icon"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="项目领域：" />
+
+                <TextView
+                    android:id="@+id/direction"
+                    style="@style/sub_editext"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:focusable="false"
+                    android:gravity="end"
+                    android:hint="点击选择"
+                    android:maxLines="1" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/arrow_right"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="项目内容：" />
+
+                <EditText
+                    android:id="@+id/edittext_project_content"
+                    style="@style/sub_editext"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:hint="点击填写" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="机型:" />
+
+                <EditText
+                    android:id="@+id/type_select"
+                    style="@style/sub_editext"
+                    android:ellipsize="end"
+                    android:focusable="false"
+                    android:gravity="end"
+                    android:hint="点击填写"
+                    android:maxLines="1" />
+
+            </LinearLayout>
+
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="数量：" />
+
+                <EditText
+                    android:id="@+id/count_et"
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击填写"
+                    android:inputType="number" />
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="项目的时间计划：" />
+
+                <EditText
+                    style="@style/sub_editext"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:hint="点击填写" />
+
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="项目的关键人：" />
+
+                <EditText
+                    android:id="@+id/related_personnel"
+                    style="@style/sub_editext"
+                    android:layout_weight="1"
+                    android:focusable="false"
+                    android:gravity="end"
+                    android:hint="点击填写" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="项目金额:" />
+
+                <EditText
+                    android:id="@+id/edittext_total_price"
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="点击输入"
+                    android:inputType="numberDecimal" />
+
+            </LinearLayout>
+
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="我的成单率：" />
+
+                <EditText
+                    android:id="@+id/edittext_success_rate"
+                    style="@style/sub_editext"
+                    android:focusable="false"
+                    android:gravity="end"
+                    android:hint="点击选择" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="所属地区：" />
+
+                <EditText
+                    android:id="@+id/project_area"
+                    style="@style/sub_editext"
+                    android:layout_weight="1"
+                    android:focusable="false"
+                    android:gravity="end"
+                    android:hint="点击选择" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/arrow_right"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="项目相关人员：" />
+
+                <EditText
+
+                    style="@style/sub_editext"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:focusable="false"
+                    android:gravity="end"
+                    android:hint="点击选择"
+                    android:maxLines="1" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/arrow_right"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp10">
+
+                <TextView
+                    style="@style/textview_submit_setting"
+                    android:text="备注:" />
+
+                <EditText
+                    android:id="@+id/remark"
+                    style="@style/sub_editext"
+                    android:gravity="end"
+                    android:hint="选填" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/dp5"
+        android:layout_marginTop="10dp"
+        android:background="@color/default_background_color"
+        android:padding="@dimen/dp5">
+
+        <Button
+            android:id="@+id/save_btn"
+            style="@style/oange_button"
+            android:text="申报项目" />
+
+    </LinearLayout>
+</RelativeLayout>

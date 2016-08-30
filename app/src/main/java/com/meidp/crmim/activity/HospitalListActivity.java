@@ -1,8 +1,6 @@
 package com.meidp.crmim.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,10 +14,8 @@ import com.meidp.crmim.R;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppDatas;
-import com.meidp.crmim.model.ClientContacts;
 import com.meidp.crmim.model.CustomerLists;
 import com.meidp.crmim.utils.Constant;
-import com.meidp.crmim.utils.SPUtils;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -100,8 +96,7 @@ public class HospitalListActivity extends BaseActivity implements AdapterView.On
         Intent intent = new Intent();
         intent.putExtra("CustName", mDatas.get(position).getCustName());
         intent.putExtra("CustNo", mDatas.get(position).getCustNo());
-        SPUtils.save(this, "CustName", mDatas.get(position).getCustName());
-        SPUtils.save(this, "CustNo", mDatas.get(position).getCustNo());
+        intent.putExtra("CustId", mDatas.get(position).getID());
         setResult(1012, intent);
         finish();
     }

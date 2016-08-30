@@ -39,6 +39,7 @@ import com.meidp.crmim.activity.ProjectManagerActivity;
 import com.meidp.crmim.activity.SigninMainActivity;
 import com.meidp.crmim.activity.SubmitActivity;
 import com.meidp.crmim.activity.VisitingClientsActivity;
+import com.meidp.crmim.activity.WebViewActivity;
 import com.meidp.crmim.activity.WorkPlanActivity;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
@@ -146,10 +147,22 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     }
 
 
-    @Event({R.id.my_hardworking_layout, R.id.my_costing, R.id.my_make_bargain, R.id.my_visiting, R.id.open_sea, R.id.exhibition_manager, R.id.approval_manager, R.id.apply_model, R.id.submit_project, R.id.new_group, R.id.visiting_customer, R.id.project_manager, R.id.cost_manager, R.id.prototype_manager, R.id.my_integrity, R.id.life_navigation, R.id.improtment_thing, R.id.knowledge, R.id.right_img, R.id.visit_client})
+    @Event({R.id.department_functions,R.id.department_duty_layout, R.id.my_hardworking_layout, R.id.my_costing, R.id.my_make_bargain, R.id.my_visiting, R.id.open_sea, R.id.exhibition_manager, R.id.approval_manager, R.id.apply_model, R.id.submit_project, R.id.new_group, R.id.visiting_customer, R.id.project_manager, R.id.cost_manager, R.id.prototype_manager, R.id.my_integrity, R.id.life_navigation, R.id.improtment_thing, R.id.knowledge, R.id.right_img, R.id.visit_client})
     private void onclick(View v) {
         Intent intent = null;
         switch (v.getId()) {
+            case R.id.department_functions:
+                intent = new Intent(getActivity(), WebViewActivity.class);
+                intent.putExtra("ClickUrl", Constant.DEPARTMENT_FUNCTIONS_URL);
+                intent.putExtra("TITLE", "部门指标");//标题
+                startActivity(intent);
+                break;
+            case R.id.department_duty_layout://部门职责
+                intent = new Intent(getActivity(), WebViewActivity.class);
+                intent.putExtra("ClickUrl", Constant.DEPARTMENT_DUTY_URL);
+                intent.putExtra("TITLE", "部门职责");//标题
+                startActivity(intent);
+                break;
             case R.id.my_costing://我的成本
                 intent = new Intent(getActivity(), MyCostingActivity.class);
                 startActivity(intent);

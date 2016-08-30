@@ -154,11 +154,10 @@ public class ConversationListsFragment extends BaseFragment {
 
                         File imageFileSource = FileUtils.getFileByUri(Uri.parse(thumUri), getActivity());
                         File imageFileThumb = FileUtils.getFileByUri(Uri.parse(thumUri), getActivity());
-                        File imageFileRemode = FileUtils.getFileByUri(Uri.parse(remodeUri),getActivity());
+                        File imageFileRemode = FileUtils.getFileByUri(Uri.parse(remodeUri), getActivity());
 
-                        ImageMessage imgMsg = ImageMessage.obtain(Uri.fromFile(imageFileThumb), Uri.fromFile(imageFileRemode));
+                        ImageMessage imgMsg = ImageMessage.obtain(Uri.fromFile(imageFileThumb), Uri.fromFile(imageFileThumb));
 
-                        final Conversation.ConversationType type = uiConversation.getConversationType();
                         RongIM.getInstance().sendImageMessage(uiConversation.getConversationType(), uiConversation.getConversationTargetId(), imgMsg, null, null, new RongIMClient.SendImageMessageCallback() {
 
                             @Override
@@ -169,6 +168,7 @@ public class ConversationListsFragment extends BaseFragment {
                             @Override
                             public void onError(Message message, RongIMClient.ErrorCode code) {
                                 //发送失败
+                                Log.e("code", code.getMessage());
                             }
 
                             @Override

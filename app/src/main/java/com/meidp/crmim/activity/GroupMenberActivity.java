@@ -51,7 +51,6 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
     public void onInit() {
         title.setText("群成员");
         mListView.setMode(PullToRefreshBase.Mode.BOTH);
-
         mTargetId = getIntent().getStringExtra("mTargetId");
         Log.e("mTargetId", mTargetId);
         mDatas = new ArrayList<>();
@@ -85,22 +84,26 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
         });
     }
 
-
-    @Event({R.id.back_arrows, R.id.right_img, R.id.reset_name})
+    @Event({R.id.back_arrows, R.id.right_img})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
                 break;
             case R.id.right_img:
+
+                ArrayList<String> userIds = new ArrayList<>();
+
+                for (int i = 0; i < mDatas.size(); i++) {
+                    userIds.add(Integer.toString(mDatas.get(i).getUserID()));
+                }
+
                 Log.e("discussionId", "discussionId>>>>>>>>" + mTargetId);
                 Intent intent = new Intent(this, NewGroupActivity.class);
                 intent.putExtra("discussionId", mTargetId);
+                intent.putStringArrayListExtra("userIds",userIds);
                 intent.putExtra("GroupName", groupName);
                 startActivityForResult(intent, 1023);
-                break;
-            case R.id.reset_name:
-
                 break;
         }
     }

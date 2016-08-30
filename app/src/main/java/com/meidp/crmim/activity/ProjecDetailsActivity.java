@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.meidp.crmim.R;
+import com.meidp.crmim.adapter.ProgressAdapter;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppBean;
@@ -23,9 +24,9 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 项目详情
@@ -71,6 +72,11 @@ public class ProjecDetailsActivity extends BaseActivity {
     private TextView departmentName;
     @ViewInject(R.id.positions_name)
     private TextView positionsName;
+    @ViewInject(R.id.process_listview)
+    private ListView processListview;
+    private List<ProjectDetails.ProcessListBean> processListBeanList;
+
+    private ProgressAdapter progressAdapter;
 
 
     @ViewInject(R.id.listview)
@@ -84,7 +90,11 @@ public class ProjecDetailsActivity extends BaseActivity {
 
     @Override
     public void onInit() {
-        titleRight.setVisibility(View.VISIBLE);
+
+        processListBeanList = new ArrayList<>();
+        progressAdapter = new ProgressAdapter(processListBeanList, this);
+        processListview.setAdapter(progressAdapter);
+
         titleRight.setText("样机申请");
         title.setText("项目详情");
         oid = getIntent().getIntExtra("OID", -1);
@@ -167,8 +177,8 @@ public class ProjecDetailsActivity extends BaseActivity {
                         mAdapter.notifyDataSetChanged();
                     }
                     //医院
-                    if (NullUtils.isNull(appBean.getData().getCompanyName())) {
-                        companyName.setText(appBean.getData().getCompanyName());
+                    if (NullUtils.isNull(appBean.getData().getCustName())) {
+                        companyName.setText(appBean.getData().getCustName());
                     }
                     //部门
                     if (NullUtils.isNull(appBean.getData().getDepartmentName())) {
@@ -178,6 +188,9 @@ public class ProjecDetailsActivity extends BaseActivity {
                     if (NullUtils.isNull(appBean.getData().getZhiWu())) {
                         positionsName.setText(appBean.getData().getZhiWu());
                     }
+                    //状态列表
+                    processListBeanList.addAll(appBean.getData().getProcessList());
+                    progressAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -232,7 +245,7 @@ public class ProjecDetailsActivity extends BaseActivity {
                 break;
             case R.id.recode_visit:
                 intent = new Intent(ProjecDetailsActivity.this, VisitRecordActivity.class);
-                intent.putExtra("KeyWord",projectNames);
+                intent.putExtra("KeyWord", projectNames);
                 startActivity(intent);
                 break;
         }

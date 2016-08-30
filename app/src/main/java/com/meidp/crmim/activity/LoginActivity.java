@@ -96,7 +96,10 @@ public class LoginActivity extends BaseActivity {
         //自动登录
         boolean isLogin = SPUtils.getLoginTag(this);
         if (isLogin) {
-            login();
+//            login();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 
@@ -185,7 +188,6 @@ public class LoginActivity extends BaseActivity {
     }
 
     /**
-     *
      * @param appBean
      */
     private void saveData(AppBean<User> appBean) {

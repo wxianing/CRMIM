@@ -83,8 +83,13 @@
 
     <string name="rc_notice_network_unavailable">网络连接不可用</string>
     <string name="rc_notice_disconnect">无法连接到服务器</string>
-    <string name="rc_notice_tick">该帐号已经在其他设备登录</string>
     <string name="rc_notice_connecting">正在连接服务器</string>
+    <!--<string name="rc_notice_connecting"></string>-->
+    <!--<string name="rc_notice_network_unavailable"></string>-->
+    <!--<string name="rc_notice_disconnect"></string>-->
+
+    <string name="rc_notice_tick">该帐号已经在其他设备登录</string>
+
     <string name="rc_notice_create_discussion">正在创建讨论组</string>
     <string name="rc_notice_create_discussion_fail">创建讨论组失败</string>
     <string name="rc_notice_enter_chatroom">进入聊天室</string>
@@ -142,7 +147,7 @@
     <string name="rc_cs_evaluate_robot">机器人是否解决了您的问题</string>
     <string name="rc_cs_submit">提交</string>
     <string name="rc_cs_cancel">取消</string>
-    
+
     <!-- PictureSelectorActivity -->
     <string name="rc_picsel_toolbar">图片</string>
     <string name="rc_picsel_toolbar_send">发送</string>

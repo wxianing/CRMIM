@@ -190,4 +190,8 @@ public class Constant {
     public static final String TEAM_LINKMAN_URL = BASE_URL + "office/employee/getpersonallinkmanpagelist";
     //修改密码
     public static final String RESET_PWD_URL = BASE_URL + "systemset/account/updatepassword";
+    //部门职责
+    public static final String DEPARTMENT_DUTY_URL = "http://beaconapi.meidp.com/Mobi/Office/DeptInfo?UserId=1&sType=1";
+    //部门指标
+    public static final String DEPARTMENT_FUNCTIONS_URL = "http://beaconapi.meidp.com/Mobi/Office/DeptInfo?UserId=1&sType=2";
 }

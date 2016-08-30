@@ -1,0 +1,246 @@
+package com.meidp.crmim.activity;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
+import com.meidp.crmim.R;
+import com.meidp.crmim.http.HttpRequestCallBack;
+import com.meidp.crmim.http.HttpRequestUtils;
+import com.meidp.crmim.model.AppBean;
+import com.meidp.crmim.model.Product;
+import com.meidp.crmim.model.Projects;
+import com.meidp.crmim.utils.Constant;
+import com.meidp.crmim.utils.NullUtils;
+import com.meidp.crmim.utils.ToastUtils;
+import com.meidp.crmim.view.WheelView;
+
+import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
+import org.xutils.view.annotation.ViewInject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
+/**
+ * 申报项目
+ */
+@ContentView(R.layout.activity_submission)
+public class SubmissionActivity extends BaseActivity {
+    private static final String[] PLANETS = new String[]{"10", "20", "30", "40", "50", "60", "70", "80", "90", "100"};
+
+    @ViewInject(R.id.title_tv)
+    private TextView title;
+
+    @ViewInject(R.id.hospital)
+    private EditText hospitalEt;
+    private int hospitalId;
+    private String hospitalNames;
+    @ViewInject(R.id.project_area)
+    private EditText projectArea;
+    @ViewInject(R.id.edittext_total_price)
+    private EditText projectTotalPriceEt;
+    @ViewInject(R.id.department_name)
+    private EditText departmentNameEt;
+    @ViewInject(R.id.count_et)
+    private EditText countEt;
+    private ArrayList<Product> products;
+    private int productID;
+    @ViewInject(R.id.type_select)
+    private EditText typeSelect;
+
+    private String productName;
+    private String projectName;
+
+    private List<Product> prototypes;
+    private String custContact;
+    private Projects projects;
+    private int projectDirectionId;
+
+
+    @ViewInject(R.id.direction)
+    private TextView directionEt;
+
+
+    private String empolyeeId;
+    private ArrayList<String> userIds;
+    @ViewInject(R.id.related_personnel)
+    private EditText relatedPersonnel;
+    private double rate = 10;
+
+    @ViewInject(R.id.edittext_success_rate)
+    private EditText projectSuccessRateEt;
+    @ViewInject(R.id.edittext_project_name)
+    private EditText projectNameEt;
+    private String contactPhone;
+    private int custContactId;
+
+    @Override
+    public void onInit() {
+        title.setText("申报项目");
+        prototypes = new ArrayList<>();
+        custContactId = getIntent().getIntExtra("custContactId", 0);
+        contactPhone = getIntent().getStringExtra("contactPhone");
+        custContact = getIntent().getStringExtra("custContact");
+    }
+
+    @Event({R.id.save_btn, R.id.back_arrows, R.id.hospital, R.id.edittext_project_name, R.id.direction, R.id.type_select, R.id.related_personnel, R.id.edittext_success_rate})
+    private void onClick(View v) {
+        Intent intent = null;
+        switch (v.getId()) {
+            case R.id.back_arrows:
+                finish();
+                break;
+            case R.id.hospital:
+                intent = new Intent(this, HospitalListActivity.class);
+                startActivityForResult(intent, 1012);
+                break;
+            case R.id.edittext_project_name:
+                intent = new Intent(this, ProjectManagerActivity.class);
+                intent.putExtra("FLAG", "Apply");
+                startActivityForResult(intent, 1004);
+                break;
+            case R.id.direction:
+                intent = new Intent(this, ProjectDirectionActivity.class);
+                startActivityForResult(intent, 1016);
+                break;
+            case R.id.type_select:
+                intent = new Intent(this, ProduceCenterActivity.class);
+                startActivityForResult(intent, 1009);
+                break;
+            case R.id.related_personnel:
+                intent = new Intent(this, SelectEmpolyeeActivity.class);
+                startActivityForResult(intent, 1013);
+                break;
+            case R.id.edittext_success_rate:
+                View outerView = LayoutInflater.from(this).inflate(R.layout.wheel_view, null);
+                WheelView wv = (WheelView) outerView.findViewById(R.id.wheel_view_wv);
+                wv.setOffset(1);
+                wv.setItems(Arrays.asList(PLANETS));
+                wv.setSeletion(0);
+                wv.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+                    @Override
+                    public void onSelected(int selectedIndex, String item) {
+                        rate = Double.valueOf(item) / 100;
+                        projectSuccessRateEt.setText(item + "%");
+                    }
+                });
+                new AlertDialog.Builder(this)
+                        .setTitle("请选择成功率(%)")
+                        .setView(outerView)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+//                                Toast.makeText(SubmitActivity.this, ">>>>>>>>", Toast.LENGTH_SHORT).show();
+                            }
+                        }).show();
+                break;
+            case R.id.save_btn://保存项目
+                sendMsg();
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (resultCode) {
+            case 1012:
+                String hospitalName = data.getStringExtra("CustName");
+                String hospitalNO = data.getStringExtra("CustNo");
+                hospitalId = data.getIntExtra("CustId", 0);
+                hospitalEt.setText(hospitalName);
+                break;
+            case 1009:
+                products = (ArrayList<Product>) data.getSerializableExtra("Product");
+                productID = data.getIntExtra("ProductID", -1);
+                productName = data.getStringExtra("ProductName");
+                typeSelect.setText(productName);
+
+                break;
+            case 1016:
+                projectDirectionId = data.getIntExtra("ProjectDirectionId", 0);
+                String directionName = data.getStringExtra("ProjectDirectionName");
+                Log.e("projectDirectionId", ">>>>>>>>>>>" + directionName);
+                directionEt.setText(directionName);
+                break;
+            case 1013:
+                empolyeeId = data.getStringExtra("EmpolyeeId");
+                String empolyeeNames = data.getStringExtra("EmpolyeeName");
+                relatedPersonnel.setText(empolyeeNames);
+                userIds = data.getStringArrayListExtra("UserIds");
+                Log.e("empolyeeId", empolyeeId);
+                Log.e("empolyeeName", empolyeeNames);
+                break;
+        }
+    }
+
+    private void sendMsg() {
+        projectName = projectNameEt.getText().toString().trim();
+        String projectAddress = projectArea.getText().toString().trim();
+        String projectTotalPrice = projectTotalPriceEt.getText().toString().trim();
+        String departmentName = departmentNameEt.getText().toString().trim();
+        String count = countEt.getText().toString().trim();
+
+        if (!NullUtils.isNull(projectName)) {
+            ToastUtils.shows(SubmissionActivity.this, "请输入项目名称");
+            return;
+        }
+
+        if (!NullUtils.isNull(departmentName)) {
+            ToastUtils.shows(SubmissionActivity.this, "请输入科室");
+            return;
+        }
+        if (!NullUtils.isNull(count)) {
+            ToastUtils.shows(SubmissionActivity.this, "请输入数量");
+            return;
+        }
+
+        for (int i = 0; i < products.size(); i++) {
+            Product product = new Product();
+            product.setProductCount(Double.valueOf(count));
+            product.setProductName(products.get(i).getProductName());
+            product.setProductID(products.get(i).getProductID());
+            prototypes.add(product);
+        }
+        HashMap params = new HashMap();
+
+        params.put("ProjectName", projectName);//项目名称
+        params.put("Address", projectAddress);//项目地址
+        params.put("CustLinkMan", custContact);//客户联系人
+        params.put("CustLinkTel", contactPhone);//客户号码
+        params.put("Investment", 0);//总价钱
+        params.put("SuccessRate", rate);//成功率
+        params.put("CanViewUser", empolyeeId);//相关人员
+        params.put("ProjectDirectionId", projectDirectionId);
+        params.put("CustLinkManId", custContactId);
+        params.put("CustID", hospitalId);//医院
+        params.put("DepartmentName", departmentName);//科室
+        params.put("Details", prototypes);//机型
+
+        HttpRequestUtils.getmInstance().send(SubmissionActivity.this, Constant.SAVE_PROJECT, params, new HttpRequestCallBack<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        AppBean<Projects> appBean = JSONObject.parseObject(result, new TypeReference<AppBean<Projects>>() {
+                        });
+                        if (appBean != null && appBean.getEnumcode() == 0) {
+                            Intent intent = new Intent();
+                            setResult(1028,intent);
+                            Log.e("保存成功", result);
+                            finish();
+                        }
+                    }
+                }
+        );
+    }
+}

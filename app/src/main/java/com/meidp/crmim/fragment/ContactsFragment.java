@@ -13,6 +13,7 @@ import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -80,6 +81,8 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
     @ViewInject(R.id.right_img)
     private ImageView rightImg;
     private PopupWindow mPopupWindow;
+    @ViewInject(R.id.scrollView)
+    private ScrollView scrollView;
 
     public ContactsFragment() {
 
@@ -87,6 +90,7 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
 
     @Override
     public void onInit() {
+        scrollView.smoothScrollTo(0, 20);
         rightImg.setImageResource(R.mipmap.more_icon);
         backImg.setVisibility(View.INVISIBLE);
         title.setText("通讯录");
@@ -99,10 +103,11 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
         mListVeiw.setOnItemClickListener(this);
         contactList = new ArrayList<>();
         expandableAdapter = new ExpandableAdapter(contactList, getActivity());
-        expListView.getRefreshableView().setOnChildClickListener(this);
-        expListView.getRefreshableView().setOnGroupClickListener(this);
-        expListView.getRefreshableView().setAdapter(expandableAdapter);
-        expListView.getRefreshableView().setGroupIndicator(null);
+        expListView.setOnChildClickListener(this);
+        expListView.setOnGroupClickListener(this);
+        expListView.setAdapter(expandableAdapter);
+        expListView.setGroupIndicator(null);//去掉箭头
+        expListView.setFocusable(false);
     }
 
     @Override
@@ -119,7 +124,7 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
                 contactList.addAll(appBean.getData());
                 expandableAdapter.notifyDataSetChanged();
                 for (int i = 0; i < contactList.size(); i++) {
-                    expListView.getRefreshableView().expandGroup(i);//默认展开选项
+                    expListView.expandGroup(i);//默认展开选项
                 }
             }
         } else {
@@ -139,7 +144,7 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
                     contactList.addAll(appBean.getData());
                     expandableAdapter.notifyDataSetChanged();
                     for (int i = 0; i < contactList.size(); i++) {
-                        expListView.getRefreshableView().expandGroup(i);//默认展开选项
+                        expListView.expandGroup(i);//默认展开选项
                     }
                 }
             }

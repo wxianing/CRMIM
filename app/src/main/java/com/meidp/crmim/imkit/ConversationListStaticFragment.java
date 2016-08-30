@@ -92,6 +92,10 @@ public class ConversationListStaticFragment extends BaseFragment {
 
     @Override
     public void onInit() {
+        String token = (String) SPUtils.get(getActivity(), "TOEKN", "");
+        if (RongIM.getInstance() == null) {
+            IMkitConnectUtils.connect(token, getActivity());
+        }
         rightImg.setImageResource(R.mipmap.more_icon);
         backImg.setVisibility(View.INVISIBLE);
         title.setText("消息");
@@ -122,25 +126,24 @@ public class ConversationListStaticFragment extends BaseFragment {
     }
 
 
-
     private class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
+        String token = (String) SPUtils.get(getActivity(), "TOKEN", "");
 
         @Override
         public void onChanged(ConnectionStatus connectionStatus) {
             switch (connectionStatus) {
 
                 case CONNECTED://连接成功。
-
                     break;
                 case DISCONNECTED://断开连接。
-                    String token = (String) SPUtils.get(getActivity(), "TOKEN", "");
+
                     IMkitConnectUtils.connect(token, getActivity());
                     break;
                 case CONNECTING://连接中。
-
+                    IMkitConnectUtils.connect(token, getActivity());
                     break;
                 case NETWORK_UNAVAILABLE://网络不可用。
-
+                    IMkitConnectUtils.connect(token, getActivity());
                     break;
                 case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
 
@@ -253,7 +256,6 @@ public class ConversationListStaticFragment extends BaseFragment {
         mPopupWindow.setContentView(popupView);
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
     }
-
 
 
 }

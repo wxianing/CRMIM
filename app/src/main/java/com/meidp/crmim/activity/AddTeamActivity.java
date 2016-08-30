@@ -98,10 +98,10 @@ public class AddTeamActivity extends BaseActivity implements ExpandableListView.
 //        mListVIew.setOnItemClickListener(this);
         contactList = new ArrayList<>();
 //        expandableAdapter = new ExpanListAdapter(contactList, this);
-        expListView.getRefreshableView().setOnChildClickListener(this);
-        expListView.getRefreshableView().setOnGroupClickListener(this);
-        expListView.getRefreshableView().setAdapter(expandableAdapter);
-        expListView.getRefreshableView().setGroupIndicator(null);
+        expListView.setOnChildClickListener(this);
+        expListView.setOnGroupClickListener(this);
+        expListView.setAdapter(expandableAdapter);
+        expListView.setGroupIndicator(null);
     }
 
     @Override
@@ -117,7 +117,7 @@ public class AddTeamActivity extends BaseActivity implements ExpandableListView.
                     contactList.clear();
                     contactList.addAll(appBean.getData());
                     expandableAdapter = new TeamExpanAdapter(contactList, AddTeamActivity.this);
-                    expListView.getRefreshableView().setAdapter(expandableAdapter);
+                    expListView.setAdapter(expandableAdapter);
                     if (userLists != null && !userLists.isEmpty()) {
                         for (int i = 0; i < userLists.size(); i++) {
                             TeamExpanAdapter.getIsSelected().put(userLists.get(i).getEmployeeId(), true);//默认吧原理已经有的成员选中
@@ -126,7 +126,7 @@ public class AddTeamActivity extends BaseActivity implements ExpandableListView.
                     }
                     expandableAdapter.notifyDataSetChanged();
                     for (int i = 0; i < contactList.size(); i++) {
-                        expListView.getRefreshableView().expandGroup(i);//默认展开选项
+                        expListView.expandGroup(i);//默认展开选项
                     }
                 }
             }

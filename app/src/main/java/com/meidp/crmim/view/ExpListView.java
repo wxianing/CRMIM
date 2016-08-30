@@ -12,17 +12,13 @@ import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
  * 作  用：
  * 时  间： 2016/8/10
  */
-public class ExpListView extends PullToRefreshExpandableListView {
+public class ExpListView extends ExpandableListView {
     public ExpListView(Context context) {
         super(context);
     }
 
     public ExpListView(Context context, AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    public ExpListView(Context context, Mode mode) {
-        super(context, mode);
     }
 
     @Override

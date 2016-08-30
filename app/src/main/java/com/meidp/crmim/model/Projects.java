@@ -70,6 +70,15 @@ public class Projects implements Serializable {
     private Object IsAppoint;
     private int Status;
     private String StatusName;
+    /**
+     * CustName : 上海市同仁医院
+     * CanViewUser : null
+     * CanViewUserName : null
+     */
+
+    private String CustName;
+    private Object CanViewUser;
+    private Object CanViewUserName;
 
     public int getID() {
         return ID;
@@ -285,5 +294,29 @@ public class Projects implements Serializable {
 
     public void setStatusName(String StatusName) {
         this.StatusName = StatusName;
+    }
+
+    public String getCustName() {
+        return CustName;
+    }
+
+    public void setCustName(String CustName) {
+        this.CustName = CustName;
+    }
+
+    public Object getCanViewUser() {
+        return CanViewUser;
+    }
+
+    public void setCanViewUser(Object CanViewUser) {
+        this.CanViewUser = CanViewUser;
+    }
+
+    public Object getCanViewUserName() {
+        return CanViewUserName;
+    }
+
+    public void setCanViewUserName(Object CanViewUserName) {
+        this.CanViewUserName = CanViewUserName;
     }
 }

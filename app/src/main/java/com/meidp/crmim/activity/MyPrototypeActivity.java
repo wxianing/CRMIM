@@ -67,7 +67,7 @@ public class MyPrototypeActivity extends BaseActivity implements PullToRefreshBa
         params.put("Keyword", keyword);
         params.put("sType", 0);
         params.put("PageIndex", pageIndex);
-        params.put("PageSize", 8);
+        params.put("PageSize", 12);
         HttpRequestUtils.getmInstance().send(MyPrototypeActivity.this, Constant.MY_MODEL_LIST, params, new HttpRequestCallBack<String>() {
             @Override
             public void onSuccess(String result) {
