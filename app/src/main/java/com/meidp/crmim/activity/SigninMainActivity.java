@@ -52,9 +52,11 @@ import com.meidp.crmim.utils.ToastUtils;
 import com.meidp.crmim.view.WheelView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -119,6 +121,7 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
     private String[] PERMISSIONS_CONTACT = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE};
     private int hospitalId;
     private ArrayList<Product> products;
+    private Projects project;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -283,9 +286,8 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
         directionEt.setOnClickListener(this);
         projectSuccessRateEt.setOnClickListener(this);
         projectArea.setOnClickListener(this);
-        relatedPersonnel.setOnClickListener(this);
+//        relatedPersonnel.setOnClickListener(this);//项目关键人
         projectNameEt.setOnClickListener(this);
-
 
         String zhiwu = (String) SPUtils.get(this, "VZhiWu", "");
         custPhone = (String) SPUtils.get(this, "VContact", "");
@@ -301,8 +303,8 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
 
         customeMessage.setOnClickListener(this);
         projRelated.setOnClickListener(this);
-        hospitalEt.setOnClickListener(this);
-
+//        hospitalEt.setOnClickListener(this);
+        projectRelated.setOnClickListener(this);
     }
 
 
@@ -334,7 +336,6 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
         mMapView.onPause();
     }
 
-
     @Override
     public void onReceiveLocation(BDLocation bdLocation) {
         if (bdLocation == null || mMapView == null) {
@@ -353,12 +354,14 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
         longitude = bdLocation.getLongitude();
         addressStr = bdLocation.getAddrStr();
 
-        Log.e("addressStr", ">>>>>>:" + addressStr);
-
         if (NullUtils.isNull(bdLocation.getAddrStr())) {
             mLocalClient.stop();
         }
-        address.setText(bdLocation.getAddrStr());
+        if (NullUtils.isNull(bdLocation.getAddrStr())) {
+            address.setText(bdLocation.getAddrStr());
+        } else {
+            address.setText("定位失败，请检查当前网络连接状态");
+        }
 
         mBaiduMap.setMyLocationData(locData);
         if (isFirstLoc) {
@@ -374,7 +377,8 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
     @ViewInject(R.id.phone_num)
     private EditText phoneNumEt;
     @ViewInject(R.id.hospital_name)
-    private EditText hospitalName;
+    private TextView hospitalName;
+
     @ViewInject(R.id.department)
     private EditText department;
     @ViewInject(R.id.direction)
@@ -435,18 +439,21 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
             if (NullUtils.isNull(custName)) {
                 SPUtils.save(SigninMainActivity.this, "VHospitalName", custName);
             }
+
             zhiwuEt.setText(zhiwu);
             phoneNumEt.setText(custPhone);
             customerName.setText(custContact);
             hospitalName.setText(custName);
             department.setText(departmentString);
 
-            Intent intent = new Intent(SigninMainActivity.this, ProjectSelectActivity.class);
-            intent.putExtra("custContact", custContact);
-            intent.putExtra("custContactId", custContactId);
-
-            intent.putExtra("contactPhone",contactPhone);
-            startActivityForResult(intent, 1025);
+            int tag = data.getIntExtra("SELECTTAG", -1);
+            if (tag == Constant.RESULT_OK) {
+                Intent intent = new Intent(SigninMainActivity.this, ProjectSelectActivity.class);
+                intent.putExtra("custContact", custContact);
+                intent.putExtra("custContactId", custContactId);
+                intent.putExtra("contactPhone", contactPhone);
+                startActivityForResult(intent, 1025);
+            }
 
         } else if (resultCode == 1016) {
             projectDirectionId = data.getIntExtra("ProjectDirectionId", 0);
@@ -468,7 +475,6 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
             String rate = data.getStringExtra("Reta");
             projectSuccessRateEt.setText(rate);
             successRate = Double.valueOf(rate) / 100;
-            Log.e("successRate", ">>>>>>>>" + successRate);
         } else if (resultCode == 1004) {
             projects = (Projects) data.getSerializableExtra("Projects");
             if (projects != null) {
@@ -476,7 +482,11 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
                 projectNameEt.setText(projects.getProjectName());
                 projectTotalPriceEt.setText("" + projects.getInvestment());
                 directionEt.setText(projects.getProjectDirectionName());
-                projectSuccessRateEt.setText(projects.getSuccessRate() * 100 + "%");
+                double d = projects.getSuccessRate() * 100;
+                DecimalFormat df = new java.text.DecimalFormat("#");
+                String result = df.format(d);
+                double floor= Math.floor(d);
+                projectSuccessRateEt.setText(result + "%");
 //                projectArea.setText(projects.get);
             }
         } else if (resultCode == 1012) {
@@ -491,24 +501,30 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
             productName = data.getStringExtra("ProductName");
             typeSelect.setText(productName);
         } else if (resultCode == 1025) {
-            Projects projects = (Projects) data.getSerializableExtra("Projects");
-            if (projects != null) {
-                Log.e("projects", "" + projects.getCustName());
-                projectId = projects.getID();
-                if (NullUtils.isNull(projects.getCustName())) {
-                    hospitalEt.setText(projects.getCustName());
+            project = (Projects) data.getSerializableExtra("Projects");
+            if (project != null) {
+                customeMessage.setVisibility(View.GONE);
+                projectRelated.setVisibility(View.VISIBLE);
+                projRelated.setTextColor(Color.rgb(255, 147, 58));
+                custelated.setTextColor(Color.rgb(40, 40, 40));
+                scrollView.smoothScrollTo(0, 20);//让ScrollView从顶端开始显示
+
+                Log.e("projects", "" + project.getCustName());
+                projectId = project.getID();
+                if (NullUtils.isNull(project.getCustName())) {
+                    hospitalEt.setText(project.getCustName());
                 }
-                if (NullUtils.isNull(projects.getDepartmentName())) {
-                    departmentNameEt.setText(projects.getDepartmentName());
+                if (NullUtils.isNull(project.getDepartmentName())) {
+                    departmentNameEt.setText(project.getDepartmentName());
                 }
-                if (NullUtils.isNull(projects.getProjectName())) {
-                    projectNameEt.setText(projects.getProjectName());
+                if (NullUtils.isNull(project.getProjectName())) {
+                    projectNameEt.setText(project.getProjectName());
                 }
 
-                if (NullUtils.isNull(projects.getProjectDirectionName())) {
-                    directionEt.setText(projects.getProjectDirectionName());
+                if (NullUtils.isNull(project.getProjectDirectionName())) {
+                    directionEt.setText(project.getProjectDirectionName());
                 }
-                projectSuccessRateEt.setText(projects.getSuccessRate() * 100 + "%");
+                projectSuccessRateEt.setText(project.getSuccessRate() * 100 + "%");
             }
         }
     }
@@ -596,6 +612,7 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
         String departmentString = department.getText().toString().trim();
         custName = (String) SPUtils.get(SigninMainActivity.this, "VHospitalName", "");
         custContactId = (int) SPUtils.get(SigninMainActivity.this, "VcustContactId", 0);
+        custPhone = phoneNumEt.getText().toString().trim();
         if (custId == -1) {
             ToastUtils.shows(this, "请选择客户您要拜访的客户");
             return;
@@ -643,7 +660,7 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
     @ViewInject(R.id.project_related)
     private LinearLayout projectRelated;
     @ViewInject(R.id.hospital)
-    private EditText hospitalEt;
+    private TextView hospitalEt;
     @ViewInject(R.id.type_select)
     private EditText typeSelect;
 
@@ -688,36 +705,40 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
                 break;
             case R.id.customer_name:
                 intent = new Intent();
-                intent.setClass(this, CustomerListActivity.class);
+                intent.setClass(this, ContactsActivity.class);
                 intent.putExtra("FLAG", "Apply");
                 startActivityForResult(intent, 1001);
                 break;
-            case R.id.direction:
-                intent = new Intent(this, ProjectDirectionActivity.class);
-                startActivityForResult(intent, 1016);
+            case R.id.direction://项目领域
+//                intent = new Intent(this, ProjectDirectionActivity.class);
+//                startActivityForResult(intent, 1016);
+                intent = new Intent(this, SubmissionActivity.class);
+//                startActivity(intent);
                 break;
             case R.id.edittext_success_rate:
-                View outerView = LayoutInflater.from(this).inflate(R.layout.wheel_view, null);
-                WheelView wv = (WheelView) outerView.findViewById(R.id.wheel_view_wv);
-                wv.setOffset(1);
-                wv.setItems(Arrays.asList(PLANETS));
-                wv.setSeletion(0);
-                wv.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
-                    @Override
-                    public void onSelected(int selectedIndex, String item) {
-                        rate = Double.valueOf(item) / 100;
-                        projectSuccessRateEt.setText(item + "%");
-                    }
-                });
-                new AlertDialog.Builder(this)
-                        .setTitle("请选择成功率(%)")
-                        .setView(outerView)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-//                                Toast.makeText(SubmitActivity.this, ">>>>>>>>", Toast.LENGTH_SHORT).show();
-                            }
-                        }).show();
+//                View outerView = LayoutInflater.from(this).inflate(R.layout.wheel_view, null);
+//                WheelView wv = (WheelView) outerView.findViewById(R.id.wheel_view_wv);
+//                wv.setOffset(1);
+//                wv.setItems(Arrays.asList(PLANETS));
+//                wv.setSeletion(0);
+//                wv.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+//                    @Override
+//                    public void onSelected(int selectedIndex, String item) {
+//                        rate = Double.valueOf(item) / 100;
+//                        projectSuccessRateEt.setText(item + "%");
+//                    }
+//                });
+//                new AlertDialog.Builder(this)
+//                        .setTitle("请选择成功率(%)")
+//                        .setView(outerView)
+//                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+////                                Toast.makeText(SubmitActivity.this, ">>>>>>>>", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }).show();
+                intent = new Intent(this, SubmissionActivity.class);
+//                startActivity(intent);
                 break;
             case R.id.project_area:
                 intent = new Intent(this, CityListActivity.class);
@@ -746,15 +767,34 @@ public class SigninMainActivity extends BaseActivity implements BDLocationListen
 //                intent = new Intent(this, ProjectManagerActivity.class);
 //                intent.putExtra("FLAG", "Apply");
 //                startActivityForResult(intent, 1004);
+                intent = new Intent(this, SubmissionActivity.class);
+//                startActivity(intent);
                 break;
             case R.id.hospital:
                 intent = new Intent(this, HospitalListActivity.class);
                 startActivityForResult(intent, 1012);
                 break;
             case R.id.type_select:
-                intent = new Intent(this, ProduceCenterActivity.class);
-                startActivityForResult(intent, 1009);
+//                intent = new Intent(this, ProduceCenterActivity.class);
+//                startActivityForResult(intent, 1009);
+                intent = new Intent(this, SubmissionActivity.class);
+//                startActivity(intent);
+                break;
+            case R.id.project_related:
+                intent = new Intent(this, SubmissionActivity.class);
+//                startActivity(intent);
                 break;
         }
+    }
+
+    @Event({R.id.remark, R.id.edittext_success_rate, R.id.hospital_layout, R.id.hospital, R.id.department_name, R.id.edittext_project_name, R.id.edittext_project_content, R.id.type_select, R.id.count_et, R.id.date_time})
+    private void click(View v) {
+        Intent intent = new Intent(this, SubmissionActivity.class);
+        Bundle bundle = new Bundle();
+        if (project != null) {
+            bundle.putSerializable("Projects", project);
+        }
+        intent.putExtras(bundle);
+//        startActivity(intent);
     }
 }

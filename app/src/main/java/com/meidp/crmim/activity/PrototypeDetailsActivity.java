@@ -108,7 +108,9 @@ public class PrototypeDetailsActivity extends BaseActivity {
         } else {
             prototypeNameString = "";
         }
-        countString = countString.substring(0, countString.length() - 1);
+        if (NullUtils.isNull(countString) && countString.length() > 0) {
+            countString = countString.substring(0, countString.length() - 1);
+        }
 
         prototypeName.setText("样机名称：" + prototypeNameString);
         count.setText("数量：" + countString);
@@ -131,9 +133,7 @@ public class PrototypeDetailsActivity extends BaseActivity {
         }
 
         String statusNames = appBean.getData().getFlowStatusName();
-        if (statusNames.equals("通过审批")) {
-            saveLayout.setVisibility(View.VISIBLE);
-        }
+
         mDatas.addAll(appBean.getData().getFlowSteps());
         mListView.setAdapter(mAdapter);
 

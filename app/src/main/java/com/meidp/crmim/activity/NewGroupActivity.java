@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.google.gson.Gson;
 import com.meidp.crmim.R;
 import com.meidp.crmim.adapter.CheckedAdapter;
 import com.meidp.crmim.adapter.ExpanListAdapter;
@@ -26,7 +27,9 @@ import com.meidp.crmim.model.AppMsg;
 import com.meidp.crmim.model.Contact;
 import com.meidp.crmim.model.Friends;
 import com.meidp.crmim.utils.Constant;
+import com.meidp.crmim.utils.CustomDialogUtils;
 import com.meidp.crmim.utils.NullUtils;
+import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.utils.ToastUtils;
 import com.meidp.crmim.view.ExpListView;
 
@@ -34,12 +37,14 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Discussion;
 
 @ContentView(R.layout.activity_new_group)
 public class NewGroupActivity extends BaseActivity implements AdapterView.OnItemClickListener, ExpandableListView.OnChildClickListener, ExpandableListView.OnGroupClickListener {
@@ -52,17 +57,13 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
     private List<Friends> mDatas;
     private SelectFriendAdapter mAdapter;
 
-    @ViewInject(R.id.listview)
-    private ListView mListView;
     private int checkNum;
 
     private ArrayList<String> userIds;
     private RongCreateGroupCallBack mCallBack;
     private String groupName;
     private String keyWord = "";
-    @ViewInject(R.id.search_edittext)
-    private EditText searchEditText;
-    @ViewInject(R.id.gridview)
+
     private GridView gridView;
     private CheckedAdapter checkedAdapter;
     private List<Friends> checkedLists;
@@ -76,13 +77,22 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
 
     @ViewInject(R.id.expListView)
     protected ExpListView expListView;
+
     private List<Contact> contactList;
     private ExpanListAdapter expandableAdapter;
     private static HashMap<Integer, Boolean> isSelected;
     private ArrayList<Integer> userIdLists;
 
+    private Gson gson;
+
     @Override
     public void onInit() {
+
+        View headerView = LayoutInflater.from(this).inflate(R.layout.header_new_group_layout, null);
+        gridView = (GridView) headerView.findViewById(R.id.gridview);
+        expListView.addHeaderView(headerView);
+
+        gson = new Gson();
         userIdLists = new ArrayList<>();
         titleRight.setVisibility(View.VISIBLE);
         titleRight.setText("确定");
@@ -129,7 +139,6 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
         expListView.setOnChildClickListener(this);
         expListView.setOnGroupClickListener(this);
         expListView.setGroupIndicator(null);
-
     }
 
     /**
@@ -174,20 +183,58 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
     @Override
     public void onInitData() {
 //        loadData(keyWord);
+        /**
+         * 保存通讯录
+         */
+        String contacts = (String) SPUtils.get(this, "Contacts", "");
+        String cons = (String) SPUtils.get(this, "Contact", "");
+
+        if (NullUtils.isNull(contacts)) {
+            CustomDialogUtils.showProgressDialog(NewGroupActivity.this);
+            AppBeans<Contact> appBean = JSONObject.parseObject(contacts, new TypeReference<AppBeans<Contact>>() {
+            });
+            if (appBean != null && appBean.getEnumcode() == 0) {
+                CustomDialogUtils.cannelProgressDialog();
+                contactList.clear();
+                contactList.addAll(appBean.getData());
+                try {
+                    String contactString = SPUtils.SceneList2String(contactList);
+                    SPUtils.save(NewGroupActivity.this, "Contact", "");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                expandableAdapter = new ExpanListAdapter(contactList, NewGroupActivity.this);
+                expListView.setAdapter(expandableAdapter);
+                expandableAdapter.notifyDataSetChanged();
+                for (int i = 0; i < userIdLists.size(); i++) {
+                    ExpanListAdapter.getIsSelected().put(userIdLists.get(i), true);
+                }
+
+                for (int i = 0; i < contactList.size(); i++) {
+                    expListView.expandGroup(i);//默认展开选项
+                }
+            }
+        } else {
+            loadData();
+        }
+    }
+
+    private void loadData() {
         HttpRequestUtils.getmInstance().send(this, Constant.GET_CONTACTS_URL, null, new HttpRequestCallBack() {
             @Override
-            public void onSuccess(String result) {
+            public void onSuccess(String result) throws IOException {
                 AppBeans<Contact> appBean = JSONObject.parseObject(result, new TypeReference<AppBeans<Contact>>() {
                 });
                 if (appBean != null && appBean.getEnumcode() == 0) {
                     contactList.clear();
                     contactList.addAll(appBean.getData());
+
+                    String contactString = SPUtils.SceneList2String(contactList);
+                    SPUtils.save(NewGroupActivity.this, "Contact", "");
+
                     expandableAdapter = new ExpanListAdapter(contactList, NewGroupActivity.this);
                     expListView.setAdapter(expandableAdapter);
-
-                    for (boolean boo : isSelected.values()) {
-                        Log.e("boo", ">>>>>>>>>" + boo);
-                    }
 
                     for (int i = 0; i < userIdLists.size(); i++) {
                         ExpanListAdapter.getIsSelected().put(userIdLists.get(i), true);
@@ -197,10 +244,80 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
                     for (int i = 0; i < contactList.size(); i++) {
                         expListView.expandGroup(i);//默认展开选项
                     }
-
                 }
             }
         });
+    }
+
+    private class discussionMember extends RongIMClient.ResultCallback<Discussion> {
+        @Override
+        public void onSuccess(Discussion discussion) {
+            List<String> list = discussion.getMemberIdList();
+            for (int i = 0; i < list.size(); i++) {
+                String ids = list.get(i);
+                Log.e("ids", ids);
+                for (int j = 0; j < userIds.size(); j++) {
+                    if (userIds.get(j).equals(ids)) {
+                        userIds.remove(j);
+                    }
+                }
+            }
+            Log.e("suerIds", ">>>>>>>>>>" + userIds.size());
+            RongIM.getInstance().addMemberToDiscussion(discussionId, userIds, new RongIMClient.OperationCallback() {
+                @Override
+                public void onSuccess() {
+                    RongIM.getInstance().getDiscussion(discussionId, new discussionMembers());
+//                            ToastUtils.shows(NewGroupActivity.this, "添加成功");
+                }
+
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+
+                }
+            });
+        }
+
+        @Override
+        public void onError(RongIMClient.ErrorCode errorCode) {
+
+        }
+    }
+
+    private class discussionMembers extends RongIMClient.ResultCallback<Discussion> {
+        @Override
+        public void onSuccess(Discussion discussion) {
+            String userStr = "";
+            List<String> list = discussion.getMemberIdList();
+            for (int i = 0; i < list.size(); i++) {
+                userStr += list.get(i) + ",";
+            }
+            userStr = userStr.substring(0, userStr.length() - 1);//删除最后的，号
+            Log.e("userStr", userStr);
+            HashMap params = new HashMap();
+            params.put("discussionId", discussionId);
+            params.put("discussionName", newGroupNames);
+            params.put("userstrs", userStr);
+            HttpRequestUtils.getmInstance().send(NewGroupActivity.this, Constant.CREATE_GROUP_URL, params, new HttpRequestCallBack<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    AppMsg appMsg = JSONObject.parseObject(result, new TypeReference<AppMsg>() {
+                    });
+                    if (appMsg != null && appMsg.getEnumcode() == 0) {
+//                                        ToastUtils.shows(NewGroupActivity.this, "创建成功");
+                        Intent intent = new Intent();
+                        setResult(1023, intent);
+                        finish();
+                    } else {
+                        ToastUtils.shows(NewGroupActivity.this, appMsg.getMsg());
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onError(RongIMClient.ErrorCode errorCode) {
+
+        }
     }
 
     @Event(value = {R.id.back_arrows, R.id.title_right, R.id.search_btn})
@@ -211,43 +328,7 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
                 break;
             case R.id.title_right:
                 if (NullUtils.isNull(discussionId)) {
-                    RongIM.getInstance().addMemberToDiscussion(discussionId, userIds, new RongIMClient.OperationCallback() {
-                        @Override
-                        public void onSuccess() {
-                            String userStr = "";
-                            for (int i = 0; i < userIds.size(); i++) {
-                                userStr += userIds.get(i) + ",";
-                            }
-                            userStr = userStr.substring(0, userStr.length() - 1);//删除最后的，号
-                            Log.e("userStr", userStr);
-                            HashMap params = new HashMap();
-                            params.put("discussionId", discussionId);
-                            params.put("discussionName", newGroupNames);
-                            params.put("userstrs", userStr);
-                            HttpRequestUtils.getmInstance().send(NewGroupActivity.this, Constant.CREATE_GROUP_URL, params, new HttpRequestCallBack<String>() {
-                                @Override
-                                public void onSuccess(String result) {
-                                    AppMsg appMsg = JSONObject.parseObject(result, new TypeReference<AppMsg>() {
-                                    });
-                                    if (appMsg != null && appMsg.getEnumcode() == 0) {
-//                                        ToastUtils.shows(NewGroupActivity.this, "创建成功");
-                                        Intent intent = new Intent();
-                                        setResult(1023, intent);
-                                        finish();
-                                    } else {
-                                        ToastUtils.shows(NewGroupActivity.this, appMsg.getMsg());
-                                    }
-                                }
-                            });
-//                            ToastUtils.shows(NewGroupActivity.this, "添加成功");
-                        }
-
-                        @Override
-                        public void onError(RongIMClient.ErrorCode errorCode) {
-
-                        }
-                    });
-
+                    RongIM.getInstance().getDiscussion(discussionId, new discussionMember());
                 } else {
                     showDialog();
                 }
@@ -400,8 +481,6 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
             super.onFail(errorCode);
             Log.e("讨论组：", "添加失败" + errorCode.getMessage());
         }
-
-
     }
 
     private void sendMsg(String s, String userStr) {

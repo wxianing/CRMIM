@@ -1,5 +1,7 @@
 package com.meidp.crmim.model;
 
+import com.meidp.crmim.utils.NullUtils;
+
 import java.io.Serializable;
 
 /**
@@ -48,9 +50,28 @@ public class TeamMembers implements Serializable {
     private String Position;
 
     private String CompanyName;
+    /**
+     * LinkmanGroupID : null
+     * Birthday : null
+     * Fax : null
+     * ICQ : null
+     * MSN : null
+     * CompanyWebsite : null
+     * CompanyAddress : null
+     * principalship : null
+     * LinkEmployeeID : 4618
+     * LinkmanType : 1
+     * IsDeleted : null
+     */
+
+    private int LinkEmployeeID;
+    private int LinkmanType;
 
     public String getCompanyName() {
-        return CompanyName;
+        if (NullUtils.isNull(CompanyName)) {
+            return CompanyName;
+        }
+        return "";
     }
 
     public void setCompanyName(String companyName) {
@@ -82,7 +103,10 @@ public class TeamMembers implements Serializable {
     }
 
     public String getLinkmanName() {
-        return LinkmanName;
+        if (NullUtils.isNull(LinkmanName)) {
+            return LinkmanName;
+        }
+        return "";
     }
 
     public void setLinkmanName(String LinkmanName) {
@@ -98,7 +122,10 @@ public class TeamMembers implements Serializable {
     }
 
     public String getMobilePhone() {
-        return MobilePhone;
+        if (NullUtils.isNull(MobilePhone)) {
+            return MobilePhone;
+        }
+        return "";
     }
 
     public void setMobilePhone(String MobilePhone) {
@@ -146,10 +173,29 @@ public class TeamMembers implements Serializable {
     }
 
     public String getPosition() {
-        return Position;
+        if (NullUtils.isNull(Position)) {
+            return Position;
+        }
+        return "";
     }
 
     public void setPosition(String Position) {
         this.Position = Position;
+    }
+
+    public int getLinkEmployeeID() {
+        return LinkEmployeeID;
+    }
+
+    public void setLinkEmployeeID(int LinkEmployeeID) {
+        this.LinkEmployeeID = LinkEmployeeID;
+    }
+
+    public int getLinkmanType() {
+        return LinkmanType;
+    }
+
+    public void setLinkmanType(int LinkmanType) {
+        this.LinkmanType = LinkmanType;
     }
 }

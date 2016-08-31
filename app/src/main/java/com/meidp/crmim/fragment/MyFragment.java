@@ -26,6 +26,7 @@ import com.meidp.crmim.activity.PersonCentorActivity;
 import com.meidp.crmim.activity.ResetPwdActivity;
 import com.meidp.crmim.activity.SigninMainActivity;
 import com.meidp.crmim.activity.SubmitActivity;
+import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.IMkitConnectUtils;
 import com.meidp.crmim.utils.ImageUtils;
 import com.meidp.crmim.utils.NullUtils;
@@ -45,7 +46,7 @@ import io.rong.imlib.RongIMClient;
  * A simple {@link Fragment} subclass.
  */
 @ContentView(R.layout.fragment_my)
-public class MyFragment extends BaseFragment {
+public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     @ViewInject(R.id.title_tv)
     private TextView title;
@@ -83,7 +84,7 @@ public class MyFragment extends BaseFragment {
     }
 
     @Event(value = {R.id.person_center, R.id.logout, R.id.my_group, R.id.about_layout, R.id.reset_password, R.id.header_img, R.id.feedbook, R.id.visit_client, R.id.new_group, R.id.submit_project, R.id.apply_model, R.id.right_img})
-    private void onClick(View v) {
+    private void click(View v) {
         Intent intent = new Intent();
         switch (v.getId()) {
             case R.id.person_center://个人中心
@@ -178,6 +179,7 @@ public class MyFragment extends BaseFragment {
                     MainActivity.mainActivity.finish();
                     MainActivity.mainActivity = null;
                 }
+                RongIM.getInstance().logout();
                 SPUtils.setLoginTag(getActivity(), false);
                 SPUtils.remove(getActivity(), "CODE");
 //                        SPUtils.clear(getActivity());
@@ -237,8 +239,7 @@ public class MyFragment extends BaseFragment {
 
                     break;
                 case DISCONNECTED://断开连接。
-                    String token = (String) SPUtils.get(getActivity(), "TOKEN", "");
-                    IMkitConnectUtils.connect(token, getActivity());//如果连接断开重新连接
+                    IMkitConnectUtils.connect(Constant.getTOKEN(), getActivity());//如果连接断开重新连接
                     break;
                 case CONNECTING://连接中。
 
@@ -260,10 +261,40 @@ public class MyFragment extends BaseFragment {
 
     private void initPopupWindow() {
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.popup_list_layout, null);
-        x.view().inject(this, contentView);
-        mPopupWindow = new PopupWindow(contentView,
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+//        x.view().inject(this, contentView);
+        mPopupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         mPopupWindow.setContentView(contentView);
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+        contentView.findViewById(R.id.visit_client).setOnClickListener(this);
+        contentView.findViewById(R.id.new_group).setOnClickListener(this);
+        contentView.findViewById(R.id.submit_project).setOnClickListener(this);
+        contentView.findViewById(R.id.apply_model).setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = null;
+        switch (v.getId()) {
+            case R.id.visit_client://客户拜访
+                intent = new Intent(getActivity(), SigninMainActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.new_group://新建群组
+                intent = new Intent(getActivity(), NewGroupActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.submit_project://申报项目
+                intent = new Intent(getActivity(), SubmitActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.apply_model:
+                intent = new Intent(getActivity(), ModelMachineApplyActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+        }
     }
 }

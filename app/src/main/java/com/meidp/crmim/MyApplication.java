@@ -59,7 +59,6 @@ public class MyApplication extends Application {
     private RequestQueue mRequestQueue;
     public static String userCode;
     private UserInfo users;
-    private List<UserInfo> mDatas;
 
     @Override
     public void onCreate() {
@@ -75,27 +74,12 @@ public class MyApplication extends Application {
          * 初始化融云
          * io.rong.push 为融云 push 进程名称，不可修改。
          */
-
+//        RongIM.init(this);
         if (NetUtils.isConnected(getApplicationContext())) {
 
             if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext())) ||
                     "io.rong.push".equals(getCurProcessName(getApplicationContext()))) {
                 RongIM.init(this);
-//            String token = (String) SPUtils.get(getApplicationContext(), "TOKEN", "");
-//            if (NullUtils.isNull(token)) {
-//                IMkitConnectUtils.connect(token, getApplicationContext());
-//                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-//                    @Override
-//                    public UserInfo getUserInfo(String userId) {
-//                        Log.e("userInfo", "userInfo正在执行");
-//                        for (int i = 0; i < mDatas.size(); i++) {
-//                            RongIM.getInstance().refreshUserInfoCache(mDatas.get(i));//刷新用户数据
-//                        }
-//                        RongIM.getInstance().refreshUserInfoCache(users);//刷新用户数据
-//                        return findUserById(userId);//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
-//                    }
-//                }, true);
-//            }
             }
         } else {
             ToastUtils.shows(getApplicationContext(), "当前网络不可用，请检查网络");

@@ -90,6 +90,43 @@ public class CheckforApply implements Serializable {
      */
 
     private List<FlowStepsBean> FlowSteps;
+    /**
+     * FlowStatusName : 审批中
+     * CurrStepNo : 0
+     * Details : null
+     * EndDateStr :
+     * OrderNo : XSDD2016080056
+     * BillStatus : 1
+     * OrderDate : 2016-08-23 00:00:00
+     * ProjectID : 78
+     * CheckState : 0
+     * StepNo : 2
+     * Actor : 1879
+     * BillTypeFlag : 5
+     * BillTypeCode : 3
+     * CanViewUser : null
+     * EndDate : null
+     * SendDate : null
+     * CountTotal : 10
+     */
+
+    private String FlowStatusName;
+    private int CurrStepNo;
+    private Object Details;
+    private String EndDateStr;
+    private String OrderNo;
+    private String BillStatus;
+    private String OrderDate;
+    private int ProjectID;
+    private int CheckState;
+    private int StepNo;
+    private int Actor;
+    private int BillTypeFlag;
+    private int BillTypeCode;
+    private Object CanViewUser;
+    private Object EndDate;
+    private Object SendDate;
+    private int CountTotal;
 
     public String getCompanyCD() {
         return CompanyCD;
@@ -329,6 +366,142 @@ public class CheckforApply implements Serializable {
 
     public void setFlowSteps(List<FlowStepsBean> FlowSteps) {
         this.FlowSteps = FlowSteps;
+    }
+
+    public String getFlowStatusName() {
+        return FlowStatusName;
+    }
+
+    public void setFlowStatusName(String FlowStatusName) {
+        this.FlowStatusName = FlowStatusName;
+    }
+
+    public int getCurrStepNo() {
+        return CurrStepNo;
+    }
+
+    public void setCurrStepNo(int CurrStepNo) {
+        this.CurrStepNo = CurrStepNo;
+    }
+
+    public Object getDetails() {
+        return Details;
+    }
+
+    public void setDetails(Object Details) {
+        this.Details = Details;
+    }
+
+    public String getEndDateStr() {
+        return EndDateStr;
+    }
+
+    public void setEndDateStr(String EndDateStr) {
+        this.EndDateStr = EndDateStr;
+    }
+
+    public String getOrderNo() {
+        return OrderNo;
+    }
+
+    public void setOrderNo(String OrderNo) {
+        this.OrderNo = OrderNo;
+    }
+
+    public String getBillStatus() {
+        return BillStatus;
+    }
+
+    public void setBillStatus(String BillStatus) {
+        this.BillStatus = BillStatus;
+    }
+
+    public String getOrderDate() {
+        return OrderDate;
+    }
+
+    public void setOrderDate(String OrderDate) {
+        this.OrderDate = OrderDate;
+    }
+
+    public int getProjectID() {
+        return ProjectID;
+    }
+
+    public void setProjectID(int ProjectID) {
+        this.ProjectID = ProjectID;
+    }
+
+    public int getCheckState() {
+        return CheckState;
+    }
+
+    public void setCheckState(int CheckState) {
+        this.CheckState = CheckState;
+    }
+
+    public int getStepNo() {
+        return StepNo;
+    }
+
+    public void setStepNo(int StepNo) {
+        this.StepNo = StepNo;
+    }
+
+    public int getActor() {
+        return Actor;
+    }
+
+    public void setActor(int Actor) {
+        this.Actor = Actor;
+    }
+
+    public int getBillTypeFlag() {
+        return BillTypeFlag;
+    }
+
+    public void setBillTypeFlag(int BillTypeFlag) {
+        this.BillTypeFlag = BillTypeFlag;
+    }
+
+    public int getBillTypeCode() {
+        return BillTypeCode;
+    }
+
+    public void setBillTypeCode(int BillTypeCode) {
+        this.BillTypeCode = BillTypeCode;
+    }
+
+    public Object getCanViewUser() {
+        return CanViewUser;
+    }
+
+    public void setCanViewUser(Object CanViewUser) {
+        this.CanViewUser = CanViewUser;
+    }
+
+    public Object getEndDate() {
+        return EndDate;
+    }
+
+    public void setEndDate(Object EndDate) {
+        this.EndDate = EndDate;
+    }
+
+    public Object getSendDate() {
+        return SendDate;
+    }
+
+    public void setSendDate(Object SendDate) {
+        this.SendDate = SendDate;
+    }
+
+    public int getCountTotal() {
+        return CountTotal;
+    }
+
+    public void setCountTotal(int CountTotal) {
+        this.CountTotal = CountTotal;
     }
 
     public static class FlowStepsBean implements Serializable{

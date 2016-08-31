@@ -28,6 +28,7 @@ import com.meidp.crmim.activity.LifeNavigationActivity;
 import com.meidp.crmim.activity.ModelMachineApplyActivity;
 import com.meidp.crmim.activity.MyCostingActivity;
 import com.meidp.crmim.activity.MyCreditActivity;
+import com.meidp.crmim.activity.MyCrowdActivity;
 import com.meidp.crmim.activity.MyMakeBargainActivity;
 import com.meidp.crmim.activity.MyPerformanceActivity;
 import com.meidp.crmim.activity.MyPrototypeActivity;
@@ -60,7 +61,7 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 
 @ContentView(R.layout.fragment_home)
-public class HomeFragment extends BaseFragment implements AdapterView.OnItemClickListener {
+public class HomeFragment extends BaseFragment implements AdapterView.OnItemClickListener, View.OnClickListener {
 
     @ViewInject(R.id.title_tv)
     private TextView title;
@@ -89,7 +90,6 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         linearLayout.setFocusableInTouchMode(true);
         linearLayout.requestFocus();
         initPopupWindow();
-
     }
 
 
@@ -147,11 +147,27 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     }
 
 
-    @Event({R.id.department_functions,R.id.department_duty_layout, R.id.my_hardworking_layout, R.id.my_costing, R.id.my_make_bargain, R.id.my_visiting, R.id.open_sea, R.id.exhibition_manager, R.id.approval_manager, R.id.apply_model, R.id.submit_project, R.id.new_group, R.id.visiting_customer, R.id.project_manager, R.id.cost_manager, R.id.prototype_manager, R.id.my_integrity, R.id.life_navigation, R.id.improtment_thing, R.id.knowledge, R.id.right_img, R.id.visit_client})
-    private void onclick(View v) {
+    @Event({R.id.crowd_layout, R.id.department_flow, R.id.important_system, R.id.department_functions, R.id.department_duty_layout, R.id.my_hardworking_layout, R.id.my_costing, R.id.my_make_bargain, R.id.my_visiting, R.id.open_sea, R.id.exhibition_manager, R.id.approval_manager, R.id.apply_model, R.id.submit_project, R.id.new_group, R.id.visiting_customer, R.id.project_manager, R.id.cost_manager, R.id.prototype_manager, R.id.my_integrity, R.id.life_navigation, R.id.improtment_thing, R.id.knowledge, R.id.right_img, R.id.visit_client})
+    private void click(View v) {
         Intent intent = null;
         switch (v.getId()) {
-            case R.id.department_functions:
+            case R.id.crowd_layout://我的一伙人
+                intent = new Intent(getActivity(), MyCrowdActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.department_flow://部门流程
+                intent = new Intent(getActivity(), WebViewActivity.class);
+                intent.putExtra("ClickUrl", Constant.DEPARTMENT_FLOW_URL);
+                intent.putExtra("TITLE", "部门流程");//标题
+                startActivity(intent);
+                break;
+            case R.id.important_system://部门重要制度
+                intent = new Intent(getActivity(), WebViewActivity.class);
+                intent.putExtra("ClickUrl", Constant.DEPARTMENT_SYSTEM_URL);
+                intent.putExtra("TITLE", "部门重要制度");//标题
+                startActivity(intent);
+                break;
+            case R.id.department_functions://部门指标
                 intent = new Intent(getActivity(), WebViewActivity.class);
                 intent.putExtra("ClickUrl", Constant.DEPARTMENT_FUNCTIONS_URL);
                 intent.putExtra("TITLE", "部门指标");//标题
@@ -164,14 +180,14 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 startActivity(intent);
                 break;
             case R.id.my_costing://我的成本
-                intent = new Intent(getActivity(), MyCostingActivity.class);
+                intent = new Intent(getActivity(), CostManagerActivity.class);
                 startActivity(intent);
                 break;
             case R.id.my_make_bargain://我的成交
                 intent = new Intent(getActivity(), MyMakeBargainActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.my_visiting:
+            case R.id.my_visiting://我的拜访
                 intent = new Intent(getActivity(), SigninMainActivity.class);
                 startActivity(intent);
                 break;
@@ -262,10 +278,6 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         }
     }
 
-
-    @ViewInject(R.id.visit_client)
-    private TextView visitClient;
-
     private void showPopupWindow() {
 //        mPopupWindow.showAsDropDown(titlebar );
         mPopupWindow.showAsDropDown(rightImg, 0, 0);
@@ -273,12 +285,43 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     private void initPopupWindow() {
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.popup_list_layout, null);
-        x.view().inject(this, contentView);
-        mPopupWindow = new PopupWindow(contentView,
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+//        x.view().inject(this, contentView);
+        mPopupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         mPopupWindow.setContentView(contentView);
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+        contentView.findViewById(R.id.visit_client).setOnClickListener(this);
+        contentView.findViewById(R.id.new_group).setOnClickListener(this);
+        contentView.findViewById(R.id.submit_project).setOnClickListener(this);
+        contentView.findViewById(R.id.apply_model).setOnClickListener(this);
     }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = null;
+        switch (v.getId()) {
+            case R.id.visit_client://客户拜访
+                intent = new Intent(getActivity(), SigninMainActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.new_group://新建群组
+                intent = new Intent(getActivity(), NewGroupActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.submit_project://申报项目
+                intent = new Intent(getActivity(), SubmitActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.apply_model:
+                intent = new Intent(getActivity(), ModelMachineApplyActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+        }
+    }
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

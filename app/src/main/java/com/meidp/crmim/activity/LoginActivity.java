@@ -133,27 +133,33 @@ public class LoginActivity extends BaseActivity {
             final AppBean<User> appBean = JSONObject.parseObject(resutl, new TypeReference<AppBean<User>>() {
             });
             if (appBean != null && appBean.getEnumcode() == 0) {
-                SPUtils.save(LoginActivity.this, "CODE", appBean.getData().getUserCode());
+
+//                SPUtils.save(LoginActivity.this, "CODE", appBean.getData().getUserCode());
+//                Constant.CODE = appBean.getData().getUserCode();
+                Constant.setCODE(appBean.getData().getUserCode());//保存userCode
+                Constant.setTOKEN(appBean.getData().getRongcloudToken());
                 saveData(appBean);
 
                 headPhotoS = appBean.getData().getPhotoURL();
                 name = appBean.getData().getEmployeeName();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
-
-                IMkitConnectUtils.connect(appBean.getData().getRongcloudToken(), getApplicationContext());
-
-                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-                    @Override
-                    public UserInfo getUserInfo(String userId) {
-                        Log.e("userInfo", "userInfo正在执行");
-                        for (int i = 0; i < mDatas.size(); i++) {
-                            RongIM.getInstance().refreshUserInfoCache(mDatas.get(i));//刷新用户数据
-                        }
-                        RongIM.getInstance().refreshUserInfoCache(users);//刷新用户数据
-                        return findUserById(userId);//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
-                    }
-                }, true);
+                /**
+                 * 融云连接
+                 */
+//                IMkitConnectUtils.connect(appBean.getData().getRongcloudToken(), getApplicationContext());
+//
+//                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+//                    @Override
+//                    public UserInfo getUserInfo(String userId) {
+//                        Log.e("userInfo", "userInfo正在执行");
+//                        for (int i = 0; i < mDatas.size(); i++) {
+//                            RongIM.getInstance().refreshUserInfoCache(mDatas.get(i));//刷新用户数据
+//                        }
+//                        RongIM.getInstance().refreshUserInfoCache(users);//刷新用户数据
+//                        return findUserById(userId);//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
+//                    }
+//                }, true);
                 finish();
             } else {
                 ToastUtils.shows(LoginActivity.this, appBean.getMsg());

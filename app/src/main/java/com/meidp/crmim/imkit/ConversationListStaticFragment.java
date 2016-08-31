@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +26,6 @@ import com.meidp.crmim.activity.SearchMsgActivity;
 import com.meidp.crmim.activity.SecretaryActivity;
 import com.meidp.crmim.activity.SigninMainActivity;
 import com.meidp.crmim.activity.SubmitActivity;
-import com.meidp.crmim.fragment.BaseFragment;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.JPushNoReader;
@@ -34,10 +35,7 @@ import com.meidp.crmim.utils.IMkitConnectUtils;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.SPUtils;
 
-import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.util.HashMap;
 
@@ -52,25 +50,18 @@ import io.rong.imlib.model.Conversation;
  * 作  用：
  * 时  间： 2016/7/11
  */
-@ContentView(R.layout.conversationlist)
-public class ConversationListStaticFragment extends BaseFragment {
+public class ConversationListStaticFragment extends Fragment implements View.OnClickListener {
 
     private static final String ARG_PARAM1 = "KEY";
     private String mParams;
 
-    @ViewInject(R.id.title_tv)
     private TextView title;
-    @ViewInject(R.id.back_arrows)
     private ImageView backImg;
-    @ViewInject(R.id.layout)
     private LinearLayout layout;
 
-    @ViewInject(R.id.right_add)
     private ImageView rightImg;
-    @ViewInject(R.id.curr_time)
     private TextView currTime;
     private PopupWindow mPopupWindow;
-    @ViewInject(R.id.unreader)
     private TextView unreader;
 
     public static ConversationListStaticFragment newInstance(String params) {
@@ -90,12 +81,37 @@ public class ConversationListStaticFragment extends BaseFragment {
         }
     }
 
+    @Nullable
     @Override
-    public void onInit() {
-        String token = (String) SPUtils.get(getActivity(), "TOEKN", "");
-        if (RongIM.getInstance() == null) {
-            IMkitConnectUtils.connect(token, getActivity());
-        }
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.conversationlist, container, false);
+        onInit(view);
+        initEvent(view);
+        return view;
+    }
+
+    private void initEvent(View view) {
+        view.findViewById(R.id.search_edittext).setOnClickListener(this);
+        view.findViewById(R.id.right_add).setOnClickListener(this);
+        view.findViewById(R.id.right_scan).setOnClickListener(this);
+        view.findViewById(R.id.secretary_layout).setOnClickListener(this);
+    }
+
+
+    public void onInit(View view) {
+
+        title = (TextView) view.findViewById(R.id.title_tv);
+        backImg = (ImageView) view.findViewById(R.id.back_arrows);
+        layout = (LinearLayout) view.findViewById(R.id.layout);
+        rightImg = (ImageView) view.findViewById(R.id.right_add);
+        currTime = (TextView) view.findViewById(R.id.curr_time);
+        unreader = (TextView) view.findViewById(R.id.unreader);
+
+
+//        String token = (String) SPUtils.get(getActivity(), "TOEKN", "");
+//        if (RongIM.getInstance() == null) {
+//            IMkitConnectUtils.connect(token, getActivity());
+//        }
         rightImg.setImageResource(R.mipmap.more_icon);
         backImg.setVisibility(View.INVISIBLE);
         title.setText("消息");
@@ -140,10 +156,8 @@ public class ConversationListStaticFragment extends BaseFragment {
                     IMkitConnectUtils.connect(token, getActivity());
                     break;
                 case CONNECTING://连接中。
-                    IMkitConnectUtils.connect(token, getActivity());
                     break;
                 case NETWORK_UNAVAILABLE://网络不可用。
-                    IMkitConnectUtils.connect(token, getActivity());
                     break;
                 case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
 
@@ -152,7 +166,6 @@ public class ConversationListStaticFragment extends BaseFragment {
         }
     }
 
-    @Override
     public void onInitData() {
         HashMap params = new HashMap();
         HttpRequestUtils.getmInstance().send(getActivity(), Constant.JPUSH_NORESDER_URL, params, new HttpRequestCallBack() {
@@ -195,31 +208,27 @@ public class ConversationListStaticFragment extends BaseFragment {
         super.onResume();
     }
 
-    @Event({R.id.search_edittext, R.id.right_add, R.id.right_scan, R.id.secretary_layout, R.id.visit_client, R.id.new_group, R.id.submit_project, R.id.apply_model})
-    private void onClick(View v) {
+    private void showPopupWindow() {
+//        mPopupWindow.showAsDropDown(titlebar );
+        mPopupWindow.showAsDropDown(rightImg, 10, 10);
+    }
+
+    private void initPopupWindow() {
+        View popupView = LayoutInflater.from(getActivity()).inflate(R.layout.popup_list_layout, null);
+//        x.view().inject(this, popupView);
+        mPopupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        mPopupWindow.setContentView(popupView);
+        mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupView.findViewById(R.id.visit_client).setOnClickListener(this);
+        popupView.findViewById(R.id.new_group).setOnClickListener(this);
+        popupView.findViewById(R.id.submit_project).setOnClickListener(this);
+        popupView.findViewById(R.id.apply_model).setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
-            case R.id.search_edittext:
-                intent = new Intent(getActivity(), SearchMsgActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.right_add:
-                if (!mPopupWindow.isShowing()) {
-                    showPopupWindow();
-                } else {
-                    mPopupWindow.dismiss();
-                }
-                break;
-            case R.id.right_scan:
-                intent = new Intent(getActivity(), DimensionCodeActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.secretary_layout:
-//                intent = new Intent(getActivity(), GroupActivity.class);
-//                startActivity(intent);
-                intent = new Intent(getActivity(), SecretaryActivity.class);
-                startActivity(intent);
-                break;
             case R.id.visit_client://客户拜访
                 intent = new Intent(getActivity(), SigninMainActivity.class);
                 startActivity(intent);
@@ -241,21 +250,28 @@ public class ConversationListStaticFragment extends BaseFragment {
                 mPopupWindow.dismiss();
                 break;
 
+            case R.id.search_edittext:
+                intent = new Intent(getActivity(), SearchMsgActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.right_add:
+                if (!mPopupWindow.isShowing()) {
+                    showPopupWindow();
+                } else {
+                    mPopupWindow.dismiss();
+                }
+                break;
+            case R.id.right_scan:
+                intent = new Intent(getActivity(), DimensionCodeActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.secretary_layout:
+//                intent = new Intent(getActivity(), GroupActivity.class);
+//                startActivity(intent);
+                intent = new Intent(getActivity(), SecretaryActivity.class);
+                startActivity(intent);
+                break;
+
         }
     }
-
-    private void showPopupWindow() {
-//        mPopupWindow.showAsDropDown(titlebar );
-        mPopupWindow.showAsDropDown(rightImg, 10, 10);
-    }
-
-    private void initPopupWindow() {
-        View popupView = LayoutInflater.from(getActivity()).inflate(R.layout.popup_list_layout, null);
-        x.view().inject(this, popupView);
-        mPopupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        mPopupWindow.setContentView(popupView);
-        mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-    }
-
-
 }

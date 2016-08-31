@@ -98,9 +98,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         /**
          * 融云登录
          */
-//        if (RongIM.getInstance() == null) {
-            IMkitConnectUtils.connect(token, getApplicationContext());//登录融云
-//        }
+        IMkitConnectUtils.connect(token, getApplicationContext());//登录融云
+
         RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
             @Override
             public UserInfo getUserInfo(String userId) {
@@ -182,12 +181,10 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                     Log.e("融云连接", "断开");
                     break;
                 case CONNECTING://连接中。
-                    IMkitConnectUtils.connect(token, MainActivity.this);
                     Log.e("融云连接", "正在连接");
                     break;
                 case NETWORK_UNAVAILABLE://网络不可用。
                     Log.e("融云连接", "网络不可用");
-                    IMkitConnectUtils.connect(token, MainActivity.this);
                     break;
                 case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
                     Log.e("融云连接", "用户账户在其他设备登录，本机会被踢掉线");

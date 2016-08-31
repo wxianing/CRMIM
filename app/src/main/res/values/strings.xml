@@ -9,4 +9,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="announcement_content">7月3日，中国海事局发表通知，宣布在海南附近一块面积约39000平方英里的海域内所有船只离开，西沙群岛就包括在这片海海域内。美国军舰和飞机将可能在中国人民解放军演习的六天内，不会尊重北京设立的这片临时的所谓南海“禁航区”——从7月5日到11日期间，美国海军学院新闻网站认为。该文认为，中国在西沙群岛附近海域设立禁航区的时机正好在菲律宾提起的国际法庭仲裁结果发表前不久，这是此次演习的敏感问题。</string>
     <string name="open_sea_content">援建希望小学，将改善乡村小学的办学条件，使学生告别危旧、拥挤的校舍，在安全、宽敞、明亮的校园中学习、生活，接受公益理念，促进身心健康，提高学业水平；将带动地方政府对贫困地区基础教育的投入，提高学校管理和教学水平；将唤起全社会对老、少、边、穷地区乡村小学的持续关注与资助热情。</string>
+    <string name="title_activity_add_crowd">AddCrowdActivity</string>
 </resources>

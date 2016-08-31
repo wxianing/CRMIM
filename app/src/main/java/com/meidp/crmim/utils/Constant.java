@@ -1,5 +1,7 @@
 package com.meidp.crmim.utils;
 
+import android.content.Context;
+
 import com.meidp.crmim.MyApplication;
 
 /**
@@ -11,8 +13,36 @@ public class Constant {
 
     public static final String APPID = "102";
 
+
     //    public static final String CODE = SharedPreferencesUtils.getUser(MyApplication.getmInstance()).getCode();
-    public static final String CODE = (String) SPUtils.get(MyApplication.getmInstance(), "CODE", "");
+
+    public static String CODE = "";
+
+    public static String TOKEN = "";
+
+    public static String getTOKEN() {
+        if (NullUtils.isNull(TOKEN)) {
+            return TOKEN;
+        }
+        return (String) SPUtils.get(MyApplication.getmInstance(), "TOKEN", "");
+    }
+
+    public static void setTOKEN(String TOKEN) {
+        Constant.TOKEN = TOKEN;
+        SPUtils.save(MyApplication.getmInstance(), "TOKEN", CODE);
+    }
+
+    public static String getCODE(Context mContext) {
+        if (NullUtils.isNull(CODE)) {
+            return CODE;
+        }
+        return (String) SPUtils.get(mContext, "CODE", "");
+    }
+
+    public static void setCODE(String CODE) {
+        Constant.CODE = CODE;
+        SPUtils.save(MyApplication.getmInstance(), "CODE", CODE);
+    }
 
     public static final String LOGIN_URL = BASE_URL + "systemset/account/login";
 
@@ -32,10 +62,6 @@ public class Constant {
     public static final String PRODUCE_LIST_URL = BASE_URL + "product/home/getproductlist";
     //获取最新版本
     public static final String GET_NEW_VERSION = BASE_URL + "systemset/getlatestversoin";
-    //10010账号token
-//    public static final String TOKEN = "velOrsGsBqFcnNd6sG8PeZWWa9eXtvB/MYH0YpK1Y2AS9IvuDT8GcFYCKKfGIo5xNNNlQ5nV78+DZrYBJbS6VA==";
-
-    public static final String TOKEN = (String) SPUtils.get(MyApplication.getmInstance(), "TOKEN", "");
 
     public static final int RESULTCODE = 1;
     //公告
@@ -194,4 +220,10 @@ public class Constant {
     public static final String DEPARTMENT_DUTY_URL = "http://beaconapi.meidp.com/Mobi/Office/DeptInfo?UserId=1&sType=1";
     //部门指标
     public static final String DEPARTMENT_FUNCTIONS_URL = "http://beaconapi.meidp.com/Mobi/Office/DeptInfo?UserId=1&sType=2";
+    //部门重要制度
+    public static final String DEPARTMENT_SYSTEM_URL = "http://beaconapi.meidp.com/Mobi/Office/DeptInfo?UserId=1&sType=4";
+    //部门流程
+    public static final String DEPARTMENT_FLOW_URL = "http://beaconapi.meidp.com/Mobi/Office/DeptInfo?UserId=1&sType=3";
+    //添加我的一伙人
+    public static final String ADD_CROWD_URL = BASE_URL + "office/employee/personallinkmansavebatch";
 }

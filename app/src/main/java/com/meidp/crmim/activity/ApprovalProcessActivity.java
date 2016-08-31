@@ -134,6 +134,7 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ApprovalProcessActivity.this, StockUpDetailsActivity.class);
                 intent.putExtra("OID", mDatasStockups.get(position).getID());
+                intent.putExtra("StatusName", mDatasStockups.get(position).getCheckStatusName());
                 startActivityForResult(intent, 1019);
             }
         });
@@ -470,6 +471,7 @@ public class ApprovalProcessActivity extends BaseActivity implements AdapterView
             case 2:
                 intent = new Intent(this, StockUpDetailsActivity.class);
                 intent.putExtra("OID", mDatasStockups.get(position - 1).getID());
+                intent.putExtra("StatusNames", mDatasStockups.get(-1).getCheckStatusName());
                 startActivityForResult(intent, 1019);
                 break;
         }

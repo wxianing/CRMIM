@@ -506,6 +506,23 @@ public class ProjectDetails implements Serializable {
         private int orderby;
         private String Msg;
         private String ProcessTime;
+        /**
+         * StatusName :
+         * IsCurrProcess : 0
+         */
+
+        private String StatusName;
+        private int IsCurrProcess;
+        /**
+         * FKId : 0
+         * CodeType : 0
+         * FlagType : 0
+         */
+
+        private int FKId;
+        private int CodeType;
+        private int FlagType;
+
 
         public String getProcessTime() {
             return ProcessTime;
@@ -561,6 +578,46 @@ public class ProjectDetails implements Serializable {
 
         public void setMsg(String Msg) {
             this.Msg = Msg;
+        }
+
+        public String getStatusName() {
+            return StatusName;
+        }
+
+        public void setStatusName(String StatusName) {
+            this.StatusName = StatusName;
+        }
+
+        public int getIsCurrProcess() {
+            return IsCurrProcess;
+        }
+
+        public void setIsCurrProcess(int IsCurrProcess) {
+            this.IsCurrProcess = IsCurrProcess;
+        }
+
+        public int getFKId() {
+            return FKId;
+        }
+
+        public void setFKId(int FKId) {
+            this.FKId = FKId;
+        }
+
+        public int getCodeType() {
+            return CodeType;
+        }
+
+        public void setCodeType(int CodeType) {
+            this.CodeType = CodeType;
+        }
+
+        public int getFlagType() {
+            return FlagType;
+        }
+
+        public void setFlagType(int FlagType) {
+            this.FlagType = FlagType;
         }
     }
 }

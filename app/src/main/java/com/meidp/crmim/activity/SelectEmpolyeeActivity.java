@@ -50,7 +50,6 @@ public class SelectEmpolyeeActivity extends BaseActivity implements ExpandableLi
 
     private String keyWord = "";
 
-    @ViewInject(R.id.gridview)
     private GridView gridView;
     private CheckedAdapter checkedAdapter;
     private List<Friends> checkedLists;//选中列表
@@ -59,7 +58,6 @@ public class SelectEmpolyeeActivity extends BaseActivity implements ExpandableLi
     private List<String> userIds;
 
     private int checkNum;
-    @ViewInject(R.id.otherPerson)
     private EditText otherPersonEt;
 
     private SelectFriendAdapter.ViewHolder holder;
@@ -78,6 +76,11 @@ public class SelectEmpolyeeActivity extends BaseActivity implements ExpandableLi
 
     @Override
     public void onInit() {
+        View headerView = LayoutInflater.from(this).inflate(R.layout.header_new_group_layout, null);
+        headerView.findViewById(R.id.remark).setVisibility(View.GONE);
+        gridView = (GridView) headerView.findViewById(R.id.gridview);
+        expListView.addHeaderView(headerView);
+
         titleRight.setText("确定");
         titleRight.setVisibility(View.VISIBLE);
         title.setText("添加团队成员");

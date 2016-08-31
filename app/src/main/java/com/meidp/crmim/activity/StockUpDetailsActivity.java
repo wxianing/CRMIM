@@ -57,11 +57,13 @@ public class StockUpDetailsActivity extends BaseActivity {
 
     private StockFollowAdapter mAdapter;
     private String billNo;
+    private String statusName;
 
     @Override
     public void onInit() {
         title.setText("备货详情");
         oid = getIntent().getIntExtra("OID", 0);
+        statusName = getIntent().getStringExtra("StatusName");
         mDatas = new ArrayList<>();
         mAdapter = new StockFollowAdapter(mDatas, this);
         mListView.setAdapter(mAdapter);

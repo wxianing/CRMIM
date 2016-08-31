@@ -2,6 +2,8 @@ package com.meidp.crmim.http;
 
 import org.xutils.common.Callback;
 
+import java.io.IOException;
+
 /**
  * Package：com.meidp.crmim.http
  * 作  用：
@@ -11,7 +13,7 @@ import org.xutils.common.Callback;
 
 public abstract class HttpRequestCallBack<ResultType> {
 
-    public abstract void onSuccess(String result);
+    public abstract void onSuccess(String result) throws IOException;
 
     public void onSuccess(ResultType result) {
     }

@@ -101,9 +101,10 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
                 Log.e("discussionId", "discussionId>>>>>>>>" + mTargetId);
                 Intent intent = new Intent(this, NewGroupActivity.class);
                 intent.putExtra("discussionId", mTargetId);
-                intent.putStringArrayListExtra("userIds",userIds);
+                intent.putStringArrayListExtra("userIds", userIds);
                 intent.putExtra("GroupName", groupName);
                 startActivityForResult(intent, 1023);
+                userIds.clear();
                 break;
         }
     }

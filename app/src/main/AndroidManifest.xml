@@ -316,7 +316,9 @@
         <activity android:name=".activity.MyCostingActivity" />
         <activity android:name=".activity.TranActivity" />
         <activity android:name=".activity.ProjectSelectActivity" />
-        <activity android:name=".activity.SubmissionActivity"></activity>
+        <activity android:name=".activity.SubmissionActivity" />
+        <activity android:name=".activity.ImportantSystemActivity" />
+        <activity android:name=".activity.MyCrowdActivity" />
+        <activity android:name=".activity.AddCrowdActivity" />
     </application>
-
 </manifest>

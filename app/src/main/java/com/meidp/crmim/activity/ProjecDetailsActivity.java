@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -19,6 +21,7 @@ import com.meidp.crmim.model.ProjectDetails;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.ToastUtils;
+import com.meidp.crmim.view.ListViewForScrollView;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -65,7 +68,7 @@ public class ProjecDetailsActivity extends BaseActivity {
     @ViewInject(R.id.related_personnel)
     private TextView relatedPersonnel;
     @ViewInject(R.id.follow_layout)
-    private LinearLayout follow_layout;
+    private RelativeLayout follow_layout;
     @ViewInject(R.id.company_name)
     private TextView companyName;
     @ViewInject(R.id.department_name)
@@ -73,15 +76,16 @@ public class ProjecDetailsActivity extends BaseActivity {
     @ViewInject(R.id.positions_name)
     private TextView positionsName;
     @ViewInject(R.id.process_listview)
-    private ListView processListview;
+    private ListViewForScrollView processListview;
     private List<ProjectDetails.ProcessListBean> processListBeanList;
 
     private ProgressAdapter progressAdapter;
 
-
     @ViewInject(R.id.listview)
     private ListView mListView;
     private FollowAdapter mAdapter;
+    @ViewInject(R.id.scrollView)
+    private ScrollView scrollView;
 
     private ArrayList<ProjectDetails.ConstructionDetailsBean> mDatas;
 
@@ -90,7 +94,7 @@ public class ProjecDetailsActivity extends BaseActivity {
 
     @Override
     public void onInit() {
-
+        scrollView.smoothScrollTo(0, 20);
         processListBeanList = new ArrayList<>();
         progressAdapter = new ProgressAdapter(processListBeanList, this);
         processListview.setAdapter(progressAdapter);
@@ -139,7 +143,7 @@ public class ProjecDetailsActivity extends BaseActivity {
                     } else {
                         projectNum.setText("项目编号：");
                     }
-                    if (NullUtils.isNull(appBean.getData().getCustLinkMan())) {
+                    if (NullUtils.isNull(appBean.getData().getCustLinkMan()) && !appBean.getData().getCustLinkMan().equals("待定")) {
                         projectLinkname.setText("联系人：" + appBean.getData().getCustLinkMan());
                     } else {
                         projectLinkname.setText("联系人：");
@@ -227,10 +231,11 @@ public class ProjecDetailsActivity extends BaseActivity {
                 });
                 break;
             case R.id.follow_btn:
-                intent = new Intent();
-                intent.setClass(this, FollowProjectActivity.class);
-                intent.putExtra("OID", oid);
-                startActivity(intent);
+                finish();
+//                intent = new Intent();
+//                intent.setClass(this, FollowProjectActivity.class);
+//                intent.putExtra("OID", oid);
+//                startActivity(intent);
                 break;
 //            case R.id.follow_layout:
 //                if (mDatas != null && !mDatas.isEmpty()) {

@@ -19,11 +19,18 @@ public class BaseActivity extends AppCompatActivity {
         x.view().inject(this);
         onInit();
         onInitData();
+        onInitEvent();
     }
 
     public void onInit() {
+
     }
 
     public void onInitData() {
+
+    }
+
+    public void onInitEvent() {
+
     }
 }

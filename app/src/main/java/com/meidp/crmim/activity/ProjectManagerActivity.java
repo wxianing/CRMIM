@@ -73,7 +73,7 @@ public class ProjectManagerActivity extends BaseActivity implements PullToRefres
 
     @Override
     public void onInitData() {
-//        loadData(pageIndex);
+        loadData(pageIndex);
     }
 
     private int sType3 = -1;
@@ -140,7 +140,7 @@ public class ProjectManagerActivity extends BaseActivity implements PullToRefres
                 startActivity(intent);
                 break;
             case R.id.right_img:
-                intent = new Intent(this, SubmitActivity.class);
+                intent = new Intent(this, SubmissionActivity.class);
                 startActivity(intent);
                 break;
         }
@@ -209,8 +209,8 @@ public class ProjectManagerActivity extends BaseActivity implements PullToRefres
     @Override
     protected void onResume() {
         super.onResume();
-        mDatas.clear();
-        loadData(pageIndex);
+//        mDatas.clear();
+//        loadData(pageIndex);
     }
 
     @Override

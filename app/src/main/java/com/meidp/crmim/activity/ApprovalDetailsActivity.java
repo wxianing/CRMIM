@@ -88,7 +88,10 @@ public class ApprovalDetailsActivity extends BaseActivity {
             titleName.setText("标题：" + appBean.getData().getTitle());
         }
         if (NullUtils.isNull(appBean.getData().getFlowStatusName())) {
-            currStatus.setText("状态：" + appBean.getData().getFlowStatusName());
+
+        }
+        if (checkforApply != null) {
+            currStatus.setText("状态：" + checkforApply.getCheckStatusName());
         }
         String produceNames = "";
         if (!appBean.getData().getDetails().isEmpty()) {

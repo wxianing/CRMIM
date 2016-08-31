@@ -84,7 +84,9 @@ public class ApprovalCostDetailActivity extends BaseActivity {
 
     private void bindView(AppBean<CostDetails> appBean) {
         int status = Integer.valueOf(appBean.getData().getStatus());
-        currStatus.setText(appBean.getData().getFlowStatusName());
+        if (approvalCosts != null) {
+            currStatus.setText(approvalCosts.getCheckStatusName());
+        }
         titleName.setText(appBean.getData().getTitle());
         projectName.setText("项目名：" + appBean.getData().getProjectName());
 //        custName.setText("客户名：" + appBean.getData().getC);

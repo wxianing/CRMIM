@@ -12,6 +12,7 @@
         layout="@layout/titlebar" />
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/title_bar"
@@ -228,7 +229,7 @@
                     android:textColor="#FF953E" />
             </RelativeLayout>
 
-            <ListView
+            <com.meidp.crmim.view.ListViewForScrollView
                 android:id="@+id/process_listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -310,7 +311,6 @@
                 android:text="备注: 无"
                 android:visibility="gone" />
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -342,7 +342,7 @@
                     android:layout_marginRight="@dimen/dp30"
                     android:layout_weight="1"
                     android:background="@drawable/button_shape"
-                    android:text="跟进计划"
+                    android:text="完成"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp16" />
             </LinearLayout>

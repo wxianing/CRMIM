@@ -21,8 +21,8 @@ public class IMkitConnectUtils {
      * @param token
      */
     public static void connect(final String token, final Context mContext) {
-
-        if (NetUtils.isConnected(mContext)) {
+        try {
+            //        if (NetUtils.isConnected(mContext)) {
             if (mContext.getApplicationInfo().packageName.equals(MyApplication.getCurProcessName(mContext.getApplicationContext()))) {
                 /**
                  * IMKit SDK调用第二步,建立与服务器的连接
@@ -55,10 +55,20 @@ public class IMkitConnectUtils {
                     @Override
                     public void onError(RongIMClient.ErrorCode errorCode) {
                         IMkitConnectUtils.connect(token, mContext);
-                        Log.e("RondIMKit", "--融云服务器连接成功" + errorCode);
+                        Log.e("RondIMKit", "--融云服务器连接失败" + errorCode);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode) {
+                        IMkitConnectUtils.connect(token, mContext);
+                        super.onFail(errorCode);
                     }
                 });
+//            }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        //</editor-fold>
     }
 }

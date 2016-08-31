@@ -41,14 +41,14 @@ public class MyTeamActivity extends BaseActivity implements AdapterView.OnItemCl
     @ViewInject(R.id.listview)
     private PullToRefreshListView mListView;
     private List<TeamMembers> mDatas;
-    private TeamMemberAdapter mAdapter;
+    private MyCrowdAdapter mAdapter;
 
     @Override
     public void onInit() {
         title.setText("我发展的团队");
         mListView.setMode(PullToRefreshBase.Mode.BOTH);
         mDatas = new ArrayList<>();
-        mAdapter = new TeamMemberAdapter(mDatas, this);
+        mAdapter = new MyCrowdAdapter(mDatas, this);
         mListView.setAdapter(mAdapter);
         loadData(pageIndex);
         mListView.setOnItemClickListener(this);

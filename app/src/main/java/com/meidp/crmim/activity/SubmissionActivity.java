@@ -91,6 +91,24 @@ public class SubmissionActivity extends BaseActivity {
         custContactId = getIntent().getIntExtra("custContactId", 0);
         contactPhone = getIntent().getStringExtra("contactPhone");
         custContact = getIntent().getStringExtra("custContact");
+
+        Projects projects = (Projects) getIntent().getSerializableExtra("Projects");
+        if (projects != null) {
+            if (NullUtils.isNull(projects.getProjectName())) {
+                hospitalEt.setText(projects.getCustName());
+            }
+            if (NullUtils.isNull(projects.getDepartmentName())){
+                departmentNameEt.setText(projects.getDepartmentName());
+            }
+            if (NullUtils.isNull(projects.getProjectName())){
+                projectNameEt.setText(projects.getProjectName());
+            }
+
+            if (NullUtils.isNull(projects.getProjectDirectionName())){
+                directionEt.setText(projects.getProjectDirectionName());
+            }
+//            if (NullUtils.isNull(projects.getC))
+        }
     }
 
     @Event({R.id.save_btn, R.id.back_arrows, R.id.hospital, R.id.edittext_project_name, R.id.direction, R.id.type_select, R.id.related_personnel, R.id.edittext_success_rate})
@@ -235,7 +253,7 @@ public class SubmissionActivity extends BaseActivity {
                         });
                         if (appBean != null && appBean.getEnumcode() == 0) {
                             Intent intent = new Intent();
-                            setResult(1028,intent);
+                            setResult(1028, intent);
                             Log.e("保存成功", result);
                             finish();
                         }

@@ -14,8 +14,6 @@ import com.meidp.crmim.activity.MainActivity;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.CustomDialogUtils;
 import com.meidp.crmim.utils.NetUtils;
-import com.meidp.crmim.utils.NullUtils;
-import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.utils.ToastUtils;
 
 import org.json.JSONObject;
@@ -25,6 +23,7 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,8 +75,12 @@ public class HttpRequestUtils {
             @Override
             public void onSuccess(String result) {
                 Log.e("HttpResponse", result);
-                mCallBack.onSuccess(result);
-//                CustomDialogUtils.cannelProgressDialog();
+                try {
+                    mCallBack.onSuccess(result);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //                CustomDialogUtils.cannelProgressDialog();
             }
 
             @Override
@@ -89,7 +92,7 @@ public class HttpRequestUtils {
                     String responseMsg = httpEx.getMessage();
                     String errorResult = httpEx.getResult();
                 }
-//                CustomDialogUtils.cannelProgressDialog();
+                //                CustomDialogUtils.cannelProgressDialog();
             }
 
             @Override
@@ -102,6 +105,7 @@ public class HttpRequestUtils {
                 CustomDialogUtils.cannelProgressDialog();
             }
         });
+
     }
 
     /**
@@ -122,7 +126,11 @@ public class HttpRequestUtils {
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                mCallBack.onSuccess(result);
+                try {
+                    mCallBack.onSuccess(result);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 CustomDialogUtils.cannelProgressDialog();
             }
 
@@ -141,6 +149,7 @@ public class HttpRequestUtils {
                 CustomDialogUtils.cannelProgressDialog();
             }
         });
+
     }
 
     /**
@@ -193,7 +202,6 @@ public class HttpRequestUtils {
             public void onLoading(long total, long current, boolean isDownloading) {
                 mCallBack.onLoading(total, current, isDownloading);
             }
-
         });
     }
 
@@ -248,14 +256,20 @@ public class HttpRequestUtils {
     }
 
     public void send(final Context mContext, String url, HashMap params, final HttpRequestCallBack mCallBack) {
-        if (NetUtils.isConnected(mContext)) {
+        if (NetUtils.isConnected(mContext)) {//网络判断
             CustomDialogUtils.showProgressDialog(mContext);
+
             Log.e("addParams:", JSON.toJSONString(params));
+
             final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, JSON.toJSONString(params), new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     Log.e("response", response.toString());
-                    mCallBack.onSuccess(response.toString());
+                    try {
+                        mCallBack.onSuccess(response.toString());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     CustomDialogUtils.cannelProgressDialog();
                 }
             }, new Response.ErrorListener() {
@@ -267,17 +281,14 @@ public class HttpRequestUtils {
                 public Map<String, String> getHeaders() {
                     Map<String, String> headers = new HashMap<String, String>();
                     headers.put("_appId", Constant.APPID);
-                    if (NullUtils.isNull(MainActivity.userCode)) {
-                        headers.put("_code", MainActivity.userCode);
-                    } else {
-                        headers.put("_code", (String) SPUtils.get(mContext, "CODE", ""));
-                    }
+                    headers.put("_code", Constant.getCODE(mContext));
+
                     return headers;
                 }
             };
-
             request.setRetryPolicy(new DefaultRetryPolicy(5000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             MyApplication.getmInstance().addToRequestQueue(request);
+
         } else {
             ToastUtils.shows(mContext, "网络连接不可用");
         }
