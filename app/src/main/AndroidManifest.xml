@@ -4,6 +4,8 @@
     package="com.meidp.crmim">
 
     <!-- 录音 -->
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
@@ -320,5 +322,7 @@
         <activity android:name=".activity.ImportantSystemActivity" />
         <activity android:name=".activity.MyCrowdActivity" />
         <activity android:name=".activity.AddCrowdActivity" />
+        <activity android:name=".activity.DocumentListActivity"></activity>
     </application>
+
 </manifest>

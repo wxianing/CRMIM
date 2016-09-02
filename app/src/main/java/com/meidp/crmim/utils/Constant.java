@@ -226,4 +226,6 @@ public class Constant {
     public static final String DEPARTMENT_FLOW_URL = "http://beaconapi.meidp.com/Mobi/Office/DeptInfo?UserId=1&sType=3";
     //添加我的一伙人
     public static final String ADD_CROWD_URL = BASE_URL + "office/employee/personallinkmansavebatch";
+    //上传文件
+    public static final String UPDATE_DOCUMENTS_URL = BASE_URL + "projects/projectdocsave";
 }

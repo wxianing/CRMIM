@@ -103,7 +103,7 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
         expListView.setOnChildClickListener(this);
         expListView.setOnGroupClickListener(this);
         expListView.setAdapter(expandableAdapter);
-        expListView.setGroupIndicator(null);//去掉箭头
+//        expListView.setGroupIndicator(null);//去掉箭头
         expListView.setFocusable(false);
     }
 
@@ -121,9 +121,9 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
                 contactList.clear();
                 contactList.addAll(appBean.getData());
                 expandableAdapter.notifyDataSetChanged();
-                for (int i = 0; i < contactList.size(); i++) {
-                    expListView.expandGroup(i);//默认展开选项
-                }
+//                for (int i = 0; i < contactList.size(); i++) {
+//                    expListView.expandGroup(i);//默认展开选项
+//                }
             }
         } else {
             loadData();

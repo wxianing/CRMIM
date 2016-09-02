@@ -32,6 +32,7 @@ import com.meidp.crmim.model.JPushNoReader;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.DataUtils;
 import com.meidp.crmim.utils.IMkitConnectUtils;
+import com.meidp.crmim.utils.NetUtils;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.SPUtils;
 
@@ -84,10 +85,13 @@ public class ConversationListStaticFragment extends Fragment implements View.OnC
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//        if (NetUtils.isConnected(getActivity())) {
         View view = inflater.inflate(R.layout.conversationlist, container, false);
         onInit(view);
         initEvent(view);
         return view;
+//        }
+//        return null;
     }
 
     private void initEvent(View view) {

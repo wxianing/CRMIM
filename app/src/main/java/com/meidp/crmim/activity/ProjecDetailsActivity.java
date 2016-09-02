@@ -1,6 +1,8 @@
 package com.meidp.crmim.activity;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -27,6 +29,7 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +40,7 @@ import java.util.List;
 
 @ContentView(R.layout.activity_projec_details)
 public class ProjecDetailsActivity extends BaseActivity {
+
     @ViewInject(R.id.title_right)
     private TextView titleRight;
     @ViewInject(R.id.title_tv)
@@ -95,14 +99,16 @@ public class ProjecDetailsActivity extends BaseActivity {
     @Override
     public void onInit() {
         scrollView.smoothScrollTo(0, 20);
-        processListBeanList = new ArrayList<>();
-        progressAdapter = new ProgressAdapter(processListBeanList, this);
-        processListview.setAdapter(progressAdapter);
 
         titleRight.setText("样机申请");
         title.setText("项目详情");
         oid = getIntent().getIntExtra("OID", -1);
         type = getIntent().getIntExtra("TYPE", -1);
+
+        processListBeanList = new ArrayList<>();
+        progressAdapter = new ProgressAdapter(processListBeanList, this, this, oid);
+        processListview.setAdapter(progressAdapter);
+
         if (type == 1) {
             button.setText("我来跟进");
             followBtn.setVisibility(View.GONE);
@@ -124,6 +130,10 @@ public class ProjecDetailsActivity extends BaseActivity {
 
     @Override
     public void onInitData() {
+        loadData();
+    }
+
+    private void loadData() {
         HashMap params = new HashMap();
         params.put("Id", oid);
         HttpRequestUtils.getmInstance().send(ProjecDetailsActivity.this, Constant.GET_PROJECT_DETAILS, params, new HttpRequestCallBack<String>() {
@@ -248,11 +258,24 @@ public class ProjecDetailsActivity extends BaseActivity {
                 intent = new Intent(ProjecDetailsActivity.this, ModelMachineApplyActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.recode_visit:
+            case R.id.recode_visit://历史拜访
                 intent = new Intent(ProjecDetailsActivity.this, VisitRecordActivity.class);
-                intent.putExtra("KeyWord", projectNames);
+                intent.putExtra("KeyWord", projectNames);//项目名称
+                intent.putExtra("PeojectId",oid);//项目ID
                 startActivity(intent);
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == 1029) {
+            Uri uri = data.getData();
+            String url;
+        } else if (resultCode == 1030) {
+            processListBeanList.clear();
+            loadData();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

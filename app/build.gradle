@@ -8,8 +8,8 @@ android {
         applicationId "com.meidp.crmim"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 3
-        versionName "1.0.2"
+        versionCode 7
+        versionName "1.0.6"
     }
     buildTypes {
         release {
@@ -47,6 +47,5 @@ dependencies {
     compile 'com.android.support:support-v4:23.4.0'
     compile files('libs/zxing.jar')
     compile project(':RongKit')
-    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
 
 }

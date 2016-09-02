@@ -1,6 +1,7 @@
 package com.meidp.crmim.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -31,8 +32,11 @@ import com.meidp.crmim.model.AppBean;
 import com.meidp.crmim.model.User;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.IMkitConnectUtils;
+import com.meidp.crmim.utils.NetUtils;
+import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.PermissionUtils;
 import com.meidp.crmim.utils.SPUtils;
+import com.meidp.crmim.utils.ToastUtils;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
@@ -41,6 +45,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
@@ -68,6 +73,15 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Override
     public void onInit() {
+        if (NetUtils.isConnected(this)) {
+            login();
+        } else {
+            ToastUtils.shows(this, "网络异常");
+            startActivity(new Intent(this, LoginActivity.class));
+            SPUtils.setLoginTag(this, false);
+            finish();
+        }
+
         mDatas = new ArrayList<>();
         String token = (String) SPUtils.get(this, "TOKEN", "");
         mainActivity = this;
@@ -297,5 +311,57 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             finish();
             System.exit(0);
         }
+    }
+
+    private void login() {
+        String userName = (String) SPUtils.get(this, "USERNAME", "");
+        String passWord = (String) SPUtils.get(this, "PASSWORD", "");
+        HashMap params = new HashMap();
+        params.put("UserName", userName);
+        params.put("Password", passWord);
+
+        if (NullUtils.isNull(userName) && NullUtils.isNull(passWord)) {
+            HttpRequestUtils.getmInstance().send(MainActivity.this, Constant.LOGIN_URL, params, new HttpCallBack());
+        } else {
+            ToastUtils.shows(this, "用户名或密码不能为空!");
+        }
+    }
+
+    class HttpCallBack extends HttpRequestCallBack<String> {
+        @Override
+        public void onSuccess(String resutl) {
+            final AppBean<User> appBean = JSONObject.parseObject(resutl, new TypeReference<AppBean<User>>() {
+            });
+            if (appBean != null && appBean.getEnumcode() == 0) {
+                Constant.setCODE(appBean.getData().getUserCode());//保存userCode
+                Constant.setTOKEN(appBean.getData().getRongcloudToken());
+                saveData(appBean);
+            } else {
+                ToastUtils.showl(MainActivity.this, appBean.getMsg());
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                SPUtils.setLoginTag(MainActivity.this, false);
+                finish();
+            }
+        }
+    }
+
+    /**
+     * @param appBean
+     */
+    private void saveData(AppBean<User> appBean) {
+
+        HttpRequestUtils.setUserCode(appBean.getData().getUserCode());
+        SPUtils.save(this, "USERNAME", appBean.getData().getLoginName());
+        SPUtils.save(this, "TOKEN", appBean.getData().getRongcloudToken());
+        SPUtils.save(this, "Mobile", appBean.getData().getMobile());
+        SPUtils.save(this, "EmployeeName", appBean.getData().getEmployeeName());
+        SPUtils.save(this, "DeptName", appBean.getData().getDeptName());
+        if (NullUtils.isNull(appBean.getData().getZhiWu())) {
+            SPUtils.save(this, "ZHIWU", appBean.getData().getZhiWu());
+        }
+        SPUtils.save(this, "PhotoURL", appBean.getData().getPhotoURL());//保存头像
+        SPUtils.setLoginTag(MainActivity.this, true);//自动登录标志
+        String JPushUserId = String.valueOf(appBean.getData().getUserID());
+        JPushInterface.setAliasAndTags(this, JPushUserId, null);
     }
 }

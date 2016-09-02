@@ -120,7 +120,6 @@ public class AddCrowdActivity extends BasicActivity implements AdapterView.OnIte
                 }
             }
         }
-
     }
 
     public void onClick(View v) {

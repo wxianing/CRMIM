@@ -1,11 +1,16 @@
 package com.meidp.crmim.fragment;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -48,7 +53,9 @@ import com.meidp.crmim.model.AppBean;
 import com.meidp.crmim.model.NoReaders;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.IMkitConnectUtils;
+import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.SPUtils;
+import com.meidp.crmim.utils.ToastUtils;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -78,6 +85,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     private TextView uNreader;
 
     public HomeFragment() {
+
     }
 
     @Override
@@ -91,7 +99,6 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         linearLayout.requestFocus();
         initPopupWindow();
     }
-
 
     @Override
     public void onResume() {
@@ -115,7 +122,6 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
              */
             RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
         }
-
     }
 
     /**
@@ -146,11 +152,58 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         }
     }
 
+    /**
+     * 修改群名称
+     */
+    private void showDialog() {
+        final Dialog dialog = new Dialog(getActivity(), R.style.Dialog);
+        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.edittext_dialog, null);
+        TextView titleName = (TextView) contentView.findViewById(R.id.title);
+        final EditText editText = (EditText) contentView.findViewById(R.id.message);
+        titleName.setText("正在开发中");
+        editText.setVisibility(View.GONE);
 
-    @Event({R.id.crowd_layout, R.id.department_flow, R.id.important_system, R.id.department_functions, R.id.department_duty_layout, R.id.my_hardworking_layout, R.id.my_costing, R.id.my_make_bargain, R.id.my_visiting, R.id.open_sea, R.id.exhibition_manager, R.id.approval_manager, R.id.apply_model, R.id.submit_project, R.id.new_group, R.id.visiting_customer, R.id.project_manager, R.id.cost_manager, R.id.prototype_manager, R.id.my_integrity, R.id.life_navigation, R.id.improtment_thing, R.id.knowledge, R.id.right_img, R.id.visit_client})
+        editText.setSelection(editText.getText().length());//把光标移到最后面
+
+        dialog.setContentView(contentView);
+        dialog.setCanceledOnTouchOutside(true);
+        Button negativeButton = (Button) contentView.findViewById(R.id.negativeButton);
+        negativeButton.setClickable(true);
+        negativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        Button positiveButton = (Button) contentView.findViewById(R.id.positiveButton);
+        positiveButton.setClickable(true);
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+            }
+        });
+        Window dialogWindow = dialog.getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        lp.width = 480;
+        dialogWindow.setAttributes(lp);
+        dialog.show();
+    }
+
+    @Event({R.id.level_expertise, R.id.loving_company, R.id.crowd_layout, R.id.department_flow, R.id.important_system, R.id.department_functions, R.id.department_duty_layout, R.id.my_hardworking_layout, R.id.my_costing, R.id.my_make_bargain, R.id.my_visiting, R.id.open_sea, R.id.exhibition_manager, R.id.approval_manager, R.id.apply_model, R.id.submit_project, R.id.new_group, R.id.visiting_customer, R.id.project_manager, R.id.cost_manager, R.id.prototype_manager, R.id.my_integrity, R.id.life_navigation, R.id.improtment_thing, R.id.knowledge, R.id.right_img, R.id.visit_client})
     private void click(View v) {
         Intent intent = null;
         switch (v.getId()) {
+            case R.id.level_expertise://我的专业水平
+                showDialog();
+                break;
+            case R.id.my_hardworking_layout://我的勤奋度
+                showDialog();
+                break;
+            case R.id.loving_company://对公司的热爱
+                showDialog();
+                break;
             case R.id.crowd_layout://我的一伙人
                 intent = new Intent(getActivity(), MyCrowdActivity.class);
                 startActivity(intent);

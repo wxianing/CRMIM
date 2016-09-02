@@ -74,16 +74,11 @@ public class MyApplication extends Application {
          * 初始化融云
          * io.rong.push 为融云 push 进程名称，不可修改。
          */
-//        RongIM.init(this);
-        if (NetUtils.isConnected(getApplicationContext())) {
-
-            if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext())) ||
-                    "io.rong.push".equals(getCurProcessName(getApplicationContext()))) {
-                RongIM.init(this);
-            }
-        } else {
-            ToastUtils.shows(getApplicationContext(), "当前网络不可用，请检查网络");
+        if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext())) ||
+                "io.rong.push".equals(getCurProcessName(getApplicationContext()))) {
+            RongIM.init(this);
         }
+
         userCode = (String) SPUtils.get(this, "CODE", "");
     }
 

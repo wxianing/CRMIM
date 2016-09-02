@@ -2,20 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EFEFF4"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/item_group_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:padding="@dimen/dp10"
-        android:paddingBottom="@dimen/dp10"
-        android:paddingLeft="18dp"
-        android:paddingTop="@dimen/dp10"
-        android:textColor="@color/black"
-        android:textSize="14sp" />
+        android:layout_marginLeft="18dp"
+        android:padding="8dp"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/count"

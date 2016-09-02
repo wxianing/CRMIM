@@ -1,6 +1,7 @@
 package com.meidp.crmim.fragment;
 
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,6 +10,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -92,7 +97,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.logout://退出登录
-                logoutAlertDialog();
+//                logoutAlertDialog();
+                showDialog();
                 break;
             case R.id.my_group:
 //                ToastUtils.shows(getActivity(), "正在开发");
@@ -112,7 +118,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 intent.setClass(getActivity(), PersonCentorActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.feedbook:
+            case R.id.feedbook://意见反馈
                 intent.setClass(getActivity(), FeedbackActivity.class);
                 startActivity(intent);
                 break;
@@ -146,33 +152,33 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
-    public void showAlertDialog() {
+    /**
+     * textview对话框
+     */
+    private void showDialog() {
+        final Dialog dialog = new Dialog(getActivity(), R.style.Dialog);
+        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_textview_layout, null);
+        TextView titleName = (TextView) contentView.findViewById(R.id.title);
+        TextView content = (TextView) contentView.findViewById(R.id.hint_content);
+        titleName.setText("温馨提示");//标题
+        content.setText("是否退出当前账户？");//提示你内容
 
-        CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
-        builder.setMessage("请联系系统管理员修改密码");
-        builder.setTitle("提示");
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
+        dialog.setContentView(contentView);
+        dialog.setCanceledOnTouchOutside(true);
+        Button negativeButton = (Button) contentView.findViewById(R.id.negativeButton);
+        negativeButton.setClickable(true);
+        negativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
                 dialog.dismiss();
             }
         });
-
-        builder.setNegativeButton("取消",
-                new android.content.DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        builder.create().show();
-    }
-
-    public void logoutAlertDialog() {
-
-        CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
-        builder.setMessage("是否退出当前登录账号？");
-        builder.setTitle("温馨提示");
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
+        Button positiveButton = (Button) contentView.findViewById(R.id.positiveButton);
+        positiveButton.setClickable(true);
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), LoginActivity.class);
                 if (MainActivity.mainActivity != null) {
@@ -184,17 +190,15 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 SPUtils.remove(getActivity(), "CODE");
 //                        SPUtils.clear(getActivity());
                 startActivity(intent);
+
                 dialog.dismiss();
             }
         });
-
-        builder.setNegativeButton("取消",
-                new android.content.DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        builder.create().show();
+        Window dialogWindow = dialog.getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+//        lp.width = 480;
+        dialogWindow.setAttributes(lp);
+        dialog.show();
     }
 
     @Override

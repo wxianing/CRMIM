@@ -213,7 +213,6 @@ public class HttpRequestUtils {
         RequestParams params = new RequestParams(url);
         params.addHeader("_appId", Constant.APPID);
         params.addHeader("_code", Constant.CODE);
-        params.addBodyParameter("content-type", "application/json");
         //设置断点续传
         params.setAutoResume(true);
         params.setSaveFilePath(filepath);
@@ -288,9 +287,9 @@ public class HttpRequestUtils {
             };
             request.setRetryPolicy(new DefaultRetryPolicy(5000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             MyApplication.getmInstance().addToRequestQueue(request);
-
         } else {
             ToastUtils.shows(mContext, "网络连接不可用");
+//            return;
         }
     }
 }

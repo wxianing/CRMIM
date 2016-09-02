@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -15,9 +16,12 @@ import com.meidp.crmim.R;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppBean;
+import com.meidp.crmim.model.AppMsg;
+import com.meidp.crmim.model.DocBean;
 import com.meidp.crmim.model.Product;
 import com.meidp.crmim.model.Projects;
 import com.meidp.crmim.utils.Constant;
+import com.meidp.crmim.utils.FileUtils;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.ToastUtils;
 import com.meidp.crmim.view.WheelView;
@@ -26,6 +30,7 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -83,6 +88,11 @@ public class SubmissionActivity extends BaseActivity {
     private EditText projectNameEt;
     private String contactPhone;
     private int custContactId;
+    @ViewInject(R.id.add_doc_img)
+    private ImageView addDocImg;
+    @ViewInject(R.id.document_name)
+    private TextView documentName;
+    private List<DocBean> checkDocLists;
 
     @Override
     public void onInit() {
@@ -97,21 +107,21 @@ public class SubmissionActivity extends BaseActivity {
             if (NullUtils.isNull(projects.getProjectName())) {
                 hospitalEt.setText(projects.getCustName());
             }
-            if (NullUtils.isNull(projects.getDepartmentName())){
+            if (NullUtils.isNull(projects.getDepartmentName())) {
                 departmentNameEt.setText(projects.getDepartmentName());
             }
-            if (NullUtils.isNull(projects.getProjectName())){
+            if (NullUtils.isNull(projects.getProjectName())) {
                 projectNameEt.setText(projects.getProjectName());
             }
 
-            if (NullUtils.isNull(projects.getProjectDirectionName())){
+            if (NullUtils.isNull(projects.getProjectDirectionName())) {
                 directionEt.setText(projects.getProjectDirectionName());
             }
 //            if (NullUtils.isNull(projects.getC))
         }
     }
 
-    @Event({R.id.save_btn, R.id.back_arrows, R.id.hospital, R.id.edittext_project_name, R.id.direction, R.id.type_select, R.id.related_personnel, R.id.edittext_success_rate})
+    @Event({R.id.add_doc_img, R.id.save_btn, R.id.back_arrows, R.id.hospital, R.id.edittext_project_name, R.id.direction, R.id.type_select, R.id.related_personnel, R.id.edittext_success_rate})
     private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -164,7 +174,53 @@ public class SubmissionActivity extends BaseActivity {
                 break;
             case R.id.save_btn://保存项目
                 sendMsg();
+
+
                 break;
+            case R.id.add_doc_img:
+                intent = new Intent(this, DocumentListActivity.class);
+                intent.putExtra("MSG", "adddocuments");
+                startActivityForResult(intent, 1031);
+                break;
+        }
+    }
+
+    private void sendDocMsg(DocBean docBean, int projectId) {
+        try {
+            String fileString = FileUtils.encodeBase64File(docBean.getPath());
+
+            int len = docBean.getPath().lastIndexOf(".");
+            String type = docBean.getPath().substring(len + 1);
+            Log.e("fileString", fileString);
+            Log.e("fileSize", docBean.getSize());
+            Log.e("fileType", type);
+
+            HashMap params = new HashMap();
+            params.put("Base64Data", fileString);
+            params.put("ProjectId", projectId);
+            params.put("ProcessId", 1);
+
+            params.put("FileNames", docBean.getFileName());
+//            params.put("FilePaths", mDagas.get(position).getPath());
+
+            HttpRequestUtils.getmInstance().send(SubmissionActivity.this, Constant.UPDATE_DOCUMENTS_URL, params, new HttpRequestCallBack() {
+                @Override
+                public void onSuccess(String result) throws IOException {
+                    AppMsg appMsg = JSONObject.parseObject(result, new TypeReference<AppMsg>() {
+                    });
+                    if (appMsg != null && appMsg.getEnumcode() == 0) {
+                        Intent intent = new Intent();
+                        setResult(1028, intent);
+                        Log.e("保存成功", result);
+                        finish();
+                    } else {
+                        ToastUtils.shows(SubmissionActivity.this, appMsg.getMsg());
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -200,6 +256,17 @@ public class SubmissionActivity extends BaseActivity {
                 Log.e("empolyeeId", empolyeeId);
                 Log.e("empolyeeName", empolyeeNames);
                 break;
+            case 1031:
+                checkDocLists = (List<DocBean>) data.getSerializableExtra("CheckDocLists");
+                String docNames = "";
+                if (checkDocLists != null && checkDocLists.size() > 0) {
+                    for (int i = 0; i < checkDocLists.size(); i++) {
+                        docNames += checkDocLists.get(i).getFileName() + ";";
+                    }
+                    documentName.setText(docNames);
+                }
+
+                break;
         }
     }
 
@@ -219,6 +286,7 @@ public class SubmissionActivity extends BaseActivity {
             ToastUtils.shows(SubmissionActivity.this, "请输入科室");
             return;
         }
+
         if (!NullUtils.isNull(count)) {
             ToastUtils.shows(SubmissionActivity.this, "请输入数量");
             return;
@@ -252,10 +320,16 @@ public class SubmissionActivity extends BaseActivity {
                         AppBean<Projects> appBean = JSONObject.parseObject(result, new TypeReference<AppBean<Projects>>() {
                         });
                         if (appBean != null && appBean.getEnumcode() == 0) {
-                            Intent intent = new Intent();
-                            setResult(1028, intent);
-                            Log.e("保存成功", result);
-                            finish();
+                            if (checkDocLists != null && checkDocLists.size() > 0) {//如果有文档就上传文档
+                                for (int i = 0; i < checkDocLists.size(); i++) {
+                                    sendDocMsg(checkDocLists.get(i), appBean.getData().getID());
+                                }
+                            } else {//没有文档直接返回
+                                Intent intent = new Intent();
+                                setResult(1028, intent);
+                                Log.e("保存成功", result);
+                                finish();
+                            }
                         }
                     }
                 }

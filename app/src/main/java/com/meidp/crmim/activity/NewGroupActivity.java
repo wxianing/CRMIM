@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.google.gson.Gson;
 import com.meidp.crmim.R;
 import com.meidp.crmim.adapter.CheckedAdapter;
 import com.meidp.crmim.adapter.ExpanListAdapter;
@@ -83,8 +82,6 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
     private static HashMap<Integer, Boolean> isSelected;
     private ArrayList<Integer> userIdLists;
 
-    private Gson gson;
-
     @Override
     public void onInit() {
 
@@ -92,7 +89,6 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
         gridView = (GridView) headerView.findViewById(R.id.gridview);
         expListView.addHeaderView(headerView);
 
-        gson = new Gson();
         userIdLists = new ArrayList<>();
         titleRight.setVisibility(View.VISIBLE);
         titleRight.setText("确定");
@@ -386,7 +382,7 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
         ExpanListAdapter.ChildViewHolder holder = (ExpanListAdapter.ChildViewHolder) v.getTag();
         holder.mCheckBox.toggle();
 
-        SelectFriendAdapter.getIsSelected().put(childPosition, holder.mCheckBox.isChecked());
+        SelectFriendAdapter.getIsSelected().put(contactList.get(groupPosition).getUsers().get(childPosition).getUserID(), holder.mCheckBox.isChecked());
         if (holder.mCheckBox.isChecked() == true) {
             checkNum++;
             userIds.add(Integer.toString(contactList.get(groupPosition).getUsers().get(childPosition).getUserID()));

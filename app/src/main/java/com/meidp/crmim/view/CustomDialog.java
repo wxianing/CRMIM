@@ -114,8 +114,7 @@ public class CustomDialog extends Dialog {
             return this;
         }
 
-        public Builder setNegativeButton(String negativeButtonText,
-                                         DialogInterface.OnClickListener listener) {
+        public Builder setNegativeButton(String negativeButtonText, DialogInterface.OnClickListener listener) {
             this.negativeButtonText = negativeButtonText;
             this.negativeButtonClickListener = listener;
             return this;

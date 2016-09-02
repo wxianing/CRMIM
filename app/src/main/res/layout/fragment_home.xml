@@ -293,6 +293,7 @@
             <include layout="@layout/horizontal_line" />
 
             <LinearLayout
+                android:id="@+id/loving_company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -317,7 +318,7 @@
             <include layout="@layout/horizontal_line" />
 
             <LinearLayout
-
+                android:id="@+id/level_expertise"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"

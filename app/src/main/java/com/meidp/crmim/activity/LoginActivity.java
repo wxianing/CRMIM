@@ -18,6 +18,7 @@ import com.meidp.crmim.model.AppBean;
 import com.meidp.crmim.model.User;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.IMkitConnectUtils;
+import com.meidp.crmim.utils.NetUtils;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.utils.ToastUtils;
@@ -96,10 +97,15 @@ public class LoginActivity extends BaseActivity {
         //自动登录
         boolean isLogin = SPUtils.getLoginTag(this);
         if (isLogin) {
-//            login();
+//            if (NetUtils.isConnected(this)) {
+//                login();
+//            } else {
+//                ToastUtils.shows(this, "网络异常");
+//            }
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
+
         }
     }
 
@@ -127,7 +133,6 @@ public class LoginActivity extends BaseActivity {
     }
 
     class HttpCallBack extends HttpRequestCallBack<String> {
-
         @Override
         public void onSuccess(String resutl) {
             final AppBean<User> appBean = JSONObject.parseObject(resutl, new TypeReference<AppBean<User>>() {

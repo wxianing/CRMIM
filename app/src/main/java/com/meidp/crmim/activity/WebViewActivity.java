@@ -15,6 +15,9 @@ import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppMsg;
 import com.meidp.crmim.utils.Constant;
+import com.meidp.crmim.utils.CustomDialogUtils;
+import com.meidp.crmim.utils.NetUtils;
+import com.meidp.crmim.utils.ToastUtils;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -37,24 +40,26 @@ public class WebViewActivity extends BaseActivity {
         String titleName = getIntent().getStringExtra("TITLE");
         title.setText(titleName);
         String link = getIntent().getStringExtra("ClickUrl");
+        if (NetUtils.isConnected(this)) {
+            WebSettings webSettings = mWebView.getSettings();
+            webSettings.setJavaScriptEnabled(true);
+            //设置可以访问文件
+            webSettings.setAllowFileAccess(true);
+            //设置支持缩放
+            webSettings.setBuiltInZoomControls(true);
+            //加载需要显示的网页
+            mWebView.loadUrl(link);
+            //设置Web视图
+            mWebView.setWebViewClient(new MyWebViewClient());
 
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        //设置可以访问文件
-        webSettings.setAllowFileAccess(true);
-        //设置支持缩放
-        webSettings.setBuiltInZoomControls(true);
-        //加载需要显示的网页
-        mWebView.loadUrl(link);
-        //设置Web视图
-        mWebView.setWebViewClient(new MyWebViewClient());
-
-        oid = getIntent().getIntExtra("OID", -1);
-        sType = getIntent().getIntExtra("sType", -1);
-        if (sType != -1) {
-            sendMsg(sType);
+            oid = getIntent().getIntExtra("OID", -1);
+            sType = getIntent().getIntExtra("sType", -1);
+            if (sType != -1) {
+                sendMsg(sType);
+            }
+        }else {
+            ToastUtils.shows(this, "网络连接不可用");
         }
-
     }
 
     /**
@@ -83,7 +88,6 @@ public class WebViewActivity extends BaseActivity {
         });
     }
 
-
     @Event({R.id.back_arrows})
     private void onClick(View v) {
         switch (v.getId()) {
@@ -98,6 +102,11 @@ public class WebViewActivity extends BaseActivity {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
             return true;
+        }
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            CustomDialogUtils.cannelProgressDialog();
         }
     }
 

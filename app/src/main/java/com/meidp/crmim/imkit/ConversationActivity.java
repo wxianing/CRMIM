@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.text.Selection;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -83,6 +84,9 @@ public class ConversationActivity extends BaseActivity {
     private Conversation.ConversationType mConversationType;
 
 
+    private String titleNameStr;
+
+
     @Override
     public void onInit() {
         activity = this;
@@ -92,9 +96,9 @@ public class ConversationActivity extends BaseActivity {
         titleRight.setVisibility(View.VISIBLE);
         titleRight.setImageResource(R.mipmap.three_dot);
         mTargetId = getIntent().getData().getQueryParameter("targetId");//获取聊天对象的Id
-        String titleName = getIntent().getData().getQueryParameter("title");//获取聊天对象的Id
+        titleNameStr = getIntent().getData().getQueryParameter("title");//获取聊天对象的Id
 
-        title.setText(titleName);
+        title.setText(titleNameStr);
         if (mConversationType.getName().equals("private")) {
             titleRight.setVisibility(View.GONE);
         }
@@ -131,6 +135,11 @@ public class ConversationActivity extends BaseActivity {
         TextView titleName = (TextView) contentView.findViewById(R.id.title);
         final EditText editText = (EditText) contentView.findViewById(R.id.message);
         titleName.setText("请输入群名称");
+
+        if (NullUtils.isNull(titleNameStr))
+            editText.setText(titleNameStr);
+        editText.setSelection(editText.getText().length());//把光标移到最后面
+
         dialog.setContentView(contentView);
         dialog.setCanceledOnTouchOutside(true);
         Button negativeButton = (Button) contentView.findViewById(R.id.negativeButton);

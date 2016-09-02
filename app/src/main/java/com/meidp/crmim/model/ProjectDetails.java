@@ -501,8 +501,8 @@ public class ProjectDetails implements Serializable {
     public static class ProcessListBean implements Serializable {
         private int ProcessId;
         private String ProcessName;
-        private Object FileNames;
-        private Object FilePaths;
+        private String FileNames;
+        private String FilePaths;
         private int orderby;
         private String Msg;
         private String ProcessTime;
@@ -548,19 +548,19 @@ public class ProjectDetails implements Serializable {
             this.ProcessName = ProcessName;
         }
 
-        public Object getFileNames() {
+        public String getFileNames() {
             return FileNames;
         }
 
-        public void setFileNames(Object FileNames) {
+        public void setFileNames(String FileNames) {
             this.FileNames = FileNames;
         }
 
-        public Object getFilePaths() {
+        public String getFilePaths() {
             return FilePaths;
         }
 
-        public void setFilePaths(Object FilePaths) {
+        public void setFilePaths(String FilePaths) {
             this.FilePaths = FilePaths;
         }
 

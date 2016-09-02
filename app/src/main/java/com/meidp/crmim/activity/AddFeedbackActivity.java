@@ -1,7 +1,10 @@
 package com.meidp.crmim.activity;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -21,7 +24,7 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.HashMap;
 
 @ContentView(R.layout.activity_add_feedback)
-public class AddFeedbackActivity extends BaseActivity {
+public class AddFeedbackActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
     @ViewInject(R.id.title_tv)
     private TextView title;
@@ -30,9 +33,16 @@ public class AddFeedbackActivity extends BaseActivity {
     @ViewInject(R.id.title_name)
     private EditText titleNameEt;
 
+    @ViewInject(R.id.main_bottom_rg)
+    private RadioGroup mRadioGroup;
+    private int type = 1;
+
+
     @Override
     public void onInit() {
         title.setText("意见反馈");
+        mRadioGroup.setOnCheckedChangeListener(this);
+        ((RadioButton) mRadioGroup.getChildAt(0)).setChecked(true);
     }
 
     @Event({R.id.back_arrows, R.id.submit_btn})
@@ -49,6 +59,7 @@ public class AddFeedbackActivity extends BaseActivity {
 
                     params.put("Title", titleName);
                     params.put("Content", content);
+                    params.put("AdviceType", type);
 
                     HttpRequestUtils.getmInstance().send(this, Constant.SAVE_FEEDBACK_URL, params, new HttpRequestCallBack() {
                         @Override
@@ -57,6 +68,8 @@ public class AddFeedbackActivity extends BaseActivity {
                             });
                             if (appMsg != null && appMsg.getEnumcode() == 0) {
                                 ToastUtils.shows(AddFeedbackActivity.this, "保存成功");
+                                Intent intent = new Intent();
+                                setResult(1032, intent);
                                 finish();
                             } else {
                                 ToastUtils.shows(AddFeedbackActivity.this, "保存失败");
@@ -68,6 +81,15 @@ public class AddFeedbackActivity extends BaseActivity {
                     ToastUtils.shows(this, "请输入您的意见");
                 }
                 break;
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        for (int i = 0; i < group.getChildCount(); i++) {
+            if (checkedId == group.getChildAt(i).getId()) {
+                type = i + 1;
+            }
         }
     }
 }

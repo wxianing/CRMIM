@@ -14,41 +14,27 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_marginLeft="@dimen/dp10"
-            android:layout_marginRight="@dimen/dp10"
             android:id="@+id/title"
             style="@style/text_18_ffffff"
             android:layout_width="match_parent"
-            android:layout_height="40.0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp10"
             android:background="@drawable/dialog_title"
             android:gravity="center"
             android:text="@string/title_alert"
             android:visibility="visible" />
 
-        <LinearLayout
-            android:layout_marginLeft="@dimen/dp10"
-            android:layout_marginRight="@dimen/dp10"
-            android:id="@+id/content"
+        <TextView
+            android:id="@+id/hint_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp10"
-            android:background="@color/white"
-            android:gravity="center">
-
-            <EditText
-                android:id="@+id/message"
-                style="@style/text_16_666666"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginBottom="@dimen/dp5"
-                android:layout_marginLeft="@dimen/dp5"
-                android:layout_marginRight="@dimen/dp5"
-                android:layout_marginTop="@dimen/dp5"
-                android:background="@drawable/dialog_edittext"
-                android:gravity="center_vertical"
-                android:hint="请输入群名"
-                android:textSize="@dimen/sp14" />
-        </LinearLayout>
+            android:gravity="center"
+            android:padding="@dimen/dp10"
+            android:text="是否退出当前账号？"
+            android:textColor="@color/black" />
 
         <View
             android:layout_width="fill_parent"
@@ -89,7 +75,6 @@
                 android:background="@color/transparent"
                 android:gravity="center"
                 android:text="@string/ok" />
-
         </LinearLayout>
     </LinearLayout>
 
