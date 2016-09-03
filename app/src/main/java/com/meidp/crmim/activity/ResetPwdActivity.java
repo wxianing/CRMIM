@@ -3,6 +3,7 @@ package com.meidp.crmim.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -106,7 +107,13 @@ public class ResetPwdActivity extends BaseActivity {
         });
         Window dialogWindow = dialog.getWindow();
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-//        lp.width = 480;//设置对话框的宽度
+
+        WindowManager wm = getWindowManager();
+        Display d = wm.getDefaultDisplay(); // 获取屏幕宽、高用
+//        p.height = (int) (d.getHeight() * 0.6); // 高度设置为屏幕的0.6
+        lp.width = (int) (d.getWidth() * 0.75); // 宽度设置为屏幕的0.65
+
+        dialogWindow.setAttributes(lp);
         dialogWindow.setAttributes(lp);
         dialog.show();
     }

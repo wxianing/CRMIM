@@ -39,8 +39,17 @@ import java.util.List;
 import java.util.ListIterator;
 
 import cn.jpush.android.api.JPushInterface;
+import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.widget.provider.FileInputProvider;
+import io.rong.imkit.widget.provider.FileMessageItemProvider;
+import io.rong.imkit.widget.provider.ImageInputProvider;
+import io.rong.imkit.widget.provider.InputProvider;
+import io.rong.imkit.widget.provider.LocationInputProvider;
+import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
+import io.rong.message.FileMessage;
+import io.rong.message.GroupNotificationMessage;
 
 /**
  * Package：com.meidp.crmim
@@ -77,9 +86,41 @@ public class MyApplication extends Application {
         if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext())) ||
                 "io.rong.push".equals(getCurProcessName(getApplicationContext()))) {
             RongIM.init(this);
+            try {
+                RongIM.registerMessageType(GroupNotificationMessage.class);
+                RongIM.registerMessageType(FileMessage.class);
+
+//                RongIM.getInstance().registerConversationTemplate();
+                RongIM.registerMessageTemplate(new FileMessageItemProvider());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            setInputProvider();
         }
 
         userCode = (String) SPUtils.get(this, "CODE", "");
+    }
+
+    private void setInputProvider() {
+
+
+        InputProvider.ExtendProvider[] singleProvider =  {
+                new ImageInputProvider(RongContext.getInstance()),
+                //new RealTimeLocationInputProvider(RongContext.getInstance()), //带位置共享的地理位置
+                new FileInputProvider(RongContext.getInstance())//文件消息
+        };
+
+        InputProvider.ExtendProvider[] muiltiProvider = {
+                new ImageInputProvider(RongContext.getInstance()),
+                //new LocationInputProvider(RongContext.getInstance()),//地理位置
+                new FileInputProvider(RongContext.getInstance())//文件消息
+        };
+
+        RongIM.resetInputExtensionProvider(Conversation.ConversationType.PRIVATE, muiltiProvider);
+        RongIM.resetInputExtensionProvider(Conversation.ConversationType.DISCUSSION, muiltiProvider);
+        RongIM.resetInputExtensionProvider(Conversation.ConversationType.CUSTOMER_SERVICE, muiltiProvider);
+        RongIM.resetInputExtensionProvider(Conversation.ConversationType.GROUP, muiltiProvider);
+        RongIM.resetInputExtensionProvider(Conversation.ConversationType.CHATROOM, muiltiProvider);
     }
 
     /**

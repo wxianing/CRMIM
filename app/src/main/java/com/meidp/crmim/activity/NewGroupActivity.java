@@ -3,8 +3,11 @@ package com.meidp.crmim.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -370,6 +373,17 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
                 dialog.dismiss();
             }
         });
+
+        Window dialogWindow = dialog.getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+
+        WindowManager wm = getWindowManager();
+        Display d = wm.getDefaultDisplay(); // 获取屏幕宽、高用
+//        p.height = (int) (d.getHeight() * 0.6); // 高度设置为屏幕的0.6
+        lp.width = (int) (d.getWidth() * 0.75); // 宽度设置为屏幕的0.65
+
+        dialogWindow.setAttributes(lp);
+
         dialog.show();
     }
 

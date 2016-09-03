@@ -3,6 +3,7 @@ package com.meidp.crmim.fragment;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,8 @@ import com.meidp.crmim.activity.EnterpriseCultureActivity;
 import com.meidp.crmim.activity.ExhibitionManagerActivity;
 import com.meidp.crmim.activity.ImportantActivity;
 import com.meidp.crmim.activity.LifeNavigationActivity;
+import com.meidp.crmim.activity.LoginActivity;
+import com.meidp.crmim.activity.MainActivity;
 import com.meidp.crmim.activity.ModelMachineApplyActivity;
 import com.meidp.crmim.activity.MyCostingActivity;
 import com.meidp.crmim.activity.MyCreditActivity;
@@ -157,13 +160,11 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
      */
     private void showDialog() {
         final Dialog dialog = new Dialog(getActivity(), R.style.Dialog);
-        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.edittext_dialog, null);
+        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_textview_layout, null);
         TextView titleName = (TextView) contentView.findViewById(R.id.title);
-        final EditText editText = (EditText) contentView.findViewById(R.id.message);
-        titleName.setText("正在开发中");
-        editText.setVisibility(View.GONE);
-
-        editText.setSelection(editText.getText().length());//把光标移到最后面
+        TextView content = (TextView) contentView.findViewById(R.id.hint_content);
+        titleName.setText("温馨提示");//标题
+        content.setText("正在开发中");//提示你内容
 
         dialog.setContentView(contentView);
         dialog.setCanceledOnTouchOutside(true);
@@ -172,6 +173,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         negativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 dialog.dismiss();
             }
         });
@@ -180,13 +182,17 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         positiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 dialog.dismiss();
             }
         });
         Window dialogWindow = dialog.getWindow();
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        lp.width = 480;
+
+        WindowManager wm = getActivity().getWindowManager();
+        Display d = wm.getDefaultDisplay(); // 获取屏幕宽、高用
+//        p.height = (int) (d.getHeight() * 0.6); // 高度设置为屏幕的0.6
+        lp.width = (int) (d.getWidth() * 0.75); // 宽度设置为屏幕的0.65
+
         dialogWindow.setAttributes(lp);
         dialog.show();
     }

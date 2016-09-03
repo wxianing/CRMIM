@@ -26,7 +26,7 @@
     <color name="rc_voice_color_left">#4385bf</color>
     <color name="rc_voice_color_right">#a2a2a2</color>
 
-    <color name="rc_voice_cancel"> #CC933432</color>
+    <color name="rc_voice_cancel">#CC933432</color>
 
     <!-- PictureSelectorActivity -->
     <color name="rc_picsel_toolbar">#393A3E</color>
@@ -48,4 +48,8 @@
 
     <color name="rc_ad_file_list_no_select_file_text_state">#9fcdfd</color>
     <color name="rc_ad_file_list_select_file_text_state">#ffffff</color>
+    <color name="white">#ffffff</color>
+    <color name="rc_voip_background_color">#262e42</color>
+    <color name="rc_voip_check_disable">#1f4a76</color>
+    <color name="rc_voip_check_enable">#0099ff</color>
 </resources>

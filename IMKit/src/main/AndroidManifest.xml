@@ -66,6 +66,53 @@
             android:name="io.rong.imkit.activity.PicturePagerActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
 
+        <!-- new voip config start-->
+        <activity
+            android:name="io.rong.imkit.MultiVideoCallActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="io.rong.intent.action.voip.MULTIVIDEO" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="io.rong.imkit.SingleCallActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="io.rong.intent.action.voip.SINGLEVIDEO" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="io.rong.intent.action.voip.SINGLEAUDIO" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="io.rong.imkit.MultiAudioCallActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="io.rong.intent.action.voip.MULTIAUDIO" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="io.rong.imkit.CallSelectMemberActivity" />
+
+        <receiver android:name="io.rong.imkit.RongCallReceiver">
+            <intent-filter>
+                <action android:name="io.rong.intent.action.UI_READY" />
+                <action android:name="io.rong.intent.action.SDK_INIT" />
+                <action android:name="io.rong.intent.action.SDK_CONNECTED" />
+            </intent-filter>
+        </receiver>
+        <!-- new voip config end-->
 
         <activity
             android:name="io.rong.imkit.mention.MemberMentionedActivity"
@@ -117,7 +164,7 @@
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
         </receiver>
-        
+
         <!--必选： SDK 核心功能-->
 
         <!-- end -->
@@ -125,7 +172,7 @@
         <!-- imlib config begin -->
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"
-            android:value="6tnym1brnec17" />
+            android:value="c9kqb3rdklm3j" />
 
         <service
             android:name="io.rong.imlib.ipc.RongService"

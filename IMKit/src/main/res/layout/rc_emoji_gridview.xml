@@ -5,6 +5,7 @@
     android:columnWidth="29dp"
     android:numColumns="7"
     android:paddingLeft="10dp"
+    android:background="@color/white"
     android:paddingRight="10dp"
     android:paddingTop="33dp"
     android:stretchMode="columnWidth"

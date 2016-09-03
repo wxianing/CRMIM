@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.Selection;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,9 +42,13 @@ import java.util.Locale;
 
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.widget.provider.CameraInputProvider;
 import io.rong.imkit.widget.provider.FileInputProvider;
+import io.rong.imkit.widget.provider.FileMessageItemProvider;
+import io.rong.imkit.widget.provider.IContainerItemProvider;
 import io.rong.imkit.widget.provider.ImageInputProvider;
 import io.rong.imkit.widget.provider.InputProvider;
+import io.rong.imkit.widget.provider.LocationInputProvider;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
@@ -83,9 +88,7 @@ public class ConversationActivity extends BaseActivity {
      */
     private Conversation.ConversationType mConversationType;
 
-
     private String titleNameStr;
-
 
     @Override
     public void onInit() {
@@ -107,7 +110,7 @@ public class ConversationActivity extends BaseActivity {
             title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showDialog();
+//                    showDialog();
                 }
             });
         }
@@ -116,14 +119,19 @@ public class ConversationActivity extends BaseActivity {
         /**
          * 设置会话界面操作的监听器。
          */
-        RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
-//        RongIM.getInstance().registerMessageType(FileMessage.class);
-//        InputProvider.ExtendProvider[] singleProvider = {
-//                new ImageInputProvider(RongContext.getInstance()),
-//                new FileInputProvider(RongContext.getInstance())//文件消息
-//        };
-//        RongIM.resetInputExtensionProvider(Conversation.ConversationType.PRIVATE, singleProvider);
-//        RongIM.resetInputExtensionProvider(Conversation.ConversationType.DISCUSSION, singleProvider);
+//        RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
+        //注册文件
+        /*RongIM.registerMessageType(FileMessage.class);
+        RongIM.registerMessageType(ImageMessage.class);*/
+        //扩展功能自定义
+       /* InputProvider.ExtendProvider[] provider = {
+                new ImageInputProvider(RongContext.getInstance()),//图片
+                //new CameraInputProvider(RongContext.getInstance()),//相机
+                new FileInputProvider(RongContext.getInstance()),
+                //new LocationInputProvider(RongContext.getInstance())//地理位置
+        };
+        RongIM.resetInputExtensionProvider(Conversation.ConversationType.PRIVATE,provider);*/
+//        RongIM.resetInputExtensionProvider(Conversation.ConversationType.DISCUSSION,provider);
     }
 
     /**
@@ -175,6 +183,19 @@ public class ConversationActivity extends BaseActivity {
                 dialog.dismiss();
             }
         });
+
+        /**
+         * 设置dialog对话框位置
+         */
+        Window dialogWindow = dialog.getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+
+        WindowManager wm = getWindowManager();
+        Display d = wm.getDefaultDisplay(); // 获取屏幕宽、高用
+//        p.height = (int) (d.getHeight() * 0.6); // 高度设置为屏幕的0.6
+        lp.width = (int) (d.getWidth() * 0.75); // 宽度设置为屏幕的0.65
+
+        dialogWindow.setAttributes(lp);
         dialog.show();
     }
 
@@ -268,7 +289,7 @@ public class ConversationActivity extends BaseActivity {
          */
         @Override
         public boolean onMessageLongClick(Context context, View view, Message message) {
-            alterDialog(view, message);
+//            alterDialog(view, message);
 
             return true;
         }
@@ -320,9 +341,14 @@ public class ConversationActivity extends BaseActivity {
         dialog.setCanceledOnTouchOutside(true);
         Window w = dialog.getWindow();
         WindowManager.LayoutParams lp = w.getAttributes();
+
+        int[] position = new int[2];
+        v.getLocationInWindow(position);
+
         //显示位置
-        lp.x = (int) v.getX();
-        lp.y = (int) v.getY();
+//        lp.x = position[0];
+//        lp.y = position[1];
+
 
         //复制
         TextView copy = (TextView) contentView.findViewById(R.id.copy);
@@ -407,12 +433,11 @@ public class ConversationActivity extends BaseActivity {
                     }
                 });
 
-
                 dialog.dismiss();
             }
         });
+//        w.setAttributes(lp);
         dialog.show();
-
     }
 
     /**
