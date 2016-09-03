@@ -396,7 +396,7 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
         ExpanListAdapter.ChildViewHolder holder = (ExpanListAdapter.ChildViewHolder) v.getTag();
         holder.mCheckBox.toggle();
 
-        SelectFriendAdapter.getIsSelected().put(contactList.get(groupPosition).getUsers().get(childPosition).getUserID(), holder.mCheckBox.isChecked());
+        ExpanListAdapter.getIsSelected().put(contactList.get(groupPosition).getUsers().get(childPosition).getUserID(), holder.mCheckBox.isChecked());
         if (holder.mCheckBox.isChecked() == true) {
             checkNum++;
             userIds.add(Integer.toString(contactList.get(groupPosition).getUsers().get(childPosition).getUserID()));
@@ -428,6 +428,7 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
         }
 
         Log.e("userIdLists", userIdStr);
+
         return true;
     }
 

@@ -54,9 +54,9 @@ public class OpenProjectAdapter extends BasicAdapter<Projects> {
         String timeStr = data.getCreateDate();
         if (NullUtils.isNull(timeStr)) {
             timeStr = timeStr.substring(0, timeStr.length() - 3);
-            vh.ceateTime.setText("登记时间：" + timeStr);
+            vh.ceateTime.setText(timeStr);
         } else {
-            vh.ceateTime.setText("登记时间：");
+            vh.ceateTime.setText("");
         }
         if (NullUtils.isNull(data.getStatusName())) {
             vh.statusName.setText(data.getStatusName());

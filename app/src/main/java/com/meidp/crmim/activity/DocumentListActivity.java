@@ -136,8 +136,6 @@ public class DocumentListActivity extends BasicActivity implements AdapterView.O
         list.add(g1);
         list.add(g2);
 
-        Log.e("list", ">>>>>" + list.size());
-
         expListView.setOnChildClickListener(this);
         expListView.setAdapter(new MyExpandableAdapter(list, this));
         //默认全部展开
@@ -147,7 +145,6 @@ public class DocumentListActivity extends BasicActivity implements AdapterView.O
 
         mAdapter = new DocumentAdapter(mDagas, this);
 //        mListView.setAdapter(mAdapter);
-        expListView.setFocusable(false);
     }
 
     private void queryFiles() {
@@ -157,7 +154,7 @@ public class DocumentListActivity extends BasicActivity implements AdapterView.O
                 MediaStore.Files.FileColumns.SIZE
         };
 
-        String[] type = new String[]{"%.doc", "%.docx", "%.xlsx", "%.jpeg", "%.zip", "%.ppt", "%.pptx"};
+        String[] type = new String[]{"%.doc", "%.docx", "%.xlsx", "%.xls", "%.ppt", "%.pptx"};
         Cursor cursor = null;
         for (int i = 0; i < type.length; i++) {
             cursor = getCursor(beanList, projection, type[i]);
@@ -255,16 +252,18 @@ public class DocumentListActivity extends BasicActivity implements AdapterView.O
         MyExpandableAdapter.getIsSelected().put(list.get(groupPosition).getDocBeen().get(childPosition).getFileName(), holder.mCheckBox.isChecked());
         if (holder.mCheckBox.isChecked() == true) {
             checkNum++;
+            //如果选中，则添加到被选集合里面
             checkLists.add(list.get(groupPosition).getDocBeen().get(childPosition));
         } else {
             checkNum--;
             for (int i = 0; i < checkLists.size(); i++) {
+                //如果取消选择则用当前的文件名到被选中的集合里面去匹配，寻找，然后remove掉它
                 if (checkLists.get(i).getFileName().equals(list.get(groupPosition).getDocBeen().get(childPosition).getFileName())) {
-                    checkLists.remove(checkNum);
+                    checkLists.remove(i);
                 }
             }
-
         }
+
         return true;
     }
 
@@ -275,10 +274,10 @@ public class DocumentListActivity extends BasicActivity implements AdapterView.O
                 if (NullUtils.isNull(msg) && msg.equals("adddocuments")) {
                     Intent intent = new Intent();
                     intent.putExtra("CheckDocLists", (Serializable) checkLists);
-                    setResult(1031, intent);
+                    setResult(100, intent);
                     finish();
                 } else {
-                    Log.e("checkList",">>>>>"+checkLists.size());
+                    Log.e("checkList", ">>>>>" + checkLists.size());
                     for (int i = 0; i < checkLists.size(); i++) {
                         if (i == checkLists.size() - 1) {
                             sendMsg(checkLists.get(i), true);

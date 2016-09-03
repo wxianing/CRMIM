@@ -161,7 +161,7 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
 
     }
 
-    private void setupIntent () {
+    private void setupIntent() {
         RongCallCommon.CallMediaType mediaType;
         Intent intent = getIntent();
         RongCallAction callAction = RongCallAction.valueOf(intent.getStringExtra("callAction"));
@@ -237,7 +237,7 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
                 TextView callInfo = (TextView) userInfoLayout.findViewById(R.id.rc_voip_call_remind_info);
                 callInfo.setText(R.string.rc_voip_video_call_inviting);
                 onIncomingCallRinging();
-                ImageView answerV = (ImageView)buttonLayout.findViewById(R.id.rc_voip_call_answer_btn);
+                ImageView answerV = (ImageView) buttonLayout.findViewById(R.id.rc_voip_call_answer_btn);
                 answerV.setImageResource(R.drawable.rc_voip_vedio_answer_selector);
             }
         }
@@ -543,12 +543,12 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
             }
         }
         if (localVideo != null && localVideo.getParent() != null) {
-            ((ViewGroup)localVideo.getParent()).removeView(localVideo);
+            ((ViewGroup) localVideo.getParent()).removeView(localVideo);
         }
         onCallOutgoing(callSession, localVideo);
         onCallConnected(callSession, localVideo);
         if (remoteVideo != null && remoteVideo.getParent() != null) {
-            ((ViewGroup)remoteVideo.getParent()).removeView(remoteVideo);
+            ((ViewGroup) remoteVideo.getParent()).removeView(remoteVideo);
         }
         onRemoteUserJoined(remoteUserId, mediaType, remoteVideo);
     }
@@ -564,11 +564,11 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
         return getIntent().getAction();
     }
 
-    public void onMinimizeClick (View view) {
+    public void onMinimizeClick(View view) {
         finish();
     }
 
-    public void onSwitchCameraClick (View view) {
+    public void onSwitchCameraClick(View view) {
         RongCallClient.getInstance().switchCamera();
     }
 

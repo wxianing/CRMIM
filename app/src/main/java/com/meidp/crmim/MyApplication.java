@@ -21,9 +21,8 @@ import com.meidp.crmim.http.OkHttpStack;
 import com.meidp.crmim.model.AppBean;
 import com.meidp.crmim.model.User;
 import com.meidp.crmim.utils.Constant;
-import com.meidp.crmim.utils.NetUtils;
+import com.meidp.crmim.utils.MyFileInputProvider;
 import com.meidp.crmim.utils.SPUtils;
-import com.meidp.crmim.utils.ToastUtils;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -45,7 +44,6 @@ import io.rong.imkit.widget.provider.FileInputProvider;
 import io.rong.imkit.widget.provider.FileMessageItemProvider;
 import io.rong.imkit.widget.provider.ImageInputProvider;
 import io.rong.imkit.widget.provider.InputProvider;
-import io.rong.imkit.widget.provider.LocationInputProvider;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 import io.rong.message.FileMessage;
@@ -104,19 +102,19 @@ public class MyApplication extends Application {
     private void setInputProvider() {
 
 
-        InputProvider.ExtendProvider[] singleProvider =  {
+        InputProvider.ExtendProvider[] singleProvider = {
                 new ImageInputProvider(RongContext.getInstance()),
                 //new RealTimeLocationInputProvider(RongContext.getInstance()), //带位置共享的地理位置
-                new FileInputProvider(RongContext.getInstance())//文件消息
+                new MyFileInputProvider(RongContext.getInstance())//文件消息
         };
 
         InputProvider.ExtendProvider[] muiltiProvider = {
                 new ImageInputProvider(RongContext.getInstance()),
                 //new LocationInputProvider(RongContext.getInstance()),//地理位置
-                new FileInputProvider(RongContext.getInstance())//文件消息
+                new MyFileInputProvider(RongContext.getInstance())//文件消息
         };
 
-        RongIM.resetInputExtensionProvider(Conversation.ConversationType.PRIVATE, muiltiProvider);
+        RongIM.resetInputExtensionProvider(Conversation.ConversationType.PRIVATE, singleProvider);
         RongIM.resetInputExtensionProvider(Conversation.ConversationType.DISCUSSION, muiltiProvider);
         RongIM.resetInputExtensionProvider(Conversation.ConversationType.CUSTOMER_SERVICE, muiltiProvider);
         RongIM.resetInputExtensionProvider(Conversation.ConversationType.GROUP, muiltiProvider);

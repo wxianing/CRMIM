@@ -186,7 +186,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                     MainActivity.mainActivity.finish();
                     MainActivity.mainActivity = null;
                 }
-                RongIM.getInstance().logout();
+                RongIM.getInstance().disconnect(true);
                 SPUtils.setLoginTag(getActivity(), false);
                 SPUtils.remove(getActivity(), "CODE");
 //                        SPUtils.clear(getActivity());

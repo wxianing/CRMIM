@@ -39,7 +39,7 @@ import java.util.List;
 @ContentView(R.layout.activity_project_manager)
 public class ProjectManagerActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2<ListView>, AdapterView.OnItemClickListener, View.OnClickListener {
     private int pageIndex = 1;
-    private int pageSize = 12;
+    private int pageSize = 18;
     private int sType = 0;
     @ViewInject(R.id.listview)
     private PullToRefreshListView mListView;

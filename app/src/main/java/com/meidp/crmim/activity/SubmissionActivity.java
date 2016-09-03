@@ -175,12 +175,11 @@ public class SubmissionActivity extends BaseActivity {
             case R.id.save_btn://保存项目
                 sendMsg();
 
-
                 break;
             case R.id.add_doc_img:
                 intent = new Intent(this, DocumentListActivity.class);
                 intent.putExtra("MSG", "adddocuments");
-                startActivityForResult(intent, 1031);
+                startActivityForResult(intent, 100);
                 break;
         }
     }
@@ -256,7 +255,7 @@ public class SubmissionActivity extends BaseActivity {
                 Log.e("empolyeeId", empolyeeId);
                 Log.e("empolyeeName", empolyeeNames);
                 break;
-            case 1031:
+            case 100:
                 checkDocLists = (List<DocBean>) data.getSerializableExtra("CheckDocLists");
                 String docNames = "";
                 if (checkDocLists != null && checkDocLists.size() > 0) {

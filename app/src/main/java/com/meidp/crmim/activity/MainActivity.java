@@ -308,6 +308,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             Toast.makeText(getApplicationContext(), "再按一次返回键退出程序", Toast.LENGTH_SHORT).show();
             exitTime = System.currentTimeMillis();
         } else {
+            RongIM.getInstance().disconnect(true);
             finish();
             System.exit(0);
         }

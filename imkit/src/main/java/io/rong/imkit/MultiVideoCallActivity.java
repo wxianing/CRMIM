@@ -492,7 +492,7 @@ public class MultiVideoCallActivity extends BaseCallActivity {
                 }
 
                 FrameLayout bottomButtonLayout = (FrameLayout) inflater.inflate(R.layout.rc_voip_call_bottom_incoming_button_layout, null);
-                ImageView answerV = (ImageView)bottomButtonLayout.findViewById(R.id.rc_voip_call_answer_btn);
+                ImageView answerV = (ImageView) bottomButtonLayout.findViewById(R.id.rc_voip_call_answer_btn);
                 answerV.setImageResource(R.drawable.rc_voip_vedio_answer_selector);
                 bottomButtonContainer.addView(bottomButtonLayout);
                 for (int i = 0; i < invitedList.size(); i++) {
@@ -575,7 +575,7 @@ public class MultiVideoCallActivity extends BaseCallActivity {
                     for (CallUserProfile profile : list) {
                         added.add(profile.getUserId());
                     }
-                    intent.putStringArrayListExtra("allMembers", (ArrayList<String>)discussion.getMemberIdList());
+                    intent.putStringArrayListExtra("allMembers", (ArrayList<String>) discussion.getMemberIdList());
                     intent.putStringArrayListExtra("invitedMembers", added);
                     startActivityForResult(intent, 110);
                 }

@@ -1,5 +1,7 @@
 package com.meidp.crmim.model;
 
+import com.meidp.crmim.utils.NullUtils;
+
 import java.io.Serializable;
 
 /**
@@ -59,7 +61,7 @@ public class Projects implements Serializable {
     private String CreatorName;
     private int CompanyId;
     private String CompanyName;
-    private String  DepartmentName;
+    private String DepartmentName;
     private Object ZhiWu;
     /**
      * IsAppoint : null
@@ -105,7 +107,9 @@ public class Projects implements Serializable {
     }
 
     public String getCreateDate() {
-        return CreateDate;
+        if (NullUtils.isNull(CreateDate))
+            return CreateDate;
+        return "";
     }
 
     public void setCreateDate(String CreateDate) {
@@ -256,7 +260,7 @@ public class Projects implements Serializable {
         this.CompanyName = CompanyName;
     }
 
-    public String  getDepartmentName() {
+    public String getDepartmentName() {
         return DepartmentName;
     }
 

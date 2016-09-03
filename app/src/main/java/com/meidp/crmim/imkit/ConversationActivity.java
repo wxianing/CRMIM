@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Environment;
 import android.text.Selection;
 import android.util.Log;
 import android.view.Display;
@@ -23,11 +24,13 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.meidp.crmim.R;
 import com.meidp.crmim.activity.BaseActivity;
 import com.meidp.crmim.activity.GroupMenberActivity;
+import com.meidp.crmim.activity.NewGroupActivity;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppMsg;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.CopyUtils;
+import com.meidp.crmim.utils.CustomDialogUtils;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.utils.ToastUtils;
@@ -36,6 +39,8 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -94,23 +99,27 @@ public class ConversationActivity extends BaseActivity {
     public void onInit() {
         activity = this;
         //获取聊天类型
+
         mConversationType = Conversation.ConversationType.valueOf(getIntent().getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
 
         titleRight.setVisibility(View.VISIBLE);
         titleRight.setImageResource(R.mipmap.three_dot);
+
         mTargetId = getIntent().getData().getQueryParameter("targetId");//获取聊天对象的Id
-        titleNameStr = getIntent().getData().getQueryParameter("title");//获取聊天对象的Id
+
+        titleNameStr = getIntent().getData().getQueryParameter("title");//获取聊天对象的标题
 
         title.setText(titleNameStr);
-        if (mConversationType.getName().equals("private")) {
-            titleRight.setVisibility(View.GONE);
-        }
 
+
+        /**
+         * 如果是讨论组，点击讨论组名称可以修改名称
+         */
         if (mConversationType.getName().equals("discussion")) {
             title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    showDialog();
+                    showDialog();
                 }
             });
         }
@@ -119,20 +128,10 @@ public class ConversationActivity extends BaseActivity {
         /**
          * 设置会话界面操作的监听器。
          */
-//        RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
-        //注册文件
-        /*RongIM.registerMessageType(FileMessage.class);
-        RongIM.registerMessageType(ImageMessage.class);*/
-        //扩展功能自定义
-       /* InputProvider.ExtendProvider[] provider = {
-                new ImageInputProvider(RongContext.getInstance()),//图片
-                //new CameraInputProvider(RongContext.getInstance()),//相机
-                new FileInputProvider(RongContext.getInstance()),
-                //new LocationInputProvider(RongContext.getInstance())//地理位置
-        };
-        RongIM.resetInputExtensionProvider(Conversation.ConversationType.PRIVATE,provider);*/
-//        RongIM.resetInputExtensionProvider(Conversation.ConversationType.DISCUSSION,provider);
+        RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
+
     }
+
 
     /**
      * 修改群名称
@@ -228,12 +227,21 @@ public class ConversationActivity extends BaseActivity {
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
+                if (ConversationListActivity.activity != null) {
+                    ConversationListActivity.activity.finish();
+                    ConversationListActivity.activity = null;
+                }
                 finish();
                 break;
             case R.id.right_img:
-                Intent intent = new Intent(this, GroupMenberActivity.class);
-                intent.putExtra("mTargetId", mTargetId);
-                startActivity(intent);
+                if (mConversationType.getName().equals("private")) {
+                    Intent intent = new Intent(this, NewGroupActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(this, GroupMenberActivity.class);
+                    intent.putExtra("mTargetId", mTargetId);
+                    startActivity(intent);
+                }
                 break;
         }
     }
@@ -289,7 +297,7 @@ public class ConversationActivity extends BaseActivity {
          */
         @Override
         public boolean onMessageLongClick(Context context, View view, Message message) {
-//            alterDialog(view, message);
+            alterDialog(view, message);
 
             return true;
         }
@@ -336,19 +344,17 @@ public class ConversationActivity extends BaseActivity {
 
         final Dialog dialog = new Dialog(ConversationActivity.this, R.style.Dialog);
         View contentView = LayoutInflater.from(this).inflate(R.layout.message_dialog, null);
-        TextView titleName = (TextView) contentView.findViewById(R.id.title);
         dialog.setContentView(contentView);
         dialog.setCanceledOnTouchOutside(true);
-        Window w = dialog.getWindow();
-        WindowManager.LayoutParams lp = w.getAttributes();
+//        Window w = dialog.getWindow();
+//        WindowManager.LayoutParams lp = w.getAttributes();
 
-        int[] position = new int[2];
-        v.getLocationInWindow(position);
+//        int[] position = new int[2];
+//        v.getLocationInWindow(position);
 
         //显示位置
 //        lp.x = position[0];
 //        lp.y = position[1];
-
 
         //复制
         TextView copy = (TextView) contentView.findViewById(R.id.copy);
@@ -363,7 +369,6 @@ public class ConversationActivity extends BaseActivity {
                 if (message.getObjectName().equals("RC:TxtMsg")) {
                     TextMessage textMessage = (TextMessage) message.getContent();
                     CopyUtils.copy(textMessage.getContent(), ConversationActivity.this);
-
                 } else if (message.getObjectName().equals("RC:ImgMsg")) {
                     ImageMessage imageMessage = (ImageMessage) message.getContent();
 //                    CopyUtils.copy(imageMessage.getBase64(), ConversationActivity.this);
@@ -385,11 +390,43 @@ public class ConversationActivity extends BaseActivity {
         transpond.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (message.getObjectName().equals("RC:TxtMsg")) {
+                if (message.getObjectName().equals("RC:FileMsg")) {
+
+                    FileMessage fileMessage = (FileMessage) message.getContent();
+                    String savePath = Environment.getExternalStorageDirectory()
+                            .toString()
+                            + File.separator
+                            + fileMessage.getName();
+                    SPUtils.save(ConversationActivity.this, "FilePaths", savePath);
+                    String fileUrl = String.valueOf(fileMessage.getMediaUrl());
+                    SPUtils.save(ConversationActivity.this, "FileUrl", fileUrl);
+                    CustomDialogUtils.showProgressDialog(ConversationActivity.this);
+
+                    HttpRequestUtils.getmInstance().downLoadFile(fileUrl, savePath, new HttpRequestCallBack<File>() {
+
+                        @Override
+                        public void onSuccess(String result) throws IOException {
+
+                        }
+
+                        @Override
+                        public void onSuccess(File result) {
+                            super.onSuccess(result);
+                            ToastUtils.shows(ConversationActivity.this, "下载完成");
+                            CustomDialogUtils.cannelProgressDialog();
+                            Intent intent = new Intent(ConversationActivity.this, ConversationListActivity.class);
+                            intent.putExtra("TYPE", "FileMessage");
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+
+                } else if (message.getObjectName().equals("RC:TxtMsg")) {
                     TextMessage textMessage = (TextMessage) message.getContent();
                     Log.e("textMessage.message", "" + textMessage.getContent());
                     CopyUtils.copy(textMessage.getContent(), ConversationActivity.this);
                     Intent intent = new Intent(ConversationActivity.this, ConversationListActivity.class);
+                    intent.putExtra("TYPE", "TextMessage");
                     startActivity(intent);
                     finish();
                 } else if (message.getObjectName().equals("RC:ImgMsg")) {
@@ -403,6 +440,7 @@ public class ConversationActivity extends BaseActivity {
                     SPUtils.save(ConversationActivity.this, "ThumUri", String.valueOf(imageMessage.getThumUri()));
                     SPUtils.save(ConversationActivity.this, "LocalUri", String.valueOf(imageMessage.getLocalUri()));
                     Intent intent = new Intent(ConversationActivity.this, ConversationListActivity.class);
+                    intent.putExtra("TYPE", "ImageMessage");
                     startActivity(intent);
                     finish();
                 } else if (message.getObjectName().equals("RC:ImgTextMsg")) {

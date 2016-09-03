@@ -1,5 +1,6 @@
 package com.meidp.crmim.imkit;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -30,7 +31,9 @@ import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.JPushNoReader;
 import com.meidp.crmim.utils.Constant;
+import com.meidp.crmim.utils.CopyUtils;
 import com.meidp.crmim.utils.DataUtils;
+import com.meidp.crmim.utils.FileUtils;
 import com.meidp.crmim.utils.IMkitConnectUtils;
 import com.meidp.crmim.utils.NetUtils;
 import com.meidp.crmim.utils.NullUtils;
@@ -38,12 +41,19 @@ import com.meidp.crmim.utils.SPUtils;
 
 import org.xutils.view.annotation.Event;
 
+import java.io.File;
 import java.util.HashMap;
 
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imkit.model.UIConversation;
+import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
+import io.rong.message.FileMessage;
+import io.rong.message.ImageMessage;
+import io.rong.message.TextMessage;
 
 /**
  * Package： com.meidp.crmim.imkit
@@ -209,7 +219,53 @@ public class ConversationListStaticFragment extends Fragment implements View.OnC
              */
             RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
         }
+
+        Log.e("ssssss", "sssssssssssss");
+
+        RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());
         super.onResume();
+    }
+
+    /**
+     * 监听融云会话列表
+     */
+    private class MyConversationListBehaviorListener implements RongIM.ConversationListBehaviorListener {
+        @Override
+        public boolean onConversationPortraitClick(Context context, Conversation.ConversationType conversationType, String s) {
+            return false;
+        }
+
+        @Override
+        public boolean onConversationPortraitLongClick(Context context, Conversation.ConversationType conversationType, String s) {
+            return false;
+        }
+
+        /**
+         * 长按会话列表中的 item 时执行。
+         *
+         * @param context        上下文。
+         * @param view           触发点击的 View。
+         * @param uiConversation 长按时的会话条目。
+         * @return 如果用户自己处理了长按会话后的逻辑处理，则返回 true， 否则返回 false，false 走融云默认处理方式。
+         */
+        @Override
+        public boolean onConversationLongClick(Context context, View view, UIConversation uiConversation) {
+            return false;
+        }
+
+        /**
+         * 点击会话列表中的 item 时执行。
+         *
+         * @param context        上下文。
+         * @param view           触发点击的 View。
+         * @param uiConversation 会话条目。
+         * @return 如果用户自己处理了点击会话后的逻辑处理，则返回 true， 否则返回 false，false 走融云默认处理方式。
+         */
+        @Override
+        public boolean onConversationClick(Context context, View view, final UIConversation uiConversation) {
+
+            return false;
+        }
     }
 
     private void showPopupWindow() {
@@ -258,14 +314,14 @@ public class ConversationListStaticFragment extends Fragment implements View.OnC
                 intent = new Intent(getActivity(), SearchMsgActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.right_add:
+            case R.id.right_add://下拉对话框
                 if (!mPopupWindow.isShowing()) {
                     showPopupWindow();
                 } else {
                     mPopupWindow.dismiss();
                 }
                 break;
-            case R.id.right_scan:
+            case R.id.right_scan://二维码
                 intent = new Intent(getActivity(), DimensionCodeActivity.class);
                 startActivity(intent);
                 break;
