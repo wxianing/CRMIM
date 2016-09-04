@@ -390,6 +390,7 @@ public class ConversationActivity extends BaseActivity {
         transpond.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //转发文件
                 if (message.getObjectName().equals("RC:FileMsg")) {
 
                     FileMessage fileMessage = (FileMessage) message.getContent();
@@ -420,7 +421,7 @@ public class ConversationActivity extends BaseActivity {
                             finish();
                         }
                     });
-
+                //转发文本
                 } else if (message.getObjectName().equals("RC:TxtMsg")) {
                     TextMessage textMessage = (TextMessage) message.getContent();
                     Log.e("textMessage.message", "" + textMessage.getContent());
@@ -429,12 +430,14 @@ public class ConversationActivity extends BaseActivity {
                     intent.putExtra("TYPE", "TextMessage");
                     startActivity(intent);
                     finish();
+                    //转发图片
                 } else if (message.getObjectName().equals("RC:ImgMsg")) {
                     //图片
                     ImageMessage imageMessage = (ImageMessage) message.getContent();
                     Log.e("imageMessage", "getRemoteUri" + imageMessage.getRemoteUri());
                     Log.e("imageMessage", "getLocalUri" + imageMessage.getLocalUri());
                     Log.e("imageMessage", "getThumUri" + imageMessage.getThumUri());
+
 //                    Log.e("Base64", imageMessage.getBase64());
                     SPUtils.save(ConversationActivity.this, "RemoteUri", imageMessage.getRemoteUri());
                     SPUtils.save(ConversationActivity.this, "ThumUri", String.valueOf(imageMessage.getThumUri()));

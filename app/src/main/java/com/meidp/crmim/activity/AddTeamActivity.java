@@ -3,6 +3,7 @@ package com.meidp.crmim.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,33 +41,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-@ContentView(R.layout.activity_add_team)
-public class AddTeamActivity extends BaseActivity implements ExpandableListView.OnChildClickListener, ExpandableListView.OnGroupClickListener {
-    @ViewInject(R.id.title_tv)
+public class AddTeamActivity extends BasicActivity implements ExpandableListView.OnChildClickListener, ExpandableListView.OnGroupClickListener, View.OnClickListener {
     private TextView title;
-    @ViewInject(R.id.title_right)
     private TextView titleRight;
 
     private List<Friends> mDatas;
     private SelectFriendAdapter mAdapter;
-
     private String keyWord = "";
-
     private GridView gridView;
     private CheckedAdapter checkedAdapter;
     private List<Friends> checkedLists;//选中列表
-
     private List<String> empolyees;
-
     private int checkNum;
     private EditText otherPersonEt;
-
     private SelectFriendAdapter.ViewHolder holder;
     private int teamId;
     private String teamName;
     private String teamNames;
 
-    @ViewInject(R.id.expListView)
     protected ExpListView expListView;
     private List<Contact> contactList;
     private TeamExpanAdapter expandableAdapter;
@@ -76,7 +68,24 @@ public class AddTeamActivity extends BaseActivity implements ExpandableListView.
     private List<TeamDetails.UsersBean> usersBeanList;
 
     @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_link_man);
+        onInit();
+        onInitData();
+        initEvent();
+    }
+
+    private void initEvent() {
+        findViewById(R.id.back_arrows).setOnClickListener(this);
+        findViewById(R.id.title_right).setOnClickListener(this);
+    }
+
+
     public void onInit() {
+        title = (TextView) findViewById(R.id.title_tv);
+        titleRight = (TextView) findViewById(R.id.title_right);
+        expListView = (ExpListView) findViewById(R.id.expListView);
         View headerView = LayoutInflater.from(this).inflate(R.layout.header_new_group_layout, null);
         headerView.findViewById(R.id.remark).setVisibility(View.GONE);
         gridView = (GridView) headerView.findViewById(R.id.gridview);
@@ -106,7 +115,6 @@ public class AddTeamActivity extends BaseActivity implements ExpandableListView.
         expListView.setGroupIndicator(null);
     }
 
-    @Override
     public void onInitData() {
 //        loadData(keyWord);
 
@@ -153,8 +161,7 @@ public class AddTeamActivity extends BaseActivity implements ExpandableListView.
         });
     }
 
-    @Event({R.id.back_arrows, R.id.title_right})
-    private void onClick(View v) {
+    public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();

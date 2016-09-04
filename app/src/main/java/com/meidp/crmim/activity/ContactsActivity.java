@@ -2,6 +2,7 @@ package com.meidp.crmim.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,25 +33,37 @@ import java.util.HashMap;
 import java.util.List;
 
 @ContentView(R.layout.activity_contacts)
-public class ContactsActivity extends BaseActivity implements AdapterView.OnItemClickListener, PullToRefreshBase.OnRefreshListener2<ListView> {
+public class ContactsActivity extends BasicActivity implements AdapterView.OnItemClickListener, PullToRefreshBase.OnRefreshListener2<ListView>, View.OnClickListener {
     public static ContactsActivity activity;
-    @ViewInject(R.id.title_tv)
     private TextView title;
-
-
-    @ViewInject(R.id.listview)
     private PullToRefreshListView mListView;
-
     private List<ClientContacts> mDatas;
     private ContactsAdapter mAdapter;
     private String flag;
     private int pageIndex = 1;
-    @ViewInject(R.id.search_edittext)
     private EditText searchEdittext;
     private String keyword = "";
 
     @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_contacts);
+        onInit();
+        onInitData();
+        initEvent();
+    }
+
+    private void initEvent() {
+        findViewById(R.id.back_arrows).setOnClickListener(this);
+        findViewById(R.id.right_img).setOnClickListener(this);
+        findViewById(R.id.search_btn).setOnClickListener(this);
+    }
+
     public void onInit() {
+        title = (TextView) findViewById(R.id.title_tv);
+        mListView = (PullToRefreshListView) findViewById(R.id.listview);
+        searchEdittext = (EditText) findViewById(R.id.search_edittext);
+
         activity = this;
         title.setText("联系人");
         String titleName = getIntent().getStringExtra("TitleName");
@@ -66,8 +79,7 @@ public class ContactsActivity extends BaseActivity implements AdapterView.OnItem
         mListView.setOnRefreshListener(this);
     }
 
-    @Event(value = {R.id.back_arrows, R.id.right_img, R.id.search_btn})
-    private void onClick(View v) {
+    public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
@@ -86,7 +98,6 @@ public class ContactsActivity extends BaseActivity implements AdapterView.OnItem
         }
     }
 
-    @Override
     public void onInitData() {
         loadData(pageIndex, keyword);
     }

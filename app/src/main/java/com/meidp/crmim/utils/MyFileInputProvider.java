@@ -35,7 +35,7 @@ public class MyFileInputProvider extends FileInputProvider {
 
     @Override
     public void onPluginClick(View view) {
-        ToastUtils.shows(RongContext.getInstance(), "点击了文件");
+//        ToastUtils.shows(RongContext.getInstance(), "点击了文件");
         Intent intent = new Intent();
         intent.setClass(getContext(), DocumentListActivity.class);
 

@@ -22,20 +22,7 @@ public class BasicActivity extends AppCompatActivity{
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         StatusBarUtils.setStatusBarColor(this, R.color.black);
-        onInit();
-        onInitData();
-        onInitEvent();
-    }
-
-    public void onInit() {
 
     }
 
-    public void onInitData() {
-
-    }
-
-    public void onInitEvent() {
-
-    }
 }

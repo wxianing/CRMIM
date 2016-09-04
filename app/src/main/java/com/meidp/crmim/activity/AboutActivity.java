@@ -1,5 +1,7 @@
 package com.meidp.crmim.activity;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -21,19 +23,29 @@ import org.xutils.view.annotation.ViewInject;
 
 import java.util.HashMap;
 
-@ContentView(R.layout.activity_about)
-public class AboutActivity extends BaseActivity {
-    @ViewInject(R.id.title_tv)
+public class AboutActivity extends BasicActivity {
     private TextView title;
-    @ViewInject(R.id.version_name)
     private TextView versionName;
-    @ViewInject(R.id.latest_version)
     private TextView latestVersion;
 
     @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_about);
+        onInit();
+        onInitData();
+    }
+
     public void onInit() {
+        findById();//初始化控件
         title.setText("关于");
         versionName.setText("当前版本：" + AppUtils.getVersionName(AboutActivity.this));
+    }
+
+    private void findById() {
+        title = (TextView) findViewById(R.id.title_tv);
+        versionName = (TextView) findViewById(R.id.version_name);
+        latestVersion = (TextView) findViewById(R.id.latest_version);
     }
 
     @Event({R.id.back_arrows, R.id.version_name})
@@ -48,7 +60,6 @@ public class AboutActivity extends BaseActivity {
         }
     }
 
-    @Override
     public void onInitData() {
         HashMap params = new HashMap();
         params.put("AppId", 102);

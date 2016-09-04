@@ -2,6 +2,7 @@ package com.meidp.crmim.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -27,13 +28,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-@ContentView(R.layout.activity_approval_cost)
-public class ApprovalCostActivity extends BaseActivity implements AdapterView.OnItemClickListener, PullToRefreshBase.OnRefreshListener2<ListView> {
-    @ViewInject(R.id.title_tv)
+public class ApprovalCostActivity extends BasicActivity implements AdapterView.OnItemClickListener, PullToRefreshBase.OnRefreshListener2<ListView>, View.OnClickListener {
     private TextView title;
 
-    @ViewInject(R.id.listview)
     private PullToRefreshListView mListView;
+
     private List<ApprovalCosts> mDatas;
     private ApprovalCostAdapter mAdapter;
 
@@ -42,7 +41,21 @@ public class ApprovalCostActivity extends BaseActivity implements AdapterView.On
     private int sType = 1;
 
     @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_approval_cost);
+        onInit();
+        onInitData();
+        initEvent();
+    }
+
+    private void initEvent() {
+        findViewById(R.id.back_arrows).setOnClickListener(this);
+    }
+
     public void onInit() {
+        title = (TextView) findViewById(R.id.title_tv);
+        mListView = (PullToRefreshListView) findViewById(R.id.listview);
         title.setText("审批费用");
         mDatas = new ArrayList<>();
         mListView.setMode(PullToRefreshBase.Mode.BOTH);
@@ -52,7 +65,6 @@ public class ApprovalCostActivity extends BaseActivity implements AdapterView.On
         mListView.setOnRefreshListener(this);
     }
 
-    @Override
     public void onInitData() {
         loadData(pageIndex, keyword);
     }
@@ -77,8 +89,7 @@ public class ApprovalCostActivity extends BaseActivity implements AdapterView.On
         });
     }
 
-    @Event({R.id.back_arrows})
-    private void onClick(View v) {
+    public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();

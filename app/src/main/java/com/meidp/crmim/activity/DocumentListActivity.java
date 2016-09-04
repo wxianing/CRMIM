@@ -43,8 +43,6 @@ public class DocumentListActivity extends BasicActivity implements AdapterView.O
 
     private List<DocBean> mDagas;
 
-    private DocumentAdapter mAdapter;
-
     private ListView mListView;
     private int projectId;
     private int processId;
@@ -69,7 +67,6 @@ public class DocumentListActivity extends BasicActivity implements AdapterView.O
     }
 
     private void initEvent() {
-        mListView.setOnItemClickListener(this);
     }
 
     private void initView() {
@@ -92,10 +89,6 @@ public class DocumentListActivity extends BasicActivity implements AdapterView.O
         backImg.setOnClickListener(this);
 //        expListView.setGroupIndicator(null);//去掉默认箭头
 
-        List<DocBean> docBeans = (List<DocBean>) getIntent().getSerializableExtra("DocBean");
-        if (docBeans != null && docBeans.size() > 0) {
-//            mDagas.addAll(docBeans);
-        }
 
         Group g = new Group();
         g.setTitle("WORD");
@@ -142,9 +135,6 @@ public class DocumentListActivity extends BasicActivity implements AdapterView.O
         for (int i = 0; i < list.size(); i++) {
             expListView.expandGroup(i);
         }
-
-        mAdapter = new DocumentAdapter(mDagas, this);
-//        mListView.setAdapter(mAdapter);
     }
 
     private void queryFiles() {
@@ -155,18 +145,14 @@ public class DocumentListActivity extends BasicActivity implements AdapterView.O
         };
 
         String[] type = new String[]{"%.doc", "%.docx", "%.xlsx", "%.xls", "%.ppt", "%.pptx"};
-        Cursor cursor = null;
+        //全部展开
         for (int i = 0; i < type.length; i++) {
-            cursor = getCursor(beanList, projection, type[i]);
+           getCursor(beanList, projection, type[i]);
         }
-
         mDagas.addAll(beanList);
-
-        cursor.close();
-
     }
 
-    private Cursor getCursor(List<DocBean> beanList, String[] projection, String docType) {
+    private void getCursor(List<DocBean> beanList, String[] projection, String docType) {
         Cursor cursorDoc = getContentResolver().query(
                 Uri.parse("content://media/external/file"),
                 projection,
@@ -196,7 +182,7 @@ public class DocumentListActivity extends BasicActivity implements AdapterView.O
                 } while (cursorDoc.moveToNext());
             }
         }
-        return cursorDoc;
+        cursorDoc.close();
     }
 
     @Override

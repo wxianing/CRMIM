@@ -130,7 +130,7 @@ public class CompanyFragment extends Fragment implements AdapterView.OnItemClick
     }
 
     public void onInitData() {
-
+        loadData();
     }
 
     private void loadData() {
@@ -152,10 +152,6 @@ public class CompanyFragment extends Fragment implements AdapterView.OnItemClick
     @Override
     public void onResume() {
         super.onResume();
-        mDatas.clear();
-        loadData();
-        mAdapter.notifyDataSetChanged();
-//        mViewPager.startAutoScroll();
         if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
             /**
              * 设置连接状态变化的监听器.

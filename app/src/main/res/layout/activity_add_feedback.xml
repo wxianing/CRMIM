@@ -6,10 +6,37 @@
 
     <include layout="@layout/titlebar" />
 
+
+    <RadioGroup
+        android:layout_marginLeft="@dimen/dp20"
+        android:id="@+id/main_bottom_rg"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/transparent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp10">
+
+        <RadioButton
+            style="@style/MyCheckBox"
+            android:layout_weight="1"
+            android:text="  产品意见" />
+
+        <RadioButton
+            style="@style/MyCheckBox"
+            android:layout_weight="1"
+            android:text="  商务意见" />
+
+        <RadioButton
+            style="@style/MyCheckBox"
+            android:layout_weight="1"
+            android:text="  技术意见" />
+
+    </RadioGroup>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp20"
         android:background="@color/white">
 
         <TextView
@@ -41,35 +68,6 @@
         android:hint="说说你的意见..."
         android:textColorHint="@color/textcolor_gray"
         android:textSize="@dimen/sp14" />
-
-
-    <RadioGroup
-        android:layout_marginLeft="@dimen/dp20"
-        android:layout_marginTop="@dimen/dp10"
-        android:id="@+id/main_bottom_rg"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/transparent"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp10">
-
-        <RadioButton
-            style="@style/MyCheckBox"
-            android:layout_weight="1"
-            android:text="  产品意见" />
-
-        <RadioButton
-            style="@style/MyCheckBox"
-            android:layout_weight="1"
-            android:text="  商务意见" />
-
-        <RadioButton
-            style="@style/MyCheckBox"
-            android:layout_weight="1"
-            android:text="  技术意见" />
-
-    </RadioGroup>
 
     <Button
         android:id="@+id/submit_btn"

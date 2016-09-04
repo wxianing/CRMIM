@@ -101,11 +101,23 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         linearLayout.setFocusableInTouchMode(true);
         linearLayout.requestFocus();
         initPopupWindow();
+
+        getunReaderCount();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+        if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
+            /**
+             * 设置连接状态变化的监听器.
+             */
+            RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
+        }
+    }
+
+    private void getunReaderCount() {
         HashMap params = new HashMap();
         HttpRequestUtils.getmInstance().send(getActivity(), Constant.GETNOCHECKTOTAL_URL, params, new HttpRequestCallBack() {
             @Override
@@ -119,12 +131,6 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 }
             }
         });
-        if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
-            /**
-             * 设置连接状态变化的监听器.
-             */
-            RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
-        }
     }
 
     /**

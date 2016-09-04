@@ -3,6 +3,10 @@ package com.meidp.crmim.imkit;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,6 +28,7 @@ import com.meidp.crmim.activity.SecretaryActivity;
 import com.meidp.crmim.activity.SigninMainActivity;
 import com.meidp.crmim.activity.SubmitActivity;
 import com.meidp.crmim.fragment.BaseFragment;
+import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.utils.CopyUtils;
 import com.meidp.crmim.utils.DataUtils;
 import com.meidp.crmim.utils.FileUtils;
@@ -37,6 +42,9 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
@@ -205,16 +213,11 @@ public class ConversationListsFragment extends BaseFragment implements View.OnCl
                 filePath = "file://" + filePath;
                 Uri uri = Uri.parse(filePath);
 
-
                 FileMessage fileMessage = FileMessage.obtain(uri);
-
                 Message messageContent = Message.obtain(uiConversation.getConversationTargetId(), uiConversation.getConversationType(), fileMessage);
-
                 int dot = filePath.lastIndexOf("/");
                 String fileName = filePath.substring(dot + 1);
-
                 String fileUrl = (String) SPUtils.get(getActivity(), "FileUrl", "");
-
                 RongIM.getInstance().sendMediaMessage(messageContent, fileName, fileUrl, new IRongCallback.ISendMediaMessageCallback() {
                     @Override
                     public void onAttached(Message message) {
@@ -245,79 +248,102 @@ public class ConversationListsFragment extends BaseFragment implements View.OnCl
 
                     }
                 });
+            } else if (NullUtils.isNull(msgType) && msgType.equals("TextMessage")) {
+                String message = CopyUtils.paste(getActivity());
+                TextMessage textMessage = TextMessage.obtain(message);
+                Message messageContent = Message.obtain(uiConversation.getConversationTargetId(), uiConversation.getConversationType(), textMessage);
+                RongIM.getInstance().sendMessage(messageContent, null, null, new IRongCallback.ISendMessageCallback() {
+                    @Override
+                    public void onAttached(Message message) {
+                        //消息本地数据库存储成功的回调
+                    }
 
-            } else if (getActivity() != null) {
+                    @Override
+                    public void onSuccess(Message message) {
+                        //消息通过网络发送成功的回调
+                        if (type.getValue() == 1) {
+                            RongIM.getInstance().startPrivateChat(getActivity(), uiConversation.getConversationTargetId(), uiConversation.getUIConversationTitle());
+                        } else if (type.getValue() == 2) {
+                            RongIM.getInstance().startDiscussionChat(getActivity(), uiConversation.getConversationTargetId(), uiConversation.getUIConversationTitle());
+                        }
+                        if (ConversationListActivity.activity != null) {
+                            ConversationListActivity.activity.finish();
+                            ConversationListActivity.activity = null;
+                        }
+                        CopyUtils.copy("", getActivity());
+                    }
+
+                    @Override
+                    public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                        //消息发送失败的回调
+                    }
+                });
+            } else if (NullUtils.isNull(msgType) && msgType.equals("ImageMessage")) {
                 String localUrl = (String) SPUtils.get(context, "LocalUri", "");
                 String thumUri = (String) SPUtils.get(context, "ThumUri", "");
-                String remodeUri = (String) SPUtils.get(getActivity(), "RemoteUri", "");
-                String message = CopyUtils.paste(getActivity());
-                if (NullUtils.isNull(message)) {
-                    TextMessage textMessage = TextMessage.obtain(message);
-                    Message messageContent = Message.obtain(uiConversation.getConversationTargetId(), uiConversation.getConversationType(), textMessage);
+                String remodeUri =(String) SPUtils.get(getActivity(), "RemoteUri", "");
 
-                    RongIM.getInstance().sendMessage(messageContent, null, null, new IRongCallback.ISendMessageCallback() {
-                        @Override
-                        public void onAttached(Message message) {
-                            //消息本地数据库存储成功的回调
-                        }
+//                HttpRequestUtils.getmInstance().downLoadFile(remodeUri,);
 
-                        @Override
-                        public void onSuccess(Message message) {
-                            //消息通过网络发送成功的回调
-                            if (type.getValue() == 1) {
-                                RongIM.getInstance().startPrivateChat(getActivity(), uiConversation.getConversationTargetId(), uiConversation.getUIConversationTitle());
-                            } else if (type.getValue() == 2) {
-                                RongIM.getInstance().startDiscussionChat(getActivity(), uiConversation.getConversationTargetId(), uiConversation.getUIConversationTitle());
-                            }
-                            if (ConversationListActivity.activity != null) {
-                                ConversationListActivity.activity.finish();
-                                ConversationListActivity.activity = null;
-                            }
-                            CopyUtils.copy("", getActivity());
-                        }
+                File imageFileSource = new File(context.getCacheDir(), thumUri);
+                File imageFileThumb = new File(context.getCacheDir(), remodeUri);
 
-                        @Override
-                        public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-                            //消息发送失败的回调
-                        }
-                    });
-                    return true;
-                } else if (NullUtils.isNull(thumUri)) {
+                try {
+                    // 读取图片。
+                    InputStream is = context.getAssets().open(remodeUri);
+                    Bitmap bmpSource = BitmapFactory.decodeStream(is);
+                    imageFileSource.createNewFile();
+                    FileOutputStream fosSource = new FileOutputStream(imageFileSource);
+                    // 保存原图。
+                    bmpSource.compress(Bitmap.CompressFormat.JPEG, 100, fosSource);
+                    // 创建缩略图变换矩阵。
+                    Matrix m = new Matrix();
+                    m.setRectToRect(new RectF(0, 0, bmpSource.getWidth(), bmpSource.getHeight()), new RectF(0, 0, 160, 160), Matrix.ScaleToFit.CENTER);
+                    // 生成缩略图。
+                    Bitmap bmpThumb = Bitmap.createBitmap(bmpSource, 0, 0, bmpSource.getWidth(), bmpSource.getHeight(), m, true);
+                    imageFileThumb.createNewFile();
+                    FileOutputStream fosThumb = new FileOutputStream(imageFileThumb);
+                    // 保存缩略图。
+                    bmpThumb.compress(Bitmap.CompressFormat.JPEG, 60, fosThumb);
 
-                    File imageFileSource = FileUtils.getFileByUri(Uri.parse(thumUri), getActivity());
-                    File imageFileThumb = FileUtils.getFileByUri(Uri.parse(thumUri), getActivity());
-                    File imageFileRemode = FileUtils.getFileByUri(Uri.parse(remodeUri), getActivity());
-
-                    ImageMessage imgMsg = ImageMessage.obtain(Uri.fromFile(imageFileThumb), Uri.fromFile(imageFileThumb));
-
-                    RongIM.getInstance().sendImageMessage(uiConversation.getConversationType(), uiConversation.getConversationTargetId(), imgMsg, null, null, new RongIMClient.SendImageMessageCallback() {
-
-                        @Override
-                        public void onAttached(Message message) {
-                            //保存数据库成功
-                        }
-
-                        @Override
-                        public void onError(Message message, RongIMClient.ErrorCode code) {
-                            //发送失败
-                            Log.e("code", code.getMessage());
-                        }
-
-                        @Override
-                        public void onSuccess(Message message) {
-                            if (ConversationListActivity.activity != null) {
-                                ConversationListActivity.activity.finish();
-                                ConversationListActivity.activity = null;
-                            }
-                        }
-
-                        @Override
-                        public void onProgress(Message message, int progress) {
-                            //发送进度
-                        }
-                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+
+                ImageMessage imgMsg = ImageMessage.obtain(Uri.fromFile(imageFileThumb), Uri.fromFile(imageFileSource));
+                RongIM.getInstance().sendImageMessage(uiConversation.getConversationType(), uiConversation.getConversationTargetId(), imgMsg, null, null, new RongIMClient.SendImageMessageCallback() {
+                    @Override
+                    public void onAttached(Message message) {
+                        //保存数据库成功
+                    }
+
+                    @Override
+                    public void onError(Message message, RongIMClient.ErrorCode code) {
+                        //发送失败
+                        Log.e("code", code.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(Message message) {
+                        //消息通过网络发送成功的回调
+                        if (type.getValue() == 1) {
+                            RongIM.getInstance().startPrivateChat(getActivity(), uiConversation.getConversationTargetId(), uiConversation.getUIConversationTitle());
+                        } else if (type.getValue() == 2) {
+                            RongIM.getInstance().startDiscussionChat(getActivity(), uiConversation.getConversationTargetId(), uiConversation.getUIConversationTitle());
+                        }
+                        if (ConversationListActivity.activity != null) {
+                            ConversationListActivity.activity.finish();
+                            ConversationListActivity.activity = null;
+                        }
+                    }
+
+                    @Override
+                    public void onProgress(Message message, int progress) {
+                        //发送进度
+                    }
+                });
             }
+
             return true;
         }
     }

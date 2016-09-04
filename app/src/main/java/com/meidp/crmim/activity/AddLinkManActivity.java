@@ -1,6 +1,8 @@
 package com.meidp.crmim.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -27,50 +29,62 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
-@ContentView(R.layout.activity_add_link_man)
-public class AddLinkManActivity extends BaseActivity {
+public class AddLinkManActivity extends BasicActivity implements View.OnClickListener {
 
-    @ViewInject(R.id.title_tv)
     private TextView title;
-
-    @ViewInject(R.id.customer_name)
     private EditText customerNameEt;
-
-    @ViewInject(R.id.linkman_phone)
     private EditText linkmanPhoneEt;
-    @ViewInject(R.id.e_mail)
     private EditText emailEt;
-
-    @ViewInject(R.id.remark)
     private EditText remarkEt;
-
-    @ViewInject(R.id.sex_et)
     private EditText sexEt;
-    @ViewInject(R.id.department)
     private EditText departmentEt;
-    @ViewInject(R.id.qq_et)
     private EditText qqEt;
-    @ViewInject(R.id.age_et)
     private EditText ageEt;
-    @ViewInject(R.id.company_et)
     private EditText companyEt;
     private String custNo;
-    @ViewInject(R.id.positions)
     private EditText positionEt;
     private int teamId;
     private String teamName;
     private List<TeamDetails.UsersBean> userLists;
 
     @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_link_man);
+        onInit();
+        initEvent();
+    }
+
+    private void initEvent() {
+
+        findViewById(R.id.back_arrows).setOnClickListener(this);
+        findViewById(R.id.save_btn).setOnClickListener(this);
+        findViewById(R.id.sex_et).setOnClickListener(this);
+        findViewById(R.id.company_et).setOnClickListener(this);
+        findViewById(R.id.add_img).setOnClickListener(this);
+    }
+
+
     public void onInit() {
+        title = (TextView) findViewById(R.id.title_tv);
+        customerNameEt = (EditText) findViewById(R.id.customer_name);
+        linkmanPhoneEt = (EditText) findViewById(R.id.linkman_phone);
+        emailEt = (EditText) findViewById(R.id.e_mail);
+        remarkEt = (EditText) findViewById(R.id.remark);
+        sexEt = (EditText) findViewById(R.id.sex_et);
+        departmentEt = (EditText) findViewById(R.id.department);
+        qqEt = (EditText) findViewById(R.id.qq_et);
+        ageEt = (EditText) findViewById(R.id.age_et);
+        companyEt = (EditText) findViewById(R.id.company_et);
+        positionEt = (EditText) findViewById(R.id.positions);
+
         title.setText("添加团队成员");
         teamId = getIntent().getIntExtra("teamId", 0);
         teamName = getIntent().getStringExtra("TeamName");//接收过来的团队名称
         userLists = (List<TeamDetails.UsersBean>) getIntent().getSerializableExtra("UsersBean");//接收传过来的对象
     }
 
-    @Event(value = {R.id.back_arrows, R.id.save_btn, R.id.sex_et, R.id.company_et, R.id.add_img})
-    private void onClick(View v) {
+    public void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
             case R.id.back_arrows:
@@ -163,5 +177,4 @@ public class AddLinkManActivity extends BaseActivity {
             companyEt.setText(custName);
         }
     }
-
 }

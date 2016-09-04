@@ -1,6 +1,8 @@
 package com.meidp.crmim.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -30,19 +32,32 @@ import java.util.List;
 /**
  * 公告/公文
  */
-@ContentView(R.layout.activity_announcement)
-public class AnnouncementActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2<ListView>, AdapterView.OnItemClickListener {
-    @ViewInject(R.id.title_tv)
+public class AnnouncementActivity extends BasicActivity implements PullToRefreshBase.OnRefreshListener2<ListView>, AdapterView.OnItemClickListener, View.OnClickListener {
     private TextView title;
     private int pageIndex = 1;
-    @ViewInject(R.id.listview)
     private PullToRefreshListView mListView;
     private List<Announcements> mDatas;
     private AnnouncementAdapter mAdapter;
     public static AnnouncementActivity announcementActivity;
 
     @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_announcement);
+        onInit();
+        onInitData();
+        initEvent();
+    }
+
+    private void initEvent() {
+        findViewById(R.id.back_arrows).setOnClickListener(this);
+        findViewById(R.id.list_item).setOnClickListener(this);
+    }
+
     public void onInit() {
+        title = (TextView) findViewById(R.id.title_tv);
+        mListView = (PullToRefreshListView) findViewById(R.id.listview);
+
         title.setText("公告");
         announcementActivity = this;
         mListView.setMode(PullToRefreshBase.Mode.BOTH);
@@ -53,7 +68,6 @@ public class AnnouncementActivity extends BaseActivity implements PullToRefreshB
         mListView.setOnItemClickListener(this);
     }
 
-    @Override
     public void onInitData() {
 //        loadData(pageIndex);
     }
@@ -76,8 +90,7 @@ public class AnnouncementActivity extends BaseActivity implements PullToRefreshB
         });
     }
 
-    @Event(value = {R.id.back_arrows, R.id.list_item})
-    private void onClick(View v) {
+    public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();

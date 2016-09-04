@@ -1,5 +1,7 @@
 package com.meidp.crmim.activity;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,17 +12,24 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 @ContentView(R.layout.activity_companytructure)
-public class CompanytructureActivity extends BaseActivity {
-    @ViewInject(R.id.title_tv)
+public class CompanytructureActivity extends BasicActivity implements View.OnClickListener {
     private TextView title;
 
     @Override
-    public void onInit() {
-        title.setText("组织架构");
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_companytructure);
+        onInit();
     }
 
-    @Event({R.id.back_arrows})
-    private void onClick(View v) {
+    public void onInit() {
+        title = (TextView) findViewById(R.id.title_tv);
+
+        title.setText("组织架构");
+        findViewById(R.id.back_arrows).setOnClickListener(this);
+    }
+
+    public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
