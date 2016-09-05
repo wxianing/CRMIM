@@ -101,10 +101,9 @@
 
             <com.meidp.crmim.view.ListViewForScrollView
                 android:id="@+id/listview"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp60"
+                android:layout_marginBottom="@dimen/dp20"
                 android:layout_marginLeft="@dimen/dp80"
                 android:layout_marginRight="@dimen/dp10"
                 android:layout_marginTop="@dimen/dp10" />
@@ -120,7 +119,8 @@
         android:layout_below="@+id/follow_layout"
         android:layout_marginBottom="@dimen/dp10"
         android:layout_marginTop="30dp"
-        android:paddingBottom="@dimen/dp5">
+        android:paddingBottom="@dimen/dp5"
+        android:visibility="gone">
 
         <Button
             android:id="@+id/button"

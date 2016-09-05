@@ -52,6 +52,4 @@
     <item type="id" name="rc_sent_status"/>
     <item type="id" name="rc_conversation_status" />
     <item type="id" name="rc_edit_text" />
-    <item name="rc_user_portrait" type="id" />
-    <item name="rc_user_name" type="id" />
 </resources>

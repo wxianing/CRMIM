@@ -17,7 +17,6 @@ package com.handmark.pulltorefresh.library;
 
 import android.view.View;
 import android.view.animation.Interpolator;
-import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;

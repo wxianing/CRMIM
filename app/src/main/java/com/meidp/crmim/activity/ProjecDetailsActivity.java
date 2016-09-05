@@ -1,20 +1,15 @@
 package com.meidp.crmim.activity;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.meidp.crmim.R;
-import com.meidp.crmim.adapter.ProgressAdapter;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppBean;
@@ -23,16 +18,14 @@ import com.meidp.crmim.model.ProjectDetails;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.ToastUtils;
-import com.meidp.crmim.view.ListViewForScrollView;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
-import java.net.URISyntaxException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * 项目详情
@@ -40,7 +33,6 @@ import java.util.List;
 
 @ContentView(R.layout.activity_projec_details)
 public class ProjecDetailsActivity extends BaseActivity {
-
     @ViewInject(R.id.title_right)
     private TextView titleRight;
     @ViewInject(R.id.title_tv)
@@ -72,24 +64,18 @@ public class ProjecDetailsActivity extends BaseActivity {
     @ViewInject(R.id.related_personnel)
     private TextView relatedPersonnel;
     @ViewInject(R.id.follow_layout)
-    private RelativeLayout follow_layout;
+    private LinearLayout follow_layout;
     @ViewInject(R.id.company_name)
     private TextView companyName;
     @ViewInject(R.id.department_name)
     private TextView departmentName;
     @ViewInject(R.id.positions_name)
     private TextView positionsName;
-    @ViewInject(R.id.process_listview)
-    private ListViewForScrollView processListview;
-    private List<ProjectDetails.ProcessListBean> processListBeanList;
 
-    private ProgressAdapter progressAdapter;
 
     @ViewInject(R.id.listview)
     private ListView mListView;
     private FollowAdapter mAdapter;
-    @ViewInject(R.id.scrollView)
-    private ScrollView scrollView;
 
     private ArrayList<ProjectDetails.ConstructionDetailsBean> mDatas;
 
@@ -98,17 +84,11 @@ public class ProjecDetailsActivity extends BaseActivity {
 
     @Override
     public void onInit() {
-        scrollView.smoothScrollTo(0, 20);
-
+        titleRight.setVisibility(View.VISIBLE);
         titleRight.setText("样机申请");
         title.setText("项目详情");
         oid = getIntent().getIntExtra("OID", -1);
         type = getIntent().getIntExtra("TYPE", -1);
-
-        processListBeanList = new ArrayList<>();
-        progressAdapter = new ProgressAdapter(processListBeanList, this, this, oid);
-        processListview.setAdapter(progressAdapter);
-
         if (type == 1) {
             button.setText("我来跟进");
             followBtn.setVisibility(View.GONE);
@@ -130,10 +110,6 @@ public class ProjecDetailsActivity extends BaseActivity {
 
     @Override
     public void onInitData() {
-        loadData();
-    }
-
-    private void loadData() {
         HashMap params = new HashMap();
         params.put("Id", oid);
         HttpRequestUtils.getmInstance().send(ProjecDetailsActivity.this, Constant.GET_PROJECT_DETAILS, params, new HttpRequestCallBack<String>() {
@@ -153,7 +129,7 @@ public class ProjecDetailsActivity extends BaseActivity {
                     } else {
                         projectNum.setText("项目编号：");
                     }
-                    if (NullUtils.isNull(appBean.getData().getCustLinkMan()) && !appBean.getData().getCustLinkMan().equals("待定")) {
+                    if (NullUtils.isNull(appBean.getData().getCustLinkMan())) {
                         projectLinkname.setText("联系人：" + appBean.getData().getCustLinkMan());
                     } else {
                         projectLinkname.setText("联系人：");
@@ -191,8 +167,8 @@ public class ProjecDetailsActivity extends BaseActivity {
                         mAdapter.notifyDataSetChanged();
                     }
                     //医院
-                    if (NullUtils.isNull(appBean.getData().getCustName())) {
-                        companyName.setText(appBean.getData().getCustName());
+                    if (NullUtils.isNull(appBean.getData().getCompanyName())) {
+                        companyName.setText(appBean.getData().getCompanyName());
                     }
                     //部门
                     if (NullUtils.isNull(appBean.getData().getDepartmentName())) {
@@ -202,9 +178,6 @@ public class ProjecDetailsActivity extends BaseActivity {
                     if (NullUtils.isNull(appBean.getData().getZhiWu())) {
                         positionsName.setText(appBean.getData().getZhiWu());
                     }
-                    //状态列表
-                    processListBeanList.addAll(appBean.getData().getProcessList());
-                    progressAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -241,11 +214,10 @@ public class ProjecDetailsActivity extends BaseActivity {
                 });
                 break;
             case R.id.follow_btn:
-                finish();
-//                intent = new Intent();
-//                intent.setClass(this, FollowProjectActivity.class);
-//                intent.putExtra("OID", oid);
-//                startActivity(intent);
+                intent = new Intent();
+                intent.setClass(this, FollowProjectActivity.class);
+                intent.putExtra("OID", oid);
+                startActivity(intent);
                 break;
 //            case R.id.follow_layout:
 //                if (mDatas != null && !mDatas.isEmpty()) {
@@ -258,24 +230,11 @@ public class ProjecDetailsActivity extends BaseActivity {
                 intent = new Intent(ProjecDetailsActivity.this, ModelMachineApplyActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.recode_visit://历史拜访
+            case R.id.recode_visit:
                 intent = new Intent(ProjecDetailsActivity.this, VisitRecordActivity.class);
-                intent.putExtra("KeyWord", projectNames);//项目名称
-                intent.putExtra("PeojectId",oid);//项目ID
+                intent.putExtra("KeyWord",projectNames);
                 startActivity(intent);
                 break;
         }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == 1029) {
-            Uri uri = data.getData();
-            String url;
-        } else if (resultCode == 1030) {
-            processListBeanList.clear();
-            loadData();
-        }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 }

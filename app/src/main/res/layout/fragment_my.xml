@@ -132,6 +132,7 @@
                     android:visibility="gone" />
             </LinearLayout>
 
+
             <LinearLayout
                 android:id="@+id/my_group"
                 android:layout_width="match_parent"
@@ -155,39 +156,6 @@
                     android:layout_marginLeft="@dimen/dp10"
                     android:layout_weight="1"
                     android:text="我发展的团队"
-                    android:textSize="@dimen/sp14" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/arrow_right"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-
-            <include layout="@layout/horizontal_line" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:paddingBottom="@dimen/dp10"
-                android:paddingLeft="@dimen/dp10"
-                android:paddingRight="@dimen/dp5"
-                android:paddingTop="@dimen/dp10">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/group_icon" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:layout_weight="1"
-                    android:text="部门管理"
                     android:textSize="@dimen/sp14" />
 
                 <ImageView

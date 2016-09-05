@@ -2,13 +2,11 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/white"
     android:clickable="true"
     android:orientation="vertical"
     android:padding="20.0dip">
 
     <LinearLayout
-        android:background="@color/white"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -51,7 +49,6 @@
             android:background="#ffd0d0d0" />
 
         <LinearLayout
-
             android:layout_width="fill_parent"
             android:layout_height="60.0dip"
             android:layout_gravity="bottom"
@@ -69,11 +66,11 @@
                 android:text="@string/cancel" />
 
             <Button
+                android:layout_marginLeft="@dimen/dp15"
                 android:id="@+id/positiveButton"
                 style="@style/text_15_666666_sdw"
                 android:layout_width="114.0dip"
                 android:layout_height="40.0dip"
-                android:layout_marginLeft="@dimen/dp15"
                 android:background="@drawable/linear_shape"
                 android:gravity="center"
                 android:text="@string/ok" />

@@ -1,8 +1,6 @@
 package com.meidp.crmim.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -25,35 +23,22 @@ import java.util.HashMap;
 /**
  * 公告详情
  */
-public class AnnounDetailsActivity extends BasicActivity implements View.OnClickListener {
+@ContentView(R.layout.activity_announ_details)
+public class AnnounDetailsActivity extends BaseActivity {
 
+    @ViewInject(R.id.title_tv)
     private TextView title;
+    @ViewInject(R.id.news_title)
     private TextView newsTitleTv;
+    @ViewInject(R.id.news_content)
     private TextView newsContentTv;
+    @ViewInject(R.id.create_time)
     private TextView createTime;
     private int isRead;
     private int oid;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_announ_details);
-        onInit();
-        onInitData();
-        initEvent();
-    }
-
-    private void initEvent() {
-        findViewById(R.id.back_arrows).setOnClickListener(this);
-    }
-
-
     public void onInit() {
-        title = (TextView) findViewById(R.id.title_tv);
-        newsTitleTv = (TextView) findViewById(R.id.news_title);
-        newsContentTv = (TextView) findViewById(R.id.news_content);
-        createTime = (TextView) findViewById(R.id.create_time);
-
         title.setText("公告详情");
         Intent intent = getIntent();
         String titleString = intent.getStringExtra("newsTitle");
@@ -66,6 +51,7 @@ public class AnnounDetailsActivity extends BasicActivity implements View.OnClick
         oid = getIntent().getIntExtra("OID", -1);
     }
 
+    @Override
     public void onInitData() {
         if (isRead == 0) {
             sendMsg();
@@ -100,7 +86,8 @@ public class AnnounDetailsActivity extends BasicActivity implements View.OnClick
         });
     }
 
-    public void onClick(View v) {
+    @Event(value = {R.id.back_arrows})
+    private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 Intent intent = new Intent(this, AnnouncementActivity.class);

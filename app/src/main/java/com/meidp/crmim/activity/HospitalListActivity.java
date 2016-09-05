@@ -1,6 +1,8 @@
 package com.meidp.crmim.activity;
 
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,14 +12,14 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.meidp.crmim.R;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppDatas;
+import com.meidp.crmim.model.ClientContacts;
 import com.meidp.crmim.model.CustomerLists;
 import com.meidp.crmim.utils.Constant;
+import com.meidp.crmim.utils.SPUtils;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -28,13 +30,13 @@ import java.util.HashMap;
 import java.util.List;
 
 @ContentView(R.layout.activity_hospital_list)
-public class HospitalListActivity extends BaseActivity implements AdapterView.OnItemClickListener, PullToRefreshBase.OnRefreshListener2<ListView> {
+public class HospitalListActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
     @ViewInject(R.id.title_tv)
     private TextView title;
 
     @ViewInject(R.id.listview)
-    private PullToRefreshListView mListView;
+    private ListView mListView;
     private List<CustomerLists> mDatas;
     private HospitalAadapter mAdapter;
     private int pageIndex = 1;
@@ -42,15 +44,14 @@ public class HospitalListActivity extends BaseActivity implements AdapterView.On
     @ViewInject(R.id.search_edittext)
     private EditText search;
 
+
     @Override
     public void onInit() {
         title.setText("请选择");
         mDatas = new ArrayList<>();
-        mListView.setMode(PullToRefreshBase.Mode.BOTH);
         mAdapter = new HospitalAadapter(mDatas, this);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
-        mListView.setOnRefreshListener(this);
     }
 
     @Event({R.id.back_arrows, R.id.search_btn})
@@ -62,8 +63,8 @@ public class HospitalListActivity extends BaseActivity implements AdapterView.On
             case R.id.search_btn:
                 keyword = search.getText().toString().trim();
                 mDatas.clear();
-                pageIndex = 1;
                 loadData(pageIndex, keyword);
+                keyword = "";
                 break;
         }
     }
@@ -78,7 +79,7 @@ public class HospitalListActivity extends BaseActivity implements AdapterView.On
         HashMap params = new HashMap();
         params.put("Keyword", keyword);
         params.put("PageIndex", pageIndex);
-        params.put("PageSize", 12);
+        params.put("PageSize", 8);
         HttpRequestUtils.getmInstance().send(HospitalListActivity.this, Constant.CUSTOMER_LIST_URL, params, new HttpRequestCallBack<String>() {
             @Override
             public void onSuccess(String result) {
@@ -87,7 +88,6 @@ public class HospitalListActivity extends BaseActivity implements AdapterView.On
                 if (appDatas != null && appDatas.getEnumcode() == 0) {
                     mDatas.addAll(appDatas.getData().getDataList());
                     mAdapter.notifyDataSetChanged();
-                    mListView.onRefreshComplete();
                 }
             }
         });
@@ -95,25 +95,14 @@ public class HospitalListActivity extends BaseActivity implements AdapterView.On
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.e("getCustName", ">>>>>>>>>>>>" + mDatas.get(position-1).getCustName());
+
+        Log.e("getCustName", ">>>>>>>>>>>>" + mDatas.get(position).getCustName());
         Intent intent = new Intent();
-        intent.putExtra("CustName", mDatas.get(position-1).getCustName());
-        intent.putExtra("CustNo", mDatas.get(position-1).getCustNo());
-        intent.putExtra("CustId", mDatas.get(position-1).getID());
+        intent.putExtra("CustName", mDatas.get(position).getCustName());
+        intent.putExtra("CustNo", mDatas.get(position).getCustNo());
+        SPUtils.save(this, "CustName", mDatas.get(position).getCustName());
+        SPUtils.save(this, "CustNo", mDatas.get(position).getCustNo());
         setResult(1012, intent);
         finish();
-    }
-
-    @Override
-    public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-        pageIndex = 1;
-        mDatas.clear();
-        loadData(pageIndex, keyword);
-    }
-
-    @Override
-    public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-        pageIndex++;
-        loadData(pageIndex, keyword);
     }
 }

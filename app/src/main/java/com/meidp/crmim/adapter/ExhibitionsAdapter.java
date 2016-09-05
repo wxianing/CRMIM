@@ -39,7 +39,7 @@ public class ExhibitionsAdapter extends BasicAdapter<Exhibitions> {
         vh.address.setText("地点：" + mDatas.get(position).getAddress());
         vh.time.setText("展会时间：" + mDatas.get(position).getExhibitionStartDate() + "~" + mDatas.get(position).getExhibitionEndDate());
         vh.dutyName.setText("负责人：" + mDatas.get(position).getLinkManName());
-//        vh.createTime.setText(mDatas.get(position).getCreateDate());
+        vh.createTime.setText(mDatas.get(position).getCreateDate());
 
         return convertView;
     }

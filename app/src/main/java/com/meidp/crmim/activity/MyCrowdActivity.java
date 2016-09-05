@@ -110,7 +110,7 @@ public class MyCrowdActivity extends BasicActivity implements View.OnClickListen
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         TeamMembers teamMembers = mDatas.get(position - 1);
-        Intent intent = new Intent(this, TeamMemberDetsilsActivity.class);
+        Intent intent = new Intent(this, MyCrowdDetailsActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("TeamMembers", teamMembers);
         intent.putExtras(bundle);

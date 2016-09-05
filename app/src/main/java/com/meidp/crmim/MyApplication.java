@@ -5,23 +5,14 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.text.TextUtils;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
 import com.baidu.mapapi.SDKInitializer;
-import com.meidp.crmim.http.HttpRequestCallBack;
-import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.http.OkHttpStack;
-import com.meidp.crmim.model.AppBean;
-import com.meidp.crmim.model.User;
-import com.meidp.crmim.utils.Constant;
-import com.meidp.crmim.utils.MyFileInputProvider;
 import com.meidp.crmim.utils.SPUtils;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -32,22 +23,12 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import org.xutils.x;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
 import cn.jpush.android.api.JPushInterface;
-import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.widget.provider.FileInputProvider;
-import io.rong.imkit.widget.provider.FileMessageItemProvider;
-import io.rong.imkit.widget.provider.ImageInputProvider;
-import io.rong.imkit.widget.provider.InputProvider;
-import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.UserInfo;
-import io.rong.message.FileMessage;
-import io.rong.message.GroupNotificationMessage;
 
 /**
  * Package：com.meidp.crmim
@@ -65,7 +46,6 @@ public class MyApplication extends Application {
     public static final String TAG = "VolleyPatterns";
     private RequestQueue mRequestQueue;
     public static String userCode;
-    private UserInfo users;
 
     @Override
     public void onCreate() {
@@ -84,66 +64,9 @@ public class MyApplication extends Application {
         if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext())) ||
                 "io.rong.push".equals(getCurProcessName(getApplicationContext()))) {
             RongIM.init(this);
-            try {
-                RongIM.registerMessageType(GroupNotificationMessage.class);
-                RongIM.registerMessageType(FileMessage.class);
 
-//                RongIM.getInstance().registerConversationTemplate();
-                RongIM.registerMessageTemplate(new FileMessageItemProvider());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            setInputProvider();
         }
-
         userCode = (String) SPUtils.get(this, "CODE", "");
-    }
-
-    private void setInputProvider() {
-
-
-        InputProvider.ExtendProvider[] singleProvider = {
-                new ImageInputProvider(RongContext.getInstance()),
-                //new RealTimeLocationInputProvider(RongContext.getInstance()), //带位置共享的地理位置
-                new MyFileInputProvider(RongContext.getInstance())//文件消息
-        };
-
-        InputProvider.ExtendProvider[] muiltiProvider = {
-                new ImageInputProvider(RongContext.getInstance()),
-                //new LocationInputProvider(RongContext.getInstance()),//地理位置
-                new MyFileInputProvider(RongContext.getInstance())//文件消息
-        };
-
-        RongIM.resetInputExtensionProvider(Conversation.ConversationType.PRIVATE, singleProvider);
-        RongIM.resetInputExtensionProvider(Conversation.ConversationType.DISCUSSION, muiltiProvider);
-        RongIM.resetInputExtensionProvider(Conversation.ConversationType.CUSTOMER_SERVICE, muiltiProvider);
-        RongIM.resetInputExtensionProvider(Conversation.ConversationType.GROUP, muiltiProvider);
-        RongIM.resetInputExtensionProvider(Conversation.ConversationType.CHATROOM, muiltiProvider);
-    }
-
-    /**
-     * 根据Id到本地服务器查找个人信息
-     *
-     * @param userId
-     * @return
-     */
-    private UserInfo findUserById(final String userId) {
-        HashMap params = new HashMap();
-        params.put("Id", Integer.valueOf(userId));
-        HttpRequestUtils.getmInstance().post(getApplicationContext(), Constant.GET_PERSON_INFORMATION, params, new HttpRequestCallBack() {
-            @Override
-            public void onSuccess(String result) {
-                AppBean<User> appBean = JSONObject.parseObject(result, new TypeReference<AppBean<User>>() {
-                });
-                if (appBean != null && appBean.getEnumcode() == 0) {
-                    String avatar = appBean.getData().getPhotoURL();
-                    String name = appBean.getData().getEmployeeName();
-                    users = new UserInfo(userId, name, Uri.parse(avatar));
-                    RongIM.getInstance().refreshUserInfoCache(users);//刷新用户数据
-                }
-            }
-        });
-        return users;
     }
 
     public static void initImageLoader(Context context) {
@@ -176,6 +99,7 @@ public class MyApplication extends Application {
     public static synchronized MyApplication getmInstance() {
         return mInstance;
     }
+
 
     public void addActivity(Activity activity) {
         activitys.add(activity);

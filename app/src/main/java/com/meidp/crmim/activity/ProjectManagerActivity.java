@@ -39,7 +39,7 @@ import java.util.List;
 @ContentView(R.layout.activity_project_manager)
 public class ProjectManagerActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2<ListView>, AdapterView.OnItemClickListener, View.OnClickListener {
     private int pageIndex = 1;
-    private int pageSize = 18;
+    private int pageSize = 8;
     private int sType = 0;
     @ViewInject(R.id.listview)
     private PullToRefreshListView mListView;
@@ -73,7 +73,7 @@ public class ProjectManagerActivity extends BaseActivity implements PullToRefres
 
     @Override
     public void onInitData() {
-        loadData(pageIndex);
+//        loadData(pageIndex);
     }
 
     private int sType3 = -1;
@@ -140,7 +140,7 @@ public class ProjectManagerActivity extends BaseActivity implements PullToRefres
                 startActivity(intent);
                 break;
             case R.id.right_img:
-                intent = new Intent(this, SubmissionActivity.class);
+                intent = new Intent(this, SubmitActivity.class);
                 startActivity(intent);
                 break;
         }
@@ -209,8 +209,8 @@ public class ProjectManagerActivity extends BaseActivity implements PullToRefres
     @Override
     protected void onResume() {
         super.onResume();
-//        mDatas.clear();
-//        loadData(pageIndex);
+        mDatas.clear();
+        loadData(pageIndex);
     }
 
     @Override
@@ -313,8 +313,7 @@ public class ProjectManagerActivity extends BaseActivity implements PullToRefres
                 sType3 = 9;
                 mTypePopWindow.dismiss();
                 break;
-            case R.id.all_type_tv://全部
-                sType3 = -1;
+            case R.id.all_type_tv:
                 sType2 = 0;
                 typeImg.setImageResource(R.mipmap.arrow_down);
                 mTypePopWindow.dismiss();

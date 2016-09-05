@@ -8,13 +8,76 @@
     tools:context="com.meidp.crmim.activity.NewGroupActivity">
 
     <include layout="@layout/titlebar" />
-s
-    <com.meidp.crmim.view.ExpListView
-        android:id="@+id/expListView"
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="#00000000"
-        android:dividerHeight="0dp"
-        android:groupIndicator="@drawable/lt_expandablelistviewselector"
-        android:scrollbars="none" />
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1200dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#DBDBDB"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dp5"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/search_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/search_edittext"
+                    android:hint="请输入关键字搜索"
+                    android:textSize="@dimen/sp14" />
+
+                <Button
+                    android:id="@+id/search_btn"
+                    android:layout_width="@dimen/dp60"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:background="@drawable/search_edittext"
+                    android:text="搜索"
+                    android:textColor="@color/textcolor_gray" />
+            </LinearLayout>
+
+            <GridView
+                android:id="@+id/gridview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:numColumns="6" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10"
+                android:text="请选择添加好友" />
+
+            <include layout="@layout/horizontal_line" />
+
+            <ListView
+                android:id="@+id/listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:visibility="gone" />
+
+            <com.meidp.crmim.view.ExpListView
+                android:id="@+id/expListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="#00000000"
+                android:dividerHeight="0dp"
+                android:groupIndicator="@drawable/lt_expandablelistviewselector"
+                android:scrollbars="none" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

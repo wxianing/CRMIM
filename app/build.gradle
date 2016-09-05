@@ -8,8 +8,8 @@ android {
         applicationId "com.meidp.crmim"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 7
-        versionName "1.0.6"
+        versionCode 1
+        versionName "1.0.0"
     }
     buildTypes {
         release {
@@ -46,5 +46,5 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.18'
     compile 'com.android.support:support-v4:23.4.0'
     compile files('libs/zxing.jar')
-    compile project(':imkit')
+    compile project(':RongKit')
 }

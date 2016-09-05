@@ -1,7 +1,6 @@
 package com.meidp.crmim.activity;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -52,7 +51,7 @@ public class MyCreditActivity extends BaseActivity {
 
     @Override
     public void onInit() {
-        title.setText("我的诚信度");
+        title.setText("我的信用");
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
@@ -74,11 +73,10 @@ public class MyCreditActivity extends BaseActivity {
     @Override
     public void onInitData() {
         HashMap params = new HashMap();
+
         HttpRequestUtils.getmInstance().send(MyCreditActivity.this, Constant.PERFORMANCE_URL, params, new HttpRequestCallBack() {
             @Override
             public void onSuccess(String result) {
-
-                Log.e("result", result);
                 AppBean<Performances> appBean = JSONObject.parseObject(result, new TypeReference<AppBean<Performances>>() {
                 });
                 if (appBean != null && appBean.getEnumcode() == 0) {
@@ -96,12 +94,8 @@ public class MyCreditActivity extends BaseActivity {
         projectReimburse.setText("项目已报销：" + appBean.getData().getProjectReimburse());
         startEndDate.setText("项目起止时间：" + appBean.getData().getStartDate() + "~" + appBean.getData().getEndDate());
 
-        if (appBean.getData().getPrjectTotalCount() != 0) {
-            double rate = (double) appBean.getData().getFinishProejct() / (double) appBean.getData().getPrjectTotalCount() *100;
-            creditRate.setText("我的诚信度：" +  Math.floor(rate) + "%");
-        } else {
-            creditRate.setText("我的诚信度：" + 0 + "%");
-        }
+        double rate = (double) appBean.getData().getFinishProejct() / (double) appBean.getData().getPrjectTotalCount() * 100;
+        creditRate.setText("我的诚信度：" + rate + "%");
     }
 
     @Event(value = {R.id.back_arrows, R.id.unscramble})

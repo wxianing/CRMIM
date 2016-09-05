@@ -3,9 +3,6 @@ package com.meidp.crmim.fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,10 +55,14 @@ import io.rong.imlib.RongIMClient;
  * 作  用：公 司 页面
  * 时  间： 2016/8/6
  */
-public class CompanyFragment extends Fragment implements AdapterView.OnItemClickListener, PullToRefreshBase.OnRefreshListener2<ListView>, View.OnClickListener {
+@ContentView(R.layout.fragment_company)
+public class CompanyFragment extends BaseFragment implements AdapterView.OnItemClickListener, PullToRefreshBase.OnRefreshListener2<ListView> {
 
+    @ViewInject(R.id.title_tv)
     private TextView title;
+    @ViewInject(R.id.back_arrows)
     private ImageView backImg;
+    @ViewInject(R.id.listview)
     private ListView mListView;
     private List<InformationClassify> mDatas;
 
@@ -78,40 +79,20 @@ public class CompanyFragment extends Fragment implements AdapterView.OnItemClick
 
     private ImagePagerAdapter pagerAdapter;
 
+    @ViewInject(R.id.right_img)
     private ImageView rightImg;
     private PopupWindow mPopupWindow;
 
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_company, container, false);
-        onInit(view);
-        initEvent(view);
-        onInitData();
-        return view;
-    }
-
-    private void initEvent(View view) {
-
-        view.findViewById(R.id.right_img).setOnClickListener(this);
-
-    }
-
-    public void onInit(View view) {
-        title = (TextView) view.findViewById(R.id.title_tv);
-        backImg = (ImageView) view.findViewById(R.id.back_arrows);
-        mListView = (ListView) view.findViewById(R.id.listview);
-        rightImg = (ImageView) view.findViewById(R.id.right_img);
-        title = (TextView) view.findViewById(R.id.title_tv);
+    public void onInit() {
         rightImg.setImageResource(R.mipmap.more_icon);
         backImg.setVisibility(View.INVISIBLE);
         title.setText(R.string.title_name);
 //        imageUrls = new ArrayList<>();
         initPopupWindow();
-
         View headerView = LayoutInflater.from(getActivity()).inflate(R.layout.auto_viewpager, null);
         View footerView = LayoutInflater.from(getActivity()).inflate(R.layout.company_list_footer, null);
+
         LinearLayout layout = (LinearLayout) footerView.findViewById(R.id.company_structure_layout);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,13 +105,62 @@ public class CompanyFragment extends Fragment implements AdapterView.OnItemClick
         mDatas = new ArrayList<>();
         mListView.setOnItemClickListener(this);
 //        mListView.setOnRefreshListener(this);
-
-
         mAdapter = new InformationAdapter(mDatas, getActivity());
     }
 
+    @Event({R.id.visit_client, R.id.new_group, R.id.submit_project, R.id.apply_model, R.id.right_img})
+    private void onClick(View v) {
+        Intent intent = null;
+        switch (v.getId()) {
+            case R.id.visit_client://客户拜访
+                intent = new Intent(getActivity(), SigninMainActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.new_group://新建群组
+                intent = new Intent(getActivity(), NewGroupActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.submit_project://申报项目
+                intent = new Intent(getActivity(), SubmitActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.apply_model:
+                intent = new Intent(getActivity(), ModelMachineApplyActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.right_img:
+                if (!mPopupWindow.isShowing()) {
+                    showPopupWindow();
+                } else {
+                    mPopupWindow.dismiss();
+                }
+                break;
+        }
+    }
+
+    @Override
     public void onInitData() {
-        loadData();
+        //轮播广告图片
+//        HashMap params = new HashMap();
+//        HttpRequestUtils.getmInstance().send(getActivity(), Constant.BANNER_URL, params, new HttpRequestCallBack<String>() {
+//            @Override
+//            public void onSuccess(String result) {
+//                Log.e("HomeFragment", result);
+//                AppBeans<Banner> appBean = JSONObject.parseObject(result, new TypeReference<AppBeans<Banner>>() {
+//                });
+//                if (appBean != null && appBean.getEnumcode() == 0) {
+//                    imageUrls.addAll(appBean.getData());
+//                    pagerAdapter = new ImagePagerAdapter(getActivity(), imageUrls, dotLL);
+//                    mViewPager.setAdapter(pagerAdapter);
+//                    mViewPager.setOnPageChangeListener(pagerAdapter);
+//                    pagerAdapter.refreshData(true);
+//                }
+//            }
+//        });
     }
 
     private void loadData() {
@@ -152,6 +182,10 @@ public class CompanyFragment extends Fragment implements AdapterView.OnItemClick
     @Override
     public void onResume() {
         super.onResume();
+        mDatas.clear();
+        loadData();
+        mAdapter.notifyDataSetChanged();
+//        mViewPager.startAutoScroll();
         if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
             /**
              * 设置连接状态变化的监听器.
@@ -168,7 +202,8 @@ public class CompanyFragment extends Fragment implements AdapterView.OnItemClick
                 case CONNECTED://连接成功。
                     break;
                 case DISCONNECTED://断开连接。
-                    IMkitConnectUtils.connect(Constant.getTOKEN(), getActivity());
+                    String token = (String) SPUtils.get(getActivity(), "TOKEN", "");
+                    IMkitConnectUtils.connect(token, getActivity());
                     break;
                 case CONNECTING://连接中。
                     break;
@@ -229,48 +264,11 @@ public class CompanyFragment extends Fragment implements AdapterView.OnItemClick
 
     private void initPopupWindow() {
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.popup_list_layout, null);
-//        x.view().inject(this, contentView);
+        x.view().inject(this, contentView);
         mPopupWindow = new PopupWindow(contentView,
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         mPopupWindow.setContentView(contentView);
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-        contentView.findViewById(R.id.visit_client).setOnClickListener(this);
-        contentView.findViewById(R.id.new_group).setOnClickListener(this);
-        contentView.findViewById(R.id.submit_project).setOnClickListener(this);
-        contentView.findViewById(R.id.apply_model).setOnClickListener(this);
     }
 
-    @Override
-    public void onClick(View v) {
-        Intent intent = null;
-        switch (v.getId()) {
-            case R.id.visit_client://客户拜访
-                intent = new Intent(getActivity(), SigninMainActivity.class);
-                startActivity(intent);
-                mPopupWindow.dismiss();
-                break;
-            case R.id.new_group://新建群组
-                intent = new Intent(getActivity(), NewGroupActivity.class);
-                startActivity(intent);
-                mPopupWindow.dismiss();
-                break;
-            case R.id.submit_project://申报项目
-                intent = new Intent(getActivity(), SubmitActivity.class);
-                startActivity(intent);
-                mPopupWindow.dismiss();
-                break;
-            case R.id.apply_model:
-                intent = new Intent(getActivity(), ModelMachineApplyActivity.class);
-                startActivity(intent);
-                mPopupWindow.dismiss();
-                break;
-            case R.id.right_img:
-                if (!mPopupWindow.isShowing()) {
-                    showPopupWindow();
-                } else {
-                    mPopupWindow.dismiss();
-                }
-                break;
-        }
-    }
 }

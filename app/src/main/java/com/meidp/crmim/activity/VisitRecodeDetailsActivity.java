@@ -13,7 +13,6 @@ import org.xutils.view.annotation.ViewInject;
 
 @ContentView(R.layout.activity_visit_recode_details)
 public class VisitRecodeDetailsActivity extends BaseActivity {
-
     @ViewInject(R.id.title_tv)
     private TextView title;
     @ViewInject(R.id.title_name)
@@ -26,8 +25,6 @@ public class VisitRecodeDetailsActivity extends BaseActivity {
     private TextView vist_time;
     @ViewInject(R.id.content_tv)
     private TextView content;
-    @ViewInject(R.id.cust_phone)
-    private TextView custPhone;
 
     @Override
     public void onInit() {
@@ -36,17 +33,10 @@ public class VisitRecodeDetailsActivity extends BaseActivity {
         if (records != null) {
             titleName.setText(records.getTitle());
             if (NullUtils.isNull(records.getCustLinkManName())) {
-                custName.setText("联系人：" + records.getCustLinkManName());
+                custName.setText("客户名称：" + records.getCustLinkManName());
             } else {
-                custName.setText("联系人：");
+                custName.setText("客户名称：");
             }
-
-            if (NullUtils.isNull(records.getLinkTel())) {
-                custPhone.setText("电话：" + records.getLinkTel());
-            } else {
-                custPhone.setText("电话：");
-            }
-
             String timeStr = records.getModifiedDate();
             if (NullUtils.isNull(timeStr)) {
                 timeStr = timeStr.substring(0, timeStr.length() - 3);

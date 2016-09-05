@@ -21,54 +21,42 @@ public class IMkitConnectUtils {
      * @param token
      */
     public static void connect(final String token, final Context mContext) {
-        try {
-            //        if (NetUtils.isConnected(mContext)) {
-            if (mContext.getApplicationInfo().packageName.equals(MyApplication.getCurProcessName(mContext.getApplicationContext()))) {
+
+        if (mContext.getApplicationInfo().packageName.equals(MyApplication.getCurProcessName(mContext.getApplicationContext()))) {
+
+            /**
+             * IMKit SDK调用第二步,建立与服务器的连接
+             */
+            RongIM.connect(token, new RongIMClient.ConnectCallback() {
+
                 /**
-                 * IMKit SDK调用第二步,建立与服务器的连接
+                 * Token 错误，在线上环境下主要是因为 Token 已经过期，您需要向 App Server 重新请求一个新的 Token
                  */
-                RongIM.connect(token, new RongIMClient.ConnectCallback() {
-                    /**
-                     * Token 错误，在线上环境下主要是因为 Token 已经过期，您需要向 App Server 重新请求一个新的 Token
-                     */
-                    @Override
-                    public void onTokenIncorrect() {
-                        Log.e("IMkitConnectUtils", "--Token不正确");
-                    }
+                @Override
+                public void onTokenIncorrect() {
+                    Log.e("IMkitConnectUtils", "--Token不正确");
+                }
 
-                    /**
-                     * 连接融云成功
-                     *
-                     * @param userid 当前 token
-                     */
-                    @Override
-                    public void onSuccess(String userid) {
-                        Log.e("RongIMkit", "------userid=" + userid + "--连接融云成功");
+                /**
+                 * 连接融云成功
+                 * @param userid 当前 token
+                 */
+                @Override
+                public void onSuccess(String userid) {
+                    Log.e("RongIMkit", "------userid=" + userid + "--连接融云成功");
 //                    mContext.startActivity(new Intent(mContext, ConversationActivity.class));
-                    }
+                }
 
-                    /**
-                     * 连接融云失败
-                     *
-                     * @param errorCode 错误码，可到官网 查看错误码对应的注释
-                     */
-                    @Override
-                    public void onError(RongIMClient.ErrorCode errorCode) {
-                        IMkitConnectUtils.connect(token, mContext);
-                        Log.e("RondIMKit", "--融云服务器连接失败" + errorCode);
-                    }
-
-                    @Override
-                    public void onFail(int errorCode) {
-                        IMkitConnectUtils.connect(token, mContext);
-                        super.onFail(errorCode);
-                    }
-                });
-//            }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+                /**
+                 * 连接融云失败
+                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
+                 */
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    IMkitConnectUtils.connect(token, mContext);
+                    Log.e("RondIMKit", "--融云服务器连接成功" + errorCode);
+                }
+            });
         }
-        //</editor-fold>
     }
 }

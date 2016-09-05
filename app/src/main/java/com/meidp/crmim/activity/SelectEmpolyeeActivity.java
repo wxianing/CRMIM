@@ -2,13 +2,16 @@ package com.meidp.crmim.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -20,6 +23,7 @@ import com.meidp.crmim.adapter.TeamExpanAdapter;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppBeans;
+import com.meidp.crmim.model.AppDatas;
 import com.meidp.crmim.model.AppMsg;
 import com.meidp.crmim.model.Contact;
 import com.meidp.crmim.model.Friends;
@@ -50,6 +54,7 @@ public class SelectEmpolyeeActivity extends BaseActivity implements ExpandableLi
 
     private String keyWord = "";
 
+    @ViewInject(R.id.gridview)
     private GridView gridView;
     private CheckedAdapter checkedAdapter;
     private List<Friends> checkedLists;//选中列表
@@ -58,6 +63,7 @@ public class SelectEmpolyeeActivity extends BaseActivity implements ExpandableLi
     private List<String> userIds;
 
     private int checkNum;
+    @ViewInject(R.id.otherPerson)
     private EditText otherPersonEt;
 
     private SelectFriendAdapter.ViewHolder holder;
@@ -76,11 +82,6 @@ public class SelectEmpolyeeActivity extends BaseActivity implements ExpandableLi
 
     @Override
     public void onInit() {
-        View headerView = LayoutInflater.from(this).inflate(R.layout.header_new_group_layout, null);
-        headerView.findViewById(R.id.remark).setVisibility(View.GONE);
-        gridView = (GridView) headerView.findViewById(R.id.gridview);
-        expListView.addHeaderView(headerView);
-
         titleRight.setText("确定");
         titleRight.setVisibility(View.VISIBLE);
         title.setText("添加团队成员");
@@ -101,10 +102,10 @@ public class SelectEmpolyeeActivity extends BaseActivity implements ExpandableLi
 //        mListVIew.setOnItemClickListener(this);
         contactList = new ArrayList<>();
 //        expandableAdapter = new ExpanListAdapter(contactList, this);
-        expListView.setOnChildClickListener(this);
-        expListView.setOnGroupClickListener(this);
-        expListView.setAdapter(expandableAdapter);
-        expListView.setGroupIndicator(null);
+        expListView.getRefreshableView().setOnChildClickListener(this);
+        expListView.getRefreshableView().setOnGroupClickListener(this);
+        expListView.getRefreshableView().setAdapter(expandableAdapter);
+        expListView.getRefreshableView().setGroupIndicator(null);
     }
 
     @Override
@@ -120,7 +121,7 @@ public class SelectEmpolyeeActivity extends BaseActivity implements ExpandableLi
                     contactList.clear();
                     contactList.addAll(appBean.getData());
                     expandableAdapter = new TeamExpanAdapter(contactList, SelectEmpolyeeActivity.this);
-                    expListView.setAdapter(expandableAdapter);
+                    expListView.getRefreshableView().setAdapter(expandableAdapter);
                     if (userLists != null && !userLists.isEmpty()) {
                         for (int i = 0; i < userLists.size(); i++) {
                             TeamExpanAdapter.getIsSelected().put(userLists.get(i).getEmployeeId(), true);//默认吧原理已经有的成员选中
@@ -129,7 +130,7 @@ public class SelectEmpolyeeActivity extends BaseActivity implements ExpandableLi
                     }
                     expandableAdapter.notifyDataSetChanged();
                     for (int i = 0; i < contactList.size(); i++) {
-                        expListView.expandGroup(i);//默认展开选项
+                        expListView.getRefreshableView().expandGroup(i);//默认展开选项
                     }
                 }
             }

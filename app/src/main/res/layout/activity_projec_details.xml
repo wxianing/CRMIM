@@ -12,7 +12,6 @@
         layout="@layout/titlebar" />
 
     <ScrollView
-        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/title_bar"
@@ -28,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp10"
-                android:text="项目基本信息"
+                android:text="项目信息"
                 android:textSize="@dimen/sp13" />
 
             <TextView
@@ -101,6 +100,28 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp10"
+                    android:text="客户信息"
+                    android:textSize="@dimen/sp13" />
+
+                <TextView
+                    android:id="@+id/recode_visit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:padding="@dimen/dp10"
+                    android:text="拜访记录"
+                    android:textColor="#FF953E" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:padding="@dimen/dp10">
@@ -109,7 +130,7 @@
                     android:id="@+id/company_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="所属医院：" />
+                    android:text="医院：" />
 
                 <TextView
                     android:id="@+id/company_name"
@@ -118,23 +139,8 @@
                     android:layout_toRightOf="@+id/company_tv"
                     android:text="" />
 
-            </RelativeLayout>
-
-            <include layout="@layout/horizontal_line" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/dp10"
-                    android:text="项目关键人信息"
-                    android:textSize="@dimen/sp13" />
 
             </RelativeLayout>
-
 
             <include layout="@layout/horizontal_line" />
 
@@ -206,36 +212,18 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:padding="@dimen/dp10"
-                android:text="项目相关人员："
-                android:visibility="gone" />
+                android:text="项目相关人员：" />
 
             <include layout="@layout/horizontal_line" />
 
-            <RelativeLayout
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10"
+                android:text="其他"
+                android:textSize="@dimen/sp13" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/dp10"
-                    android:text="项目进展"
-                    android:textSize="@dimen/sp13" />
-
-                <TextView
-                    android:id="@+id/recode_visit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:padding="@dimen/dp10"
-                    android:text="拜访记录"
-                    android:textColor="#FF953E" />
-            </RelativeLayout>
-
-            <com.meidp.crmim.view.ListViewForScrollView
-                android:id="@+id/process_listview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <include layout="@layout/horizontal_line" />
 
             <TextView
                 android:id="@+id/register_date"
@@ -243,14 +231,14 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:padding="@dimen/dp10"
-                android:text="项目登记时间:"
-                android:visibility="gone" />
+                android:text="项目登记时间:" />
+
+            <include layout="@layout/horizontal_line" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:visibility="gone">
+                android:background="@color/white">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -272,16 +260,15 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp10"
                 android:text="跟进记录"
-                android:textSize="@dimen/sp13"
-                android:visibility="gone" />
+                android:textSize="@dimen/sp13" />
 
+            <include layout="@layout/horizontal_line" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/follow_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:visibility="gone">
+                android:background="@color/white">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -296,14 +283,14 @@
                     android:padding="10dp"
                     android:text="未有跟进信息"
                     android:textColor="@color/tc_gray" />
-            </RelativeLayout>
+            </LinearLayout>
 
+            <include layout="@layout/horizontal_line" />
 
             <ListView
                 android:id="@+id/listview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/remark_tv"
@@ -313,6 +300,7 @@
                 android:padding="@dimen/dp10"
                 android:text="备注: 无"
                 android:visibility="gone" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -345,7 +333,7 @@
                     android:layout_marginRight="@dimen/dp30"
                     android:layout_weight="1"
                     android:background="@drawable/button_shape"
-                    android:text="完成"
+                    android:text="跟进计划"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp16" />
             </LinearLayout>

@@ -3,24 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"
-    android:background="@color/default_background_color"
-    android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context="com.meidp.crmim.activity.CustomerListActivity">
+    android:background="@color/default_background_color"
+    tools:context="com.meidp.crmim.activity.ContactsActivity">
 
-    <include layout="@layout/titlebar_layout" />
-
-    <include layout="@layout/search_layout" />
-
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
+    <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/dp10"
-        android:layout_marginRight="@dimen/dp10"
-        android:divider="@color/transparent"
-        android:dividerHeight="8dp"
-        android:scrollbars="none" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

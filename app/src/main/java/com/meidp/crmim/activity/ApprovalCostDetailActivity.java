@@ -1,8 +1,6 @@
 package com.meidp.crmim.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,52 +29,36 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ApprovalCostDetailActivity extends BasicActivity implements View.OnClickListener {
+@ContentView(R.layout.activity_approval_cost_detail)
+public class ApprovalCostDetailActivity extends BaseActivity {
 
+    @ViewInject(R.id.title_tv)
     private TextView title;
     private ApprovalCosts approvalCosts;
+    @ViewInject(R.id.title_name)
     private TextView titleName;
+    @ViewInject(R.id.curr_status)
     private TextView currStatus;
+    @ViewInject(R.id.project_name)
     private TextView projectName;
+    @ViewInject(R.id.cust_name)
     private TextView custName;
+    @ViewInject(R.id.duty_name)
     private TextView dutyName;
+    @ViewInject(R.id.listview)
     private ListViewForScrollView mListView;
     private CheckCostAdapter mAdapter;
     private String billNo;
+    @ViewInject(R.id.apply_reason)
     private TextView applyReason;
+    @ViewInject(R.id.apply_time)
     private TextView applyTime;
     private int id;
+    @ViewInject(R.id.checked_opinion)
     private EditText checkedOpinion;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_approval_cost_detail);
-        onInit();
-        onInitData();
-        initEvent();
-    }
-
-    private void initEvent() {
-        //R.id.back_arrows, R.id.agree_btn, R.id.refuse_btn
-        findViewById(R.id.back_arrows).setOnClickListener(this);
-        findViewById(R.id.agree_btn).setOnClickListener(this);
-        findViewById(R.id.refuse_btn).setOnClickListener(this);
-    }
-
     public void onInit() {
-
-        title = (TextView) findViewById(R.id.title_tv);
-        titleName = (TextView) findViewById(R.id.title_name);
-        currStatus = (TextView) findViewById(R.id.curr_status);
-        projectName = (TextView) findViewById(R.id.project_name);
-        custName = (TextView) findViewById(R.id.cust_name);
-        dutyName = (TextView) findViewById(R.id.duty_name);
-        mListView = (ListViewForScrollView) findViewById(R.id.listview);
-        applyReason = (TextView) findViewById(R.id.apply_reason);
-        applyTime = (TextView) findViewById(R.id.apply_time);
-        checkedOpinion = (EditText) findViewById(R.id.checked_opinion);
-
         title.setText("详情");
         id = getIntent().getIntExtra("OID", 0);
         approvalCosts = (ApprovalCosts) getIntent().getSerializableExtra("ApprovalCosts");
@@ -84,6 +66,7 @@ public class ApprovalCostDetailActivity extends BasicActivity implements View.On
     }
 
 
+    @Override
     public void onInitData() {
         HashMap hashMap = new HashMap();
         hashMap.put("Id", id);
@@ -101,9 +84,7 @@ public class ApprovalCostDetailActivity extends BasicActivity implements View.On
 
     private void bindView(AppBean<CostDetails> appBean) {
         int status = Integer.valueOf(appBean.getData().getStatus());
-        if (approvalCosts != null) {
-            currStatus.setText(approvalCosts.getCheckStatusName());
-        }
+        currStatus.setText(appBean.getData().getFlowStatusName());
         titleName.setText(appBean.getData().getTitle());
         projectName.setText("项目名：" + appBean.getData().getProjectName());
 //        custName.setText("客户名：" + appBean.getData().getC);
@@ -119,7 +100,8 @@ public class ApprovalCostDetailActivity extends BasicActivity implements View.On
         mAdapter.notifyDataSetChanged();
     }
 
-    public void onClick(View v) {
+    @Event({R.id.back_arrows, R.id.agree_btn, R.id.refuse_btn})
+    private void onClick(View v) {
         String note = checkedOpinion.getText().toString().trim();
         switch (v.getId()) {
             case R.id.back_arrows:

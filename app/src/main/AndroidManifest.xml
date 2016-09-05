@@ -4,8 +4,6 @@
     package="com.meidp.crmim">
 
     <!-- 录音 -->
-    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
@@ -53,7 +51,7 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="rqmu37QW28tL3UNSOVQHzc6gOGDuocgx" />
 
-        <activity android:name=".activity.LoginActivity">
+        <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -129,7 +127,7 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".activity.WelcomeActivity" />
+        <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.AnnouncementActivity" />
         <activity android:name=".activity.AnnounDetailsActivity" />
         <activity android:name=".activity.OpenSeaPoolActivity" />
@@ -316,13 +314,7 @@
         <activity android:name=".activity.ResetPwdActivity" />
         <activity android:name=".activity.MyMakeBargainActivity" />
         <activity android:name=".activity.MyCostingActivity" />
-        <activity android:name=".activity.TranActivity" />
-        <activity android:name=".activity.ProjectSelectActivity" />
-        <activity android:name=".activity.SubmissionActivity" />
-        <activity android:name=".activity.ImportantSystemActivity" />
-        <activity android:name=".activity.MyCrowdActivity" />
-        <activity android:name=".activity.AddCrowdActivity" />
-        <activity android:name=".activity.DocumentListActivity"></activity>
+        <activity android:name=".activity.TranActivity"></activity>
     </application>
 
 </manifest>

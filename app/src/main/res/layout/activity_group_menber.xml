@@ -9,6 +9,13 @@
 
     <include layout="@layout/titlebar_layout" />
 
+    <TextView
+        android:id="@+id/reset_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:text="修改群名" />
+
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/listview"
         android:layout_width="match_parent"

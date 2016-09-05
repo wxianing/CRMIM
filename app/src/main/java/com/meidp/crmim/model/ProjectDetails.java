@@ -67,24 +67,6 @@ public class ProjectDetails implements Serializable {
     private String ZhiWu;
     private Object IsAppoint;
     private String CanViewUser;
-    /**
-     * ProcessList : null
-     * CustName : 上海市同仁医院
-     * CanViewUserName : 马云
-     */
-
-    private String CustName;
-    private String CanViewUserName;
-    /**
-     * ProcessId : 1
-     * ProcessName : 样机申请
-     * FileNames : null
-     * FilePaths : null
-     * orderby : 2
-     * Msg :
-     */
-
-    private List<ProcessListBean> ProcessList;
 
     public String getCanViewUser() {
         return CanViewUser;
@@ -344,31 +326,6 @@ public class ProjectDetails implements Serializable {
         this.StatusName = StatusName;
     }
 
-
-    public String getCustName() {
-        return CustName;
-    }
-
-    public void setCustName(String CustName) {
-        this.CustName = CustName;
-    }
-
-    public String getCanViewUserName() {
-        return CanViewUserName;
-    }
-
-    public void setCanViewUserName(String CanViewUserName) {
-        this.CanViewUserName = CanViewUserName;
-    }
-
-    public List<ProcessListBean> getProcessList() {
-        return ProcessList;
-    }
-
-    public void setProcessList(List<ProcessListBean> ProcessList) {
-        this.ProcessList = ProcessList;
-    }
-
     public static class ConstructionDetailsBean implements Serializable{
         private int ID;
         private String SummaryName;
@@ -495,129 +452,6 @@ public class ProjectDetails implements Serializable {
 
         public void setCreateDate(String CreateDate) {
             this.CreateDate = CreateDate;
-        }
-    }
-
-    public static class ProcessListBean implements Serializable {
-        private int ProcessId;
-        private String ProcessName;
-        private String FileNames;
-        private String FilePaths;
-        private int orderby;
-        private String Msg;
-        private String ProcessTime;
-        /**
-         * StatusName :
-         * IsCurrProcess : 0
-         */
-
-        private String StatusName;
-        private int IsCurrProcess;
-        /**
-         * FKId : 0
-         * CodeType : 0
-         * FlagType : 0
-         */
-
-        private int FKId;
-        private int CodeType;
-        private int FlagType;
-
-
-        public String getProcessTime() {
-            return ProcessTime;
-        }
-
-        public void setProcessTime(String processTime) {
-            ProcessTime = processTime;
-        }
-
-        public int getProcessId() {
-            return ProcessId;
-        }
-
-        public void setProcessId(int ProcessId) {
-            this.ProcessId = ProcessId;
-        }
-
-        public String getProcessName() {
-            return ProcessName;
-        }
-
-        public void setProcessName(String ProcessName) {
-            this.ProcessName = ProcessName;
-        }
-
-        public String getFileNames() {
-            return FileNames;
-        }
-
-        public void setFileNames(String FileNames) {
-            this.FileNames = FileNames;
-        }
-
-        public String getFilePaths() {
-            return FilePaths;
-        }
-
-        public void setFilePaths(String FilePaths) {
-            this.FilePaths = FilePaths;
-        }
-
-        public int getOrderby() {
-            return orderby;
-        }
-
-        public void setOrderby(int orderby) {
-            this.orderby = orderby;
-        }
-
-        public String getMsg() {
-            return Msg;
-        }
-
-        public void setMsg(String Msg) {
-            this.Msg = Msg;
-        }
-
-        public String getStatusName() {
-            return StatusName;
-        }
-
-        public void setStatusName(String StatusName) {
-            this.StatusName = StatusName;
-        }
-
-        public int getIsCurrProcess() {
-            return IsCurrProcess;
-        }
-
-        public void setIsCurrProcess(int IsCurrProcess) {
-            this.IsCurrProcess = IsCurrProcess;
-        }
-
-        public int getFKId() {
-            return FKId;
-        }
-
-        public void setFKId(int FKId) {
-            this.FKId = FKId;
-        }
-
-        public int getCodeType() {
-            return CodeType;
-        }
-
-        public void setCodeType(int CodeType) {
-            this.CodeType = CodeType;
-        }
-
-        public int getFlagType() {
-            return FlagType;
-        }
-
-        public void setFlagType(int FlagType) {
-            this.FlagType = FlagType;
         }
     }
 }

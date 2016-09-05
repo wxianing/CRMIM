@@ -1,7 +1,5 @@
 package com.meidp.crmim.activity;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -23,38 +21,26 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.HashMap;
 
 @ContentView(R.layout.activity_client_details)
-public class ClientDetailsActivity extends BasicActivity implements View.OnClickListener {
+public class ClientDetailsActivity extends BaseActivity {
+    @ViewInject(R.id.title_tv)
     private TextView title;
+
+    @ViewInject(R.id.name_tv)
     private TextView name;
+    @ViewInject(R.id.phone_num)
     private TextView phone_num;
+    @ViewInject(R.id.sex_tv)
     private TextView sex_tv;
+    @ViewInject(R.id.company_name)
     private TextView company_name;
+    @ViewInject(R.id.keshi)
     private TextView keshi;
+    @ViewInject(R.id.positions)
     private TextView positions;
     private int oid;
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_client_details);
-        onInit();
-        onInitData();
-        initEvent();
-    }
-
-    private void initEvent() {
-        findViewById(R.id.back_arrows).setOnClickListener(this);
-    }
-
-
     public void onInit() {
-        title = (TextView) findViewById(R.id.title_tv);
-        name = (TextView) findViewById(R.id.name_tv);
-        phone_num = (TextView) findViewById(R.id.phone_num);
-        sex_tv = (TextView) findViewById(R.id.sex_tv);
-        company_name = (TextView) findViewById(R.id.company_name);
-        keshi = (TextView) findViewById(R.id.keshi);
-        positions = (TextView) findViewById(R.id.positions);
-
         title.setText("客户详情");
         oid = getIntent().getIntExtra("OID", 0);
         ClientContacts contacts = (ClientContacts) getIntent().getSerializableExtra("ClientContacts");
@@ -68,6 +54,7 @@ public class ClientDetailsActivity extends BasicActivity implements View.OnClick
 //        }
     }
 
+    @Override
     public void onInitData() {
         HashMap params = new HashMap();
         params.put("Id", oid);
@@ -113,11 +100,13 @@ public class ClientDetailsActivity extends BasicActivity implements View.OnClick
         });
     }
 
-    public void onClick(View v) {
+    @Event({R.id.back_arrows})
+    private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
                 break;
         }
     }
+
 }

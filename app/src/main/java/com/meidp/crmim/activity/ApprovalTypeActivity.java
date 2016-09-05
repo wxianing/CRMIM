@@ -1,8 +1,6 @@
 package com.meidp.crmim.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,40 +21,25 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.HashMap;
 
 @ContentView(R.layout.activity_approval_type)
-public class ApprovalTypeActivity extends BasicActivity implements View.OnClickListener {
+public class ApprovalTypeActivity extends BaseActivity {
 
+    @ViewInject(R.id.title_tv)
     private TextView title;
+    @ViewInject(R.id.fee_unreader)
     private TextView feeUnReader;
+
+    @ViewInject(R.id.model_unreader)
     private TextView modelUnReader;
+    @ViewInject(R.id.stockup_unreader)
     private TextView stockupUnreader;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_approval_type);
-        onInit();
-        initEvent();
-    }
-
-    private void initEvent() {
-        findViewById(R.id.back_arrows).setOnClickListener(this);
-        findViewById(R.id.cost).setOnClickListener(this);
-        findViewById(R.id.prototype).setOnClickListener(this);
-        findViewById(R.id.stockup_layout).setOnClickListener(this);
-    }
-
-
     public void onInit() {
-        title = (TextView) findViewById(R.id.title_tv);
-        feeUnReader = (TextView) findViewById(R.id.fee_unreader);
-        modelUnReader = (TextView) findViewById(R.id.model_unreader);
-        stockupUnreader = (TextView) findViewById(R.id.stockup_unreader);
-
-
         title.setText("审批管理");
     }
 
-    public void onClick(View v) {
+    @Event({R.id.back_arrows, R.id.cost, R.id.prototype, R.id.stockup_layout})
+    private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
             case R.id.back_arrows:

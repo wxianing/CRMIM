@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Environment;
-import android.text.Selection;
 import android.util.Log;
-import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,13 +21,11 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.meidp.crmim.R;
 import com.meidp.crmim.activity.BaseActivity;
 import com.meidp.crmim.activity.GroupMenberActivity;
-import com.meidp.crmim.activity.NewGroupActivity;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppMsg;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.CopyUtils;
-import com.meidp.crmim.utils.CustomDialogUtils;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.utils.ToastUtils;
@@ -39,26 +34,15 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.widget.provider.CameraInputProvider;
-import io.rong.imkit.widget.provider.FileInputProvider;
-import io.rong.imkit.widget.provider.FileMessageItemProvider;
-import io.rong.imkit.widget.provider.IContainerItemProvider;
-import io.rong.imkit.widget.provider.ImageInputProvider;
-import io.rong.imkit.widget.provider.InputProvider;
-import io.rong.imkit.widget.provider.LocationInputProvider;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
-import io.rong.message.FileMessage;
 import io.rong.message.ImageMessage;
 import io.rong.message.RichContentMessage;
 import io.rong.message.StickerMessage;
@@ -93,28 +77,23 @@ public class ConversationActivity extends BaseActivity {
      */
     private Conversation.ConversationType mConversationType;
 
-    private String titleNameStr;
 
     @Override
     public void onInit() {
         activity = this;
         //获取聊天类型
-
         mConversationType = Conversation.ConversationType.valueOf(getIntent().getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
 
         titleRight.setVisibility(View.VISIBLE);
         titleRight.setImageResource(R.mipmap.three_dot);
-
         mTargetId = getIntent().getData().getQueryParameter("targetId");//获取聊天对象的Id
+        String titleName = getIntent().getData().getQueryParameter("title");//获取聊天对象的Id
 
-        titleNameStr = getIntent().getData().getQueryParameter("title");//获取聊天对象的标题
+        title.setText(titleName);
+        if (mConversationType.getName().equals("private")) {
+            titleRight.setVisibility(View.GONE);
+        }
 
-        title.setText(titleNameStr);
-
-
-        /**
-         * 如果是讨论组，点击讨论组名称可以修改名称
-         */
         if (mConversationType.getName().equals("discussion")) {
             title.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -129,24 +108,14 @@ public class ConversationActivity extends BaseActivity {
          * 设置会话界面操作的监听器。
          */
         RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
-
     }
 
-
-    /**
-     * 修改群名称
-     */
     private void showDialog() {
         final Dialog dialog = new Dialog(this, R.style.Dialog);
         View contentView = LayoutInflater.from(this).inflate(R.layout.edittext_dialog, null);
         TextView titleName = (TextView) contentView.findViewById(R.id.title);
         final EditText editText = (EditText) contentView.findViewById(R.id.message);
         titleName.setText("请输入群名称");
-
-        if (NullUtils.isNull(titleNameStr))
-            editText.setText(titleNameStr);
-        editText.setSelection(editText.getText().length());//把光标移到最后面
-
         dialog.setContentView(contentView);
         dialog.setCanceledOnTouchOutside(true);
         Button negativeButton = (Button) contentView.findViewById(R.id.negativeButton);
@@ -182,28 +151,9 @@ public class ConversationActivity extends BaseActivity {
                 dialog.dismiss();
             }
         });
-
-        /**
-         * 设置dialog对话框位置
-         */
-        Window dialogWindow = dialog.getWindow();
-        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-
-        WindowManager wm = getWindowManager();
-        Display d = wm.getDefaultDisplay(); // 获取屏幕宽、高用
-//        p.height = (int) (d.getHeight() * 0.6); // 高度设置为屏幕的0.6
-        lp.width = (int) (d.getWidth() * 0.75); // 宽度设置为屏幕的0.65
-
-        dialogWindow.setAttributes(lp);
         dialog.show();
     }
 
-    /**
-     * 修改群名
-     *
-     * @param s
-     * @param groupName
-     */
     private void sendMsg(String s, String groupName) {
         HashMap params = new HashMap();
         params.put("discussionId", s);
@@ -227,21 +177,12 @@ public class ConversationActivity extends BaseActivity {
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
-                if (ConversationListActivity.activity != null) {
-                    ConversationListActivity.activity.finish();
-                    ConversationListActivity.activity = null;
-                }
                 finish();
                 break;
             case R.id.right_img:
-                if (mConversationType.getName().equals("private")) {
-                    Intent intent = new Intent(this, NewGroupActivity.class);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(this, GroupMenberActivity.class);
-                    intent.putExtra("mTargetId", mTargetId);
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(this, GroupMenberActivity.class);
+                intent.putExtra("mTargetId", mTargetId);
+                startActivity(intent);
                 break;
         }
     }
@@ -344,17 +285,14 @@ public class ConversationActivity extends BaseActivity {
 
         final Dialog dialog = new Dialog(ConversationActivity.this, R.style.Dialog);
         View contentView = LayoutInflater.from(this).inflate(R.layout.message_dialog, null);
+        TextView titleName = (TextView) contentView.findViewById(R.id.title);
         dialog.setContentView(contentView);
         dialog.setCanceledOnTouchOutside(true);
-//        Window w = dialog.getWindow();
-//        WindowManager.LayoutParams lp = w.getAttributes();
-
-//        int[] position = new int[2];
-//        v.getLocationInWindow(position);
-
+        Window w = dialog.getWindow();
+        WindowManager.LayoutParams lp = w.getAttributes();
         //显示位置
-//        lp.x = position[0];
-//        lp.y = position[1];
+        lp.x = (int) v.getX();
+        lp.y = (int) v.getY();
 
         //复制
         TextView copy = (TextView) contentView.findViewById(R.id.copy);
@@ -369,6 +307,7 @@ public class ConversationActivity extends BaseActivity {
                 if (message.getObjectName().equals("RC:TxtMsg")) {
                     TextMessage textMessage = (TextMessage) message.getContent();
                     CopyUtils.copy(textMessage.getContent(), ConversationActivity.this);
+
                 } else if (message.getObjectName().equals("RC:ImgMsg")) {
                     ImageMessage imageMessage = (ImageMessage) message.getContent();
 //                    CopyUtils.copy(imageMessage.getBase64(), ConversationActivity.this);
@@ -390,60 +329,24 @@ public class ConversationActivity extends BaseActivity {
         transpond.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //转发文件
-                if (message.getObjectName().equals("RC:FileMsg")) {
-
-                    FileMessage fileMessage = (FileMessage) message.getContent();
-                    String savePath = Environment.getExternalStorageDirectory()
-                            .toString()
-                            + File.separator
-                            + fileMessage.getName();
-                    SPUtils.save(ConversationActivity.this, "FilePaths", savePath);
-                    String fileUrl = String.valueOf(fileMessage.getMediaUrl());
-                    SPUtils.save(ConversationActivity.this, "FileUrl", fileUrl);
-                    CustomDialogUtils.showProgressDialog(ConversationActivity.this);
-
-                    HttpRequestUtils.getmInstance().downLoadFile(fileUrl, savePath, new HttpRequestCallBack<File>() {
-
-                        @Override
-                        public void onSuccess(String result) throws IOException {
-
-                        }
-
-                        @Override
-                        public void onSuccess(File result) {
-                            super.onSuccess(result);
-                            ToastUtils.shows(ConversationActivity.this, "下载完成");
-                            CustomDialogUtils.cannelProgressDialog();
-                            Intent intent = new Intent(ConversationActivity.this, ConversationListActivity.class);
-                            intent.putExtra("TYPE", "FileMessage");
-                            startActivity(intent);
-                            finish();
-                        }
-                    });
-                //转发文本
-                } else if (message.getObjectName().equals("RC:TxtMsg")) {
+                if (message.getObjectName().equals("RC:TxtMsg")) {
                     TextMessage textMessage = (TextMessage) message.getContent();
                     Log.e("textMessage.message", "" + textMessage.getContent());
                     CopyUtils.copy(textMessage.getContent(), ConversationActivity.this);
                     Intent intent = new Intent(ConversationActivity.this, ConversationListActivity.class);
-                    intent.putExtra("TYPE", "TextMessage");
                     startActivity(intent);
                     finish();
-                    //转发图片
                 } else if (message.getObjectName().equals("RC:ImgMsg")) {
                     //图片
                     ImageMessage imageMessage = (ImageMessage) message.getContent();
                     Log.e("imageMessage", "getRemoteUri" + imageMessage.getRemoteUri());
                     Log.e("imageMessage", "getLocalUri" + imageMessage.getLocalUri());
                     Log.e("imageMessage", "getThumUri" + imageMessage.getThumUri());
-
 //                    Log.e("Base64", imageMessage.getBase64());
                     SPUtils.save(ConversationActivity.this, "RemoteUri", imageMessage.getRemoteUri());
                     SPUtils.save(ConversationActivity.this, "ThumUri", String.valueOf(imageMessage.getThumUri()));
                     SPUtils.save(ConversationActivity.this, "LocalUri", String.valueOf(imageMessage.getLocalUri()));
                     Intent intent = new Intent(ConversationActivity.this, ConversationListActivity.class);
-                    intent.putExtra("TYPE", "ImageMessage");
                     startActivity(intent);
                     finish();
                 } else if (message.getObjectName().equals("RC:ImgTextMsg")) {
@@ -474,11 +377,12 @@ public class ConversationActivity extends BaseActivity {
                     }
                 });
 
+
                 dialog.dismiss();
             }
         });
-//        w.setAttributes(lp);
         dialog.show();
+
     }
 
     /**

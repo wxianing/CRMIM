@@ -1,7 +1,5 @@
 package com.meidp.crmim.model;
 
-import com.meidp.crmim.utils.NullUtils;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -122,10 +120,7 @@ public class Exhibitions implements Serializable {
     }
 
     public String getTitle() {
-        if (NullUtils.isNull(Title)) {
-            return Title;
-        }
-        return "";
+        return Title;
     }
 
     public void setTitle(String Title) {
@@ -205,10 +200,7 @@ public class Exhibitions implements Serializable {
     }
 
     public String getAddress() {
-        if (NullUtils.isNull(Address)) {
-            return Address;
-        }
-        return "";
+        return Address;
     }
 
     public void setAddress(String Address) {

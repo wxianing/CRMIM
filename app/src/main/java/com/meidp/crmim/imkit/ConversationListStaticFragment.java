@@ -1,12 +1,9 @@
 package com.meidp.crmim.imkit;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,33 +24,27 @@ import com.meidp.crmim.activity.SearchMsgActivity;
 import com.meidp.crmim.activity.SecretaryActivity;
 import com.meidp.crmim.activity.SigninMainActivity;
 import com.meidp.crmim.activity.SubmitActivity;
+import com.meidp.crmim.fragment.BaseFragment;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.JPushNoReader;
 import com.meidp.crmim.utils.Constant;
-import com.meidp.crmim.utils.CopyUtils;
 import com.meidp.crmim.utils.DataUtils;
-import com.meidp.crmim.utils.FileUtils;
 import com.meidp.crmim.utils.IMkitConnectUtils;
-import com.meidp.crmim.utils.NetUtils;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.SPUtils;
 
+import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
+import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
 
-import java.io.File;
 import java.util.HashMap;
 
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
-import io.rong.imkit.model.UIConversation;
-import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.Message;
-import io.rong.message.FileMessage;
-import io.rong.message.ImageMessage;
-import io.rong.message.TextMessage;
 
 /**
  * Package： com.meidp.crmim.imkit
@@ -61,18 +52,25 @@ import io.rong.message.TextMessage;
  * 作  用：
  * 时  间： 2016/7/11
  */
-public class ConversationListStaticFragment extends Fragment implements View.OnClickListener {
+@ContentView(R.layout.conversationlist)
+public class ConversationListStaticFragment extends BaseFragment {
 
     private static final String ARG_PARAM1 = "KEY";
     private String mParams;
 
+    @ViewInject(R.id.title_tv)
     private TextView title;
+    @ViewInject(R.id.back_arrows)
     private ImageView backImg;
+    @ViewInject(R.id.layout)
     private LinearLayout layout;
 
+    @ViewInject(R.id.right_add)
     private ImageView rightImg;
+    @ViewInject(R.id.curr_time)
     private TextView currTime;
     private PopupWindow mPopupWindow;
+    @ViewInject(R.id.unreader)
     private TextView unreader;
 
     public static ConversationListStaticFragment newInstance(String params) {
@@ -92,40 +90,8 @@ public class ConversationListStaticFragment extends Fragment implements View.OnC
         }
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        if (NetUtils.isConnected(getActivity())) {
-        View view = inflater.inflate(R.layout.conversationlist, container, false);
-        onInit(view);
-        initEvent(view);
-        return view;
-//        }
-//        return null;
-    }
-
-    private void initEvent(View view) {
-        view.findViewById(R.id.search_edittext).setOnClickListener(this);
-        view.findViewById(R.id.right_add).setOnClickListener(this);
-        view.findViewById(R.id.right_scan).setOnClickListener(this);
-        view.findViewById(R.id.secretary_layout).setOnClickListener(this);
-    }
-
-
-    public void onInit(View view) {
-
-        title = (TextView) view.findViewById(R.id.title_tv);
-        backImg = (ImageView) view.findViewById(R.id.back_arrows);
-        layout = (LinearLayout) view.findViewById(R.id.layout);
-        rightImg = (ImageView) view.findViewById(R.id.right_add);
-        currTime = (TextView) view.findViewById(R.id.curr_time);
-        unreader = (TextView) view.findViewById(R.id.unreader);
-
-
-//        String token = (String) SPUtils.get(getActivity(), "TOEKN", "");
-//        if (RongIM.getInstance() == null) {
-//            IMkitConnectUtils.connect(token, getActivity());
-//        }
+    public void onInit() {
         rightImg.setImageResource(R.mipmap.more_icon);
         backImg.setVisibility(View.INVISIBLE);
         title.setText("消息");
@@ -156,22 +122,25 @@ public class ConversationListStaticFragment extends Fragment implements View.OnC
     }
 
 
+
     private class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
-        String token = (String) SPUtils.get(getActivity(), "TOKEN", "");
 
         @Override
         public void onChanged(ConnectionStatus connectionStatus) {
             switch (connectionStatus) {
 
                 case CONNECTED://连接成功。
+
                     break;
                 case DISCONNECTED://断开连接。
-
+                    String token = (String) SPUtils.get(getActivity(), "TOKEN", "");
                     IMkitConnectUtils.connect(token, getActivity());
                     break;
                 case CONNECTING://连接中。
+
                     break;
                 case NETWORK_UNAVAILABLE://网络不可用。
+
                     break;
                 case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
 
@@ -180,6 +149,7 @@ public class ConversationListStaticFragment extends Fragment implements View.OnC
         }
     }
 
+    @Override
     public void onInitData() {
         HashMap params = new HashMap();
         HttpRequestUtils.getmInstance().send(getActivity(), Constant.JPUSH_NORESDER_URL, params, new HttpRequestCallBack() {
@@ -219,76 +189,34 @@ public class ConversationListStaticFragment extends Fragment implements View.OnC
              */
             RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
         }
-
-        Log.e("ssssss", "sssssssssssss");
-
-        RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());
         super.onResume();
     }
 
-    /**
-     * 监听融云会话列表
-     */
-    private class MyConversationListBehaviorListener implements RongIM.ConversationListBehaviorListener {
-        @Override
-        public boolean onConversationPortraitClick(Context context, Conversation.ConversationType conversationType, String s) {
-            return false;
-        }
-
-        @Override
-        public boolean onConversationPortraitLongClick(Context context, Conversation.ConversationType conversationType, String s) {
-            return false;
-        }
-
-        /**
-         * 长按会话列表中的 item 时执行。
-         *
-         * @param context        上下文。
-         * @param view           触发点击的 View。
-         * @param uiConversation 长按时的会话条目。
-         * @return 如果用户自己处理了长按会话后的逻辑处理，则返回 true， 否则返回 false，false 走融云默认处理方式。
-         */
-        @Override
-        public boolean onConversationLongClick(Context context, View view, UIConversation uiConversation) {
-            return false;
-        }
-
-        /**
-         * 点击会话列表中的 item 时执行。
-         *
-         * @param context        上下文。
-         * @param view           触发点击的 View。
-         * @param uiConversation 会话条目。
-         * @return 如果用户自己处理了点击会话后的逻辑处理，则返回 true， 否则返回 false，false 走融云默认处理方式。
-         */
-        @Override
-        public boolean onConversationClick(Context context, View view, final UIConversation uiConversation) {
-
-            return false;
-        }
-    }
-
-    private void showPopupWindow() {
-//        mPopupWindow.showAsDropDown(titlebar );
-        mPopupWindow.showAsDropDown(rightImg, 10, 10);
-    }
-
-    private void initPopupWindow() {
-        View popupView = LayoutInflater.from(getActivity()).inflate(R.layout.popup_list_layout, null);
-//        x.view().inject(this, popupView);
-        mPopupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        mPopupWindow.setContentView(popupView);
-        mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-        popupView.findViewById(R.id.visit_client).setOnClickListener(this);
-        popupView.findViewById(R.id.new_group).setOnClickListener(this);
-        popupView.findViewById(R.id.submit_project).setOnClickListener(this);
-        popupView.findViewById(R.id.apply_model).setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
+    @Event({R.id.search_edittext, R.id.right_add, R.id.right_scan, R.id.secretary_layout, R.id.visit_client, R.id.new_group, R.id.submit_project, R.id.apply_model})
+    private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
+            case R.id.search_edittext:
+                intent = new Intent(getActivity(), SearchMsgActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.right_add:
+                if (!mPopupWindow.isShowing()) {
+                    showPopupWindow();
+                } else {
+                    mPopupWindow.dismiss();
+                }
+                break;
+            case R.id.right_scan:
+                intent = new Intent(getActivity(), DimensionCodeActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.secretary_layout:
+//                intent = new Intent(getActivity(), GroupActivity.class);
+//                startActivity(intent);
+                intent = new Intent(getActivity(), SecretaryActivity.class);
+                startActivity(intent);
+                break;
             case R.id.visit_client://客户拜访
                 intent = new Intent(getActivity(), SigninMainActivity.class);
                 startActivity(intent);
@@ -310,28 +238,22 @@ public class ConversationListStaticFragment extends Fragment implements View.OnC
                 mPopupWindow.dismiss();
                 break;
 
-            case R.id.search_edittext:
-                intent = new Intent(getActivity(), SearchMsgActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.right_add://下拉对话框
-                if (!mPopupWindow.isShowing()) {
-                    showPopupWindow();
-                } else {
-                    mPopupWindow.dismiss();
-                }
-                break;
-            case R.id.right_scan://二维码
-                intent = new Intent(getActivity(), DimensionCodeActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.secretary_layout:
-//                intent = new Intent(getActivity(), GroupActivity.class);
-//                startActivity(intent);
-                intent = new Intent(getActivity(), SecretaryActivity.class);
-                startActivity(intent);
-                break;
-
         }
     }
+
+    private void showPopupWindow() {
+//        mPopupWindow.showAsDropDown(titlebar );
+        mPopupWindow.showAsDropDown(rightImg, 10, 10);
+    }
+
+    private void initPopupWindow() {
+        View popupView = LayoutInflater.from(getActivity()).inflate(R.layout.popup_list_layout, null);
+        x.view().inject(this, popupView);
+        mPopupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        mPopupWindow.setContentView(popupView);
+        mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+    }
+
+
+
 }

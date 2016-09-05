@@ -1,42 +1,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:background="@color/default_background_color"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <include layout="@layout/titlebar" />
 
-
-    <RadioGroup
-        android:layout_marginLeft="@dimen/dp20"
-        android:id="@+id/main_bottom_rg"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/transparent"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp10">
-
-        <RadioButton
-            style="@style/MyCheckBox"
-            android:layout_weight="1"
-            android:text="  产品意见" />
-
-        <RadioButton
-            style="@style/MyCheckBox"
-            android:layout_weight="1"
-            android:text="  商务意见" />
-
-        <RadioButton
-            style="@style/MyCheckBox"
-            android:layout_weight="1"
-            android:text="  技术意见" />
-
-    </RadioGroup>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp20"
         android:background="@color/white">
 
         <TextView

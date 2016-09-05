@@ -91,7 +91,7 @@
                     style="@style/sub_editext"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:hint="点击选择" />
+                    android:hint="点击填写" />
 
                 <ImageView
                     android:id="@+id/add_img"
@@ -146,6 +146,7 @@
                 android:background="@color/white"
                 android:gravity="center"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:padding="@dimen/dp10">
 
                 <TextView

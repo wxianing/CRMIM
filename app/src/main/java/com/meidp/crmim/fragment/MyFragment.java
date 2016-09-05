@@ -1,20 +1,14 @@
 package com.meidp.crmim.fragment;
 
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.app.Fragment;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -32,7 +26,6 @@ import com.meidp.crmim.activity.PersonCentorActivity;
 import com.meidp.crmim.activity.ResetPwdActivity;
 import com.meidp.crmim.activity.SigninMainActivity;
 import com.meidp.crmim.activity.SubmitActivity;
-import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.IMkitConnectUtils;
 import com.meidp.crmim.utils.ImageUtils;
 import com.meidp.crmim.utils.NullUtils;
@@ -52,7 +45,7 @@ import io.rong.imlib.RongIMClient;
  * A simple {@link Fragment} subclass.
  */
 @ContentView(R.layout.fragment_my)
-public class MyFragment extends BaseFragment implements View.OnClickListener {
+public class MyFragment extends BaseFragment {
 
     @ViewInject(R.id.title_tv)
     private TextView title;
@@ -90,7 +83,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     }
 
     @Event(value = {R.id.person_center, R.id.logout, R.id.my_group, R.id.about_layout, R.id.reset_password, R.id.header_img, R.id.feedbook, R.id.visit_client, R.id.new_group, R.id.submit_project, R.id.apply_model, R.id.right_img})
-    private void click(View v) {
+    private void onClick(View v) {
         Intent intent = new Intent();
         switch (v.getId()) {
             case R.id.person_center://个人中心
@@ -98,8 +91,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.logout://退出登录
-//                logoutAlertDialog();
-                showDialog();
+                logoutAlertDialog();
                 break;
             case R.id.my_group:
 //                ToastUtils.shows(getActivity(), "正在开发");
@@ -119,7 +111,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 intent.setClass(getActivity(), PersonCentorActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.feedbook://意见反馈
+            case R.id.feedbook:
                 intent.setClass(getActivity(), FeedbackActivity.class);
                 startActivity(intent);
                 break;
@@ -153,58 +145,54 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
-    /**
-     * textview对话框
-     */
-    private void showDialog() {
-        final Dialog dialog = new Dialog(getActivity(), R.style.Dialog);
-        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_textview_layout, null);
-        TextView titleName = (TextView) contentView.findViewById(R.id.title);
-        TextView content = (TextView) contentView.findViewById(R.id.hint_content);
-        titleName.setText("温馨提示");//标题
-        content.setText("是否退出当前账户？");//提示你内容
+    public void showAlertDialog() {
 
-        dialog.setContentView(contentView);
-        dialog.setCanceledOnTouchOutside(true);
-        Button negativeButton = (Button) contentView.findViewById(R.id.negativeButton);
-        negativeButton.setClickable(true);
-        negativeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+        CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
+        builder.setMessage("请联系系统管理员修改密码");
+        builder.setTitle("提示");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
-        Button positiveButton = (Button) contentView.findViewById(R.id.positiveButton);
-        positiveButton.setClickable(true);
-        positiveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
+        builder.setNegativeButton("取消",
+                new android.content.DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.create().show();
+    }
+
+    public void logoutAlertDialog() {
+
+        CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
+        builder.setMessage("是否退出当前登录账号？");
+        builder.setTitle("温馨提示");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), LoginActivity.class);
                 if (MainActivity.mainActivity != null) {
                     MainActivity.mainActivity.finish();
                     MainActivity.mainActivity = null;
                 }
-                RongIM.getInstance().disconnect(true);
                 SPUtils.setLoginTag(getActivity(), false);
                 SPUtils.remove(getActivity(), "CODE");
 //                        SPUtils.clear(getActivity());
                 startActivity(intent);
-
                 dialog.dismiss();
             }
         });
-        Window dialogWindow = dialog.getWindow();
-        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
 
-        WindowManager wm = getActivity().getWindowManager();
-        Display d = wm.getDefaultDisplay(); // 获取屏幕宽、高用
-//        p.height = (int) (d.getHeight() * 0.6); // 高度设置为屏幕的0.6
-        lp.width = (int) (d.getWidth() * 0.75); // 宽度设置为屏幕的0.65
-
-        dialogWindow.setAttributes(lp);
-        dialog.show();
+        builder.setNegativeButton("取消",
+                new android.content.DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.create().show();
     }
 
     @Override
@@ -249,7 +237,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
                     break;
                 case DISCONNECTED://断开连接。
-                    IMkitConnectUtils.connect(Constant.getTOKEN(), getActivity());//如果连接断开重新连接
+                    String token = (String) SPUtils.get(getActivity(), "TOKEN", "");
+                    IMkitConnectUtils.connect(token, getActivity());//如果连接断开重新连接
                     break;
                 case CONNECTING://连接中。
 
@@ -271,40 +260,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     private void initPopupWindow() {
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.popup_list_layout, null);
-//        x.view().inject(this, contentView);
-        mPopupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        x.view().inject(this, contentView);
+        mPopupWindow = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         mPopupWindow.setContentView(contentView);
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-        contentView.findViewById(R.id.visit_client).setOnClickListener(this);
-        contentView.findViewById(R.id.new_group).setOnClickListener(this);
-        contentView.findViewById(R.id.submit_project).setOnClickListener(this);
-        contentView.findViewById(R.id.apply_model).setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        Intent intent = null;
-        switch (v.getId()) {
-            case R.id.visit_client://客户拜访
-                intent = new Intent(getActivity(), SigninMainActivity.class);
-                startActivity(intent);
-                mPopupWindow.dismiss();
-                break;
-            case R.id.new_group://新建群组
-                intent = new Intent(getActivity(), NewGroupActivity.class);
-                startActivity(intent);
-                mPopupWindow.dismiss();
-                break;
-            case R.id.submit_project://申报项目
-                intent = new Intent(getActivity(), SubmitActivity.class);
-                startActivity(intent);
-                mPopupWindow.dismiss();
-                break;
-            case R.id.apply_model:
-                intent = new Intent(getActivity(), ModelMachineApplyActivity.class);
-                startActivity(intent);
-                mPopupWindow.dismiss();
-                break;
-        }
     }
 }

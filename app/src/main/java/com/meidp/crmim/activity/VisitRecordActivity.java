@@ -39,12 +39,10 @@ public class VisitRecordActivity extends BaseActivity implements PullToRefreshBa
     private List<VisitRecords> mDatas;
     private VisitRecordAdapter mAdapter;
     private int pageIndex = 1;
-    private int projcetId;
 
     @Override
     public void onInit() {
         title.setText("拜访记录");
-        projcetId = getIntent().getIntExtra("ProjectId", 0);
         mListView.setMode(PullToRefreshBase.Mode.BOTH);
         mDatas = new ArrayList<>();
         mAdapter = new VisitRecordAdapter(mDatas, this);
@@ -60,8 +58,6 @@ public class VisitRecordActivity extends BaseActivity implements PullToRefreshBa
 
     private void loadData(int pageIndex) {
         HashMap params = new HashMap();
-        params.put("sType", 0);
-        params.put("sType2", projcetId);
         params.put("PageIndex", pageIndex);
         params.put("PageSize", 8);
         HttpRequestUtils.getmInstance().send(VisitRecordActivity.this, Constant.VISIT_RECORD_URL, params, new HttpRequestCallBack<String>() {

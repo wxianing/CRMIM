@@ -3,10 +3,6 @@ package com.meidp.crmim.imkit;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,7 +24,6 @@ import com.meidp.crmim.activity.SecretaryActivity;
 import com.meidp.crmim.activity.SigninMainActivity;
 import com.meidp.crmim.activity.SubmitActivity;
 import com.meidp.crmim.fragment.BaseFragment;
-import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.utils.CopyUtils;
 import com.meidp.crmim.utils.DataUtils;
 import com.meidp.crmim.utils.FileUtils;
@@ -42,9 +37,6 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
@@ -53,7 +45,6 @@ import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
-import io.rong.message.FileMessage;
 import io.rong.message.ImageMessage;
 import io.rong.message.TextMessage;
 
@@ -64,15 +55,13 @@ import io.rong.message.TextMessage;
  * 时  间： 2016/7/11
  */
 @ContentView(R.layout.conversationlist)
-public class ConversationListsFragment extends BaseFragment implements View.OnClickListener {
+public class ConversationListsFragment extends BaseFragment {
 
     private static final String ARG_PARAM1 = "KEY";
-    private static final String ARG_PARAM2 = "TYPE";
     private String mParams;
 
     @ViewInject(R.id.title_tv)
     private TextView title;
-
     @ViewInject(R.id.back_arrows)
     private ImageView backImg;
     @ViewInject(R.id.layout)
@@ -85,13 +74,11 @@ public class ConversationListsFragment extends BaseFragment implements View.OnCl
     private PopupWindow mPopupWindow;
     @ViewInject(R.id.unreader)
     private TextView unreader;
-    private String msgType;
 
-    public static ConversationListsFragment newInstance(String params, String type) {
+    public static ConversationListsFragment newInstance(String params) {
         ConversationListsFragment fragment = new ConversationListsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, params);
-        args.putString(ARG_PARAM2, type);
         fragment.setArguments(args);
         return fragment;
     }
@@ -101,14 +88,104 @@ public class ConversationListsFragment extends BaseFragment implements View.OnCl
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParams = getArguments().getString(ARG_PARAM1);
-            msgType = getArguments().getString(ARG_PARAM2);
             Log.e("mParam", mParams);
         }
     }
 
     @Override
     public void onInit() {
+        Log.e("mes", CopyUtils.paste(getActivity()));
+        RongIM.setConversationListBehaviorListener(new RongIM.ConversationListBehaviorListener() {
+            @Override
+            public boolean onConversationPortraitClick(Context context, Conversation.ConversationType conversationType, String s) {
+                return false;
+            }
 
+            @Override
+            public boolean onConversationPortraitLongClick(Context context, Conversation.ConversationType conversationType, String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onConversationLongClick(Context context, View view, UIConversation uiConversation) {
+                return false;
+            }
+
+            @Override
+            public boolean onConversationClick(Context context, View view, final UIConversation uiConversation) {
+                if (getActivity() != null) {
+                    String localUrl = (String) SPUtils.get(context, "LocalUri", "");
+                    String thumUri = (String) SPUtils.get(context, "ThumUri", "");
+                    String remodeUri = (String) SPUtils.get(getActivity(), "RemoteUri", "");
+                    String message = CopyUtils.paste(getActivity());
+                    if (NullUtils.isNull(message)) {
+                        TextMessage textMessage = TextMessage.obtain(message);
+                        Message messageContent = Message.obtain(uiConversation.getConversationTargetId(), uiConversation.getConversationType(), textMessage);
+                        final Conversation.ConversationType type = uiConversation.getConversationType();
+
+                        RongIM.getInstance().sendMessage(messageContent, null, null, new IRongCallback.ISendMessageCallback() {
+                            @Override
+                            public void onAttached(Message message) {
+                                //消息本地数据库存储成功的回调
+                            }
+
+                            @Override
+                            public void onSuccess(Message message) {
+                                //消息通过网络发送成功的回调
+                                if (type.getValue() == 1) {
+                                    RongIM.getInstance().startPrivateChat(getActivity(), uiConversation.getConversationTargetId(), uiConversation.getUIConversationTitle());
+                                } else if (type.getValue() == 2) {
+                                    RongIM.getInstance().startDiscussionChat(getActivity(), uiConversation.getConversationTargetId(), uiConversation.getUIConversationTitle());
+                                }
+                                if (ConversationListActivity.activity != null) {
+                                    ConversationListActivity.activity.finish();
+                                    ConversationListActivity.activity = null;
+                                }
+                                CopyUtils.copy("", getActivity());
+                            }
+
+                            @Override
+                            public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                                //消息发送失败的回调
+                            }
+                        });
+                        return true;
+                    } else if (NullUtils.isNull(thumUri)) {
+
+                        File imageFileSource = FileUtils.getFileByUri(Uri.parse(thumUri), getActivity());
+                        File imageFileThumb = FileUtils.getFileByUri(Uri.parse(thumUri), getActivity());
+                        File imageFileRemode = FileUtils.getFileByUri(Uri.parse(remodeUri),getActivity());
+
+                        ImageMessage imgMsg = ImageMessage.obtain(Uri.fromFile(imageFileThumb), Uri.fromFile(imageFileRemode));
+
+                        final Conversation.ConversationType type = uiConversation.getConversationType();
+                        RongIM.getInstance().sendImageMessage(uiConversation.getConversationType(), uiConversation.getConversationTargetId(), imgMsg, null, null, new RongIMClient.SendImageMessageCallback() {
+
+                            @Override
+                            public void onAttached(Message message) {
+                                //保存数据库成功
+                            }
+
+                            @Override
+                            public void onError(Message message, RongIMClient.ErrorCode code) {
+                                //发送失败
+                            }
+
+                            @Override
+                            public void onSuccess(Message message) {
+
+                            }
+
+                            @Override
+                            public void onProgress(Message message, int progress) {
+                                //发送进度
+                            }
+                        });
+                    }
+                }
+                return false;
+            }
+        });
         rightImg.setImageResource(R.mipmap.more_icon);
         backImg.setVisibility(View.INVISIBLE);
         title.setText("消息");
@@ -135,42 +212,15 @@ public class ConversationListsFragment extends BaseFragment implements View.OnCl
                     .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")//设置系统会话非聚合显示
                     .build();
             fragment.setUri(uri);
+            /**
+             * 设置会话列表界面操作的监听器。
+             */
+//            RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());
         }
     }
 
-    @Override
-    public void onResume() {
-        if (NullUtils.isNull(mParams) && NullUtils.isNull(msgType)) {
-            RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());
-        }
-        super.onResume();
-    }
+    private void sendImg(String localUrl, String thumUri) {
 
-    @Override
-    public void onClick(View v) {
-        Intent intent = null;
-        switch (v.getId()) {
-            case R.id.visit_client://客户拜访
-                intent = new Intent(getActivity(), SigninMainActivity.class);
-                startActivity(intent);
-                mPopupWindow.dismiss();
-                break;
-            case R.id.new_group://新建群组
-                intent = new Intent(getActivity(), NewGroupActivity.class);
-                startActivity(intent);
-                mPopupWindow.dismiss();
-                break;
-            case R.id.submit_project://申报项目
-                intent = new Intent(getActivity(), SubmitActivity.class);
-                startActivity(intent);
-                mPopupWindow.dismiss();
-                break;
-            case R.id.apply_model:
-                intent = new Intent(getActivity(), ModelMachineApplyActivity.class);
-                startActivity(intent);
-                mPopupWindow.dismiss();
-                break;
-        }
     }
 
     private class MyConversationListBehaviorListener implements RongIM.ConversationListBehaviorListener {
@@ -206,144 +256,30 @@ public class ConversationListsFragment extends BaseFragment implements View.OnCl
          * @return 如果用户自己处理了点击会话后的逻辑处理，则返回 true， 否则返回 false，false 走融云默认处理方式。
          */
         @Override
-        public boolean onConversationClick(Context context, View view, final UIConversation uiConversation) {
-            final Conversation.ConversationType type = uiConversation.getConversationType();
-            if (NullUtils.isNull(msgType) && msgType.equals("FileMessage")) {
-                String filePath = (String) SPUtils.get(getActivity(), "FilePaths", "");
-                filePath = "file://" + filePath;
-                Uri uri = Uri.parse(filePath);
-
-                FileMessage fileMessage = FileMessage.obtain(uri);
-                Message messageContent = Message.obtain(uiConversation.getConversationTargetId(), uiConversation.getConversationType(), fileMessage);
-                int dot = filePath.lastIndexOf("/");
-                String fileName = filePath.substring(dot + 1);
-                String fileUrl = (String) SPUtils.get(getActivity(), "FileUrl", "");
-                RongIM.getInstance().sendMediaMessage(messageContent, fileName, fileUrl, new IRongCallback.ISendMediaMessageCallback() {
-                    @Override
-                    public void onAttached(Message message) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(Message message) {
-                        //消息通过网络发送成功的回调
-                        if (type.getValue() == 1) {
-                            RongIM.getInstance().startPrivateChat(getActivity(), uiConversation.getConversationTargetId(), uiConversation.getUIConversationTitle());
-                        } else if (type.getValue() == 2) {
-                            RongIM.getInstance().startDiscussionChat(getActivity(), uiConversation.getConversationTargetId(), uiConversation.getUIConversationTitle());
-                        }
-                        if (ConversationListActivity.activity != null) {
-                            ConversationListActivity.activity.finish();
-                            ConversationListActivity.activity = null;
-                        }
-                    }
-
-                    @Override
-                    public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-
-                    }
-
-                    @Override
-                    public void onProgress(Message message, int i) {
-
-                    }
-                });
-            } else if (NullUtils.isNull(msgType) && msgType.equals("TextMessage")) {
+        public boolean onConversationClick(Context context, View view, UIConversation uiConversation) {
+            if (getActivity() != null) {
                 String message = CopyUtils.paste(getActivity());
-                TextMessage textMessage = TextMessage.obtain(message);
-                Message messageContent = Message.obtain(uiConversation.getConversationTargetId(), uiConversation.getConversationType(), textMessage);
-                RongIM.getInstance().sendMessage(messageContent, null, null, new IRongCallback.ISendMessageCallback() {
-                    @Override
-                    public void onAttached(Message message) {
-                        //消息本地数据库存储成功的回调
-                    }
-
-                    @Override
-                    public void onSuccess(Message message) {
-                        //消息通过网络发送成功的回调
-                        if (type.getValue() == 1) {
-                            RongIM.getInstance().startPrivateChat(getActivity(), uiConversation.getConversationTargetId(), uiConversation.getUIConversationTitle());
-                        } else if (type.getValue() == 2) {
-                            RongIM.getInstance().startDiscussionChat(getActivity(), uiConversation.getConversationTargetId(), uiConversation.getUIConversationTitle());
+                if (NullUtils.isNull(message)) {
+                    TextMessage textMessage = TextMessage.obtain(message);
+                    Message messageContent = Message.obtain(uiConversation.getConversationTargetId(), uiConversation.getConversationType(), textMessage);
+                    RongIM.getInstance().sendMessage(messageContent, null, null, new IRongCallback.ISendMessageCallback() {
+                        @Override
+                        public void onAttached(Message message) {
+                            //消息本地数据库存储成功的回调
                         }
-                        if (ConversationListActivity.activity != null) {
-                            ConversationListActivity.activity.finish();
-                            ConversationListActivity.activity = null;
+
+                        @Override
+                        public void onSuccess(Message message) {
+                            //消息通过网络发送成功的回调
                         }
-                        CopyUtils.copy("", getActivity());
-                    }
 
-                    @Override
-                    public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-                        //消息发送失败的回调
-                    }
-                });
-            } else if (NullUtils.isNull(msgType) && msgType.equals("ImageMessage")) {
-                String localUrl = (String) SPUtils.get(context, "LocalUri", "");
-                String thumUri = (String) SPUtils.get(context, "ThumUri", "");
-                String remodeUri =(String) SPUtils.get(getActivity(), "RemoteUri", "");
-
-//                HttpRequestUtils.getmInstance().downLoadFile(remodeUri,);
-
-                File imageFileSource = new File(context.getCacheDir(), thumUri);
-                File imageFileThumb = new File(context.getCacheDir(), remodeUri);
-
-                try {
-                    // 读取图片。
-                    InputStream is = context.getAssets().open(remodeUri);
-                    Bitmap bmpSource = BitmapFactory.decodeStream(is);
-                    imageFileSource.createNewFile();
-                    FileOutputStream fosSource = new FileOutputStream(imageFileSource);
-                    // 保存原图。
-                    bmpSource.compress(Bitmap.CompressFormat.JPEG, 100, fosSource);
-                    // 创建缩略图变换矩阵。
-                    Matrix m = new Matrix();
-                    m.setRectToRect(new RectF(0, 0, bmpSource.getWidth(), bmpSource.getHeight()), new RectF(0, 0, 160, 160), Matrix.ScaleToFit.CENTER);
-                    // 生成缩略图。
-                    Bitmap bmpThumb = Bitmap.createBitmap(bmpSource, 0, 0, bmpSource.getWidth(), bmpSource.getHeight(), m, true);
-                    imageFileThumb.createNewFile();
-                    FileOutputStream fosThumb = new FileOutputStream(imageFileThumb);
-                    // 保存缩略图。
-                    bmpThumb.compress(Bitmap.CompressFormat.JPEG, 60, fosThumb);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
+                        @Override
+                        public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                            //消息发送失败的回调
+                        }
+                    });
                 }
-
-                ImageMessage imgMsg = ImageMessage.obtain(Uri.fromFile(imageFileThumb), Uri.fromFile(imageFileSource));
-                RongIM.getInstance().sendImageMessage(uiConversation.getConversationType(), uiConversation.getConversationTargetId(), imgMsg, null, null, new RongIMClient.SendImageMessageCallback() {
-                    @Override
-                    public void onAttached(Message message) {
-                        //保存数据库成功
-                    }
-
-                    @Override
-                    public void onError(Message message, RongIMClient.ErrorCode code) {
-                        //发送失败
-                        Log.e("code", code.getMessage());
-                    }
-
-                    @Override
-                    public void onSuccess(Message message) {
-                        //消息通过网络发送成功的回调
-                        if (type.getValue() == 1) {
-                            RongIM.getInstance().startPrivateChat(getActivity(), uiConversation.getConversationTargetId(), uiConversation.getUIConversationTitle());
-                        } else if (type.getValue() == 2) {
-                            RongIM.getInstance().startDiscussionChat(getActivity(), uiConversation.getConversationTargetId(), uiConversation.getUIConversationTitle());
-                        }
-                        if (ConversationListActivity.activity != null) {
-                            ConversationListActivity.activity.finish();
-                            ConversationListActivity.activity = null;
-                        }
-                    }
-
-                    @Override
-                    public void onProgress(Message message, int progress) {
-                        //发送进度
-                    }
-                });
             }
-
             return true;
         }
     }
@@ -373,9 +309,51 @@ public class ConversationListsFragment extends BaseFragment implements View.OnCl
         }
     }
 
+    @Override
+    public void onInitData() {
+//        HashMap params = new HashMap();
+//        HttpRequestUtils.getmInstance().send(getActivity(), Constant.JPUSH_NORESDER_URL, params, new HttpRequestCallBack() {
+//            @Override
+//            public void onSuccess(String result) {
+//                JPushNoReader appBean = JSONObject.parseObject(result, new TypeReference<JPushNoReader>() {
+//                });
+//                if (appBean != null && appBean.getEnumcode() == 0) {
+//                    BadgeView badgeView = new BadgeView(getActivity());
+//                    badgeView.setBadgeCount(appBean.getData());
+//                    badgeView.setTargetView(unreader);
+//                }
+//            }
+//        });
+    }
 
-    @Event({R.id.search_edittext, R.id.right_add, R.id.right_scan, R.id.secretary_layout})
-    private void click(View v) {
+    @Override
+    public void onResume() {
+//        HashMap params = new HashMap();
+//        params.put("Id", 1);
+//        HttpRequestUtils.getmInstance().send(getActivity(), Constant.JPUSH_NORESDER_URL, params, new HttpRequestCallBack() {
+//            @Override
+//            public void onSuccess(String result) {
+//                Log.e("极光未读消息：", result);
+//                JPushNoReader appBean = JSONObject.parseObject(result, new TypeReference<JPushNoReader>() {
+//                });
+//                if (appBean != null && appBean.getEnumcode() == 0) {
+//                    BadgeView badgeView = new BadgeView(getActivity());
+//                    badgeView.setBadgeCount(appBean.getData());
+//                    badgeView.setTargetView(unreader);
+//                }
+//            }
+//        });
+//        if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
+//            /**
+//             * 设置连接状态变化的监听器.
+//             */
+//            RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
+//        }
+        super.onResume();
+    }
+
+    @Event({R.id.search_edittext, R.id.right_add, R.id.right_scan, R.id.secretary_layout, R.id.visit_client, R.id.new_group, R.id.submit_project, R.id.apply_model})
+    private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
             case R.id.search_edittext:
@@ -399,6 +377,27 @@ public class ConversationListsFragment extends BaseFragment implements View.OnCl
                 intent = new Intent(getActivity(), SecretaryActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.visit_client://客户拜访
+                intent = new Intent(getActivity(), SigninMainActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.new_group://新建群组
+                intent = new Intent(getActivity(), NewGroupActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.submit_project://申报项目
+                intent = new Intent(getActivity(), SubmitActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.apply_model:
+                intent = new Intent(getActivity(), ModelMachineApplyActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+
         }
     }
 
@@ -410,13 +409,9 @@ public class ConversationListsFragment extends BaseFragment implements View.OnCl
     private void initPopupWindow() {
         View popupView = LayoutInflater.from(getActivity()).inflate(R.layout.popup_list_layout, null);
 //        x.view().inject(this, popupView);
-//        x.view().inject(this, popupView);
+        x.view().inject(this, popupView);
         mPopupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         mPopupWindow.setContentView(popupView);
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-        popupView.findViewById(R.id.visit_client).setOnClickListener(this);
-        popupView.findViewById(R.id.new_group).setOnClickListener(this);
-        popupView.findViewById(R.id.submit_project).setOnClickListener(this);
-        popupView.findViewById(R.id.apply_model).setOnClickListener(this);
     }
 }

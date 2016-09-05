@@ -14,6 +14,8 @@ import com.meidp.crmim.activity.MainActivity;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.CustomDialogUtils;
 import com.meidp.crmim.utils.NetUtils;
+import com.meidp.crmim.utils.NullUtils;
+import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.utils.ToastUtils;
 
 import org.json.JSONObject;
@@ -80,7 +82,7 @@ public class HttpRequestUtils {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                //                CustomDialogUtils.cannelProgressDialog();
+//                CustomDialogUtils.cannelProgressDialog();
             }
 
             @Override
@@ -92,7 +94,7 @@ public class HttpRequestUtils {
                     String responseMsg = httpEx.getMessage();
                     String errorResult = httpEx.getResult();
                 }
-                //                CustomDialogUtils.cannelProgressDialog();
+//                CustomDialogUtils.cannelProgressDialog();
             }
 
             @Override
@@ -105,7 +107,6 @@ public class HttpRequestUtils {
                 CustomDialogUtils.cannelProgressDialog();
             }
         });
-
     }
 
     /**
@@ -149,7 +150,6 @@ public class HttpRequestUtils {
                 CustomDialogUtils.cannelProgressDialog();
             }
         });
-
     }
 
     /**
@@ -202,6 +202,7 @@ public class HttpRequestUtils {
             public void onLoading(long total, long current, boolean isDownloading) {
                 mCallBack.onLoading(total, current, isDownloading);
             }
+
         });
     }
 
@@ -213,6 +214,7 @@ public class HttpRequestUtils {
         RequestParams params = new RequestParams(url);
         params.addHeader("_appId", Constant.APPID);
         params.addHeader("_code", Constant.CODE);
+        params.addBodyParameter("content-type", "application/json");
         //设置断点续传
         params.setAutoResume(true);
         params.setSaveFilePath(filepath);
@@ -255,11 +257,9 @@ public class HttpRequestUtils {
     }
 
     public void send(final Context mContext, String url, HashMap params, final HttpRequestCallBack mCallBack) {
-        if (NetUtils.isConnected(mContext)) {//网络判断
+        if (NetUtils.isConnected(mContext)) {
             CustomDialogUtils.showProgressDialog(mContext);
-
             Log.e("addParams:", JSON.toJSONString(params));
-
             final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, JSON.toJSONString(params), new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -280,16 +280,19 @@ public class HttpRequestUtils {
                 public Map<String, String> getHeaders() {
                     Map<String, String> headers = new HashMap<String, String>();
                     headers.put("_appId", Constant.APPID);
-                    headers.put("_code", Constant.getCODE(mContext));
-
+                    if (NullUtils.isNull(MainActivity.userCode)) {
+                        headers.put("_code", MainActivity.userCode);
+                    } else {
+                        headers.put("_code", (String) SPUtils.get(mContext, "CODE", ""));
+                    }
                     return headers;
                 }
             };
+
             request.setRetryPolicy(new DefaultRetryPolicy(5000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             MyApplication.getmInstance().addToRequestQueue(request);
         } else {
             ToastUtils.shows(mContext, "网络连接不可用");
-//            return;
         }
     }
 }

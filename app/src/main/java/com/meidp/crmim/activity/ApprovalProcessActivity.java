@@ -3,7 +3,6 @@ package com.meidp.crmim.activity;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,15 +42,21 @@ import java.util.List;
 /**
  * 审批
  */
-public class ApprovalProcessActivity extends BasicActivity implements AdapterView.OnItemClickListener, PullToRefreshBase.OnRefreshListener2<ListView>, View.OnClickListener {
+@ContentView(R.layout.activity_approval_process)
+public class ApprovalProcessActivity extends BaseActivity implements AdapterView.OnItemClickListener, PullToRefreshBase.OnRefreshListener2<ListView>, View.OnClickListener {
 
+    @ViewInject(R.id.title_tv)
     private TextView title;
     private String keyword = "";
     private int pageIndex = 1;
 
+    @ViewInject(R.id.prototype_listview)
     private ListViewForScrollView prototypeListView;
+    @ViewInject(R.id.fee_listview)
     private ListViewForScrollView feeListView;
+    @ViewInject(R.id.stockup_listview)
     private ListViewForScrollView stockupListview;
+
 
     private List<CheckforApply> mDatasPrototype;//样机
     private List<ApprovalCosts> mDatasCosts;//费用
@@ -61,16 +66,24 @@ public class ApprovalProcessActivity extends BasicActivity implements AdapterVie
     private ApprovalAdapter ApprovalAdapter;//样机审核
     private ApprovalCostAdapter costAdapter;//费用审核
 
+    @ViewInject(R.id.search_edittext)
     private EditText search;
 
     private PopupWindow mCheckStatusPopWindow;
     private PopupWindow mCheckTypePopWindow;
+    @ViewInject(R.id.layout)
     private LinearLayout layout;
+    @ViewInject(R.id.type_name)
     private TextView typeName;
+    @ViewInject(R.id.status_name)
     private TextView statusName;
+    @ViewInject(R.id.scrollView)
     private PullToRefreshScrollView scrollView;
+    @ViewInject(R.id.prototype_tv)
     private TextView prototype_tv;
+    @ViewInject(R.id.fee_tv)
     private TextView fee_tv;
+    @ViewInject(R.id.stockup_tv)
     private TextView stockup_tv;
 
     private String url = "";
@@ -80,37 +93,7 @@ public class ApprovalProcessActivity extends BasicActivity implements AdapterVie
     private int sType2 = -1;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_approval_process);
-        onInit();
-        onInitData();
-        initEvent();
-    }
-
-    private void initEvent() {
-        findViewById(R.id.back_arrows).setOnClickListener(this);
-        findViewById(R.id.search_btn).setOnClickListener(this);
-        findViewById(R.id.checked_type).setOnClickListener(this);
-        findViewById(R.id.checked_status).setOnClickListener(this);
-    }
-
-
     public void onInit() {
-        title = (TextView) findViewById(R.id.title_tv);
-        prototypeListView = (ListViewForScrollView) findViewById(R.id.prototype_listview);
-        feeListView = (ListViewForScrollView) findViewById(R.id.fee_listview);
-        stockupListview = (ListViewForScrollView) findViewById(R.id.stockup_listview);
-        search = (EditText) findViewById(R.id.search_edittext);
-        layout = (LinearLayout) findViewById(R.id.layout);
-        typeName = (TextView) findViewById(R.id.type_name);
-        statusName = (TextView) findViewById(R.id.status_name);
-        scrollView = (PullToRefreshScrollView) findViewById(R.id.scrollView);
-        prototype_tv = (TextView) findViewById(R.id.prototype_tv);
-        fee_tv = (TextView) findViewById(R.id.fee_tv);
-        stockup_tv = (TextView) findViewById(R.id.stockup_tv);
-
-
         scrollView.setMode(PullToRefreshBase.Mode.BOTH);
         title.setText("我的审批");
         mDatasPrototype = new ArrayList<>();
@@ -151,7 +134,6 @@ public class ApprovalProcessActivity extends BasicActivity implements AdapterVie
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ApprovalProcessActivity.this, StockUpDetailsActivity.class);
                 intent.putExtra("OID", mDatasStockups.get(position).getID());
-                intent.putExtra("StatusName", mDatasStockups.get(position).getCheckStatusName());
                 startActivityForResult(intent, 1019);
             }
         });
@@ -182,6 +164,42 @@ public class ApprovalProcessActivity extends BasicActivity implements AdapterVie
         });
     }
 
+    @Event({R.id.back_arrows, R.id.search_btn, R.id.checked_type, R.id.checked_status})
+    private void click(View v) {
+        switch (v.getId()) {
+            case R.id.back_arrows:
+                finish();
+                break;
+            case R.id.search_btn:
+                keyword = search.getText().toString().trim();
+                mDatasPrototype.clear();
+                mDatasCosts.clear();
+                mDatasStockups.clear();
+                getPrototypeData(pageIndex, keyword);
+                getFeeData(pageIndex, keyword);
+                break;
+            case R.id.checked_type://审核类型
+                if (!mCheckTypePopWindow.isShowing()) {
+                    showCheckTypePopupWindow();
+                    dismissCheckStatusPopupWindow();
+                } else {
+                    dismissCheckTypePopupWindow();
+                }
+
+                break;
+            case R.id.checked_status://审核状态
+                if (!mCheckStatusPopWindow.isShowing()) {
+                    showCheckStatusPopupWindow();
+                    dismissCheckTypePopupWindow();
+                } else {
+                    dismissCheckStatusPopupWindow();
+                }
+                break;
+        }
+    }
+
+
+    @Override
     public void onInitData() {
         getPrototypeData(pageIndex, keyword);
         getFeeData(pageIndex, keyword);
@@ -406,34 +424,6 @@ public class ApprovalProcessActivity extends BasicActivity implements AdapterVie
                 statusName.setText("已拒绝");
                 dismissCheckStatusPopupWindow();
                 break;
-            case R.id.back_arrows:
-                finish();
-                break;
-            case R.id.search_btn:
-                keyword = search.getText().toString().trim();
-                mDatasPrototype.clear();
-                mDatasCosts.clear();
-                mDatasStockups.clear();
-                getPrototypeData(pageIndex, keyword);
-                getFeeData(pageIndex, keyword);
-                break;
-            case R.id.checked_type://审核类型
-                if (!mCheckTypePopWindow.isShowing()) {
-                    showCheckTypePopupWindow();
-                    dismissCheckStatusPopupWindow();
-                } else {
-                    dismissCheckTypePopupWindow();
-                }
-
-                break;
-            case R.id.checked_status://审核状态
-                if (!mCheckStatusPopWindow.isShowing()) {
-                    showCheckStatusPopupWindow();
-                    dismissCheckTypePopupWindow();
-                } else {
-                    dismissCheckStatusPopupWindow();
-                }
-                break;
         }
     }
 
@@ -480,7 +470,6 @@ public class ApprovalProcessActivity extends BasicActivity implements AdapterVie
             case 2:
                 intent = new Intent(this, StockUpDetailsActivity.class);
                 intent.putExtra("OID", mDatasStockups.get(position - 1).getID());
-                intent.putExtra("StatusNames", mDatasStockups.get(-1).getCheckStatusName());
                 startActivityForResult(intent, 1019);
                 break;
         }

@@ -17,7 +17,7 @@ public class TranActivity extends BaseActivity {
 //        Log.e("copy--message", CopyUtils.paste(this));
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
-        ft.replace(R.id.content, ConversationListsFragment.newInstance("转发",""));
+        ft.replace(R.id.content, ConversationListsFragment.newInstance("转发"));
         ft.commit();
         finish();
     }

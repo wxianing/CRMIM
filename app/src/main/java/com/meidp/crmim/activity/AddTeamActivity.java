@@ -3,7 +3,6 @@ package com.meidp.crmim.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,24 +40,35 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class AddTeamActivity extends BasicActivity implements ExpandableListView.OnChildClickListener, ExpandableListView.OnGroupClickListener, View.OnClickListener {
+@ContentView(R.layout.activity_add_team)
+public class AddTeamActivity extends BaseActivity implements ExpandableListView.OnChildClickListener, ExpandableListView.OnGroupClickListener {
+    @ViewInject(R.id.title_tv)
     private TextView title;
+    @ViewInject(R.id.title_right)
     private TextView titleRight;
 
     private List<Friends> mDatas;
     private SelectFriendAdapter mAdapter;
+
     private String keyWord = "";
+
+    @ViewInject(R.id.gridview)
     private GridView gridView;
     private CheckedAdapter checkedAdapter;
     private List<Friends> checkedLists;//选中列表
+
     private List<String> empolyees;
+
     private int checkNum;
+    @ViewInject(R.id.otherPerson)
     private EditText otherPersonEt;
+
     private SelectFriendAdapter.ViewHolder holder;
     private int teamId;
     private String teamName;
     private String teamNames;
 
+    @ViewInject(R.id.expListView)
     protected ExpListView expListView;
     private List<Contact> contactList;
     private TeamExpanAdapter expandableAdapter;
@@ -68,28 +78,7 @@ public class AddTeamActivity extends BasicActivity implements ExpandableListView
     private List<TeamDetails.UsersBean> usersBeanList;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_link_man);
-        onInit();
-        onInitData();
-        initEvent();
-    }
-
-    private void initEvent() {
-        findViewById(R.id.back_arrows).setOnClickListener(this);
-        findViewById(R.id.title_right).setOnClickListener(this);
-    }
-
-
     public void onInit() {
-        title = (TextView) findViewById(R.id.title_tv);
-        titleRight = (TextView) findViewById(R.id.title_right);
-        expListView = (ExpListView) findViewById(R.id.expListView);
-        View headerView = LayoutInflater.from(this).inflate(R.layout.header_new_group_layout, null);
-        headerView.findViewById(R.id.remark).setVisibility(View.GONE);
-        gridView = (GridView) headerView.findViewById(R.id.gridview);
-        expListView.addHeaderView(headerView);
         titleRight.setText("保存");
         titleRight.setVisibility(View.VISIBLE);
         title.setText("添加团队成员");
@@ -109,12 +98,13 @@ public class AddTeamActivity extends BasicActivity implements ExpandableListView
 //        mListVIew.setOnItemClickListener(this);
         contactList = new ArrayList<>();
 //        expandableAdapter = new ExpanListAdapter(contactList, this);
-        expListView.setOnChildClickListener(this);
-        expListView.setOnGroupClickListener(this);
-        expListView.setAdapter(expandableAdapter);
-        expListView.setGroupIndicator(null);
+        expListView.getRefreshableView().setOnChildClickListener(this);
+        expListView.getRefreshableView().setOnGroupClickListener(this);
+        expListView.getRefreshableView().setAdapter(expandableAdapter);
+        expListView.getRefreshableView().setGroupIndicator(null);
     }
 
+    @Override
     public void onInitData() {
 //        loadData(keyWord);
 
@@ -127,7 +117,7 @@ public class AddTeamActivity extends BasicActivity implements ExpandableListView
                     contactList.clear();
                     contactList.addAll(appBean.getData());
                     expandableAdapter = new TeamExpanAdapter(contactList, AddTeamActivity.this);
-                    expListView.setAdapter(expandableAdapter);
+                    expListView.getRefreshableView().setAdapter(expandableAdapter);
                     if (userLists != null && !userLists.isEmpty()) {
                         for (int i = 0; i < userLists.size(); i++) {
                             TeamExpanAdapter.getIsSelected().put(userLists.get(i).getEmployeeId(), true);//默认吧原理已经有的成员选中
@@ -136,7 +126,7 @@ public class AddTeamActivity extends BasicActivity implements ExpandableListView
                     }
                     expandableAdapter.notifyDataSetChanged();
                     for (int i = 0; i < contactList.size(); i++) {
-                        expListView.expandGroup(i);//默认展开选项
+                        expListView.getRefreshableView().expandGroup(i);//默认展开选项
                     }
                 }
             }
@@ -161,7 +151,8 @@ public class AddTeamActivity extends BasicActivity implements ExpandableListView
         });
     }
 
-    public void onClick(View v) {
+    @Event({R.id.back_arrows, R.id.title_right})
+    private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();

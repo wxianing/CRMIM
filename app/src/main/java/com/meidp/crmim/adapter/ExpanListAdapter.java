@@ -107,6 +107,7 @@ public class ExpanListAdapter extends BaseExpandableListAdapter {
         }
 
         Boolean nowStatus = getIsSelected().get(list.get(groupPosition).getUsers().get(childPosition).getUserID());// 当前状态
+        Log.e("nowStatus>>>>>>>>>", "nowStatus +: " + nowStatus);
         cvh.mCheckBox.setChecked(nowStatus);
 
         return convertView;
