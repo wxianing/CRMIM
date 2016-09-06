@@ -26,7 +26,7 @@
                 android:id="@+id/title_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp5"
                 android:background="@color/white"
                 android:padding="@dimen/dp10"
                 android:text="标题" />
@@ -35,7 +35,7 @@
                 android:id="@+id/prototype_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp5"
                 android:background="@color/white"
                 android:padding="@dimen/dp10"
                 android:text="样机名称" />
@@ -58,7 +58,7 @@
                 android:id="@+id/apply_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp5"
                 android:background="@color/white"
                 android:padding="@dimen/dp10"
                 android:text="申请时间：" />
@@ -113,6 +113,7 @@
     </ScrollView>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/save_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

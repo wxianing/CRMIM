@@ -95,11 +95,12 @@ public class HospitalListActivity extends BaseActivity implements AdapterView.On
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.e("getCustName", ">>>>>>>>>>>>" + mDatas.get(position-1).getCustName());
+        Log.e("getCustName", ">>>>>>>>>>>>" + mDatas.get(position - 1).getCustName());
         Intent intent = new Intent();
         intent.putExtra("CustName", mDatas.get(position-1).getCustName());
         intent.putExtra("CustNo", mDatas.get(position-1).getCustNo());
         intent.putExtra("CustId", mDatas.get(position-1).getID());
+        intent.putExtra("CustModel",JSONObject.toJSONString(mDatas.get(position - 1)));
         setResult(1012, intent);
         finish();
     }

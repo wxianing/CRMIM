@@ -2,7 +2,9 @@ package com.meidp.crmim.imkit;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -30,11 +32,13 @@ import com.meidp.crmim.activity.SubmitActivity;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.JPushNoReader;
+import com.meidp.crmim.receiver.ConnectionChangeReceiver;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.CopyUtils;
 import com.meidp.crmim.utils.DataUtils;
 import com.meidp.crmim.utils.FileUtils;
 import com.meidp.crmim.utils.IMkitConnectUtils;
+import com.meidp.crmim.utils.MyFileInputProvider;
 import com.meidp.crmim.utils.NetUtils;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.SPUtils;
@@ -44,9 +48,12 @@ import org.xutils.view.annotation.Event;
 import java.io.File;
 import java.util.HashMap;
 
+import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imkit.model.UIConversation;
+import io.rong.imkit.widget.provider.ImageInputProvider;
+import io.rong.imkit.widget.provider.InputProvider;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -97,6 +104,7 @@ public class ConversationListStaticFragment extends Fragment implements View.OnC
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //        if (NetUtils.isConnected(getActivity())) {
         View view = inflater.inflate(R.layout.conversationlist, container, false);
+//        setInputProvider();
         onInit(view);
         initEvent(view);
         return view;
@@ -111,9 +119,16 @@ public class ConversationListStaticFragment extends Fragment implements View.OnC
         view.findViewById(R.id.secretary_layout).setOnClickListener(this);
     }
 
+    private ConnectionChangeReceiver myReceiver;
+
+    private void registerReceiver() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        myReceiver = new ConnectionChangeReceiver();
+        getActivity().registerReceiver(myReceiver, filter);
+    }
 
     public void onInit(View view) {
-
+        registerReceiver();
         title = (TextView) view.findViewById(R.id.title_tv);
         backImg = (ImageView) view.findViewById(R.id.back_arrows);
         layout = (LinearLayout) view.findViewById(R.id.layout);
@@ -126,6 +141,7 @@ public class ConversationListStaticFragment extends Fragment implements View.OnC
 //        if (RongIM.getInstance() == null) {
 //            IMkitConnectUtils.connect(token, getActivity());
 //        }
+
         rightImg.setImageResource(R.mipmap.more_icon);
         backImg.setVisibility(View.INVISIBLE);
         title.setText("消息");
@@ -156,7 +172,7 @@ public class ConversationListStaticFragment extends Fragment implements View.OnC
     }
 
 
-    private class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
+    /*private class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
         String token = (String) SPUtils.get(getActivity(), "TOKEN", "");
 
         @Override
@@ -166,8 +182,9 @@ public class ConversationListStaticFragment extends Fragment implements View.OnC
                 case CONNECTED://连接成功。
                     break;
                 case DISCONNECTED://断开连接。
-
-                    IMkitConnectUtils.connect(token, getActivity());
+                    if (NetUtils.isConnected(getActivity())) {
+                       new IMkitConnectUtils().connect(token, getActivity());
+                    }
                     break;
                 case CONNECTING://连接中。
                     break;
@@ -178,7 +195,7 @@ public class ConversationListStaticFragment extends Fragment implements View.OnC
                     break;
             }
         }
-    }
+    }*/
 
     public void onInitData() {
         HashMap params = new HashMap();
@@ -217,7 +234,7 @@ public class ConversationListStaticFragment extends Fragment implements View.OnC
             /**
              * 设置连接状态变化的监听器.
              */
-            RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
+          //  RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
         }
 
         Log.e("ssssss", "sssssssssssss");

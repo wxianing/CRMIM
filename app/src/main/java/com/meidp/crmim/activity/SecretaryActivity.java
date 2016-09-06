@@ -45,11 +45,13 @@ public class SecretaryActivity extends BaseActivity implements AdapterView.OnIte
 
     @Override
     public void onInit() {
-        title.setText("巨烽小助手");
+        title.setText("未读消息");
         mDatas = new ArrayList<>();
         mListView.setMode(PullToRefreshBase.Mode.BOTH);
         mListView.setOnItemClickListener(this);
         mListView.setOnRefreshListener(this);
+        mAdapter = new SecretaryAdapter(mDatas, SecretaryActivity.this);
+        mListView.setAdapter(mAdapter);
     }
 
     @Override
@@ -60,8 +62,8 @@ public class SecretaryActivity extends BaseActivity implements AdapterView.OnIte
     @Override
     protected void onResume() {
         super.onResume();
-        mDatas.clear();
-        loadData(pageIndex, keyWord);
+//        mDatas.clear();
+//        loadData(pageIndex, keyWord);
     }
 
     @Event({R.id.back_arrows, R.id.search_btn})
@@ -84,16 +86,22 @@ public class SecretaryActivity extends BaseActivity implements AdapterView.OnIte
         params.put("Keyword", keyWord);
         params.put("sType", -1);
         params.put("PageIndex", pageIndex);
-        params.put("PageSize", 8);
+        params.put("PageSize", 30);
         HttpRequestUtils.getmInstance().send(SecretaryActivity.this, Constant.GET_SYSTEM_MESSAGE, params, new HttpRequestCallBack() {
             @Override
             public void onSuccess(String result) {
                 AppDatas<Secretary> appDatas = JSONObject.parseObject(result, new TypeReference<AppDatas<Secretary>>() {
                 });
+                List<Secretary> secretary = null;
                 if (appDatas != null && appDatas.getEnumcode() == 0) {
-                    mDatas.addAll(appDatas.getData().getDataList());
-                    mAdapter = new SecretaryAdapter(mDatas, SecretaryActivity.this);
-                    mListView.setAdapter(mAdapter);
+                    secretary = appDatas.getData().getDataList();
+
+                    for (int i = 0; i < secretary.size(); i++) {
+                        if (secretary.get(i).getStatusName().equals("未读")) {
+                            mDatas.add(secretary.get(i));
+                        }
+                    }
+
                     mAdapter.notifyDataSetChanged();
                     mListView.onRefreshComplete();
                 }

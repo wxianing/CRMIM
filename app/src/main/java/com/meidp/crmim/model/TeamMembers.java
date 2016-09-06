@@ -114,7 +114,10 @@ public class TeamMembers implements Serializable {
     }
 
     public String getSex() {
-        return Sex;
+        if (NullUtils.isNull(Sex)) {
+            return Sex;
+        }
+        return "0";
     }
 
     public void setSex(String Sex) {

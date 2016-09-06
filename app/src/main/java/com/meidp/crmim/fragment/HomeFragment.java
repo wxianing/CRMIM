@@ -56,6 +56,7 @@ import com.meidp.crmim.model.AppBean;
 import com.meidp.crmim.model.NoReaders;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.IMkitConnectUtils;
+import com.meidp.crmim.utils.NetUtils;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.utils.ToastUtils;
@@ -113,7 +114,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             /**
              * 设置连接状态变化的监听器.
              */
-            RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
+           // RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
         }
     }
 
@@ -136,7 +137,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     /**
      * 监测融云连接状态回调接口
      */
-    private class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
+    /*private class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
         @Override
         public void onChanged(ConnectionStatus connectionStatus) {
             switch (connectionStatus) {
@@ -145,8 +146,11 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
                     break;
                 case DISCONNECTED://断开连接。
-                    String token = (String) SPUtils.get(getActivity(), "TOKEN", "");
-                    IMkitConnectUtils.connect(token, getActivity());
+                    if (NetUtils.isConnected(getActivity())) {
+                        String token = (String) SPUtils.get(getActivity(), "TOKEN", "");
+                        //IMkitConnectUtils.connect(token, getActivity());
+                        new IMkitConnectUtils().connect(Constant.getTOKEN(), getActivity());
+                    }
                     break;
                 case CONNECTING://连接中。
 
@@ -159,18 +163,18 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                     break;
             }
         }
-    }
+    }*/
 
     /**
      * 修改群名称
      */
-    private void showDialog() {
+    private void showDialog(String msg) {
         final Dialog dialog = new Dialog(getActivity(), R.style.Dialog);
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_textview_layout, null);
         TextView titleName = (TextView) contentView.findViewById(R.id.title);
         TextView content = (TextView) contentView.findViewById(R.id.hint_content);
         titleName.setText("温馨提示");//标题
-        content.setText("正在开发中");//提示你内容
+        content.setText(msg);//提示你内容
 
         dialog.setContentView(contentView);
         dialog.setCanceledOnTouchOutside(true);
@@ -203,18 +207,21 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         dialog.show();
     }
 
-    @Event({R.id.level_expertise, R.id.loving_company, R.id.crowd_layout, R.id.department_flow, R.id.important_system, R.id.department_functions, R.id.department_duty_layout, R.id.my_hardworking_layout, R.id.my_costing, R.id.my_make_bargain, R.id.my_visiting, R.id.open_sea, R.id.exhibition_manager, R.id.approval_manager, R.id.apply_model, R.id.submit_project, R.id.new_group, R.id.visiting_customer, R.id.project_manager, R.id.cost_manager, R.id.prototype_manager, R.id.my_integrity, R.id.life_navigation, R.id.improtment_thing, R.id.knowledge, R.id.right_img, R.id.visit_client})
+    @Event({R.id.cooperative_partner, R.id.level_expertise, R.id.loving_company, R.id.crowd_layout, R.id.department_flow, R.id.important_system, R.id.department_functions, R.id.department_duty_layout, R.id.my_hardworking_layout, R.id.my_costing, R.id.my_make_bargain, R.id.my_visiting, R.id.open_sea, R.id.exhibition_manager, R.id.approval_manager, R.id.apply_model, R.id.submit_project, R.id.new_group, R.id.visiting_customer, R.id.project_manager, R.id.cost_manager, R.id.prototype_manager, R.id.my_integrity, R.id.life_navigation, R.id.improtment_thing, R.id.knowledge, R.id.right_img, R.id.visit_client})
     private void click(View v) {
         Intent intent = null;
         switch (v.getId()) {
+            case R.id.cooperative_partner:
+                showDialog("明天开发完成");
+                break;
             case R.id.level_expertise://我的专业水平
-                showDialog();
+                showDialog("正在开发");
                 break;
             case R.id.my_hardworking_layout://我的勤奋度
-                showDialog();
+                showDialog("正在开发");
                 break;
             case R.id.loving_company://对公司的热爱
-                showDialog();
+                showDialog("正在开发");
                 break;
             case R.id.crowd_layout://我的一伙人
                 intent = new Intent(getActivity(), MyCrowdActivity.class);

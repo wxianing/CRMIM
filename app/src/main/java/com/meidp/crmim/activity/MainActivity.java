@@ -2,7 +2,9 @@ package com.meidp.crmim.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -30,6 +32,7 @@ import com.meidp.crmim.http.HttpTask;
 import com.meidp.crmim.imkit.ConversationListStaticFragment;
 import com.meidp.crmim.model.AppBean;
 import com.meidp.crmim.model.User;
+import com.meidp.crmim.receiver.ConnectionChangeReceiver;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.IMkitConnectUtils;
 import com.meidp.crmim.utils.NetUtils;
@@ -73,13 +76,19 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Override
     public void onInit() {
-        if (NetUtils.isConnected(this)) {
+        registerReceiver();//广播监听网络状态
+/*        if (NetUtils.isConnected(this)) {
             login();
-        } else {
-            ToastUtils.shows(this, "网络异常");
-            startActivity(new Intent(this, LoginActivity.class));
-            SPUtils.setLoginTag(this, false);
-            finish();
+        } else*/
+        {
+            // ToastUtils.shows(this, "网络异常");
+            if (getIntent().getStringExtra("LoginSuccess").equals("1")) {
+
+            } else {
+                startActivity(new Intent(this, LoginActivity.class));
+                SPUtils.setLoginTag(this, false);
+                finish();
+            }
         }
 
         mDatas = new ArrayList<>();
@@ -100,6 +109,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.addToBackStack("tag");
         transaction.commit();
+
         mRadioGroup.setOnCheckedChangeListener(this);//设置监听
 
         if (Build.VERSION.SDK_INT >= 23) {
@@ -108,49 +118,30 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             HttpTask.detectionNewAppVersion(this, true, false);//检查版本更新
         }
         handler.postDelayed(runnable, DELYED); //每隔30s执行
-
-        /**
-         * 融云登录
-         */
-        IMkitConnectUtils.connect(token, getApplicationContext());//登录融云
-
-        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-            @Override
-            public UserInfo getUserInfo(String userId) {
-                Log.e("userInfo", "userInfo正在执行");
-                for (int i = 0; i < mDatas.size(); i++) {
-                    RongIM.getInstance().refreshUserInfoCache(mDatas.get(i));//刷新用户数据
-                }
-                RongIM.getInstance().refreshUserInfoCache(users);//刷新用户数据
-                return findUserById(userId);//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
-            }
-        }, true);
+//
+//        new IMkitConnectUtils().connect(token, getApplicationContext());//登录融云
+//
+//        //刷新用户信息
+//        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+//            @Override
+//            public UserInfo getUserInfo(String userId) {
+//                Log.e("userId", userId);
+//                Log.e("userInfo", "userInfo正在执行");
+//                for (int i = 0; i < mDatas.size(); i++) {
+//                    RongIM.getInstance().refreshUserInfoCache(mDatas.get(i));//刷新用户数据
+//                }
+//                RongIM.getInstance().refreshUserInfoCache(users);//刷新用户数据
+//                return findUserById(userId);//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
+//            }
+//        }, true);
     }
 
-    /**
-     * 根据Id到本地服务器查找个人信息
-     *
-     * @param userId
-     * @return
-     */
-    private UserInfo findUserById(final String userId) {
-        HashMap params = new HashMap();
-        params.put("Id", Integer.valueOf(userId));
-        HttpRequestUtils.getmInstance().post(MainActivity.this, Constant.GET_PERSON_INFORMATION, params, new HttpRequestCallBack() {
-            @Override
-            public void onSuccess(String result) {
-                AppBean<User> appBean = JSONObject.parseObject(result, new TypeReference<AppBean<User>>() {
-                });
-                if (appBean != null && appBean.getEnumcode() == 0) {
-                    String avatar = appBean.getData().getPhotoURL();
-                    String name = appBean.getData().getEmployeeName();
-                    users = new UserInfo(userId, name, Uri.parse(avatar));
-                    mDatas.add(users);
-                    RongIM.getInstance().refreshUserInfoCache(users);//刷新用户数据
-                }
-            }
-        });
-        return users;
+    private ConnectionChangeReceiver myReceiver;
+
+    private void registerReceiver() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        myReceiver = new ConnectionChangeReceiver();
+        registerReceiver(myReceiver, filter);
     }
 
 
@@ -167,7 +158,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                     /**
                      * 设置连接状态变化的监听器.
                      */
-                    RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
+                    // RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
                 }
             } catch (Exception e) {
                 // TODO Auto-generated catch block
@@ -176,36 +167,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             }
         }
     };
-
-    /**
-     * 监听融云连接状态
-     */
-    private class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
-        String token = (String) SPUtils.get(MainActivity.this, "TOKEN", "");
-
-        @Override
-        public void onChanged(ConnectionStatus connectionStatus) {
-            switch (connectionStatus) {
-
-                case CONNECTED://连接融云成功。
-                    Log.e("融云连接", "融云连接成功");
-                    break;
-                case DISCONNECTED://断开连接。
-                    IMkitConnectUtils.connect(token, MainActivity.this);
-                    Log.e("融云连接", "断开");
-                    break;
-                case CONNECTING://连接中。
-                    Log.e("融云连接", "正在连接");
-                    break;
-                case NETWORK_UNAVAILABLE://网络不可用。
-                    Log.e("融云连接", "网络不可用");
-                    break;
-                case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
-                    Log.e("融云连接", "用户账户在其他设备登录，本机会被踢掉线");
-                    break;
-            }
-        }
-    }
 
     public void showContacts() {
         // Verify that all required contact permissions have been granted.
@@ -255,8 +216,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             /**
              * 设置连接状态变化的监听器.
              */
-            RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
-            Log.e("监测融云连接状态", "监测融云连接状态");
+            // RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
         }
         for (int i = 0; i < group.getChildCount(); i++) {
             Fragment fragment = mFragments.get(i);
@@ -320,22 +280,56 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         HashMap params = new HashMap();
         params.put("UserName", userName);
         params.put("Password", passWord);
-
+        params.put("IsRongRelease", 1);
+        RongIM.getInstance().disconnect(true);
         if (NullUtils.isNull(userName) && NullUtils.isNull(passWord)) {
             HttpRequestUtils.getmInstance().send(MainActivity.this, Constant.LOGIN_URL, params, new HttpCallBack());
         } else {
             ToastUtils.shows(this, "用户名或密码不能为空!");
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            SPUtils.setLoginTag(MainActivity.this, false);
+            finish();
         }
     }
 
+    /**
+     * 登录方法回调
+     */
     class HttpCallBack extends HttpRequestCallBack<String> {
         @Override
         public void onSuccess(String resutl) {
+
             final AppBean<User> appBean = JSONObject.parseObject(resutl, new TypeReference<AppBean<User>>() {
             });
             if (appBean != null && appBean.getEnumcode() == 0) {
+
                 Constant.setCODE(appBean.getData().getUserCode());//保存userCode
                 Constant.setTOKEN(appBean.getData().getRongcloudToken());
+                String token = appBean.getData().getRongcloudToken();
+
+                Log.e("token", token);
+                /**
+                 * 融云登录
+                 */
+                SPUtils.save(MainActivity.this, "IMkitconnectionStatus", 0);
+
+                new IMkitConnectUtils().connect(token, getApplicationContext());//登录融云
+
+                Log.e("result", "登录成功");
+
+                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+                    @Override
+                    public UserInfo getUserInfo(String userId) {
+                        Log.e("userId", userId);
+                        Log.e("userInfo", "userInfo正在执行");
+                        for (int i = 0; i < mDatas.size(); i++) {
+                            RongIM.getInstance().refreshUserInfoCache(mDatas.get(i));//刷新用户数据
+                        }
+                        RongIM.getInstance().refreshUserInfoCache(users);//刷新用户数据
+                        return findUserById(userId);//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
+                    }
+                }, true);
+
                 saveData(appBean);
             } else {
                 ToastUtils.showl(MainActivity.this, appBean.getMsg());
@@ -344,6 +338,32 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 finish();
             }
         }
+    }
+
+    /**
+     * 根据Id到本地服务器查找个人信息
+     *
+     * @param userId
+     * @return
+     */
+    private UserInfo findUserById(final String userId) {
+        HashMap params = new HashMap();
+        params.put("Id", Integer.valueOf(userId));
+        HttpRequestUtils.getmInstance().send(MainActivity.this, Constant.GET_PERSON_INFORMATION, params, new HttpRequestCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                AppBean<User> appBean = JSONObject.parseObject(result, new TypeReference<AppBean<User>>() {
+                });
+                if (appBean != null && appBean.getEnumcode() == 0) {
+                    String avatar = appBean.getData().getPhotoURL();
+                    String name = appBean.getData().getEmployeeName();
+                    users = new UserInfo(userId, name, Uri.parse(avatar));
+                    mDatas.add(users);
+                    RongIM.getInstance().refreshUserInfoCache(users);//刷新用户数据
+                }
+            }
+        });
+        return users;
     }
 
     /**
@@ -364,5 +384,11 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         SPUtils.setLoginTag(MainActivity.this, true);//自动登录标志
         String JPushUserId = String.valueOf(appBean.getData().getUserID());
         JPushInterface.setAliasAndTags(this, JPushUserId, null);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(myReceiver);
     }
 }

@@ -18,6 +18,7 @@ import com.meidp.crmim.adapter.OpenProjectAdapter;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppDatas;
+import com.meidp.crmim.model.CustomerLists;
 import com.meidp.crmim.model.Projects;
 import com.meidp.crmim.utils.Constant;
 
@@ -28,7 +29,7 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+//需兼容客户及客户联系人搜索
 @ContentView(R.layout.activity_project_select)
 public class ProjectSelectActivity extends BaseActivity implements AdapterView.OnItemClickListener {
     @ViewInject(R.id.title_tv)
@@ -45,20 +46,42 @@ public class ProjectSelectActivity extends BaseActivity implements AdapterView.O
     @ViewInject(R.id.search_edittext)
     private EditText search;
 
-    private String keyWord = "";
+    private String keyWord = "",custName="";
     @ViewInject(R.id.explain)
     private TextView explain;
-    private int custContactId;
+    private int custContactId,custId=0;
     private String contactPhone;
-
+    private int IsCreate=0;
     @Override
     public void onInit() {
         mListView.setOnItemClickListener(this);
-        keyWord = getIntent().getStringExtra("custContact");
-        Log.e("keyWord", keyWord);
-        custContactId = getIntent().getIntExtra("CustContactId", -1);
-        contactPhone = getIntent().getStringExtra("ContactPhone");
+        if (getIntent().getExtras().containsKey("IsCreate")) {
+            IsCreate = getIntent().getIntExtra("IsCreate",0);
+        }
+        if (getIntent().getExtras().containsKey("custContact"))
+            keyWord = getIntent().getStringExtra("custContact");
+        else if(getIntent().getExtras().containsKey("custName")){
+            keyWord = getIntent().getStringExtra("custName");
+            custName = getIntent().getStringExtra("custName");
+        }
+       // Log.e("keyWord", keyWord);
+        if (getIntent().getExtras().containsKey("CustContactId"))
+            custContactId = getIntent().getIntExtra("CustContactId", -1);
+        else if(getIntent().getExtras().containsKey("custId"))
+            custId = getIntent().getIntExtra("custId", -1);
+        if (getIntent().getExtras().containsKey("ContactPhone"))
+            contactPhone = getIntent().getStringExtra("ContactPhone");
         title.setText(keyWord + "与公司合作项目有");
+
+        if (IsCreate==1){
+            Intent intent = new Intent(this, SubmissionActivity.class);
+            intent.putExtra("custContactId", custContactId);
+            intent.putExtra("custId", custId);
+            intent.putExtra("contactPhone", contactPhone);
+            intent.putExtra("contactPhone", contactPhone);
+            intent.putExtra("custName", custName);
+            startActivityForResult(intent, 1028);
+        }
 //        mListView.setMode(PullToRefreshBase.Mode.BOTH);
         mDatas = new ArrayList<>();
         mAdapter = new OpenProjectAdapter(mDatas, this);
@@ -72,7 +95,11 @@ public class ProjectSelectActivity extends BaseActivity implements AdapterView.O
 
     private void loadData(int pageIndex, String keyWord) {
         HashMap params = new HashMap();
-        params.put("Keyword", keyWord);//2公海池
+        if(custId>0){
+            params.put("CustId", custId);//客户Id
+        }else {
+            params.put("Keyword", keyWord);
+        }
         params.put("sType", sType);//2公海池
         params.put("sType2", -1);//2公海池
         params.put("PageIndex", pageIndex);
@@ -111,6 +138,8 @@ public class ProjectSelectActivity extends BaseActivity implements AdapterView.O
             case R.id.save_btn:
                 Intent intent = new Intent(this, SubmissionActivity.class);
                 intent.putExtra("custContactId", custContactId);
+                intent.putExtra("custId", custId);
+                intent.putExtra("custName", custName);
                 intent.putExtra("contactPhone", contactPhone);
                 intent.putExtra("custContact", keyWord);
                 startActivityForResult(intent, 1028);
@@ -132,10 +161,23 @@ public class ProjectSelectActivity extends BaseActivity implements AdapterView.O
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 1028) {
-            mDatas.clear();
-            loadData(pageIndex, keyWord);
+            if (IsCreate==1 && data!=null){//如果是从新建拜访进入，则直接将添加后的数据返回给拜访页面
+           /*     Projects projects = JSONObject.parseObject(data.getStringExtra("projects"), new TypeReference<Projects>(){
+                });*/
+                Projects projects = (Projects) data.getSerializableExtra("Projects");
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("Projects", projects);
+                intent.putExtras(bundle);
+                setResult(1025, intent);
+                finish();
+            }else {
+                mDatas.clear();
+                loadData(pageIndex, keyWord);
+            }
         }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

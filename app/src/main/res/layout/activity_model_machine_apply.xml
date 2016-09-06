@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/default_background_color"
     android:layout_height="match_parent"
+    android:background="@color/default_background_color"
     android:orientation="vertical"
     tools:context="com.meidp.crmim.activity.ModelMachineApplyActivity">
 
@@ -22,7 +22,8 @@
             android:layout_margin="@dimen/dp10"
             android:layout_marginTop="@dimen/submit_item_top"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 style="@style/textview_submit_setting"
@@ -34,6 +35,36 @@
                 android:gravity="end"
                 android:hint="点击填写"
                 android:textColorHint="@color/tc_gray" />
+
+        </LinearLayout>
+
+        <include layout="@layout/horizontal_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp5"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/textview_submit_setting"
+                android:text="项目名:" />
+
+            <EditText
+                android:id="@+id/project_et"
+                style="@style/sub_editext"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:gravity="end"
+                android:hint="点击选择" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/arrow_right"
+                android:visibility="gone" />
 
         </LinearLayout>
 
@@ -70,6 +101,29 @@
                 android:visibility="gone" />
 
         </LinearLayout>
+
+        <include layout="@layout/horizontal_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp10"
+            android:layout_marginTop="@dimen/submit_item_top"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/textview_submit_setting"
+                android:text="申请数量:" />
+
+            <EditText
+                android:id="@+id/count_et"
+                style="@style/sub_editext"
+                android:gravity="end"
+                android:hint="点击填写" />
+
+        </LinearLayout>
+
 
         <include layout="@layout/horizontal_line" />
 
@@ -134,26 +188,6 @@
             android:layout_margin="@dimen/dp10"
             android:layout_marginTop="@dimen/submit_item_top"
             android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                style="@style/textview_submit_setting"
-                android:text="申请数量:" />
-
-            <EditText
-                android:id="@+id/count_et"
-                style="@style/sub_editext"
-                android:gravity="end"
-                android:hint="点击填写" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp10"
-            android:layout_marginTop="@dimen/submit_item_top"
-            android:gravity="center"
             android:orientation="horizontal"
             android:visibility="gone">
 
@@ -169,36 +203,6 @@
 
         </LinearLayout>
 
-        <include layout="@layout/horizontal_line" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp10"
-            android:layout_marginTop="@dimen/dp5"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                style="@style/textview_submit_setting"
-                android:text="项目名:" />
-
-            <EditText
-                android:id="@+id/project_et"
-                style="@style/sub_editext"
-                android:layout_weight="1"
-                android:focusable="false"
-                android:gravity="end"
-                android:hint="点击选择" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/arrow_right"
-                android:visibility="gone" />
-
-        </LinearLayout>
-
 
         <include layout="@layout/horizontal_line" />
 
@@ -208,7 +212,8 @@
             android:layout_margin="@dimen/dp10"
             android:layout_marginTop="@dimen/submit_item_top"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 style="@style/textview_submit_setting"

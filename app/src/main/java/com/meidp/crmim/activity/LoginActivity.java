@@ -97,15 +97,15 @@ public class LoginActivity extends BaseActivity {
         //自动登录
         boolean isLogin = SPUtils.getLoginTag(this);
         if (isLogin) {
-//            if (NetUtils.isConnected(this)) {
-//                login();
-//            } else {
-//                ToastUtils.shows(this, "网络异常");
-//            }
-            Intent intent = new Intent(this, MainActivity.class);
+            if (NetUtils.isConnected(this)) {
+                login();
+            } else {
+                ToastUtils.shows(this, "网络异常");
+            }
+           /* Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("LoginSuccess","1");
             startActivity(intent);
-            finish();
-
+            finish();*/
         }
     }
 
@@ -118,13 +118,19 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
+    //登录
     private void login() {
+
+
         userName = usernameEt.getText().toString().trim();
         passWord = passwordEt.getText().toString().trim();
         HashMap params = new HashMap();
         params.put("UserName", userName);
         params.put("Password", passWord);
+        params.put("IsRongRelease", 1);
+        RongIM.getInstance().disconnect(true);
 
+        SPUtils.save(LoginActivity.this, "IMkitconnectionStatus", 0);
         if (NullUtils.isNull(userName) && NullUtils.isNull(passWord)) {
             HttpRequestUtils.getmInstance().send(LoginActivity.this, Constant.LOGIN_URL, params, mCallBack);
         } else {
@@ -148,23 +154,24 @@ public class LoginActivity extends BaseActivity {
                 headPhotoS = appBean.getData().getPhotoURL();
                 name = appBean.getData().getEmployeeName();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra("LoginSuccess", "1");
                 startActivity(intent);
                 /**
                  * 融云连接
                  */
-//                IMkitConnectUtils.connect(appBean.getData().getRongcloudToken(), getApplicationContext());
-//
-//                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-//                    @Override
-//                    public UserInfo getUserInfo(String userId) {
-//                        Log.e("userInfo", "userInfo正在执行");
-//                        for (int i = 0; i < mDatas.size(); i++) {
-//                            RongIM.getInstance().refreshUserInfoCache(mDatas.get(i));//刷新用户数据
-//                        }
-//                        RongIM.getInstance().refreshUserInfoCache(users);//刷新用户数据
-//                        return findUserById(userId);//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
-//                    }
-//                }, true);
+                new IMkitConnectUtils().connect(appBean.getData().getRongcloudToken(), getApplicationContext());
+
+                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+                    @Override
+                    public UserInfo getUserInfo(String userId) {
+                        Log.e("userInfo", "userInfo正在执行");
+                        for (int i = 0; i < mDatas.size(); i++) {
+                            RongIM.getInstance().refreshUserInfoCache(mDatas.get(i));//刷新用户数据
+                        }
+                        RongIM.getInstance().refreshUserInfoCache(users);//刷新用户数据
+                        return findUserById(userId);//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
+                    }
+                }, true);
                 finish();
             } else {
                 ToastUtils.shows(LoginActivity.this, appBean.getMsg());
@@ -211,6 +218,7 @@ public class LoginActivity extends BaseActivity {
         SPUtils.save(this, "TOKEN", appBean.getData().getRongcloudToken());
 
         SPUtils.save(this, "Mobile", appBean.getData().getMobile());
+        SPUtils.save(this, "UserId", appBean.getData().getUserID());
 
         SPUtils.save(this, "EmployeeName", appBean.getData().getEmployeeName());
         SPUtils.save(this, "DeptName", appBean.getData().getDeptName());

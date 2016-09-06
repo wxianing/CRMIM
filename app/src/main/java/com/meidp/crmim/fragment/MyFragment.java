@@ -35,6 +35,7 @@ import com.meidp.crmim.activity.SubmitActivity;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.IMkitConnectUtils;
 import com.meidp.crmim.utils.ImageUtils;
+import com.meidp.crmim.utils.NetUtils;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.view.CustomDialog;
@@ -233,14 +234,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
          * 设置连接状态变化的监听器.
          */
         if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
-            RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
+          //  RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
         }
     }
 
     /**
      * 监测融云连接状态回调接口
      */
-    private class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
+    /*private class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
         @Override
         public void onChanged(ConnectionStatus connectionStatus) {
             switch (connectionStatus) {
@@ -249,7 +250,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
                     break;
                 case DISCONNECTED://断开连接。
-                    IMkitConnectUtils.connect(Constant.getTOKEN(), getActivity());//如果连接断开重新连接
+                    if (NetUtils.isConnected(getActivity())) {
+                        new IMkitConnectUtils().connect(Constant.getTOKEN(), getActivity());//如果连接断开重新连接
+                    }
                     break;
                 case CONNECTING://连接中。
 
@@ -262,7 +265,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                     break;
             }
         }
-    }
+    }*/
 
     private void showPopupWindow() {
 //        mPopupWindow.showAsDropDown(titlebar );

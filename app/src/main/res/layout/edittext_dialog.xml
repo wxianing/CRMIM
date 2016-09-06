@@ -14,26 +14,27 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_marginLeft="@dimen/dp10"
-            android:layout_marginRight="@dimen/dp10"
             android:id="@+id/title"
             style="@style/text_18_ffffff"
             android:layout_width="match_parent"
             android:layout_height="40.0dip"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp10"
             android:background="@drawable/dialog_title"
             android:gravity="center"
             android:text="@string/title_alert"
             android:visibility="visible" />
 
         <LinearLayout
-            android:layout_marginLeft="@dimen/dp10"
-            android:layout_marginRight="@dimen/dp10"
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp10"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp10"
             android:background="@color/white"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/message"
@@ -48,6 +49,17 @@
                 android:gravity="center_vertical"
                 android:hint="请输入群名"
                 android:textSize="@dimen/sp14" />
+
+            <TextView
+                android:id="@+id/msg_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/dp10"
+                android:paddingTop="@dimen/dp10"
+                android:text="群名不能为空"
+                android:textColor="@color/text_color_red"
+                android:textSize="@dimen/sp13"
+                android:visibility="gone" />
         </LinearLayout>
 
         <View

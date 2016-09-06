@@ -9,9 +9,12 @@
 
     <include layout="@layout/titlebar_layout" />
 
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
-        android:id="@+id/listview"
+    <GridView
+        android:id="@+id/gridview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:numColumns="5"
+        android:padding="@dimen/dp5" />
 
 </LinearLayout>

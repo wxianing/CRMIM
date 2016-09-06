@@ -2,9 +2,11 @@ package com.meidp.crmim.imkit;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
+import android.os.Handler;
 import android.text.Selection;
 import android.util.Log;
 import android.view.Display;
@@ -31,10 +33,13 @@ import com.meidp.crmim.model.AppMsg;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.CopyUtils;
 import com.meidp.crmim.utils.CustomDialogUtils;
+import com.meidp.crmim.utils.FileUtils;
+import com.meidp.crmim.utils.MyFileInputProvider;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.utils.ToastUtils;
 
+import org.xutils.common.util.MD5;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -54,6 +59,7 @@ import io.rong.imkit.widget.provider.IContainerItemProvider;
 import io.rong.imkit.widget.provider.ImageInputProvider;
 import io.rong.imkit.widget.provider.InputProvider;
 import io.rong.imkit.widget.provider.LocationInputProvider;
+import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
@@ -95,10 +101,33 @@ public class ConversationActivity extends BaseActivity {
 
     private String titleNameStr;
 
+    ProgressDialog pd;
+    Handler handler;
+    int progressStatus = 0;
+
     @Override
     public void onInit() {
+
+        handler = new Handler() {
+//            @Override
+//            public void handleMessage(Message msg) {
+//                // 表明消息是由该程序发送的。
+//                if (msg.what == 0x111) {
+//                    pd.setProgress(progressStatus);
+//                }
+//            }
+        };
+
+//        new Handler((){
+//            @Override
+//            public String getMessageName(android.os.Message message) {
+//                return super.getMessageName(message);
+//            }
+//        })
+//        setInputProvider();
         activity = this;
         //获取聊天类型
+        pd = new ProgressDialog(ConversationActivity.this);
 
         mConversationType = Conversation.ConversationType.valueOf(getIntent().getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
 
@@ -131,7 +160,6 @@ public class ConversationActivity extends BaseActivity {
         RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener());
 
     }
-
 
     /**
      * 修改群名称
@@ -197,6 +225,30 @@ public class ConversationActivity extends BaseActivity {
         dialogWindow.setAttributes(lp);
         dialog.show();
     }
+
+//    private void setInputProvider() {
+//
+//        InputProvider.ExtendProvider[] singleProvider = {
+//                new ImageInputProvider(RongContext.getInstance()),
+//                //new RealTimeLocationInputProvider(RongContext.getInstance()), //带位置共享的地理位置
+//                new MyFileInputProvider(RongContext.getInstance()),//文件消息
+////                new AudioCallInputProvider(RongContext.getInstance())// 语音通话
+//        };
+//
+//        InputProvider.ExtendProvider[] muiltiProvider = {
+//                new ImageInputProvider(RongContext.getInstance()),
+//                //new LocationInputProvider(RongContext.getInstance()),//地理位置
+//                new MyFileInputProvider(RongContext.getInstance()),//文件消息
+////                new AudioCallInputProvider(RongContext.getInstance())// 语音通话
+//        };
+//
+//        RongIM.resetInputExtensionProvider(Conversation.ConversationType.PRIVATE, singleProvider);
+//        RongIM.resetInputExtensionProvider(Conversation.ConversationType.DISCUSSION, muiltiProvider);
+//        RongIM.resetInputExtensionProvider(Conversation.ConversationType.CUSTOMER_SERVICE, muiltiProvider);
+//        RongIM.resetInputExtensionProvider(Conversation.ConversationType.GROUP, muiltiProvider);
+//        RongIM.resetInputExtensionProvider(Conversation.ConversationType.CHATROOM, muiltiProvider);
+//    }
+
 
     /**
      * 修改群名
@@ -284,7 +336,83 @@ public class ConversationActivity extends BaseActivity {
          */
         @Override
         public boolean onMessageClick(Context context, View view, Message message) {
+            int userId = (int) SPUtils.get(ConversationActivity.this, "UserId", 0);
+            if (message.getObjectName().equals("RC:FileMsg")&&!message.getSenderUserId().equals(Integer.toString(userId))) {
+
+                FileMessage fileMessage = (FileMessage) message.getContent();
+
+                String fileUrl = String.valueOf(fileMessage.getMediaUrl());
+                String md5String = FileUtils.stringToMD5(fileUrl);
+                if (md5String.length() > 10) {
+                    md5String = md5String.substring(0, 10);
+                }
+
+                String savePath = Environment.getExternalStorageDirectory()
+                        .toString()
+                        + File.separator
+                        + md5String
+                        + File.separator;
+//                        + fileMessage.getName();
+                File file = new File(savePath);
+                if (!file.exists()) {
+                    file.mkdir();
+                }
+                savePath += fileMessage.getName();
+                file = new File(savePath);
+                if (!file.exists()) {
+                    downloads(fileUrl, savePath);
+                } else {
+                    FileUtils.openFile(file, activity);//打开文档
+                }
+
+                return true;
+            }
+
             return false;
+        }
+
+        private void downloads(String fileUrl, String savePath) {
+            savePath = savePath.replace(" ", "");
+//                ToastUtils.shows(context, "正在下载");
+            CustomDialogUtils.showProgressDialog(ConversationActivity.this);
+//            final ProgressDialog pd = new ProgressDialog(ConversationActivity.this);
+            pd.setMax(100);
+            // 设置对话框的标题
+            pd.setTitle("文件下载完成百分比");
+            // 设置对话框 显示的内容
+            //pd.setMessage("耗时任务的完成百分比");
+            // 设置对话框不能用“取消”按钮关闭
+            // pd.setCancelable(false);
+            // 设置对话框的进度条风格
+//              pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            // 设置对话框的进度条是否显示进度
+            pd.setIndeterminate(false);
+            pd.show();
+            HttpRequestUtils.getmInstance().downLoadFile(fileUrl, savePath, new HttpRequestCallBack<File>() {
+                @Override
+                public void onSuccess(String result) throws IOException {
+                    pd.dismiss();
+                }
+
+                @Override
+                public void onLoading(long total, long current, boolean isDownloading) {
+                    super.onLoading(total, current, isDownloading);
+                    int curr = (int) (current * 100 / total);
+                    progressStatus = curr;
+                    pd.setProgress(curr);
+                    Log.e("curr", ">>>" + curr + "total" + total + "current:" + current);
+                }
+
+                @Override
+                public void onSuccess(File result) {
+                    pd.dismiss();
+                    super.onSuccess(result);
+                    Log.e("result", "下载成功");
+                    FileUtils.openFile(result, activity);//打开文档
+                    CustomDialogUtils.cannelProgressDialog();
+                }
+            });
         }
 
         /**
@@ -298,7 +426,6 @@ public class ConversationActivity extends BaseActivity {
         @Override
         public boolean onMessageLongClick(Context context, View view, Message message) {
             alterDialog(view, message);
-
             return true;
         }
 
@@ -314,6 +441,17 @@ public class ConversationActivity extends BaseActivity {
             return false;
         }
     }
+
+
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            pd.dismiss();
+//            return false;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
+
 
     /**
      * 获取会话列表。
@@ -336,6 +474,49 @@ public class ConversationActivity extends BaseActivity {
 
         }
     }
+
+    /**
+     * 修改群名称
+     */
+    private void showDialog(String msg) {
+        final Dialog dialog = new Dialog(this, R.style.Dialog);
+        View contentView = LayoutInflater.from(this).inflate(R.layout.dialog_textview_layout, null);
+        TextView titleName = (TextView) contentView.findViewById(R.id.title);
+        TextView content = (TextView) contentView.findViewById(R.id.hint_content);
+        titleName.setText("温馨提示");//标题
+        content.setText(msg);//提示你内容
+
+        dialog.setContentView(contentView);
+        dialog.setCanceledOnTouchOutside(true);
+        Button negativeButton = (Button) contentView.findViewById(R.id.negativeButton);
+        negativeButton.setClickable(true);
+        negativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+            }
+        });
+        Button positiveButton = (Button) contentView.findViewById(R.id.positiveButton);
+        positiveButton.setClickable(true);
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        Window dialogWindow = dialog.getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+
+        WindowManager wm = this.getWindowManager();
+        Display d = wm.getDefaultDisplay(); // 获取屏幕宽、高用
+//        p.height = (int) (d.getHeight() * 0.6); // 高度设置为屏幕的0.6
+        lp.width = (int) (d.getWidth() * 0.75); // 宽度设置为屏幕的0.65
+
+        dialogWindow.setAttributes(lp);
+        dialog.show();
+    }
+
 
     /**
      * 点击消息对话框
@@ -390,69 +571,120 @@ public class ConversationActivity extends BaseActivity {
         transpond.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //转发文件
-                if (message.getObjectName().equals("RC:FileMsg")) {
+                showDialog("单条多条一起开发中");
+//
+//                //转发文件
+//                if (message.getObjectName().equals("RC:FileMsg")) {
+//
+//                    FileMessage fileMessage = (FileMessage) message.getContent();
+//                    String savePath = Environment.getExternalStorageDirectory()
+//                            .toString()
+//                            + File.separator
+//                            + fileMessage.getName();
+//
+//                    SPUtils.save(ConversationActivity.this, "FilePaths", savePath);
+//                    String fileUrl = String.valueOf(fileMessage.getMediaUrl());
+//                    SPUtils.save(ConversationActivity.this, "FileUrl", fileUrl);
+//
+//
+////                    String md5String = FileUtils.stringToMD5(fileUrl);
+////                    if (md5String.length() > 10) {
+////                        md5String = md5String.substring(0, 10);
+////                    }
+//
+////                    String savePath = Environment.getExternalStorageDirectory()
+////                            .toString()
+////                            + File.separator
+////                            + md5String
+////                            + File.separator;
+//////                        + fileMessage.getName();
+////                    File file = new File(savePath);
+////                    if (!file.exists()) {
+////                        file.mkdir();
+////                    }
+////                    savePath += fileMessage.getName();
+////                    file =new File(savePath);
+////                    if (!file.exists()) {
+////                        downloads(fileUrl, savePath);
+////                    }
+//
+//                    final ProgressDialog pd = new ProgressDialog(ConversationActivity.this);
+//                    pd.setMax(100);
+//                    // 设置对话框的标题
+//                    pd.setTitle("文件下载完成百分比");
+//                    // 设置对话框 显示的内容
+//                    //pd.setMessage("耗时任务的完成百分比");
+//                    // 设置对话框不能用“取消”按钮关闭
+//                    pd.setCancelable(false);
+//                    // 设置对话框的进度条风格
+////              pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//                    pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+//                    // 设置对话框的进度条是否显示进度
+//                    pd.setIndeterminate(false);
+//                    pd.show();
+//
+//
+//                    CustomDialogUtils.showProgressDialog(ConversationActivity.this);
+//
+//                    HttpRequestUtils.getmInstance().downLoadFile(fileUrl, savePath, new HttpRequestCallBack<File>() {
+//
+//                        @Override
+//                        public void onSuccess(String result) throws IOException {
+//
+//                        }
+//
+//                        @Override
+//                        public void onSuccess(File result) {
+//                            pd.dismiss();
+//                            super.onSuccess(result);
+//                            ToastUtils.shows(ConversationActivity.this, "下载完成");
+//                            CustomDialogUtils.cannelProgressDialog();
+//                            Intent intent = new Intent(ConversationActivity.this, ConversationListActivity.class);
+//                            intent.putExtra("TYPE", "FileMessage");
+//                            startActivity(intent);
+//                            finish();
+//                        }
+//
+//                        @Override
+//                        public void onLoading(long total, long current, boolean isDownloading) {
+//                            super.onLoading(total, current, isDownloading);
+//                            int curr = (int) (current / total) * 100;
+//                            pd.setProgress(curr);
+//                        }
+//                    });
+//                    //转发文本
+//                } else if (message.getObjectName().equals("RC:TxtMsg")) {
+//                    TextMessage textMessage = (TextMessage) message.getContent();
+//                    Log.e("textMessage.message", "" + textMessage.getContent());
+//                    CopyUtils.copy(textMessage.getContent(), ConversationActivity.this);
+//                    Intent intent = new Intent(ConversationActivity.this, ConversationListActivity.class);
+//                    intent.putExtra("TYPE", "TextMessage");
+//                    startActivity(intent);
+//                    finish();
+//                    //转发图片
+//                } else if (message.getObjectName().equals("RC:ImgMsg")) {
+//                    //图片
+//                    ImageMessage imageMessage = (ImageMessage) message.getContent();
+//                    Log.e("imageMessage", "getRemoteUri" + imageMessage.getRemoteUri());
+//                    Log.e("imageMessage", "getLocalUri" + imageMessage.getLocalUri());
+//                    Log.e("imageMessage", "getThumUri" + imageMessage.getThumUri());
+//
+////                    Log.e("Base64", imageMessage.getBase64());
+//                    SPUtils.save(ConversationActivity.this, "RemoteUri", imageMessage.getRemoteUri());
+//                    SPUtils.save(ConversationActivity.this, "ThumUri", String.valueOf(imageMessage.getThumUri()));
+//                    SPUtils.save(ConversationActivity.this, "LocalUri", String.valueOf(imageMessage.getLocalUri()));
+//                    Intent intent = new Intent(ConversationActivity.this, ConversationListActivity.class);
+//                    intent.putExtra("TYPE", "ImageMessage");
+//                    startActivity(intent);
+//                    finish();
+//                } else if (message.getObjectName().equals("RC:ImgTextMsg")) {
+//                    //图文
+//                    RichContentMessage richContentMessage = (RichContentMessage) message.getContent();
+//                } else if (message.getObjectName().equals("RC:StkMsg")) {
+//                    //表情
+//                    StickerMessage StickerMessage = (io.rong.message.StickerMessage) message.getContent();
+//                }
 
-                    FileMessage fileMessage = (FileMessage) message.getContent();
-                    String savePath = Environment.getExternalStorageDirectory()
-                            .toString()
-                            + File.separator
-                            + fileMessage.getName();
-                    SPUtils.save(ConversationActivity.this, "FilePaths", savePath);
-                    String fileUrl = String.valueOf(fileMessage.getMediaUrl());
-                    SPUtils.save(ConversationActivity.this, "FileUrl", fileUrl);
-                    CustomDialogUtils.showProgressDialog(ConversationActivity.this);
-
-                    HttpRequestUtils.getmInstance().downLoadFile(fileUrl, savePath, new HttpRequestCallBack<File>() {
-
-                        @Override
-                        public void onSuccess(String result) throws IOException {
-
-                        }
-
-                        @Override
-                        public void onSuccess(File result) {
-                            super.onSuccess(result);
-                            ToastUtils.shows(ConversationActivity.this, "下载完成");
-                            CustomDialogUtils.cannelProgressDialog();
-                            Intent intent = new Intent(ConversationActivity.this, ConversationListActivity.class);
-                            intent.putExtra("TYPE", "FileMessage");
-                            startActivity(intent);
-                            finish();
-                        }
-                    });
-                //转发文本
-                } else if (message.getObjectName().equals("RC:TxtMsg")) {
-                    TextMessage textMessage = (TextMessage) message.getContent();
-                    Log.e("textMessage.message", "" + textMessage.getContent());
-                    CopyUtils.copy(textMessage.getContent(), ConversationActivity.this);
-                    Intent intent = new Intent(ConversationActivity.this, ConversationListActivity.class);
-                    intent.putExtra("TYPE", "TextMessage");
-                    startActivity(intent);
-                    finish();
-                    //转发图片
-                } else if (message.getObjectName().equals("RC:ImgMsg")) {
-                    //图片
-                    ImageMessage imageMessage = (ImageMessage) message.getContent();
-                    Log.e("imageMessage", "getRemoteUri" + imageMessage.getRemoteUri());
-                    Log.e("imageMessage", "getLocalUri" + imageMessage.getLocalUri());
-                    Log.e("imageMessage", "getThumUri" + imageMessage.getThumUri());
-
-//                    Log.e("Base64", imageMessage.getBase64());
-                    SPUtils.save(ConversationActivity.this, "RemoteUri", imageMessage.getRemoteUri());
-                    SPUtils.save(ConversationActivity.this, "ThumUri", String.valueOf(imageMessage.getThumUri()));
-                    SPUtils.save(ConversationActivity.this, "LocalUri", String.valueOf(imageMessage.getLocalUri()));
-                    Intent intent = new Intent(ConversationActivity.this, ConversationListActivity.class);
-                    intent.putExtra("TYPE", "ImageMessage");
-                    startActivity(intent);
-                    finish();
-                } else if (message.getObjectName().equals("RC:ImgTextMsg")) {
-                    //图文
-                    RichContentMessage richContentMessage = (RichContentMessage) message.getContent();
-                } else if (message.getObjectName().equals("RC:StkMsg")) {
-                    //表情
-                    StickerMessage StickerMessage = (io.rong.message.StickerMessage) message.getContent();
-                }
                 dialog.dismiss();
             }
         });
@@ -475,6 +707,7 @@ public class ConversationActivity extends BaseActivity {
                 });
 
                 dialog.dismiss();
+
             }
         });
 //        w.setAttributes(lp);
@@ -495,6 +728,8 @@ public class ConversationActivity extends BaseActivity {
                 ConversationListActivity.activity.finish();
                 ConversationListActivity.activity = null;
             }
+            pd.dismiss();
+            pd.cancel();
             finish();
             return false;
         }

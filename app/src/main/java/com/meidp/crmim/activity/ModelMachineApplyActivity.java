@@ -139,7 +139,7 @@ public class ModelMachineApplyActivity extends BaseActivity {
                     setResult(1019, intent);
                     finish();
                 } else {
-                    ToastUtils.shows(ModelMachineApplyActivity.this, appMag.getMsg());
+                    ToastUtils.showl(ModelMachineApplyActivity.this, appMag.getMsg());
                 }
             }
         });
@@ -162,6 +162,13 @@ public class ModelMachineApplyActivity extends BaseActivity {
                 case 1004:
                     projectId = data.getIntExtra("ProjectId", -1);
                     String projectName = data.getStringExtra("ProjectName");
+                    String custNames = data.getStringExtra("CustName");
+                    String linkTel = data.getStringExtra("LinkTel");
+
+//                    linkmanId = data.getIntExtra("")
+                    custId = data.getIntExtra("CustID", 0);
+                    custTelEt.setText(linkTel);
+                    customerEt.setText(custNames);
                     projectEt.setText(projectName);
                     break;
                 case 1009:

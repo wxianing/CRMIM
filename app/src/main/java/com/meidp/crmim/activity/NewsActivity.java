@@ -1,6 +1,7 @@
 package com.meidp.crmim.activity;
 
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -14,7 +15,6 @@ import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppDatas;
 import com.meidp.crmim.model.Informations;
-import com.meidp.crmim.model.Rules;
 import com.meidp.crmim.utils.Constant;
 
 import org.xutils.view.annotation.ContentView;
@@ -84,10 +84,24 @@ public class NewsActivity extends BaseActivity implements AdapterView.OnItemClic
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
+                Intent intent = new Intent();
+                setResult(101, intent);
                 finish();
                 break;
         }
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent();
+            setResult(101, intent);
+            finish();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -98,4 +112,5 @@ public class NewsActivity extends BaseActivity implements AdapterView.OnItemClic
         intent.putExtra("TITLE", titleName);//标题
         startActivity(intent);
     }
+
 }

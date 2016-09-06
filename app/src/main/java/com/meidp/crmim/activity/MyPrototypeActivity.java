@@ -55,11 +55,12 @@ public class MyPrototypeActivity extends BaseActivity implements PullToRefreshBa
         mListView.setAdapter(mAdapter);
         mListView.setOnRefreshListener(this);
         mListView.setOnItemClickListener(this);
+        loadData(pageIndex, keyword);
     }
 
     @Override
     public void onInitData() {
-        loadData(pageIndex, keyword);
+//        loadData(pageIndex, keyword);
     }
 
     private void loadData(int pageIndex, String keyword) {

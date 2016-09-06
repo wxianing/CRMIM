@@ -24,5 +24,4 @@ public class BasicActivity extends AppCompatActivity{
         StatusBarUtils.setStatusBarColor(this, R.color.black);
 
     }
-
 }

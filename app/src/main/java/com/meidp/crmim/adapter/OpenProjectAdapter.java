@@ -2,6 +2,7 @@ package com.meidp.crmim.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -37,8 +38,11 @@ public class OpenProjectAdapter extends BasicAdapter<Projects> {
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-        if (NullUtils.isNull(data.getProjectName())) {
-            vh.projectName.setText(data.getProjectName());
+        if (NullUtils.isNull(data.getCustName())) {
+            vh.projectName.setText(data.getCustName());
+            if (NullUtils.isNull(data.getProjectName())) {
+                vh.projectName.setText(data.getCustName() + "(" + data.getProjectName() + ")");
+            }
         } else {
             vh.projectName.setText("");
         }
@@ -92,6 +96,8 @@ public class OpenProjectAdapter extends BasicAdapter<Projects> {
         } else {
             vh.department.setText("");
         }
+
+        Log.e("custName", mDatas.get(position).getCustName());
 
         return convertView;
     }

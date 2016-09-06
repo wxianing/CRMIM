@@ -37,6 +37,7 @@ import com.meidp.crmim.model.Banner;
 import com.meidp.crmim.model.InformationClassify;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.IMkitConnectUtils;
+import com.meidp.crmim.utils.NetUtils;
 import com.meidp.crmim.utils.SPUtils;
 import com.meidp.crmim.widget.AutoScrollViewPager;
 
@@ -156,11 +157,11 @@ public class CompanyFragment extends Fragment implements AdapterView.OnItemClick
             /**
              * 设置连接状态变化的监听器.
              */
-            RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
+           // RongIM.getInstance().getRongIMClient().setConnectionStatusListener(new MyConnectionStatusListener());
         }
     }
 
-    private class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
+    /*private class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
 
         @Override
         public void onChanged(ConnectionStatus connectionStatus) {
@@ -168,7 +169,9 @@ public class CompanyFragment extends Fragment implements AdapterView.OnItemClick
                 case CONNECTED://连接成功。
                     break;
                 case DISCONNECTED://断开连接。
-                    IMkitConnectUtils.connect(Constant.getTOKEN(), getActivity());
+                    if (NetUtils.isConnected(getActivity())) {
+                       new IMkitConnectUtils().connect(Constant.getTOKEN(), getActivity());
+                    }
                     break;
                 case CONNECTING://连接中。
                     break;
@@ -179,7 +182,7 @@ public class CompanyFragment extends Fragment implements AdapterView.OnItemClick
             }
         }
     }
-
+*/
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -202,7 +205,7 @@ public class CompanyFragment extends Fragment implements AdapterView.OnItemClick
         intent.setClass(getActivity(), NewsActivity.class);
         intent.putExtra("sType", sType);
         intent.putExtra("title", titleName);
-        startActivity(intent);
+        startActivityForResult(intent, 101);
     }
 
     /**
@@ -271,6 +274,15 @@ public class CompanyFragment extends Fragment implements AdapterView.OnItemClick
                     mPopupWindow.dismiss();
                 }
                 break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==101){
+            mDatas.clear();
+            loadData();
         }
     }
 }

@@ -3,6 +3,7 @@ package com.meidp.crmim.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,7 +68,7 @@ public class SubmissionActivity extends BaseActivity {
     private String projectName;
 
     private List<Product> prototypes;
-    private String custContact;
+    private String custContact,custName="";
     private Projects projects;
     private int projectDirectionId;
 
@@ -87,7 +88,7 @@ public class SubmissionActivity extends BaseActivity {
     @ViewInject(R.id.edittext_project_name)
     private EditText projectNameEt;
     private String contactPhone;
-    private int custContactId;
+    private int custContactId,custId=0;
     @ViewInject(R.id.add_doc_img)
     private ImageView addDocImg;
     @ViewInject(R.id.document_name)
@@ -98,9 +99,13 @@ public class SubmissionActivity extends BaseActivity {
     public void onInit() {
         title.setText("申报项目");
         prototypes = new ArrayList<>();
-        custContactId = getIntent().getIntExtra("custContactId", 0);
-        contactPhone = getIntent().getStringExtra("contactPhone");
-        custContact = getIntent().getStringExtra("custContact");
+            custId = getIntent().getIntExtra("custId", 0);
+            hospitalId = custId;
+            custContactId = getIntent().getIntExtra("custContactId", 0);
+            contactPhone = getIntent().getStringExtra("contactPhone");
+            custContact = getIntent().getStringExtra("custContact");
+            custName = getIntent().getStringExtra("custName");
+            hospitalEt.setText(custName);
 
         Projects projects = (Projects) getIntent().getSerializableExtra("Projects");
         if (projects != null) {
@@ -184,7 +189,7 @@ public class SubmissionActivity extends BaseActivity {
         }
     }
 
-    private void sendDocMsg(DocBean docBean, int projectId) {
+    private void sendDocMsg(DocBean docBean, int projectId, final Projects project) {
         try {
             String fileString = FileUtils.encodeBase64File(docBean.getPath());
 
@@ -209,6 +214,10 @@ public class SubmissionActivity extends BaseActivity {
                     });
                     if (appMsg != null && appMsg.getEnumcode() == 0) {
                         Intent intent = new Intent();
+
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("Projects",project);
+                        intent.putExtras(bundle);
                         setResult(1028, intent);
                         Log.e("保存成功", result);
                         finish();
@@ -321,13 +330,20 @@ public class SubmissionActivity extends BaseActivity {
                         if (appBean != null && appBean.getEnumcode() == 0) {
                             if (checkDocLists != null && checkDocLists.size() > 0) {//如果有文档就上传文档
                                 for (int i = 0; i < checkDocLists.size(); i++) {
-                                    sendDocMsg(checkDocLists.get(i), appBean.getData().getID());
+                                    sendDocMsg(checkDocLists.get(i), appBean.getData().getID(),appBean.getData());
                                 }
                             } else {//没有文档直接返回
-                                Intent intent = new Intent();
-                                setResult(1028, intent);
-                                Log.e("保存成功", result);
-                                finish();
+                                if (appBean != null && appBean.getEnumcode() == 0) {
+                                    Intent intent = new Intent();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putSerializable("Projects", appBean.getData());
+                                    intent.putExtras(bundle);
+                                    setResult(1028, intent);
+                                    Log.e("保存成功", result);
+                                    finish();
+                                } else {
+                                    ToastUtils.shows(SubmissionActivity.this, appBean.getMsg());
+                                }
                             }
                         }
                     }

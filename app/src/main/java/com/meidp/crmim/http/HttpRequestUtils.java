@@ -256,7 +256,10 @@ public class HttpRequestUtils {
 
     public void send(final Context mContext, String url, HashMap params, final HttpRequestCallBack mCallBack) {
         if (NetUtils.isConnected(mContext)) {//网络判断
+
             CustomDialogUtils.showProgressDialog(mContext);
+
+
 
             Log.e("addParams:", JSON.toJSONString(params));
 

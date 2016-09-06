@@ -207,10 +207,12 @@ public class ConversationListsFragment extends BaseFragment implements View.OnCl
          */
         @Override
         public boolean onConversationClick(Context context, View view, final UIConversation uiConversation) {
+
             final Conversation.ConversationType type = uiConversation.getConversationType();
             if (NullUtils.isNull(msgType) && msgType.equals("FileMessage")) {
                 String filePath = (String) SPUtils.get(getActivity(), "FilePaths", "");
                 filePath = "file://" + filePath;
+
                 Uri uri = Uri.parse(filePath);
 
                 FileMessage fileMessage = FileMessage.obtain(uri);
@@ -218,6 +220,9 @@ public class ConversationListsFragment extends BaseFragment implements View.OnCl
                 int dot = filePath.lastIndexOf("/");
                 String fileName = filePath.substring(dot + 1);
                 String fileUrl = (String) SPUtils.get(getActivity(), "FileUrl", "");
+
+
+
                 RongIM.getInstance().sendMediaMessage(messageContent, fileName, fileUrl, new IRongCallback.ISendMediaMessageCallback() {
                     @Override
                     public void onAttached(Message message) {
@@ -285,8 +290,11 @@ public class ConversationListsFragment extends BaseFragment implements View.OnCl
 
 //                HttpRequestUtils.getmInstance().downLoadFile(remodeUri,);
 
-                File imageFileSource = new File(context.getCacheDir(), thumUri);
-                File imageFileThumb = new File(context.getCacheDir(), remodeUri);
+//                File imageFileSource = new File(context.getCacheDir(), thumUri);
+//                File imageFileThumb = new File(context.getCacheDir(), remodeUri);
+                File imageFileSource = FileUtils.getFileByUri(Uri.parse(thumUri), getActivity());
+                File imageFileThumb = FileUtils.getFileByUri(Uri.parse(thumUri), getActivity());
+                File imageFileRemode = FileUtils.getFileByUri(Uri.parse(remodeUri), getActivity());
 
                 try {
                     // 读取图片。
@@ -348,7 +356,7 @@ public class ConversationListsFragment extends BaseFragment implements View.OnCl
         }
     }
 
-    private class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
+    /*private class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
 
         @Override
         public void onChanged(ConnectionStatus connectionStatus) {
@@ -358,7 +366,7 @@ public class ConversationListsFragment extends BaseFragment implements View.OnCl
                     break;
                 case DISCONNECTED://断开连接。
                     String token = (String) SPUtils.get(getActivity(), "TOKEN", "");
-                    IMkitConnectUtils.connect(token, getActivity());
+                   new IMkitConnectUtils().connect(token, getActivity());
                     break;
                 case CONNECTING://连接中。
 
@@ -372,7 +380,7 @@ public class ConversationListsFragment extends BaseFragment implements View.OnCl
             }
         }
     }
-
+*/
 
     @Event({R.id.search_edittext, R.id.right_add, R.id.right_scan, R.id.secretary_layout})
     private void click(View v) {

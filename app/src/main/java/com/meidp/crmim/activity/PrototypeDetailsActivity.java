@@ -5,8 +5,11 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -58,7 +61,9 @@ public class PrototypeDetailsActivity extends BaseActivity {
     private TextView applyPerson;
     @ViewInject(R.id.phone_num)
     private TextView phoneNum;
+
     private String countString;
+
     private AppBean<PrototypeDetails> appBean;
 
     @ViewInject(R.id.relevant_project)
@@ -69,6 +74,8 @@ public class PrototypeDetailsActivity extends BaseActivity {
     private ListViewForScrollView mListView;
     private List<PrototypeDetails.FlowStepsBean> mDatas;
     private CheckedPrototypeAdapter mAdapter;
+
+    private Button button;
 
     @Override
     public void onInit() {
@@ -95,6 +102,9 @@ public class PrototypeDetailsActivity extends BaseActivity {
         });
     }
 
+    private String maxCount = "0";
+
+
     private void bindView(AppBean<PrototypeDetails> appBean) {
         titleName.setText("标题：" + appBean.getData().getTitle());
         String prototypeNameString = "";
@@ -110,10 +120,15 @@ public class PrototypeDetailsActivity extends BaseActivity {
         }
         if (NullUtils.isNull(countString) && countString.length() > 0) {
             countString = countString.substring(0, countString.length() - 1);
+            maxCount = countString;
         }
 
         prototypeName.setText("样机名称：" + prototypeNameString);
+
+
         count.setText("数量：" + countString);
+
+
         applyTime.setText("申请时间：" + appBean.getData().getCreateDate());
         if (NullUtils.isNull(appBean.getData().getCreatorName())) {
             applyPerson.setText("申请人：" + appBean.getData().getCreatorName());
@@ -133,6 +148,9 @@ public class PrototypeDetailsActivity extends BaseActivity {
         }
 
         String statusNames = appBean.getData().getFlowStatusName();
+        if (statusNames.equals("通过审批")) {
+            saveLayout.setVisibility(View.VISIBLE);
+        }
 
         mDatas.addAll(appBean.getData().getFlowSteps());
         mListView.setAdapter(mAdapter);
@@ -177,6 +195,7 @@ public class PrototypeDetailsActivity extends BaseActivity {
 
         final EditText editText = (EditText) contentView.findViewById(R.id.message);
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        final TextView msg = (TextView) contentView.findViewById(R.id.msg_tv);
         editText.setHint("");
         titleName.setText("请输入备货数量");
         dialog.setContentView(contentView);
@@ -191,18 +210,38 @@ public class PrototypeDetailsActivity extends BaseActivity {
         });
         Button positiveButton = (Button) contentView.findViewById(R.id.positiveButton);
         positiveButton.setClickable(true);
+
+
         positiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                countString = editText.getText().toString().trim();
-                if (NullUtils.isNull(countString)) {
-                    sendMsg(countString);
+                String countStr = editText.getText().toString().trim();
+                if (NullUtils.isNull(countStr) && NullUtils.isNull(maxCount)) {
+                    if (Integer.valueOf(countStr) > Integer.valueOf(maxCount)) {
+                        msg.setText("申请的数量不能大于" + maxCount);
+                        msg.setVisibility(View.VISIBLE);
+                        return;
+                    }
+                    sendMsg(countStr);
+                    dialog.dismiss();
                 } else {
                     ToastUtils.shows(PrototypeDetailsActivity.this, "数量不能为空");
                 }
-                dialog.dismiss();
+
             }
         });
+
+        Window dialogWindow = dialog.getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+
+        WindowManager wm = this.getWindowManager();
+        Display d = wm.getDefaultDisplay(); // 获取屏幕宽、高用
+//        p.height = (int) (d.getHeight() * 0.6); // 高度设置为屏幕的0.6
+        lp.width = (int) (d.getWidth() * 0.75); // 宽度设置为屏幕的0.65
+
+        dialogWindow.setAttributes(lp);
+
+
         dialog.show();
 
     }
@@ -223,7 +262,6 @@ public class PrototypeDetailsActivity extends BaseActivity {
         params.put("FromBillID", id);
         params.put("Details", prototypePrepares);
 
-
         HttpRequestUtils.getmInstance().send(PrototypeDetailsActivity.this, Constant.STOCK_UP_URL, params, new HttpRequestCallBack() {
             @Override
             public void onSuccess(String result) {
@@ -232,7 +270,7 @@ public class PrototypeDetailsActivity extends BaseActivity {
                 if (appMsg != null && appMsg.getEnumcode() == 0) {
                     ToastUtils.shows(PrototypeDetailsActivity.this, "申请成功");
                 } else {
-                    ToastUtils.shows(PrototypeDetailsActivity.this, appMsg.getMsg());
+                    ToastUtils.showl(PrototypeDetailsActivity.this, appMsg.getMsg());
                 }
             }
         });

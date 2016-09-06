@@ -21,7 +21,18 @@ public class CustomDialogUtils {
         if (progressDialog == null) {
             progressDialog = CustomProgressDialog.createDialog(context);
         }
-        progressDialog.show();
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                    progressDialog.show();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                super.run();
+            }
+        };
     }
 
     public static void cannelProgressDialog() {

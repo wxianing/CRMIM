@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -35,8 +36,8 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
     private TextView title;
     private String mTargetId;
 
-    @ViewInject(R.id.listview)
-    private PullToRefreshListView mListView;
+    @ViewInject(R.id.gridview)
+    private GridView mListView;
 
     private List<Menber.UsersBean> mDatas;
 
@@ -50,7 +51,7 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
     @Override
     public void onInit() {
         title.setText("群成员");
-        mListView.setMode(PullToRefreshBase.Mode.BOTH);
+//        mListView.setMode(PullToRefreshBase.Mode.BOTH);
         mTargetId = getIntent().getStringExtra("mTargetId");
         Log.e("mTargetId", mTargetId);
         mDatas = new ArrayList<>();
@@ -58,7 +59,7 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
         mListView.setOnItemClickListener(this);
         mAdapter = new GroupMenberAdapter(mDatas, GroupMenberActivity.this);
         mListView.setAdapter(mAdapter);
-        mListView.setOnRefreshListener(this);
+//        mListView.setOnRefreshListener(this);
     }
 
     @Override
@@ -78,7 +79,7 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
                     mDatas.addAll(appBean.getData().getUsers());
                     groupName = appBean.getData().getDiscussionName();
                     mAdapter.notifyDataSetChanged();
-                    mListView.onRefreshComplete();
+//                    mListView.onRefreshComplete();
                 }
             }
         });
@@ -115,7 +116,7 @@ public class GroupMenberActivity extends BaseActivity implements AdapterView.OnI
         if (holder != null) {
             mTargetName = holder.userName.getText().toString();
         }
-        RongIM.getInstance().startPrivateChat(this, Integer.toString(mDatas.get(position - 1).getUserID()), mTargetName);
+        RongIM.getInstance().startPrivateChat(this, Integer.toString(mDatas.get(position).getUserID()), mTargetName);
     }
 
     @Override

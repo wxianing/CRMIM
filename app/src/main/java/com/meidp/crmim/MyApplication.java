@@ -22,6 +22,7 @@ import com.meidp.crmim.model.AppBean;
 import com.meidp.crmim.model.User;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.MyFileInputProvider;
+import com.meidp.crmim.utils.MyImageInputProvider;
 import com.meidp.crmim.utils.SPUtils;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -90,6 +91,10 @@ public class MyApplication extends Application {
 
 //                RongIM.getInstance().registerConversationTemplate();
                 RongIM.registerMessageTemplate(new FileMessageItemProvider());
+
+
+
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -103,15 +108,15 @@ public class MyApplication extends Application {
 
 
         InputProvider.ExtendProvider[] singleProvider = {
-                new ImageInputProvider(RongContext.getInstance()),
+                new MyImageInputProvider(RongContext.getInstance(), getApplicationContext()),
                 //new RealTimeLocationInputProvider(RongContext.getInstance()), //带位置共享的地理位置
-                new MyFileInputProvider(RongContext.getInstance())//文件消息
+                new MyFileInputProvider(RongContext.getInstance(), getApplicationContext())//文件消息
         };
 
         InputProvider.ExtendProvider[] muiltiProvider = {
-                new ImageInputProvider(RongContext.getInstance()),
+                new MyImageInputProvider(RongContext.getInstance(), getApplicationContext()),
                 //new LocationInputProvider(RongContext.getInstance()),//地理位置
-                new MyFileInputProvider(RongContext.getInstance())//文件消息
+                new MyFileInputProvider(RongContext.getInstance(), getApplicationContext())//文件消息
         };
 
         RongIM.resetInputExtensionProvider(Conversation.ConversationType.PRIVATE, singleProvider);

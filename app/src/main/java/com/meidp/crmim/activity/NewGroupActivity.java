@@ -296,6 +296,7 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
             params.put("discussionId", discussionId);
             params.put("discussionName", newGroupNames);
             params.put("userstrs", userStr);
+            params.put("IsRongRelease", 1);
             HttpRequestUtils.getmInstance().send(NewGroupActivity.this, Constant.CREATE_GROUP_URL, params, new HttpRequestCallBack<String>() {
                 @Override
                 public void onSuccess(String result) {
@@ -360,16 +361,17 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
         });
         Button positiveButton = (Button) contentView.findViewById(R.id.positiveButton);
         positiveButton.setClickable(true);
+
         positiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 groupName = editText.getText().toString().trim();
-                if (NullUtils.isNull(groupName)) {
-                    RongIM.getInstance().createDiscussionChat(NewGroupActivity.this, userIds, groupName, mCallBack);
-                } else {
-                    ToastUtils.shows(NewGroupActivity.this, "请输入群名称");
+                if (!NullUtils.isNull(groupName)) {
+                    String employeeName = (String) SPUtils.get(NewGroupActivity.this, "EmployeeName", "");
+                    groupName = employeeName + "创建了群聊";
                 }
-                Log.e("positiveButton", keyWord);
+
+                RongIM.getInstance().createDiscussionChat(NewGroupActivity.this, userIds, groupName, mCallBack);
                 dialog.dismiss();
             }
         });
@@ -499,6 +501,7 @@ public class NewGroupActivity extends BaseActivity implements AdapterView.OnItem
         params.put("discussionId", s);
         params.put("discussionName", groupName);
         params.put("userstrs", userStr);
+        params.put("IsRongRelease", 1);
         HttpRequestUtils.getmInstance().send(NewGroupActivity.this, Constant.CREATE_GROUP_URL, params, new HttpRequestCallBack<String>() {
             @Override
             public void onSuccess(String result) {

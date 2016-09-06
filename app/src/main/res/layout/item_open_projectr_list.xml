@@ -28,7 +28,8 @@
         android:layout_alignParentRight="true"
         android:text="20160606"
         android:textColor="@color/tc_gray"
-        android:textSize="@dimen/sp13" />
+        android:textSize="@dimen/sp13"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:layout_width="match_parent"

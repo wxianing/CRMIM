@@ -58,6 +58,7 @@ public class GroupActivity extends BaseActivity implements AdapterView.OnItemCli
 
     private void loadData() {
         HashMap params = new HashMap();
+        params.put("IsRongRelease", 1);
         HttpRequestUtils.getmInstance().send(GroupActivity.this, Constant.GROUP_LIST_URL, params, new HttpRequestCallBack<String>() {
             @Override
             public void onSuccess(String result) {
@@ -68,7 +69,7 @@ public class GroupActivity extends BaseActivity implements AdapterView.OnItemCli
                     mDatas.addAll(appDatas.getData());
                     mAdapter.notifyDataSetChanged();
 
-                    for (int i = 0;i < mDatas.size();i++){
+                    for (int i = 0; i < mDatas.size(); i++) {
 //                        GroupEntity
                     }
                 }

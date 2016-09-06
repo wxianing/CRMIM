@@ -41,6 +41,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:name=".MyApplication"
@@ -323,6 +324,7 @@
         <activity android:name=".activity.MyCrowdActivity" />
         <activity android:name=".activity.AddCrowdActivity" />
         <activity android:name=".activity.DocumentListActivity"></activity>
+        <activity android:name=".activity.MyCrowdDetailsActivity"></activity>
     </application>
 
 </manifest>

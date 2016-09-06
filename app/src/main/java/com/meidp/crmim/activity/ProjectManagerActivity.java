@@ -3,6 +3,7 @@ package com.meidp.crmim.activity;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,6 +93,15 @@ public class ProjectManagerActivity extends BaseActivity implements PullToRefres
                 });
                 if (appDatas != null && appDatas.getEnumcode() == 0) {
                     mDatas.addAll(appDatas.getData().getDataList());
+                    //医院名字为空的移除掉
+                    for (int i = 0; i < appDatas.getData().getDataList().size(); i++) {
+                        if (NullUtils.isNull(appDatas.getData().getDataList().get(i).getCustName())) {
+                            mDatas.add(appDatas.getData().getDataList().get(i));
+                        }
+                    }
+
+                    Log.e("mDatas", ">>>>>>>" + mDatas.size());
+
                     mAdapter.notifyDataSetChanged();
                     mListView.onRefreshComplete();
                 }
@@ -220,6 +230,11 @@ public class ProjectManagerActivity extends BaseActivity implements PullToRefres
             Intent intent = new Intent();
             intent.putExtra("ProjectId", mDatas.get(position - 1).getID());
             intent.putExtra("ProjectName", mDatas.get(position - 1).getProjectName());
+
+            intent.putExtra("CustName", mDatas.get(position - 1).getCustName());
+            intent.putExtra("CustID", mDatas.get(position - 1).getCustID());
+            intent.putExtra("LinkTel", mDatas.get(position - 1).getLinkTel());
+//            intent.putExtra("",mDatas.get(-1).get)
 
             Bundle bundle = new Bundle();
             bundle.putSerializable("Projects", projects);

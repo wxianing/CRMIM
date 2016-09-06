@@ -33,7 +33,7 @@ public class GroupMenberAdapter extends BasicAdapter<Menber.UsersBean> {
     public View createView(int position, View convertView, ViewGroup parent) {
         ViewHolder vh = null;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.item_friends_list, parent, false);
+            convertView = inflater.inflate(R.layout.item_group_member_layout, parent, false);
             vh = new ViewHolder(convertView);
             convertView.setTag(vh);
         } else {
@@ -48,9 +48,7 @@ public class GroupMenberAdapter extends BasicAdapter<Menber.UsersBean> {
             vh.userName.setText(mDatas.get(position).getEmployeeName());
         }
         ImageLoader.getInstance().displayImage(mDatas.get(position).getPhotoURL(), vh.headerImg, MyApplication.optionsRounds);
-        if (NullUtils.isNull(mDatas.get(position).getDeptName())) {
-            vh.department.setText(mDatas.get(position).getDeptName());
-        }
+
         return convertView;
     }
 
@@ -59,10 +57,6 @@ public class GroupMenberAdapter extends BasicAdapter<Menber.UsersBean> {
         public TextView userName;
         @ViewInject(R.id.header_img)
         public ImageView headerImg;
-        @ViewInject(R.id.layout)
-        public LinearLayout layout;
-        @ViewInject(R.id.department_tv)
-        private TextView department;
 
         public ViewHolder(View view) {
             x.view().inject(this, view);

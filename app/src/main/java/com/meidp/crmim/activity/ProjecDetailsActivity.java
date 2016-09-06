@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -15,11 +16,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.meidp.crmim.R;
 import com.meidp.crmim.adapter.ProgressAdapter;
+import com.meidp.crmim.adapter.VisitRecordAdapter;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppBean;
+import com.meidp.crmim.model.AppDatas;
 import com.meidp.crmim.model.AppMsg;
 import com.meidp.crmim.model.ProjectDetails;
+import com.meidp.crmim.model.VisitRecords;
 import com.meidp.crmim.utils.Constant;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.ToastUtils;
@@ -91,10 +95,17 @@ public class ProjecDetailsActivity extends BaseActivity {
     @ViewInject(R.id.scrollView)
     private ScrollView scrollView;
 
+    @ViewInject(R.id.recode_listview)
+    private ListViewForScrollView recodeListview;//历史拜访记录
+
     private ArrayList<ProjectDetails.ConstructionDetailsBean> mDatas;
 
     private String url;
     private String projectNames;
+
+    private List<VisitRecords> recordsList;
+
+    private VisitRecordAdapter visitRecordAdapter;
 
     @Override
     public void onInit() {
@@ -126,11 +137,36 @@ public class ProjecDetailsActivity extends BaseActivity {
         mDatas = new ArrayList<>();
         mAdapter = new FollowAdapter(mDatas, this);
         mListView.setAdapter(mAdapter);
+        //历史拜访
+        recordsList = new ArrayList<>();
+        visitRecordAdapter = new VisitRecordAdapter(recordsList, this);
+        recodeListview.setAdapter(visitRecordAdapter);
     }
 
     @Override
     public void onInitData() {
         loadData();
+        getRecodeVisiting();
+    }
+
+    private void getRecodeVisiting() {
+        HashMap params = new HashMap();
+        params.put("sType", 0);
+        params.put("sType2", oid);
+        params.put("PageIndex", 1);
+        params.put("PageSize", 8);
+        HttpRequestUtils.getmInstance().send(ProjecDetailsActivity.this, Constant.VISIT_RECORD_URL, params, new HttpRequestCallBack<String>() {
+            @Override
+            public void onSuccess(String result) {
+                AppDatas<VisitRecords> appBean = JSONObject.parseObject(result, new TypeReference<AppDatas<VisitRecords>>() {
+                });
+                Log.e("历史记录", result);
+                if (appBean != null && appBean.getEnumcode() == 0) {
+                    recordsList.addAll(appBean.getData().getDataList());
+                    visitRecordAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     private void loadData() {
@@ -210,10 +246,52 @@ public class ProjecDetailsActivity extends BaseActivity {
         });
     }
 
-    @Event(value = {R.id.recode_visit, R.id.back_arrows, R.id.button, R.id.follow_btn, R.id.follow_layout, R.id.title_right, R.id.button})
+    @ViewInject(R.id.recode_visit_layout)
+    private LinearLayout recodeVisit;
+    @ViewInject(R.id.arrow_img)
+    private ImageView arrowImg;
+
+    @ViewInject(R.id.project_message_layout)
+    private LinearLayout projectLayout;
+
+    @ViewInject(R.id.arrow_project_img)
+    private ImageView projectImg;
+    @ViewInject(R.id.related_message_layout)
+    private LinearLayout relatedMessage;
+    @ViewInject(R.id.related_img)
+    private ImageView relatedImg;
+
+    @Event(value = {R.id.related_layout, R.id.project_layout, R.id.reocde_visiting, R.id.recode_visit, R.id.back_arrows, R.id.button, R.id.follow_btn, R.id.follow_layout, R.id.title_right, R.id.button})
     private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
+            case R.id.related_layout:
+                if (relatedMessage.getVisibility() == View.GONE) {
+                    relatedMessage.setVisibility(View.VISIBLE);
+                    relatedImg.setImageResource(R.mipmap.lt_open);
+                } else {
+                    relatedMessage.setVisibility(View.GONE);
+                    relatedImg.setImageResource(R.mipmap.lt_normal);
+                }
+                break;
+            case R.id.project_layout:
+                if (projectLayout.getVisibility() == View.GONE) {
+                    projectLayout.setVisibility(View.VISIBLE);
+                    projectImg.setImageResource(R.mipmap.lt_open);
+                } else {
+                    projectLayout.setVisibility(View.GONE);
+                    projectImg.setImageResource(R.mipmap.lt_normal);
+                }
+                break;
+            case R.id.reocde_visiting:
+                if (recodeVisit.getVisibility() == View.GONE) {
+                    recodeVisit.setVisibility(View.VISIBLE);
+                    arrowImg.setImageResource(R.mipmap.lt_open);
+                } else {
+                    recodeVisit.setVisibility(View.GONE);
+                    arrowImg.setImageResource(R.mipmap.lt_normal);
+                }
+                break;
             case R.id.back_arrows:
                 finish();
                 break;
@@ -261,7 +339,7 @@ public class ProjecDetailsActivity extends BaseActivity {
             case R.id.recode_visit://历史拜访
                 intent = new Intent(ProjecDetailsActivity.this, VisitRecordActivity.class);
                 intent.putExtra("KeyWord", projectNames);//项目名称
-                intent.putExtra("PeojectId",oid);//项目ID
+                intent.putExtra("PeojectId", oid);//项目ID
                 startActivity(intent);
                 break;
         }

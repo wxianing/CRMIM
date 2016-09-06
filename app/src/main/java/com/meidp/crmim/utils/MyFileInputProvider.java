@@ -3,6 +3,7 @@ package com.meidp.crmim.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 
 import com.meidp.crmim.activity.DocumentListActivity;
@@ -17,6 +18,8 @@ import io.rong.imkit.RongIM;
 import io.rong.imkit.model.FileInfo;
 import io.rong.imkit.widget.provider.FileInputProvider;
 import io.rong.imlib.IRongCallback;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.message.FileMessage;
 
@@ -29,8 +32,11 @@ import io.rong.message.FileMessage;
 public class MyFileInputProvider extends FileInputProvider {
     private List<DocBean> checkDocLists;
 
-    public MyFileInputProvider(RongContext context) {
+    private Context mContext;
+
+    public MyFileInputProvider(RongContext context, Context mContext) {
         super(context);
+        this.mContext = mContext;
     }
 
     @Override
@@ -67,12 +73,97 @@ public class MyFileInputProvider extends FileInputProvider {
                 Uri filePath = Uri.parse("file://" + fileInfo.getPath());
                 FileMessage fileMessage = FileMessage.obtain(filePath);
 
-                if (fileMessage != null) {
+//                RongIM.getInstance().setConnectionStatusListener(new MyConnectionStatusListener(fileMessage, this.getCurrentConversation().getTargetId(), this.getCurrentConversation().getConversationType()));
+//                RongIM.getInstance().setConnectionStatusListener(new MyConnectionStatusListener());
+//                if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
+//                }
+
+                if (NetUtils.isConnected(mContext)) {
+                    if (fileMessage != null) {
+//                        IMkitConnectUtils.connect(Constant.getTOKEN(), mContext);
 //                    fileMessage.setType(fileInfo.getSuffix());
-                    Message message = Message.obtain(this.getCurrentConversation().getTargetId(), this.getCurrentConversation().getConversationType(), fileMessage);
-                    RongIM.getInstance().sendMediaMessage(message, (String) null, (String) null, (IRongCallback.ISendMediaMessageCallback) null);
+                        Message message = Message.obtain(this.getCurrentConversation().getTargetId(), this.getCurrentConversation().getConversationType(), fileMessage);
+
+                        RongIM.getInstance().sendMediaMessage(message, (String) null, (String) null, new MyFileIRongCallback());
+                    }
+                } else {
+                    ToastUtils.shows(mContext, "当前网络不稳定，请检查网络是否通畅");
+                    new IMkitConnectUtils().connect(Constant.getTOKEN(), mContext);
                 }
             }
+        }
+    }
+
+    /**
+     * 监听融云连接状态
+     */
+    /*private class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
+        private FileMessage fileMessage;
+
+        private String targetId;
+
+        private Conversation.ConversationType type;
+//
+//        public MyConnectionStatusListener(FileMessage fileMessage, String targetId, Conversation.ConversationType type) {
+//            this.fileMessage = fileMessage;
+//            this.targetId = targetId;
+//            this.type = type;
+//        }
+
+        @Override
+        public void onChanged(ConnectionStatus connectionStatus) {
+            switch (connectionStatus) {
+                case CONNECTED://连接融云成功。
+                    Log.e("融云连接", "融云连接成功");
+//                    if (fileMessage != null) {
+////                    fileMessage.setType(fileInfo.getSuffix());
+//                        Message message = Message.obtain(targetId, type, fileMessage);
+//                        RongIM.getInstance().sendMediaMessage(message, (String) null, (String) null, new MyFileIRongCallback());
+//                    }
+                    break;
+                case DISCONNECTED://断开连接。
+                    if (NetUtils.isConnected(mContext)) {
+                        new IMkitConnectUtils().connect(Constant.getTOKEN(), mContext);
+                        Log.e("融云连接", "断开");
+                    } else {
+                        ToastUtils.shows(mContext, "网络连接不可用");
+                    }
+                    break;
+                case CONNECTING://连接中。
+                    Log.e("融云连接", "正在连接");
+                    break;
+                case NETWORK_UNAVAILABLE://网络不可用。
+                    Log.e("融云连接", "网络不可用");
+                    break;
+                case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
+                    Log.e("融云连接", "用户账户在其他设备登录，本机会被踢掉线");
+                    break;
+            }
+        }
+    }*/
+
+
+    private class MyFileIRongCallback implements IRongCallback.ISendMediaMessageCallback {
+
+        @Override
+        public void onProgress(Message message, int i) {
+
+        }
+
+        @Override
+        public void onAttached(Message message) {
+
+        }
+
+        @Override
+        public void onSuccess(Message message) {
+//            ToastUtils.shows(mContext, "发送成功");
+        }
+
+        @Override
+        public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+            ToastUtils.shows(mContext, "发送失败");
+            new IMkitConnectUtils().connect(Constant.getTOKEN(), mContext);
         }
     }
 }

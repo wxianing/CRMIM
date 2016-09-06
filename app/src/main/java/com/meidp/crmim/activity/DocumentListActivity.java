@@ -1,8 +1,10 @@
 package com.meidp.crmim.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -27,6 +29,7 @@ import com.meidp.crmim.model.DocBean;
 import com.meidp.crmim.model.Friends;
 import com.meidp.crmim.model.Group;
 import com.meidp.crmim.utils.Constant;
+import com.meidp.crmim.utils.CustomDialogUtils;
 import com.meidp.crmim.utils.FileUtils;
 import com.meidp.crmim.utils.NullUtils;
 import com.meidp.crmim.utils.ToastUtils;
@@ -58,10 +61,23 @@ public class DocumentListActivity extends BasicActivity implements AdapterView.O
     private TextView titleRight;
     private String msg;
 
+    ProgressDialog pd = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_document_list);
+
+        pd = new ProgressDialog(this);
+        // 设置对话框的标题
+//        pd.setTitle("查找手机文档中，请稍后...");
+
+        // 设置对话框 显示的内容
+        pd.setMessage("查找手机文档中，请稍后...");
+        // 设置对话框不能用“取消”按钮关闭
+        pd.setCancelable(false);
+        // 设置对话框的进度条风格
+        pd.show();
         initView();
         initEvent();
     }
@@ -71,14 +87,17 @@ public class DocumentListActivity extends BasicActivity implements AdapterView.O
 
     private void initView() {
         mDagas = new ArrayList<>();
-        queryFiles();
+        new MyAsncyTask().execute();
+
         msg = getIntent().getStringExtra("MSG");
         checkLists = new ArrayList<>();
         checkLists.clear();
         projectId = getIntent().getIntExtra("ProjectId", 0);
         processId = getIntent().getIntExtra("ProcessId", 0);
+
         title = (TextView) findViewById(R.id.title_tv);
         title.setText("文件列表");
+
         mListView = (ListView) findViewById(R.id.listview);
         expListView = (ExpandableListView) findViewById(R.id.expListView);
         titleRight = (TextView) findViewById(R.id.title_right);
@@ -89,7 +108,11 @@ public class DocumentListActivity extends BasicActivity implements AdapterView.O
         backImg.setOnClickListener(this);
 //        expListView.setGroupIndicator(null);//去掉默认箭头
 
+        expListView.setOnChildClickListener(this);
 
+    }
+
+    private void data(List<DocBean> mDagas) {
         Group g = new Group();
         g.setTitle("WORD");
         Group g1 = new Group();
@@ -103,6 +126,7 @@ public class DocumentListActivity extends BasicActivity implements AdapterView.O
         ArrayList<Child> childList1 = new ArrayList<Child>();
         ArrayList<DocBean> docList2 = new ArrayList<>();
         ArrayList<Child> childList2 = new ArrayList<Child>();
+
         for (int i = 0; i < mDagas.size(); i++) {
             int len = mDagas.get(i).getPath().lastIndexOf(".");
             String filType = mDagas.get(i).getPath().substring(len + 1);
@@ -128,16 +152,38 @@ public class DocumentListActivity extends BasicActivity implements AdapterView.O
         list.add(g);
         list.add(g1);
         list.add(g2);
-
-        expListView.setOnChildClickListener(this);
-        expListView.setAdapter(new MyExpandableAdapter(list, this));
+        expListView.setAdapter(new MyExpandableAdapter(list, DocumentListActivity.this));
         //默认全部展开
         for (int i = 0; i < list.size(); i++) {
             expListView.expandGroup(i);
         }
     }
 
-    private void queryFiles() {
+    private class MyAsncyTask extends AsyncTask<String, String, List<DocBean>> {
+
+        @Override
+        protected List<DocBean> doInBackground(String... params) {
+            List<DocBean> docBeen = queryFiles();
+
+
+            return docBeen;
+        }
+
+        @Override
+        protected void onPostExecute(List<DocBean> docBeen) {
+            super.onPostExecute(docBeen);
+            if (docBeen != null) {
+                data(docBeen);
+                pd.dismiss();
+
+            }
+        }
+    }
+
+    private List<DocBean> queryFiles() {
+
+
+        //CustomDialogUtils.showProgressDialog(DocumentListActivity.this);
         List<DocBean> beanList = new ArrayList<>();
         String[] projection = new String[]{MediaStore.Files.FileColumns._ID,
                 MediaStore.Files.FileColumns.DATA,
@@ -147,9 +193,12 @@ public class DocumentListActivity extends BasicActivity implements AdapterView.O
         String[] type = new String[]{"%.doc", "%.docx", "%.xlsx", "%.xls", "%.ppt", "%.pptx"};
         //全部展开
         for (int i = 0; i < type.length; i++) {
-           getCursor(beanList, projection, type[i]);
+            getCursor(beanList, projection, type[i]);
         }
         mDagas.addAll(beanList);
+
+        //CustomDialogUtils.cannelProgressDialog();
+        return mDagas;
     }
 
     private void getCursor(List<DocBean> beanList, String[] projection, String docType) {
@@ -179,6 +228,7 @@ public class DocumentListActivity extends BasicActivity implements AdapterView.O
                     docBean.setFileName(name);
                     Log.e("test", name);
                     beanList.add(docBean);
+//                    pd.setMessage(name);
                 } while (cursorDoc.moveToNext());
             }
         }
@@ -188,7 +238,6 @@ public class DocumentListActivity extends BasicActivity implements AdapterView.O
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         ToastUtils.shows(this, mDagas.get(position).getPath());
-
     }
 
     private void sendMsg(DocBean docBean, final boolean boo) {
@@ -197,6 +246,7 @@ public class DocumentListActivity extends BasicActivity implements AdapterView.O
 
             int len = docBean.getPath().lastIndexOf(".");
             String type = docBean.getPath().substring(len + 1);
+
             Log.e("fileString", fileString);
             Log.e("fileSize", docBean.getSize());
             Log.e("fileType", type);
@@ -249,7 +299,6 @@ public class DocumentListActivity extends BasicActivity implements AdapterView.O
                 }
             }
         }
-
         return true;
     }
 

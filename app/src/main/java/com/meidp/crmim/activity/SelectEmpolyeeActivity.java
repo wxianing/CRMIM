@@ -83,7 +83,7 @@ public class SelectEmpolyeeActivity extends BaseActivity implements ExpandableLi
 
         titleRight.setText("确定");
         titleRight.setVisibility(View.VISIBLE);
-        title.setText("添加团队成员");
+        title.setText("选择团队成员");
         teamId = getIntent().getIntExtra("teamId", 0);
         teamNames = getIntent().getStringExtra("TeamName");//接收过来的团队名称
         usersBeanList = new ArrayList<>();

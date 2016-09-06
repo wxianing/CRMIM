@@ -51,7 +51,7 @@ public class VisitRecordAdapter extends BasicAdapter<VisitRecords> {
         }
         String timeStr = data.getModifiedDate();
         if (NullUtils.isNull(timeStr)) {
-            timeStr = timeStr.substring(0, timeStr.length() - 3);
+//            timeStr = timeStr.substring(0, timeStr.length() - 3);
             vh.visitTime.setText(timeStr);
         } else {
             vh.visitTime.setText("");

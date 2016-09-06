@@ -23,7 +23,7 @@ import org.xutils.view.annotation.ViewInject;
 
 import java.util.HashMap;
 
-public class AboutActivity extends BasicActivity {
+public class AboutActivity extends BasicActivity implements View.OnClickListener {
     private TextView title;
     private TextView versionName;
     private TextView latestVersion;
@@ -40,6 +40,8 @@ public class AboutActivity extends BasicActivity {
         findById();//初始化控件
         title.setText("关于");
         versionName.setText("当前版本：" + AppUtils.getVersionName(AboutActivity.this));
+        findViewById(R.id.back_arrows).setOnClickListener(this);
+        findViewById(R.id.version_name).setOnClickListener(this);
     }
 
     private void findById() {
@@ -48,8 +50,7 @@ public class AboutActivity extends BasicActivity {
         latestVersion = (TextView) findViewById(R.id.latest_version);
     }
 
-    @Event({R.id.back_arrows, R.id.version_name})
-    private void onClick(View v) {
+    public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
