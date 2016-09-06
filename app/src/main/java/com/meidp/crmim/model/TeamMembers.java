@@ -11,7 +11,6 @@ import java.io.Serializable;
  * 时  间： 2016/8/22
  */
 public class TeamMembers implements Serializable {
-
     /**
      * ID : 121
      * CompanyCD : C1002

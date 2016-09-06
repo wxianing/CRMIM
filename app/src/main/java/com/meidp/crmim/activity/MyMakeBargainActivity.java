@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
@@ -16,6 +17,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.meidp.crmim.R;
 import com.meidp.crmim.adapter.MakeBargainAdapter;
+import com.meidp.crmim.adapter.OpenProjectAdapter;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppDatas;
@@ -37,7 +39,7 @@ import java.util.List;
 public class MyMakeBargainActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2<ListView>, AdapterView.OnItemClickListener, View.OnClickListener {
 
     private int pageIndex = 1;
-    private int pageSize = 12;
+    private int pageSize = 8;
     private int sType = 0;
     private int sType2 = 0;
     private int sType3 = -1;

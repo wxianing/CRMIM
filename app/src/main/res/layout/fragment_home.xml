@@ -159,31 +159,6 @@
             <include layout="@layout/horizontal_line" />
 
             <LinearLayout
-                android:id="@+id/project_manager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingBottom="@dimen/dp5"
-                android:paddingTop="@dimen/dp5">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:src="@mipmap/project_manager_icon" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:text="我的项目" />
-
-            </LinearLayout>
-
-            <include layout="@layout/horizontal_line" />
-
-            <LinearLayout
                 android:id="@+id/prototype_manager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -253,8 +228,32 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@mipmap/star_icon"
                 android:padding="@dimen/dp8"
-                android:text="我实现的价值" />
+                android:text="我的价值" />
 
+            <include layout="@layout/horizontal_line" />
+
+            <LinearLayout
+                android:id="@+id/project_manager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/dp5"
+                android:paddingTop="@dimen/dp5">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:src="@mipmap/project_manager_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:text="我的项目" />
+
+            </LinearLayout>
 
             <include layout="@layout/horizontal_line" />
 
@@ -370,7 +369,6 @@
             <include layout="@layout/horizontal_line" />
 
             <LinearLayout
-                android:id="@+id/loving_company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -395,7 +393,7 @@
             <include layout="@layout/horizontal_line" />
 
             <LinearLayout
-                android:id="@+id/level_expertise"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -418,30 +416,6 @@
 
             <include layout="@layout/horizontal_line" />
 
-            <LinearLayout
-                android:id="@+id/crowd_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingBottom="@dimen/dp5"
-                android:paddingTop="@dimen/dp5">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:src="@mipmap/flock_icon" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:text="我的一伙人" />
-            </LinearLayout>
-
-            <include layout="@layout/horizontal_line" />
-
             <TextView
                 android:textStyle="bold"
                 android:textColor="@color/black"
@@ -454,7 +428,6 @@
             <include layout="@layout/horizontal_line" />
 
             <LinearLayout
-                android:id="@+id/important_system"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -502,7 +475,6 @@
             <include layout="@layout/horizontal_line" />
 
             <LinearLayout
-                android:id="@+id/department_duty_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -526,7 +498,6 @@
             <include layout="@layout/horizontal_line" />
 
             <LinearLayout
-                android:id="@+id/department_functions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -550,7 +521,6 @@
             <include layout="@layout/horizontal_line" />
 
             <LinearLayout
-                android:id="@+id/department_flow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"

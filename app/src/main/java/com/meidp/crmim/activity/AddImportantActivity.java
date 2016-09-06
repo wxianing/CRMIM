@@ -1,8 +1,6 @@
 package com.meidp.crmim.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -24,37 +22,25 @@ import org.xutils.view.annotation.ViewInject;
 
 import java.util.HashMap;
 
-public class AddImportantActivity extends BasicActivity implements View.OnClickListener {
+@ContentView(R.layout.activity_add_important)
+public class AddImportantActivity extends BaseActivity {
+    @ViewInject(R.id.title_tv)
     private TextView title;
+    @ViewInject(R.id.title_name)
     private EditText titleEt;
+    @ViewInject(R.id.content_tv)
     private EditText contentEt;
+    @ViewInject(R.id.empolyee_name)
     private TextView empolyeeName;
     private String empolyeeId;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_important);
-        onInit();
-        initEvent();
-    }
-
-    private void initEvent() {
-        findViewById(R.id.back_arrows).setOnClickListener(this);
-        findViewById(R.id.submit_btn).setOnClickListener(this);
-        findViewById(R.id.add_empolyee).setOnClickListener(this);
-    }
-
-
     public void onInit() {
-        title = (TextView) findViewById(R.id.title_tv);
-        titleEt = (EditText) findViewById(R.id.title_name);
-        contentEt = (EditText) findViewById(R.id.content_tv);
-        empolyeeName = (TextView) findViewById(R.id.empolyee_name);
         title.setText("添加重要事项");
     }
 
-    public void onClick(View v) {
+    @Event({R.id.back_arrows, R.id.submit_btn,R.id.add_empolyee})
+    private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();
@@ -96,8 +82,8 @@ public class AddImportantActivity extends BasicActivity implements View.OnClickL
             empolyeeId = data.getStringExtra("EmpolyeeId");
             String empolyeeNames = data.getStringExtra("EmpolyeeName");
             empolyeeName.setText(empolyeeNames);
-            Log.e("empolyeeId", empolyeeId);
-            Log.e("empolyeeName", empolyeeNames);
+            Log.e("empolyeeId",empolyeeId);
+            Log.e("empolyeeName",empolyeeNames);
         }
     }
 }

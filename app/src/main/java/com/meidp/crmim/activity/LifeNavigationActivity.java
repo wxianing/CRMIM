@@ -29,9 +29,9 @@ public class LifeNavigationActivity extends BaseActivity {
 
     @Override
     public void onInit() {
-        title.setText("人生导航");
         if (NetUtils.isConnected(this)) {
             CustomDialogUtils.showProgressDialog(LifeNavigationActivity.this);
+            title.setText("人生导航");
             WebSettings webSettings = mWebView.getSettings();
             webSettings.setJavaScriptEnabled(true);
             //设置可以访问文件

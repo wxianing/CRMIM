@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.widget.ScrollView;
 
 import com.meidp.crmim.R;
 import com.meidp.crmim.utils.CopyUtils;
@@ -25,11 +24,10 @@ public class ConversationListActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         activity = this;
         setContentView(R.layout.activity_conversationlist);
-        String msgType = getIntent().getStringExtra("TYPE");
 //        Log.e("copy--message", CopyUtils.paste(this));
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
-        ft.replace(R.id.content, ConversationListsFragment.newInstance("转发", msgType));
+        ft.replace(R.id.content, ConversationListsFragment.newInstance("转发"));
         ft.commit();
 //        finish();
     }

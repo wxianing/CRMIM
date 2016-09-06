@@ -56,6 +56,5 @@
     <dimen name="submit_item_width">120dp</dimen>
     <dimen name="submit_item_text_size">14dp</dimen>
     <dimen name="submit_item_top">5dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
 
 </resources>

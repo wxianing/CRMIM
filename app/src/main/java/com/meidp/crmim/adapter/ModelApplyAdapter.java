@@ -55,7 +55,7 @@ public class ModelApplyAdapter extends BasicAdapter<ModelApply> {
         }
         if (NullUtils.isNull(mDatas.get(position).getCreateDate())) {
             vh.createTime.setText(mDatas.get(position).getCreateDate());
-        } else {
+        }else {
             vh.createTime.setText("");
         }
         vh.applyCount.setText("申请数量：" + Integer.toString(mDatas.get(position).getProductCount()));

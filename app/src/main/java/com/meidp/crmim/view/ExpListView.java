@@ -12,7 +12,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
  * 作  用：
  * 时  间： 2016/8/10
  */
-public class ExpListView extends ExpandableListView {
+public class ExpListView extends PullToRefreshExpandableListView {
     public ExpListView(Context context) {
         super(context);
     }
@@ -21,9 +21,13 @@ public class ExpListView extends ExpandableListView {
         super(context, attrs);
     }
 
-//    @Override
-//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        int height = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
-//        super.onMeasure(widthMeasureSpec, height);
-//    }
+    public ExpListView(Context context, Mode mode) {
+        super(context, mode);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int height = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
+        super.onMeasure(widthMeasureSpec, height);
+    }
 }

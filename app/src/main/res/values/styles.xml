@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar" type="text/css">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar" type= "text/css">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -32,25 +32,6 @@
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/main_rg_color</item>
         <item name="android:textSize">12sp</item>
-    </style>    <!--主页的RadioButton-->
-
-    <style name="FaceRgStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:button">@null</item>
-
-        <item name="android:textColor">@color/main_rg_color</item>
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="FaceRgStyle2">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/main_rg_color</item>
-        <item name="android:textSize">14sp</item>
     </style>
 
     <!-- 自定义仿IOS的ActionSheet底部Dialog的样式 ，有模糊效果 -->
@@ -126,8 +107,8 @@
     </style>
 
     <style name="text_18_ffffff">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18.0dip</item>
+        <item name="android:textColor">#ffffffff</item>
     </style>
 
     <style name="text_16_666666">
@@ -158,9 +139,5 @@
         <item name="android:textSize">15.0dip</item>
         <item name="android:textColor">#ff666666</item>
     </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

@@ -3,10 +3,8 @@ package com.meidp.crmim.activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -37,27 +35,43 @@ import java.util.HashMap;
 import java.util.List;
 
 @ContentView(R.layout.activity_convention_apply_for)
-public class ConventionApplyForActivity extends BasicActivity implements View.OnClickListener {
+public class ConventionApplyForActivity extends BaseActivity {
 
     private static final int SHOW_DATAPICK = 0;
     private static final int DATE_DIALOG_ID = 1;
+    @ViewInject(R.id.title_tv)
     private TextView title;
+    @ViewInject(R.id.title_right)
     private TextView titleRight;
+    @ViewInject(R.id.title_name)
     private EditText titleNameEt;
+    @ViewInject(R.id.linkman)
     private EditText linkmanEt;
+    @ViewInject(R.id.link_phone)
     private EditText linkPhoneEt;
+    @ViewInject(R.id.perosn_count)
     private EditText perosnCountEt;
+    @ViewInject(R.id.start_date)
     private EditText startdateEt;
+    @ViewInject(R.id.total_money)
     private EditText totalMoneyEt;
+    @ViewInject(R.id.plan_content)
     private EditText planContentEt;
+    @ViewInject(R.id.unionPartner)
     private EditText unionPartnerEt;
+    @ViewInject(R.id.competitors)
     private EditText competitorsEt;
+    @ViewInject(R.id.address_et)
     private EditText addressEt;
+    @ViewInject(R.id.over_date)
     private EditText overDateEt;
     public int flag = 0;
+    @ViewInject(R.id.pickdate_btn)
     private Button pickDate;
+    @ViewInject(R.id.give_back_date)
     private EditText giveBackDateEt;
 
+    @ViewInject(R.id.model_machine)
     private TextView modelMachine;
     private String productName;
     private int productID;
@@ -65,42 +79,7 @@ public class ConventionApplyForActivity extends BasicActivity implements View.On
     private List<ProduceEntitys> entityList;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_convention_apply_for);
-        onInit();
-        initEvent();
-    }
-
-    private void initEvent() {
-        //R.id.back_arrows, R.id.title_right, R.id.start_date, R.id.over_date, R.id.give_back_date, R.id.model_machine
-        findViewById(R.id.back_arrows).setOnClickListener(this);
-        findViewById(R.id.title_right).setOnClickListener(this);
-        findViewById(R.id.start_date).setOnClickListener(this);
-        findViewById(R.id.over_date).setOnClickListener(this);
-        findViewById(R.id.give_back_date).setOnClickListener(this);
-        findViewById(R.id.model_machine).setOnClickListener(this);
-    }
-
     public void onInit() {
-        title = (TextView) findViewById(R.id.title_tv);
-        titleRight = (TextView) findViewById(R.id.title_right);
-        titleNameEt = (EditText) findViewById(R.id.title_name);
-        linkmanEt = (EditText) findViewById(R.id.linkman);
-        linkPhoneEt = (EditText) findViewById(R.id.link_phone);
-        perosnCountEt = (EditText) findViewById(R.id.perosn_count);
-        startdateEt = (EditText) findViewById(R.id.start_date);
-        totalMoneyEt = (EditText) findViewById(R.id.total_money);
-        planContentEt = (EditText) findViewById(R.id.plan_content);
-        unionPartnerEt = (EditText) findViewById(R.id.unionPartner);
-        competitorsEt = (EditText) findViewById(R.id.competitors);
-        addressEt = (EditText) findViewById(R.id.address_et);
-        overDateEt = (EditText) findViewById(R.id.over_date);
-        pickDate = (Button) findViewById(R.id.pickdate_btn);
-        giveBackDateEt = (EditText) findViewById(R.id.give_back_date);
-        modelMachine = (TextView) findViewById(R.id.model_machine);
-
-
         title.setText("地方参展申请单");
         titleRight.setText("申请");
         titleRight.setVisibility(View.VISIBLE);
@@ -111,7 +90,8 @@ public class ConventionApplyForActivity extends BasicActivity implements View.On
         productsLists = new ArrayList<>();
     }
 
-    public void onClick(View v) {
+    @Event({R.id.back_arrows, R.id.title_right, R.id.start_date, R.id.over_date, R.id.give_back_date, R.id.model_machine})
+    private void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_arrows:
                 finish();

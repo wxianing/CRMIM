@@ -116,7 +116,7 @@ public class Menber implements Serializable {
         this.users = users;
     }
 
-    public static class UsersBean implements Serializable{
+    public static class UsersBean {
         private String PhotoURL;
         private String DeptName;
         private String EmployeeName;

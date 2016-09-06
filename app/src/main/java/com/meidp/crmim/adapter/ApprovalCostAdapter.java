@@ -58,12 +58,14 @@ public class ApprovalCostAdapter extends BasicAdapter<ApprovalCosts> {
             vh.reason.setText("申请原因：");
         }
         int status = Integer.valueOf(data.getStatus());
-        if (NullUtils.isNull(data.getCheckStatusName())) {
-            vh.currStatus.setText(data.getCheckStatusName());
-        } else {
-            vh.currStatus.setText("");
+        switch (status) {
+            case 0:
+                vh.currStatus.setText("已审核");
+                break;
+            case 1:
+                vh.currStatus.setText("待审核");
+                break;
         }
-
         return convertView;
     }
 

@@ -1,8 +1,5 @@
 package com.meidp.crmim.activity;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
 import android.widget.TextView;
 
 import com.meidp.crmim.R;
@@ -16,33 +13,21 @@ import org.xutils.view.annotation.ViewInject;
 
 import java.util.HashMap;
 
-
 @ContentView(R.layout.activity_chatting_records)
-public class ChattingRecordsActivity extends BasicActivity implements View.OnClickListener {
+public class ChattingRecordsActivity extends BaseActivity {
 
     @ViewInject(R.id.title_tv)
     private TextView title;
     private String userId;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chatting_records);
-        onInit();
-        onInitData();
-        initEvent();
-    }
-
-    private void initEvent() {
-        findViewById(R.id.back_arrows).setOnClickListener(this);
-    }
-
     public void onInit() {
-        title = (TextView) findViewById(R.id.title_tv);
         title.setText("聊天记录");
         userId = getIntent().getStringExtra("userId");
+
     }
 
+    @Override
     public void onInitData() {
         HashMap params = new HashMap();
         params.put("Id", userId);
@@ -56,10 +41,5 @@ public class ChattingRecordsActivity extends BasicActivity implements View.OnCli
             }
         });
 
-    }
-
-    @Override
-    public void onClick(View v) {
-        finish();
     }
 }

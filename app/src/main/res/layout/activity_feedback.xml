@@ -6,54 +6,9 @@
 
     <include layout="@layout/titlebar_layout" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp3"
-        android:layout_marginLeft="@dimen/dp5"
-        android:layout_marginTop="@dimen/dp3">
-
-        <Button
-            android:id="@+id/publish"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/btn_blue_bg"
-            android:text="发表意见"
-            android:textColor="@color/white" />
-    </RelativeLayout>
-
-    <RadioGroup
-        android:id="@+id/main_bottom_rg"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp10">
-
-        <RadioButton
-            style="@style/FaceRgStyle"
-            android:drawableLeft="@mipmap/produce_icon"
-            android:text="  产品意见" />
-
-        <RadioButton
-            style="@style/FaceRgStyle"
-            android:drawableLeft="@mipmap/shangwu_icon"
-            android:text="  商务意见" />
-
-        <RadioButton
-            style="@style/FaceRgStyle"
-            android:drawableLeft="@mipmap/jishu_icon"
-            android:text="  技术意见" />
-
-    </RadioGroup>
-
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dp10"
-        android:layout_weight="1" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

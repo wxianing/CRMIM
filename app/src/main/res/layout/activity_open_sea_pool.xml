@@ -28,7 +28,7 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/dp5"
             android:layout_marginTop="@dimen/dp5"
-            android:background="@color/tc_gray" />
+            android:background="@color/textcolor_gray" />
 
         <TextView
             android:id="@+id/type_tv"
@@ -48,11 +48,11 @@
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/dp5"
-        android:layout_marginLeft="@dimen/dp5"
-        android:layout_marginRight="@dimen/dp5"
+        android:layout_marginBottom="@dimen/dp10"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
         android:divider="@color/transparent"
-        android:dividerHeight="2dp"
+        android:dividerHeight="8dp"
         android:scrollbars="none" />
 
 </LinearLayout>

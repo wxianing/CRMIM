@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 import com.meidp.crmim.R;
 import com.meidp.crmim.activity.GroupActivity;
 import com.meidp.crmim.activity.ModelMachineApplyActivity;
@@ -25,8 +26,10 @@ import com.meidp.crmim.activity.NewGroupActivity;
 import com.meidp.crmim.activity.SearchMsgActivity;
 import com.meidp.crmim.activity.SigninMainActivity;
 import com.meidp.crmim.activity.SubmitActivity;
+import com.meidp.crmim.activity.VisitingClientsActivity;
 import com.meidp.crmim.adapter.ExpandableAdapter;
 import com.meidp.crmim.adapter.NearContactsAdapter;
+import com.meidp.crmim.fragment.BaseFragment;
 import com.meidp.crmim.http.HttpRequestCallBack;
 import com.meidp.crmim.http.HttpRequestUtils;
 import com.meidp.crmim.model.AppBeans;
@@ -43,6 +46,7 @@ import com.meidp.crmim.view.ListViewForScrollView;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,14 +58,16 @@ import io.rong.imlib.RongIMClient;
  * A simple {@link Fragment} subclass.
  */
 @ContentView(R.layout.fragment_friend_list)
-public class ContactsFragment extends BaseFragment implements AdapterView.OnItemClickListener, ExpandableListView.OnChildClickListener, ExpandableListView.OnGroupClickListener, View.OnClickListener {
+public class ContactsFragment extends BaseFragment implements AdapterView.OnItemClickListener, ExpandableListView.OnChildClickListener, ExpandableListView.OnGroupClickListener {
 
     @ViewInject(R.id.title_tv)
     private TextView title;
     @ViewInject(R.id.back_arrows)
     private ImageView backImg;
     private List<String> userIds;
-
+    @ViewInject(R.id.listview)
+    private ListViewForScrollView mListVeiw;
+    private NearContactsAdapter mAdapter;
     private List<Friends> mDatas;
 
     @ViewInject(R.id.expListView)
@@ -70,12 +76,11 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
     private List<Contact> contactList;
 
     private ExpandableAdapter expandableAdapter;
-
+    @ViewInject(R.id.friends_list)
+    private FrameLayout friendsList;
     @ViewInject(R.id.right_img)
     private ImageView rightImg;
     private PopupWindow mPopupWindow;
-//    @ViewInject(R.id.scrollView)
-//    private ScrollView scrollView;
 
     public ContactsFragment() {
 
@@ -83,13 +88,6 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
 
     @Override
     public void onInit() {
-        View headerView = LayoutInflater.from(getActivity()).inflate(R.layout.header_contacts_layout, null);
-
-        headerView.findViewById(R.id.search_edittext).setOnClickListener(this);
-        headerView.findViewById(R.id.recent_contacts).setOnClickListener(this);
-        headerView.findViewById(R.id.group_layout).setOnClickListener(this);
-        expListView.addHeaderView(headerView);
-//        scrollView.smoothScrollTo(0, 20);
         rightImg.setImageResource(R.mipmap.more_icon);
         backImg.setVisibility(View.INVISIBLE);
         title.setText("通讯录");
@@ -99,13 +97,13 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
         userIds.add("3");
         mDatas = new ArrayList<>();
 //        mAdapter = new NearContactsAdapter(userLists, getActivity());
+        mListVeiw.setOnItemClickListener(this);
         contactList = new ArrayList<>();
         expandableAdapter = new ExpandableAdapter(contactList, getActivity());
-        expListView.setOnChildClickListener(this);
-        expListView.setOnGroupClickListener(this);
-        expListView.setAdapter(expandableAdapter);
-//        expListView.setGroupIndicator(null);//去掉箭头
-        expListView.setFocusable(false);
+        expListView.getRefreshableView().setOnChildClickListener(this);
+        expListView.getRefreshableView().setOnGroupClickListener(this);
+        expListView.getRefreshableView().setAdapter(expandableAdapter);
+        expListView.getRefreshableView().setGroupIndicator(null);
     }
 
     @Override
@@ -115,21 +113,19 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
          */
         String contacts = (String) SPUtils.get(getActivity(), "Contacts", "");
         if (NullUtils.isNull(contacts)) {
-
             AppBeans<Contact> appBean = JSONObject.parseObject(contacts, new TypeReference<AppBeans<Contact>>() {
             });
             if (appBean != null && appBean.getEnumcode() == 0) {
                 contactList.clear();
                 contactList.addAll(appBean.getData());
                 expandableAdapter.notifyDataSetChanged();
-//                for (int i = 0; i < contactList.size(); i++) {
-//                    expListView.expandGroup(i);//默认展开选项
-//                }
+                for (int i = 0; i < contactList.size(); i++) {
+                    expListView.getRefreshableView().expandGroup(i);//默认展开选项
+                }
             }
         } else {
             loadData();
         }
-
     }
 
     private void loadData() {
@@ -143,9 +139,9 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
                     contactList.clear();
                     contactList.addAll(appBean.getData());
                     expandableAdapter.notifyDataSetChanged();
-//                    for (int i = 0; i < contactList.size(); i++) {
-//                        expListView.expandGroup(i);//默认展开选项
-//                    }
+                    for (int i = 0; i < contactList.size(); i++) {
+                        expListView.getRefreshableView().expandGroup(i);//默认展开选项
+                    }
                 }
             }
         });
@@ -154,6 +150,7 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
     @Override
     public void onResume() {
         super.onResume();
+
         /**
          * 设置连接状态变化的监听器.
          */
@@ -193,11 +190,47 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
     }*/
 
 
-    @Event(value = {R.id.right_img})
-    private void click(View v) {
+    @Event(value = {R.id.search_edittext, R.id.group_layout, R.id.recent_contacts, R.id.visit_client, R.id.new_group, R.id.submit_project, R.id.apply_model, R.id.right_img})
+    private void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
+            case R.id.search_edittext:
+                intent = new Intent(getActivity(), SearchMsgActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.group_layout:
+                startActivity(new Intent(getActivity(), GroupActivity.class));
+                break;
+            case R.id.recent_contacts:
+                Intent intent1 = new Intent(getActivity(), NearContactsActivity.class);
+                startActivity(intent1);
 
+                if (friendsList.getVisibility() == View.GONE) {
+                    friendsList.setVisibility(View.VISIBLE);
+                } else {
+                    friendsList.setVisibility(View.GONE);
+                }
+                break;
+            case R.id.visit_client://客户拜访
+                intent = new Intent(getActivity(), SigninMainActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.new_group://新建群组
+                intent = new Intent(getActivity(), NewGroupActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.submit_project://申报项目
+                intent = new Intent(getActivity(), SubmitActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
+            case R.id.apply_model:
+                intent = new Intent(getActivity(), ModelMachineApplyActivity.class);
+                startActivity(intent);
+                mPopupWindow.dismiss();
+                break;
             case R.id.right_img:
                 if (!mPopupWindow.isShowing()) {
                     showPopupWindow();
@@ -228,64 +261,15 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
 
     private void initPopupWindow() {
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.popup_list_layout, null);
-//        x.view().inject(this, contentView);
+        x.view().inject(this, contentView);
         mPopupWindow = new PopupWindow(contentView,
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         mPopupWindow.setContentView(contentView);
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-        contentView.findViewById(R.id.visit_client).setOnClickListener(this);
-        contentView.findViewById(R.id.new_group).setOnClickListener(this);
-        contentView.findViewById(R.id.submit_project).setOnClickListener(this);
-        contentView.findViewById(R.id.apply_model).setOnClickListener(this);
     }
-
-    @Override
-    public void onClick(View v) {
-        Intent intent = null;
-        switch (v.getId()) {
-            case R.id.visit_client://客户拜访
-                intent = new Intent(getActivity(), SigninMainActivity.class);
-                startActivity(intent);
-                mPopupWindow.dismiss();
-                break;
-            case R.id.new_group://新建群组
-                intent = new Intent(getActivity(), NewGroupActivity.class);
-                startActivity(intent);
-                mPopupWindow.dismiss();
-                break;
-            case R.id.submit_project://申报项目
-                intent = new Intent(getActivity(), SubmitActivity.class);
-                startActivity(intent);
-                mPopupWindow.dismiss();
-                break;
-            case R.id.apply_model:
-                intent = new Intent(getActivity(), ModelMachineApplyActivity.class);
-                startActivity(intent);
-                mPopupWindow.dismiss();
-                break;
-            case R.id.search_edittext:
-                intent = new Intent(getActivity(), SearchMsgActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.recent_contacts:
-                Intent intent1 = new Intent(getActivity(), NearContactsActivity.class);
-                startActivity(intent1);
-
-//                if (friendsList.getVisibility() == View.GONE) {
-//                    friendsList.setVisibility(View.VISIBLE);
-//                } else {
-//                    friendsList.setVisibility(View.GONE);
-//                }
-                break;
-            case R.id.group_layout:
-                startActivity(new Intent(getActivity(), GroupActivity.class));
-                break;
-        }
-    }
-
 
     @Override
     public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-        return false;
+        return true;
     }
 }

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp10"
-        android:text="待审批" />
+        android:text="未审核" />
 
     <include layout="@layout/horizontal_line" />
 
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp10"
-        android:text="审批通过" />
+        android:text="已审核" />
 
     <include layout="@layout/horizontal_line" />
 
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp10"
-        android:text="审批不通过" />
+        android:text="已拒绝" />
 
     <include layout="@layout/horizontal_line" />
 

@@ -24,12 +24,4 @@
         android:gravity="center"
         android:text="当前版本：" />
 
-    <TextView
-        android:id="@+id/latest_version"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp15"
-        android:gravity="center"
-        android:text="最新版本：" />
-
 </LinearLayout>

@@ -10,7 +10,6 @@
     <include layout="@layout/titlebar" />
 
     <TextView
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp80"
@@ -68,7 +67,6 @@
 
 
         <RelativeLayout
-            android:layout_marginTop="@dimen/dp10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"

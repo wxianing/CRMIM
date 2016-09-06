@@ -248,7 +248,7 @@ public class SubmissionActivity extends BaseActivity {
                 productID = data.getIntExtra("ProductID", -1);
                 productName = data.getStringExtra("ProductName");
                 typeSelect.setText(productName);
-
+                countEt.setText("1");
                 break;
             case 1016:
                 projectDirectionId = data.getIntExtra("ProjectDirectionId", 0);

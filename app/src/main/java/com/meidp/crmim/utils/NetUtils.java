@@ -30,6 +30,7 @@ public class NetUtils {
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
 
         if (null != connectivity) {
+
             NetworkInfo info = connectivity.getActiveNetworkInfo();
             if (null != info && info.isConnected()) {
                 if (info.getState() == NetworkInfo.State.CONNECTED) {
